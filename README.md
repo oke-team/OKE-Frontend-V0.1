@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OKE Frontend V0.1
 
-## Getting Started
+## 🚀 Application de Gestion d'Entreprise
 
-First, run the development server:
+OKE est une super app de gestion d'entreprise moderne et élégante, développée avec les dernières technologies web.
+
+### ✨ Caractéristiques
+
+- **Interface Liquid Glass** : Design moderne inspiré d'Apple Vision Pro
+- **Mode Expert** : Interface adaptative selon le niveau d'expertise
+- **100% Frontend** : Données mockées pour démonstration
+- **Mobile First** : Conception responsive optimisée
+- **Performance** : Construit avec Next.js 15 et Turbopack
+
+### 🛠 Technologies
+
+- **Framework**: Next.js 15.4.6 avec App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Runtime**: React 19.1.0
+
+### 📦 Modules
+
+- ✅ **Dashboard** : Tableau de bord avec widgets
+- ✅ **Comptabilité** : Balance générale et grand livre avec fonctionnalités expert
+- 🚧 **Banque** : Gestion bancaire (à venir)
+- 🚧 **Ventes** : Facturation client (à venir)
+- 🚧 **Achats** : Gestion fournisseurs (à venir)
+
+### 🚀 Installation
 
 ```bash
+# Cloner le repository
+git clone https://github.com/OKE-TEAM/OKE-Frontend-V0.1.git
+
+# Installer les dépendances
+cd OKE-Frontend-V0.1
+npm install
+
+# Lancer le serveur de développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🎨 Design System
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Principe**: "Less is More" - Élégance minimaliste
+- **Couleurs**: Palette moderne avec accents violet/bleu
+- **Animations**: Micro-interactions fluides
+- **Responsive**: Adaptatif mobile/tablet/desktop
 
-## Learn More
+### 👥 Équipe
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend Lead**: Yann Chappuit
+- **Backend Lead**: Tony (API en développement)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📝 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Propriétaire - OKE TEAM © 2025
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Version**: 0.1.0  
+**Status**: Alpha  
+**Date**: Août 2025

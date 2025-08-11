@@ -1,0 +1,31 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="okeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5e72ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d150da;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6b6b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- O -->
+  <circle cx="20" cy="20" r="12" stroke="url(#okeGradient)" stroke-width="3" fill="none" filter="url(#glow)"/>
+  
+  <!-- K -->
+  <path d="M 45 8 L 45 32 M 45 20 L 57 8 M 45 20 L 57 32" stroke="url(#okeGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"/>
+  
+  <!-- E -->
+  <path d="M 70 8 L 70 32 M 70 8 L 82 8 M 70 20 L 80 20 M 70 32 L 82 32" stroke="url(#okeGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"/>
+  
+  <!-- Accent dot -->
+  <circle cx="95" cy="20" r="3" fill="url(#okeGradient)" opacity="0.8">
+    <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
