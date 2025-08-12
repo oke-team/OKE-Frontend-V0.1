@@ -123,6 +123,22 @@ const config: Config = {
           medium: "rgba(255, 255, 255, 0.15)",
           dark: "rgba(0, 0, 0, 0.1)",
         },
+        
+        // Couleurs spécifiques pour les cartes entrepreneur
+        cards: {
+          bg: {
+            DEFAULT: "rgba(255, 255, 255, 0.05)",
+            hover: "rgba(255, 255, 255, 0.08)",
+            active: "rgba(255, 255, 255, 0.1)",
+            glass: "rgba(255, 255, 255, 0.03)",
+          },
+          border: {
+            DEFAULT: "rgba(255, 255, 255, 0.1)",
+            hover: "rgba(255, 255, 255, 0.15)",
+            active: "rgba(94, 114, 255, 0.3)",
+            focus: "rgba(94, 114, 255, 0.5)",
+          },
+        },
       },
       
       // Border radius
@@ -206,6 +222,13 @@ const config: Config = {
         "glow": "0 0 40px rgba(94, 114, 255, 0.2)",
         "glow-lg": "0 0 60px rgba(94, 114, 255, 0.25)",
         "inner-glow": "inset 0 0 20px rgba(94, 114, 255, 0.1)",
+        // Ombres spécifiques pour les cartes
+        "card-default": "0 4px 24px 0 rgba(0, 0, 0, 0.06)",
+        "card-hover": "0 8px 32px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(94, 114, 255, 0.1)",
+        "card-active": "0 2px 16px 0 rgba(0, 0, 0, 0.04)",
+        "glow-violet": "0 0 24px rgba(139, 92, 246, 0.2)",
+        "glow-green": "0 0 24px rgba(16, 185, 129, 0.2)",
+        "glow-red": "0 0 24px rgba(239, 68, 68, 0.2)",
       },
       
       // Backdrop blur pour Glass effect

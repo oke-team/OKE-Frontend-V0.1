@@ -12,3 +12,19 @@ export * from './layout';
 
 // Example Components (pour le développement)
 export { default as BottomNavExample } from './examples/BottomNavExample';
+
+// Card Components
+export { 
+  CardBase,
+  HeroCard,
+  StandardCard,
+  CompactCard,
+  CalculationCard,
+  type CardVariant,
+  type CardState,
+  type AccentColor,
+  type CardBaseProps 
+} from './ui/CardBase';
+
+// Dashboard Components
+export { EntrepreneurDashboard } from './dashboard/EntrepreneurCards';

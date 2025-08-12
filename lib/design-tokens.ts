@@ -292,6 +292,145 @@ export const designTokens = {
     notification: 1080,
     max: 9999,
   },
+  
+  /**
+   * Tokens spécifiques pour les cartes entrepreneur
+   */
+  cards: {
+    // Couleurs spécifiques aux cartes
+    colors: {
+      background: {
+        default: "rgba(255, 255, 255, 0.05)",
+        hover: "rgba(255, 255, 255, 0.08)",
+        active: "rgba(255, 255, 255, 0.1)",
+        glass: "rgba(255, 255, 255, 0.03)",
+      },
+      border: {
+        default: "rgba(255, 255, 255, 0.1)",
+        hover: "rgba(255, 255, 255, 0.15)",
+        active: "rgba(94, 114, 255, 0.3)",
+        focus: "rgba(94, 114, 255, 0.5)",
+      },
+      accent: {
+        violet: "#8b5cf6",
+        violetLight: "rgba(139, 92, 246, 0.1)",
+        green: "#10b981",
+        greenLight: "rgba(16, 185, 129, 0.1)",
+        red: "#ef4444",
+        redLight: "rgba(239, 68, 68, 0.1)",
+      },
+    },
+    
+    // Espacements spécifiques
+    spacing: {
+      xs: "12px",
+      sm: "16px",
+      md: "20px",
+      lg: "24px",
+      xl: "32px",
+    },
+    
+    // Tailles de cartes
+    sizes: {
+      hero: {
+        minHeight: "200px",
+        maxHeight: "280px",
+      },
+      standard: {
+        minHeight: "120px",
+        maxHeight: "160px",
+      },
+      compact: {
+        minHeight: "80px",
+        maxHeight: "100px",
+      },
+    },
+    
+    // Transitions spécifiques
+    transitions: {
+      default: "all 200ms cubic-bezier(0.4, 0, 0.2, 1)",
+      hover: "all 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+      active: "all 150ms cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    
+    // Ombres spécifiques
+    shadows: {
+      default: "0 4px 24px 0 rgba(0, 0, 0, 0.06)",
+      hover: "0 8px 32px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(94, 114, 255, 0.1)",
+      active: "0 2px 16px 0 rgba(0, 0, 0, 0.04)",
+      glow: {
+        violet: "0 0 24px rgba(139, 92, 246, 0.2)",
+        green: "0 0 24px rgba(16, 185, 129, 0.2)",
+        red: "0 0 24px rgba(239, 68, 68, 0.2)",
+      },
+    },
+    
+    // Radius spécifiques
+    borderRadius: {
+      sm: "12px",
+      md: "16px",
+      lg: "20px",
+      xl: "24px",
+    },
+  },
+};
+
+/**
+ * Tokens pour les états des cartes
+ */
+export const cardStates = {
+  normal: {
+    background: designTokens.cards.colors.background.default,
+    border: designTokens.cards.colors.border.default,
+    shadow: designTokens.cards.shadows.default,
+    transform: "translateY(0)",
+  },
+  hover: {
+    background: designTokens.cards.colors.background.hover,
+    border: designTokens.cards.colors.border.hover,
+    shadow: designTokens.cards.shadows.hover,
+    transform: "translateY(-2px)",
+  },
+  pressed: {
+    background: designTokens.cards.colors.background.active,
+    border: designTokens.cards.colors.border.active,
+    shadow: designTokens.cards.shadows.active,
+    transform: "translateY(0) scale(0.98)",
+  },
+  loading: {
+    background: designTokens.cards.colors.background.glass,
+    border: designTokens.cards.colors.border.default,
+    opacity: "0.7",
+    pointerEvents: "none",
+  },
+  disabled: {
+    background: "rgba(255, 255, 255, 0.02)",
+    border: "rgba(255, 255, 255, 0.05)",
+    opacity: "0.5",
+    pointerEvents: "none",
+  },
+};
+
+/**
+ * Variantes de cartes
+ */
+export const cardVariants = {
+  hero: {
+    className: "min-h-[200px] max-h-[280px] p-6 lg:p-8",
+    borderRadius: designTokens.cards.borderRadius.xl,
+  },
+  standard: {
+    className: "min-h-[120px] max-h-[160px] p-4 lg:p-6",
+    borderRadius: designTokens.cards.borderRadius.lg,
+  },
+  compact: {
+    className: "min-h-[80px] max-h-[100px] p-3 lg:p-4",
+    borderRadius: designTokens.cards.borderRadius.md,
+  },
+  calculation: {
+    className: "min-h-[140px] p-4 lg:p-5",
+    borderRadius: designTokens.cards.borderRadius.lg,
+  },
 };
 
 /**
@@ -303,6 +442,34 @@ export const usageExamples = {
     <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 shadow-glass">
       <!-- Contenu de la carte -->
     </div>
+  `,
+  
+  // Carte entrepreneur avec variante hero
+  entrepreneurCardHero: `
+    <CardBase 
+      variant="hero"
+      state="normal"
+      accentColor="violet"
+      className="relative overflow-hidden"
+    >
+      <h2 className="text-2xl font-bold">Carte Entrepreneur</h2>
+      <p className="text-neutral-400">Contenu principal</p>
+    </CardBase>
+  `,
+  
+  // Carte de calcul interactive
+  calculationCard: `
+    <CardBase 
+      variant="calculation"
+      state="hover"
+      accentColor="green"
+      interactive
+    >
+      <div className="flex justify-between items-center">
+        <span>Total</span>
+        <span className="text-2xl font-bold">€1,234</span>
+      </div>
+    </CardBase>
   `,
   
   // Bouton avec gradient
