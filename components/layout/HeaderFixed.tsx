@@ -3,7 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
+import { usePeriod } from '@/contexts/PeriodContext';
+import { PeriodSelector } from './PeriodSelector';
 import ModeTooltip from '@/components/ui/ModeTooltip';
+import { usePathname } from 'next/navigation';
 import {
   Building2,
   ChevronDown,
@@ -17,9 +20,7 @@ import {
   Shield,
   Wrench,
   Wand2,
-  GraduationCap,
-  Settings2,
-  Sliders,
+  Sparkles,
   FileText,
   Receipt,
   TrendingUp,
@@ -87,6 +88,8 @@ export default function HeaderFixed({
   activeModule = 'dashboard'
 }: HeaderProps) {
   const { expertMode, toggleExpertMode, resetOnboarding } = useExpertMode();
+  const { currentPeriod, periods, setPeriod } = usePeriod();
+  const pathname = usePathname();
   const [companyDropdownOpen, setCompanyDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [actionsDropdownOpen, setActionsDropdownOpen] = useState(false);
@@ -460,83 +463,58 @@ export default function HeaderFixed({
           )}
         </div>
 
+        {/* Period Selector - Only in accounting module */}
+        {pathname?.includes('/accounting') && (
+          <div className="flex-1 flex justify-center max-w-xs">
+            <PeriodSelector
+              currentPeriod={currentPeriod}
+              periods={periods}
+              onPeriodChange={setPeriod}
+              compact={isMobile}
+            />
+          </div>
+        )}
+
         {/* Right Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {/* Expert Mode Toggle - Amélioré avec animations et accessibilité */}
+          {/* Expert Mode Toggle - Version compacte */}
           <ModeTooltip isExpertMode={expertMode}>
             <motion.button
-            onClick={toggleExpertMode}
-            aria-label={`Mode ${expertMode ? 'expert' : 'entrepreneur'} activé. Cliquez pour basculer`}
-            aria-pressed={expertMode}
-            role="switch"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            initial={false}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.375rem',
-              borderRadius: '0.5rem',
-              border: 'none',
-              backgroundColor: 'transparent',
-              color: expertMode ? '#5e72ff' : '#525252',
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              position: 'relative'
-            }}
-          >
-            {/* Badge Expert avec état on/off */}
-            <motion.div
-              animate={{ 
-                backgroundColor: expertMode ? '#10b981' : '#f5f5f5',
-                color: expertMode ? '#ffffff' : '#737373',
-                borderColor: expertMode ? '#10b981' : '#e5e5e5'
-              }}
-              transition={{ duration: 0.2 }}
+              onClick={toggleExpertMode}
+              aria-label={`Mode ${expertMode ? 'expert' : 'entrepreneur'} activé`}
+              aria-pressed={expertMode}
+              role="switch"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative"
               style={{
-                padding: isMobile ? '4px 8px' : '4px 10px',
-                borderRadius: '6px',
-                border: '1px solid',
-                fontSize: isMobile ? '11px' : '12px',
-                fontWeight: 600,
-                letterSpacing: '0.3px',
-                textTransform: 'uppercase',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '0.25rem',
+                padding: isMobile ? '0.25rem 0.5rem' : '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                border: 'none',
+                backgroundColor: expertMode 
+                  ? 'linear-gradient(135deg, #5e72ff 0%, #d150da 100%)'
+                  : '#f5f5f5',
+                background: expertMode 
+                  ? 'linear-gradient(135deg, #5e72ff 0%, #d150da 100%)'
+                  : '#f5f5f5',
+                color: expertMode ? '#ffffff' : '#737373',
+                fontSize: isMobile ? '11px' : '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
               }}
             >
-              <div style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                backgroundColor: expertMode ? '#ffffff' : '#a3a3a3',
-                transition: 'background-color 0.2s'
-              }} />
-              <span>Expert</span>
-            </motion.div>
-            
-            {/* Badge de notification pour l'onboarding */}
-            {showOnboardingBadge && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', delay: 0.5 }}
-                style={{
-                  position: 'absolute',
-                  top: '-4px',
-                  right: '-4px',
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#ff6b6b',
-                  borderRadius: '50%',
-                  border: '2px solid white'
-                }}
-              />
-            )}
+              {expertMode ? (
+                <>
+                  <Sparkles size={isMobile ? 12 : 14} />
+                  {!isMobile && <span>EXPERT</span>}
+                </>
+              ) : (
+                <span style={{ padding: '0 2px' }}>{isMobile ? 'OFF' : 'SIMPLE'}</span>
+              )}
             </motion.button>
           </ModeTooltip>
 
