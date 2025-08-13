@@ -447,7 +447,7 @@ export default function HeaderFixed({
                 backgroundColor: 'rgba(229, 229, 229, 0.4)',
                 margin: '0 1rem'
               }} />
-              <PeriodSelectorGlass aligned />
+              {/* <PeriodSelectorGlass aligned /> */}
             </>
           )}
         </div>
