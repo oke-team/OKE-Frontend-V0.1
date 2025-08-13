@@ -46,6 +46,7 @@ import {
   Check,
   Copy,
   MoreHorizontal,
+  MoreVertical,
   Columns2,
   Layers,
   Square,
@@ -145,6 +146,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
   const [searchText, setSearchText] = useState<string>('');
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<string>('');
+  const [showMoreMenu, setShowMoreMenu] = useState<boolean>(false);
   
   // États de vue
   const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'double'>('single');
@@ -283,6 +285,23 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
     }
   }, [src, title]);
 
+  // Fermer le menu quand on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (showMoreMenu && !(e.target as HTMLElement).closest('.relative')) {
+        setShowMoreMenu(false);
+      }
+    };
+    
+    if (showMoreMenu) {
+      document.addEventListener('click', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showMoreMenu]);
+
   // Raccourcis clavier
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -401,69 +420,128 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
   if (isTouchDevice) {
     return (
       <div className={cn("flex flex-col h-full bg-gray-50 dark:bg-gray-900", className)}>
-        {/* Header mobile compact */}
-        <div className="flex items-center justify-between px-3 py-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={previousPage}
-              disabled={currentPage <= 1 || viewMode === 'continuous'}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <span className="text-sm font-medium">
-              {currentPage}/{numPages}
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={nextPage}
-              disabled={currentPage >= numPages || viewMode === 'continuous'}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
-
-          <h3 className="flex-1 text-sm font-medium truncate text-center px-2">
-            {title || pdfInfo?.title || 'Document'}
-          </h3>
-
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setViewMode('single')}
-              className={cn(
-                "h-8 w-8 p-0 rounded-lg transition-all duration-200",
-                viewMode === 'single' 
-                  ? "bg-gradient-to-br from-purple-500/20 to-purple-600/20 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/50" 
-                  : "hover:bg-gray-100 text-gray-600"
-              )}
-              title="Page unique"
-            >
-              <Square className="h-4 w-4 mx-auto" />
-            </button>
-            <button
-              onClick={() => setViewMode('continuous')}
-              className={cn(
-                "h-8 w-8 p-0 rounded-lg transition-all duration-200",
-                viewMode === 'continuous' 
-                  ? "bg-gradient-to-br from-purple-500/20 to-purple-600/20 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/50" 
-                  : "hover:bg-gray-100 text-gray-600"
-              )}
-              title="Scroll continu"
-            >
-              <Layers className="h-4 w-4 mx-auto" />
-            </button>
-            {onClose && (
+        {/* Header mobile compact amélioré */}
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between px-2 py-2 gap-2">
+            {/* Navigation mobile */}
+            <div className="flex items-center gap-1 flex-shrink-0">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={onClose}
+                onClick={previousPage}
+                disabled={currentPage <= 1 || viewMode === 'continuous'}
                 className="h-8 w-8 p-0"
               >
-                <X className="h-4 w-4" />
+                <ChevronLeft className="h-4 w-4" />
               </Button>
-            )}
+              <span className="text-xs font-medium whitespace-nowrap">
+                {currentPage}/{numPages}
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={nextPage}
+                disabled={currentPage >= numPages || viewMode === 'continuous'}
+                className="h-8 w-8 p-0"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Titre mobile avec truncate */}
+            <h3 className="flex-1 text-xs font-medium truncate text-center min-w-0 px-1">
+              {title || pdfInfo?.title || 'Document'}
+            </h3>
+
+            {/* Actions mobile avec menu plus */}
+            <div className="flex items-center gap-1 flex-shrink-0">
+              {/* Actions essentielles toujours visibles */}
+              <button
+                onClick={rotate}
+                className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
+                title="Rotation"
+              >
+                <RotateCw className="h-4 w-4" />
+              </button>
+              
+              <button
+                onClick={handleShare}
+                className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
+                title="Partager"
+              >
+                <Share2 className="h-4 w-4" />
+              </button>
+              
+              {/* Menu plus pour les autres actions */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowMoreMenu(!showMoreMenu)}
+                  className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
+                  title="Plus d'options"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                </button>
+                
+                {showMoreMenu && (
+                  <div className="absolute right-0 top-10 z-50 min-w-[180px] bg-white rounded-lg shadow-lg border border-gray-200 py-1">
+                    <button
+                      onClick={() => {
+                        setViewMode(viewMode === 'single' ? 'continuous' : 'single');
+                        setShowMoreMenu(false);
+                      }}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      {viewMode === 'single' ? <Layers className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+                      {viewMode === 'single' ? 'Scroll continu' : 'Page unique'}
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        setShowThumbnails(!showThumbnails);
+                        setShowMoreMenu(false);
+                      }}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <Grid3X3 className="h-4 w-4" />
+                      Vignettes
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        handleDownload();
+                        setShowMoreMenu(false);
+                      }}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <Download className="h-4 w-4" />
+                      Télécharger
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        handlePrint();
+                        setShowMoreMenu(false);
+                      }}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <Printer className="h-4 w-4" />
+                      Imprimer
+                    </button>
+                  </div>
+                )}
+              </div>
+              
+              {onClose && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onClose}
+                  className="h-8 w-8 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -577,239 +655,320 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
   // UI desktop complète
   return (
     <div className={cn("flex flex-col h-full bg-gray-50 dark:bg-gray-900", className)}>
-      {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        {/* Navigation */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={previousPage}
-            disabled={currentPage <= 1}
-            className="h-8"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          
-          <div className="flex items-center gap-2">
-            <input
-              type="number"
-              min="1"
-              max={numPages}
-              value={currentPage}
-              onChange={(e) => goToPage(parseInt(e.target.value) || 1)}
-              className="w-12 px-2 py-1 text-sm text-center border rounded"
-            />
-            <span className="text-sm text-gray-500">/ {numPages || '-'}</span>
+      {/* Toolbar amélioré avec responsive */}
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between px-2 md:px-4 py-2 md:py-3 gap-2">
+          {/* Navigation - toujours visible */}
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={previousPage}
+              disabled={currentPage <= 1}
+              className="h-8 w-8 p-0 md:px-2"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            
+            <div className="flex items-center gap-1">
+              <input
+                type="number"
+                min="1"
+                max={numPages}
+                value={currentPage}
+                onChange={(e) => goToPage(parseInt(e.target.value) || 1)}
+                className="w-10 md:w-12 px-1 py-1 text-xs md:text-sm text-center border rounded"
+              />
+              <span className="text-xs md:text-sm text-gray-500 whitespace-nowrap">/ {numPages || '-'}</span>
+            </div>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={nextPage}
+              disabled={currentPage >= numPages}
+              className="h-8 w-8 p-0 md:px-2"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
           </div>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={nextPage}
-            disabled={currentPage >= numPages}
-            className="h-8"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
 
-        {/* Titre */}
-        <div className="flex-1 text-center">
-          <h3 className="text-sm font-medium truncate px-4">
-            {title || pdfInfo?.title || 'Document PDF'}
-          </h3>
-        </div>
+          {/* Titre - avec truncate adaptatif */}
+          <div className="flex-1 min-w-0 px-2">
+            <h3 className="text-xs md:text-sm font-medium truncate text-center">
+              {title || pdfInfo?.title || 'Document PDF'}
+            </h3>
+          </div>
 
-        {/* Zoom & Actions */}
-        <div className="flex items-center gap-2">
-          {/* Zoom */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={zoomOut}
-            disabled={zoom <= MIN_ZOOM}
-            className="h-8"
-          >
-            <ZoomOut className="h-4 w-4" />
-          </Button>
-          
-          <select
-            value={zoom}
-            onChange={(e) => setZoomLevel(parseInt(e.target.value))}
-            className="px-2 py-1 text-sm border rounded"
-          >
-            {ZOOM_LEVELS.map(level => (
-              <option key={level} value={level}>{level}%</option>
-            ))}
-          </select>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={zoomIn}
-            disabled={zoom >= MAX_ZOOM}
-            className="h-8"
-          >
-            <ZoomIn className="h-4 w-4" />
-          </Button>
-
-          <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
-
-          {/* Modes de vue avec style Liquid Glass subtil */}
-          <button
-            onClick={() => setViewMode('single')}
-            className={cn(
-              "h-8 px-2 rounded-lg transition-all duration-200 flex items-center gap-1",
-              viewMode === 'single' 
-                ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
-                : "hover:bg-gray-100 text-gray-600"
-            )}
-            title="Page unique"
-          >
-            <Square className="h-4 w-4" />
-          </button>
-
-          <button
-            onClick={() => setViewMode('continuous')}
-            className={cn(
-              "h-8 px-2 rounded-lg transition-all duration-200 flex items-center gap-1",
-              viewMode === 'continuous' 
-                ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
-                : "hover:bg-gray-100 text-gray-600"
-            )}
-            title="Scroll continu"
-          >
-            <Layers className="h-4 w-4" />
-          </button>
-
-          {!isTouchDevice && (
-            <button
-              onClick={() => setViewMode('double')}
-              className={cn(
-                "h-8 px-2 rounded-lg transition-all duration-200 flex items-center gap-1",
-                viewMode === 'double' 
-                  ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
-                  : "hover:bg-gray-100 text-gray-600"
-              )}
-              title="Double page"
-            >
-              <Columns2 className="h-4 w-4" />
-            </button>
-          )}
-
-          <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
-
-          {/* Actions */}
-          <button
-            onClick={() => {
-              if (fitMode === 'width') {
-                // Si déjà en mode largeur, repasser en mode normal 100%
-                setFitMode('none');
-                setZoom(100);
-              } else {
-                // Sinon, adapter à la largeur
-                fitToWidth();
-              }
-            }}
-            className={cn(
-              "h-8 px-2 rounded-lg transition-all duration-200",
-              fitMode === 'width'
-                ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30"
-                : "hover:bg-gray-100 text-gray-600"
-            )}
-            title={fitMode === 'width' ? "Taille réelle" : "Adapter à la largeur"}
-          >
-            <Maximize2 className="h-4 w-4" />
-          </button>
-
-          <button
-            onClick={rotate}
-            className="h-8 px-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
-            title="Rotation"
-          >
-            <RotateCw className="h-4 w-4" />
-          </button>
-
-          <button
-            onClick={() => {
-              setShowThumbnails(!showThumbnails);
-              // Forcer un recalcul en changeant temporairement le fitMode
-              if (fitMode === 'width') {
-                setFitMode('page');
-                setTimeout(() => setFitMode('width'), 10);
-              }
-            }}
-            className={cn(
-              "h-8 px-2 rounded-lg transition-all duration-200",
-              showThumbnails 
-                ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
-                : "hover:bg-gray-100 text-gray-600"
-            )}
-            title="Vignettes"
-          >
-            <Grid3X3 className="h-4 w-4" />
-          </button>
-
-          <button
-            onClick={toggleFullscreen}
-            className="h-8 px-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
-            title="Plein écran"
-          >
-            <Maximize className="h-4 w-4" />
-          </button>
-
-          <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
-
-          {enableDownload && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleDownload}
-              className="h-8"
-              title="Télécharger"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
-          )}
-
-          {enablePrint && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handlePrint}
-              className="h-8"
-              title="Imprimer"
-            >
-              <Printer className="h-4 w-4" />
-            </Button>
-          )}
-
-          {enableShare && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleShare}
-              className="h-8"
-              title="Partager"
-            >
-              <Share2 className="h-4 w-4" />
-            </Button>
-          )}
-
-          {onClose && (
-            <>
-              <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
+          {/* Actions - responsive avec priorités */}
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {/* Zoom - visible sur desktop, compact sur mobile */}
+            <div className="hidden sm:flex items-center gap-1">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={onClose}
-                className="h-8"
+                onClick={zoomOut}
+                disabled={zoom <= MIN_ZOOM}
+                className="h-8 w-8 p-0"
               >
-                <X className="h-4 w-4" />
+                <ZoomOut className="h-4 w-4" />
               </Button>
-            </>
-          )}
+              
+              <select
+                value={zoom}
+                onChange={(e) => setZoomLevel(parseInt(e.target.value))}
+                className="px-1 py-1 text-xs border rounded w-16"
+              >
+                {ZOOM_LEVELS.map(level => (
+                  <option key={level} value={level}>{level}%</option>
+                ))}
+              </select>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={zoomIn}
+                disabled={zoom >= MAX_ZOOM}
+                className="h-8 w-8 p-0"
+              >
+                <ZoomIn className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Zoom mobile avec boutons compacts */}
+            <div className="sm:hidden flex items-center gap-1">
+              <button
+                onClick={zoomOut}
+                disabled={zoom <= MIN_ZOOM}
+                className="h-7 w-7 p-0 rounded hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ZoomOut className="h-3 w-3 mx-auto" />
+              </button>
+              <span className="text-xs text-gray-600 min-w-[35px] text-center">{zoom}%</span>
+              <button
+                onClick={zoomIn}
+                disabled={zoom >= MAX_ZOOM}
+                className="h-7 w-7 p-0 rounded hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ZoomIn className="h-3 w-3 mx-auto" />
+              </button>
+            </div>
+
+            <div className="hidden md:block w-px h-6 bg-gray-200 dark:bg-gray-700" />
+
+            {/* Modes de vue - visibles sur tablette et plus */}
+            <div className="hidden md:flex items-center gap-1">
+              <button
+                onClick={() => setViewMode('single')}
+                className={cn(
+                  "h-8 w-8 p-0 rounded-lg transition-all duration-200",
+                  viewMode === 'single' 
+                    ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                    : "hover:bg-gray-100 text-gray-600"
+                )}
+                title="Page unique"
+              >
+                <Square className="h-4 w-4" />
+              </button>
+
+              <button
+                onClick={() => setViewMode('continuous')}
+                className={cn(
+                  "h-8 w-8 p-0 rounded-lg transition-all duration-200",
+                  viewMode === 'continuous' 
+                    ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                    : "hover:bg-gray-100 text-gray-600"
+                )}
+                title="Scroll continu"
+              >
+                <Layers className="h-4 w-4" />
+              </button>
+
+              {!isTouchDevice && (
+                <button
+                  onClick={() => setViewMode('double')}
+                  className={cn(
+                    "h-8 w-8 p-0 rounded-lg transition-all duration-200",
+                    viewMode === 'double' 
+                      ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                      : "hover:bg-gray-100 text-gray-600"
+                  )}
+                  title="Double page"
+                >
+                  <Columns2 className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="hidden md:block w-px h-6 bg-gray-200 dark:bg-gray-700" />
+
+            {/* Actions principales avec menu plus pour écrans étroits */}
+            <button
+              onClick={() => {
+                if (fitMode === 'width') {
+                  setFitMode('none');
+                  setZoom(100);
+                } else {
+                  fitToWidth();
+                }
+              }}
+              className={cn(
+                "h-8 w-8 p-0 rounded-lg transition-all duration-200 hidden lg:block",
+                fitMode === 'width'
+                  ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30"
+                  : "hover:bg-gray-100 text-gray-600"
+              )}
+              title={fitMode === 'width' ? "Taille réelle" : "Adapter à la largeur"}
+            >
+              <Maximize2 className="h-4 w-4" />
+            </button>
+
+            {/* Rotation - toujours visible */}
+            <button
+              onClick={rotate}
+              className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
+              title="Rotation"
+            >
+              <RotateCw className="h-4 w-4" />
+            </button>
+
+            {/* Vignettes - toujours visible */}
+            <button
+              onClick={() => {
+                setShowThumbnails(!showThumbnails);
+                if (fitMode === 'width') {
+                  setFitMode('page');
+                  setTimeout(() => setFitMode('width'), 10);
+                }
+              }}
+              className={cn(
+                "h-8 w-8 p-0 rounded-lg transition-all duration-200",
+                showThumbnails 
+                  ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                  : "hover:bg-gray-100 text-gray-600"
+              )}
+              title="Vignettes"
+            >
+              <Grid3X3 className="h-4 w-4" />
+            </button>
+
+            <button
+              onClick={toggleFullscreen}
+              className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200 hidden xl:block"
+              title="Plein écran"
+            >
+              <Maximize className="h-4 w-4" />
+            </button>
+
+            <div className="hidden sm:block w-px h-6 bg-gray-200 dark:bg-gray-700" />
+
+            {/* Actions prioritaires */}
+            {enableShare && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleShare}
+                className="h-8 w-8 p-0"
+                title="Partager"
+              >
+                <Share2 className="h-4 w-4" />
+              </Button>
+            )}
+
+            {enableDownload && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleDownload}
+                className="h-8 w-8 p-0"
+                title="Télécharger"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+            )}
+
+            {/* Menu plus pour tablette et desktop étroit */}
+            <div className="relative lg:hidden">
+              <button
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                className="h-8 w-8 p-0 rounded-lg hover:bg-gray-100 text-gray-600 transition-all duration-200"
+                title="Plus d'options"
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+              
+              {showMoreMenu && (
+                <div className="absolute right-0 top-10 z-50 min-w-[160px] bg-white rounded-lg shadow-lg border border-gray-200 py-1">
+                  {enablePrint && (
+                    <button
+                      onClick={() => {
+                        handlePrint();
+                        setShowMoreMenu(false);
+                      }}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <Printer className="h-4 w-4" />
+                      Imprimer
+                    </button>
+                  )}
+                  
+                  <button
+                    onClick={() => {
+                      if (fitMode === 'width') {
+                        setFitMode('none');
+                        setZoom(100);
+                      } else {
+                        fitToWidth();
+                      }
+                      setShowMoreMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <Maximize2 className="h-4 w-4" />
+                    {fitMode === 'width' ? 'Taille réelle' : 'Adapter largeur'}
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      toggleFullscreen();
+                      setShowMoreMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <Maximize className="h-4 w-4" />
+                    Plein écran
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Print - visible sur grand écran */}
+            {enablePrint && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handlePrint}
+                className="h-8 w-8 p-0 hidden lg:block"
+                title="Imprimer"
+              >
+                <Printer className="h-4 w-4" />
+              </Button>
+            )}
+
+            {onClose && (
+              <>
+                <div className="hidden sm:block w-px h-6 bg-gray-200 dark:bg-gray-700" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onClose}
+                  className="h-8 w-8 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

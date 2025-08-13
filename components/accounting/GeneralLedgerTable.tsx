@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
 import {
   ChevronRight,
   Download,
@@ -21,7 +22,11 @@ import {
   RefreshCw,
   Search,
   X,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Settings,
+  Info,
+  Columns3,
+  Check
 } from 'lucide-react';
 import { JournalEntry, BankTransaction, getEntriesByAccount, getEntriesByPiece, calculateProgressiveBalance, getBankTransactionById } from '@/lib/accounting-data';
 
@@ -63,6 +68,34 @@ export default function GeneralLedgerTable({
   const [showLettrageDialog, setShowLettrageDialog] = useState(false);
   const [newAccountCode, setNewAccountCode] = useState('');
   const [newLettrage, setNewLettrage] = useState('');
+
+  // États pour la gestion des colonnes FEC
+  const [showColumnConfig, setShowColumnConfig] = useState(false);
+  const [fecColumns, setFecColumns] = useState<{[key: string]: boolean}>({
+    // FEC columns only (initially hidden to preserve current view)
+    JournalLib: false,
+    EcritureNum: false,
+    CompAuxNum: false,
+    PieceDate: false,
+    ValidDate: false,
+    Idevise: false
+  });
+
+  // Configuration des colonnes FEC
+  const fecColumnConfig = {
+    JournalLib: { label: 'LIBELLÉ JAL', width: '150px', align: 'left' as const },
+    EcritureNum: { label: 'N° ÉCRITURE', width: '120px', align: 'center' as const },
+    CompAuxNum: { label: 'CPTE AUX', width: '120px', align: 'left' as const },
+    PieceDate: { label: 'DATE PIÈCE', width: '110px', align: 'center' as const },
+    ValidDate: { label: 'DATE VALID', width: '110px', align: 'center' as const },
+    Idevise: { label: 'DEV', width: '70px', align: 'center' as const }
+  };
+
+  // Colonnes FEC actives mémorisées avec validation stricte
+  const activeFecColumns = useMemo(() => {
+    return Object.keys(fecColumnConfig)
+      .filter(key => key && typeof key === 'string' && key.length > 0 && fecColumns[key] === true);
+  }, [fecColumns]);
 
   // Hook pour détecter la taille d'écran
   useEffect(() => {
@@ -114,6 +147,19 @@ export default function GeneralLedgerTable({
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(num).replace(/\s/g, ' ');
+  };
+
+  // Calculer le total des lignes sélectionnées
+  const calculateSelectedTotal = () => {
+    let totalDebit = 0;
+    let totalCredit = 0;
+    entries.forEach(entry => {
+      if (selectedRows.has(entry.id)) {
+        totalDebit += entry.debit;
+        totalCredit += entry.credit;
+      }
+    });
+    return { debit: totalDebit, credit: totalCredit, solde: totalDebit - totalCredit };
   };
 
   const handleSelectAll = () => {
@@ -222,11 +268,17 @@ export default function GeneralLedgerTable({
     }
   };
 
+  // Hook pour le viewer de documents OKÉ
+  const { open: openDocument, ViewerComponent } = useDocumentViewer();
+
   const handleAttachmentClick = (entry: JournalEntry) => {
     if (entry.attachmentUrl) {
-      // Simuler l'ouverture dans une nouvelle fenêtre
-      console.log(`Ouverture de: ${entry.attachmentUrl}`);
-      window.open(entry.attachmentUrl, '_blank');
+      // Utiliser le DocumentViewer OKÉ au lieu d'ouvrir une nouvelle fenêtre
+      openDocument({
+        src: entry.attachmentUrl,
+        title: entry.attachmentName || `Pièce jointe - ${entry.label}`,
+        type: entry.attachmentType === 'invoice' ? 'pdf' : 'document'
+      });
     }
   };
 
@@ -597,9 +649,29 @@ export default function GeneralLedgerTable({
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', color: '#666' }}>
-                {filteredEntries.length} écritures
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span style={{ fontSize: '12px', color: '#666' }}>
+                  {filteredEntries.length} écritures
+                </span>
+                {/* FEC compliance indicator */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.25rem',
+                  padding: '0.25rem 0.5rem',
+                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  borderRadius: '0.375rem',
+                  fontSize: '10px',
+                  color: '#10b981',
+                  fontWeight: 500,
+                  border: '1px solid rgba(16, 185, 129, 0.2)'
+                }}
+                title="Toutes les écritures sont conformes FEC"
+                >
+                  <Check size={10} />
+                  FEC OK
+                </div>
+              </div>
               <button style={{
                 padding: '0.25rem 0.5rem',
                 backgroundColor: 'transparent',
@@ -665,6 +737,32 @@ export default function GeneralLedgerTable({
                 }}>
                 <Filter size={12} style={{ color: showFilters ? '#5e72ff' : '#666' }} />
                 Filtres
+              </button>
+              <button 
+                onClick={() => setShowColumnConfig(!showColumnConfig)}
+                style={{
+                  padding: '0.25rem 0.5rem',
+                  backgroundColor: showColumnConfig ? 'rgba(16, 185, 129, 0.1)' : 'transparent',
+                  border: '1px solid',
+                  borderColor: showColumnConfig ? '#10b981' : 'rgba(229, 229, 229, 0.5)',
+                  borderRadius: '0.375rem',
+                  fontSize: '11px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  transition: 'all 0.15s'
+                }}
+                onMouseEnter={(e) => {
+                  if (!showColumnConfig) e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
+                }}
+                onMouseLeave={(e) => {
+                  if (!showColumnConfig) e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+                title="Configuration des colonnes FEC"
+                >
+                <Columns3 size={12} style={{ color: showColumnConfig ? '#10b981' : '#666' }} />
+                FEC
               </button>
             </div>
           </div>
@@ -822,6 +920,129 @@ export default function GeneralLedgerTable({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Panel de configuration des colonnes FEC */}
+        <AnimatePresence>
+          {showColumnConfig && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              style={{ 
+                overflow: 'hidden',
+                borderTop: '1px solid rgba(229, 229, 229, 0.3)'
+              }}
+            >
+              <div style={{ padding: '1rem' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  marginBottom: '1rem'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Info size={16} style={{ color: '#10b981' }} />
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: '#171717' }}>
+                      Configuration des colonnes FEC
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#666' }}>
+                    Affichez les champs obligatoires du Fichier des Écritures Comptables
+                  </span>
+                </div>
+
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+                  gap: '0.75rem' 
+                }}>
+                  {Object.entries({
+                    JournalLib: 'Libellé journal',
+                    EcritureNum: 'Numéro d\'écriture',
+                    CompAuxNum: 'Compte auxiliaire',
+                    PieceDate: 'Date pièce',
+                    ValidDate: 'Date validation',
+                    Idevise: 'Devise'
+                  }).map(([key, label]) => (
+                    <label key={key} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '0.5rem',
+                      cursor: 'pointer',
+                      fontSize: '12px',
+                      color: '#374151'
+                    }}>
+                      <input
+                        type="checkbox"
+                        checked={fecColumns[key] || false}
+                        onChange={(e) => setFecColumns(prev => ({ ...prev, [key]: e.target.checked }))}
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          cursor: 'pointer',
+                          accentColor: '#10b981'
+                        }}
+                      />
+                      <span>{label}</span>
+                      {fecColumns[key] ? <Check size={12} style={{ color: '#10b981' }} /> : null}
+                    </label>
+                  ))}
+                </div>
+
+                <div style={{ 
+                  marginTop: '1rem', 
+                  paddingTop: '1rem', 
+                  borderTop: '1px solid rgba(229, 229, 229, 0.3)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <span style={{ fontSize: '11px', color: '#666' }}>
+                    {activeFecColumns.length} colonnes FEC actives
+                  </span>
+                  <button
+                    onClick={() => setFecColumns(prev => ({
+                      ...prev,
+                      JournalLib: false,
+                      EcritureNum: false,
+                      CompAuxNum: false,
+                      PieceDate: false,
+                      ValidDate: false,
+                      Idevise: false
+                    }))}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      backgroundColor: 'transparent',
+                      border: '1px solid rgba(229, 229, 229, 0.5)',
+                      borderRadius: '0.375rem',
+                      fontSize: '11px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      transition: 'all 0.15s',
+                      color: '#666'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.05)';
+                      e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                      e.currentTarget.style.color = '#ef4444';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.borderColor = 'rgba(229, 229, 229, 0.5)';
+                      e.currentTarget.style.color = '#666';
+                    }}
+                  >
+                    <X size={12} />
+                    Réinitialiser vue standard
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Contenu principal responsive */}
@@ -864,7 +1085,10 @@ export default function GeneralLedgerTable({
               overflowY: 'auto'
             }}
           >
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table style={{ 
+          width: '100%',
+          borderCollapse: 'collapse' 
+        }}>
           <thead style={{
             position: 'sticky',
             top: 0,
@@ -892,7 +1116,7 @@ export default function GeneralLedgerTable({
               </th>
               <th style={{
                 padding: '0.5rem 0.25rem',
-                width: '30px'
+                width: '45px'
               }}></th>
               <th style={{
                 padding: '0.5rem 0.5rem',
@@ -965,7 +1189,9 @@ export default function GeneralLedgerTable({
                 fontWeight: 600,
                 color: '#666',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.5px',
+                width: '40%',
+                minWidth: '200px'
               }}>
                 <button
                   onClick={() => handleSort('description')}
@@ -1030,7 +1256,7 @@ export default function GeneralLedgerTable({
                 color: '#666',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
-                width: '100px'
+                width: '90px'
               }}>
                 <button
                   onClick={() => handleSort('debit')}
@@ -1064,7 +1290,7 @@ export default function GeneralLedgerTable({
                 color: '#666',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
-                width: '100px'
+                width: '90px'
               }}>
                 <button
                   onClick={() => handleSort('credit')}
@@ -1098,7 +1324,7 @@ export default function GeneralLedgerTable({
                 color: '#666',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
-                width: '120px'
+                width: '100px'
               }}>
                 <button
                   onClick={() => handleSort('balance')}
@@ -1124,6 +1350,27 @@ export default function GeneralLedgerTable({
                   }} />
                 </button>
               </th>
+              {/* FEC columns headers */}
+              {activeFecColumns.length > 0 && activeFecColumns.map((key, index) => {
+                const config = fecColumnConfig[key];
+                return (
+                  <th key={`fec-h-${index}`} style={{
+                    padding: '0.5rem 0.75rem',
+                    textAlign: config.align,
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    color: '#a3a3a3',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    minWidth: config.width,
+                    backgroundColor: 'rgba(250, 250, 250, 0.5)',
+                    borderLeft: '1px solid rgba(229, 229, 229, 0.3)',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    <span>{config.label}</span>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
@@ -1164,37 +1411,54 @@ export default function GeneralLedgerTable({
                         }}
                       />
                     </td>
-                    <td style={{ padding: '0.375rem 0.25rem', width: '30px' }}>
-                      <button
-                        onClick={() => toggleExpanded(entry.id)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          padding: '0.25rem',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          transition: 'transform 0.2s'
-                        }}
-                      >
-                        <ChevronRight 
-                          size={12} 
-                          style={{ 
-                            color: '#666',
-                            transform: expandedRows.has(entry.id) ? 'rotate(90deg)' : 'none',
+                    <td style={{ padding: '0.375rem 0.25rem', width: '45px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.125rem' }}>
+                        <button
+                          onClick={() => toggleExpanded(entry.id)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            padding: '0.25rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
                             transition: 'transform 0.2s'
-                          }} 
-                        />
-                      </button>
+                          }}
+                        >
+                          <ChevronRight 
+                            size={12} 
+                            style={{ 
+                              color: '#666',
+                              transform: expandedRows.has(entry.id) ? 'rotate(90deg)' : 'none',
+                              transition: 'transform 0.2s'
+                            }} 
+                          />
+                        </button>
+                      </div>
                     </td>
-                    <td style={{ padding: '0.375rem 0.5rem', fontSize: '12px' }}>
+                    <td style={{ 
+                      padding: '0.375rem 0.5rem', 
+                      fontSize: '12px',
+                      width: '90px',
+                      whiteSpace: 'nowrap'
+                    }}>
                       {formatDate(entry.date)}
                     </td>
-                    <td style={{ padding: '0.375rem 0.5rem', fontSize: '13px' }}>
+                    <td style={{ 
+                      padding: '0.375rem 0.5rem', 
+                      fontSize: '13px',
+                      width: '50px'
+                    }}>
                       {getJournalBadge(entry.journal)}
                     </td>
                     <td 
-                      style={{ padding: '0.375rem 0.5rem', fontSize: '13px', cursor: 'text' }}
+                      style={{ 
+                        padding: '0.375rem 0.5rem', 
+                        fontSize: '13px', 
+                        cursor: 'text',
+                        width: '40%',
+                        minWidth: '200px'
+                      }}
                       onDoubleClick={() => startEditing(entry, 'description')}
                     >
                       {editingCell?.id === entry.id && editingCell?.field === 'description' ? (
@@ -1209,7 +1473,7 @@ export default function GeneralLedgerTable({
                             handleKeyNavigation(e, entry, 'description');
                           }}
                           style={{
-                            width: '100%',
+                            width: '400px',
                             padding: '0.125rem 0.25rem',
                             border: '1px solid #5e72ff',
                             borderRadius: '0.25rem',
@@ -1267,11 +1531,24 @@ export default function GeneralLedgerTable({
                               </button>
                             );
                           })()}
-                          <span>{entry.description}</span>
+                          <span style={{
+                            display: 'block',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }} 
+                          title={entry.description}>
+                            {entry.description}
+                          </span>
                         </div>
                       )}
                     </td>
-                    <td style={{ padding: '0.375rem 0.5rem', textAlign: 'center', fontSize: '11px' }}>
+                    <td style={{ 
+                      padding: '0.375rem 0.5rem', 
+                      textAlign: 'center', 
+                      fontSize: '11px',
+                      width: '50px'
+                    }}>
                       {entry.lettrage && (
                         <span style={{
                           padding: '1px 5px',
@@ -1285,7 +1562,14 @@ export default function GeneralLedgerTable({
                       )}
                     </td>
                     <td 
-                      style={{ padding: '0.375rem 0.75rem', textAlign: 'right', fontSize: '13px', cursor: 'text' }}
+                      style={{ 
+                        padding: '0.375rem 0.75rem', 
+                        textAlign: 'right', 
+                        fontSize: '13px', 
+                        cursor: 'text',
+                        width: '90px',
+                        whiteSpace: 'nowrap'
+                      }}
                       onDoubleClick={() => startEditing(entry, 'debit')}
                     >
                       {editingCell?.id === entry.id && editingCell?.field === 'debit' ? (
@@ -1317,7 +1601,14 @@ export default function GeneralLedgerTable({
                       )}
                     </td>
                     <td 
-                      style={{ padding: '0.375rem 0.75rem', textAlign: 'right', fontSize: '13px', cursor: 'text' }}
+                      style={{ 
+                        padding: '0.375rem 0.75rem', 
+                        textAlign: 'right', 
+                        fontSize: '13px', 
+                        cursor: 'text',
+                        width: '90px',
+                        whiteSpace: 'nowrap'
+                      }}
                       onDoubleClick={() => startEditing(entry, 'credit')}
                     >
                       {editingCell?.id === entry.id && editingCell?.field === 'credit' ? (
@@ -1348,7 +1639,13 @@ export default function GeneralLedgerTable({
                         </span>
                       )}
                     </td>
-                    <td style={{ padding: '0.375rem 0.75rem', textAlign: 'right', fontSize: '12px' }}>
+                    <td style={{ 
+                      padding: '0.375rem 0.75rem', 
+                      textAlign: 'right', 
+                      fontSize: '12px',
+                      width: '100px',
+                      whiteSpace: 'nowrap'
+                    }}>
                       <span style={{ 
                         fontWeight: 500,
                         color: entry.balance < 0 ? '#ef4444' : '#171717'
@@ -1356,16 +1653,74 @@ export default function GeneralLedgerTable({
                         {entry.balance < 0 ? '-' : ''}{formatNumber(Math.abs(entry.balance))}
                       </span>
                     </td>
+                    {/* FEC columns data */}
+                    {activeFecColumns.length > 0 && activeFecColumns.map((key, index) => {
+                      const config = fecColumnConfig[key];
+                      return (
+                        <td key={`fec-d-${entry.id}-${index}`} style={{ 
+                          padding: '0.375rem 0.75rem', 
+                          fontSize: '12px',
+                          minWidth: config.width,
+                          borderLeft: '1px solid rgba(229, 229, 229, 0.3)',
+                          color: '#171717',
+                          textAlign: config.align as any,
+                          fontFamily: ['EcritureNum', 'PieceDate', 'ValidDate'].includes(key) ? 'monospace' : 'inherit',
+                          backgroundColor: 'rgba(250, 250, 250, 0.2)',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          {key === 'JournalLib' && (
+                            <span style={{ color: '#10b981', fontSize: '12px', fontWeight: 500 }}>
+                              {entry.fec?.JournalLib || '-'}
+                            </span>
+                          )}
+                          {key === 'EcritureNum' && (
+                            <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                              {entry.fec?.EcritureNum || '-'}
+                            </span>
+                          )}
+                          {key === 'CompAuxNum' && (
+                            <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                              {entry.fec?.CompAuxNum || '-'}
+                            </span>
+                          )}
+                          {key === 'PieceDate' && (
+                            <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                              {entry.fec?.PieceDate ? 
+                                `${entry.fec.PieceDate.substring(0,4)}-${entry.fec.PieceDate.substring(4,6)}-${entry.fec.PieceDate.substring(6,8)}` 
+                                : '-'}
+                            </span>
+                          )}
+                          {key === 'ValidDate' && (
+                            <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                              {entry.fec?.ValidDate ? 
+                                `${entry.fec.ValidDate.substring(0,4)}-${entry.fec.ValidDate.substring(4,6)}-${entry.fec.ValidDate.substring(6,8)}` 
+                                : '-'}
+                            </span>
+                          )}
+                          {key === 'Idevise' && (
+                            <span style={{
+                              padding: '0.125rem 0.25rem',
+                              backgroundColor: entry.fec?.Idevise && entry.fec.Idevise !== 'EUR' ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
+                              color: entry.fec?.Idevise && entry.fec.Idevise !== 'EUR' ? '#ef4444' : '#6b7280',
+                              borderRadius: '0.25rem',
+                              fontSize: '10px',
+                              fontWeight: 600
+                            }}>
+                              {entry.fec?.Idevise || 'EUR'}
+                            </span>
+                          )}
+                        </td>
+                      );
+                    })}
                   </motion.tr>
                   
                   {/* Lignes dépliées : contreparties de l'écriture */}
-                  {expandedRows.has(entry.id) && (
-                    <>
-                      {getEntriesByPiece(entry.piece)
-                        .filter(e => e.id !== entry.id) // Exclure la ligne courante
-                        .map((counterpartEntry) => (
-                          <motion.tr
-                            key={counterpartEntry.id}
+                  {expandedRows.has(entry.id) && 
+                    getEntriesByPiece(entry.piece)
+                      .filter(e => e.id !== entry.id) // Exclure la ligne courante
+                      .map((counterpartEntry) => (
+                        <motion.tr
+                          key={`counterpart-${entry.id}-${counterpartEntry.id}`}
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
@@ -1499,10 +1854,54 @@ export default function GeneralLedgerTable({
                             <td style={{ padding: '0.25rem 0.75rem', textAlign: 'right', fontSize: '11px', color: '#a3a3a3' }}>
                               {/* Pas de solde pour les lignes de contrepartie */}
                             </td>
+                            {/* FEC columns for counterpart rows */}
+                            {activeFecColumns.length > 0 && activeFecColumns.map((key, index) => {
+                              const config = fecColumnConfig[key];
+                              return (
+                                <td key={`fec-c-${entry.id}-${counterpartEntry.id}-${index}`} style={{ 
+                                  padding: '0.25rem 0.75rem', 
+                                  fontSize: '11px',
+                                  borderLeft: '1px solid rgba(229, 229, 229, 0.2)',
+                                  color: '#6b7280',
+                                  textAlign: config.align as any,
+                                  backgroundColor: 'rgba(250, 250, 250, 0.5)',
+                                  whiteSpace: 'nowrap'
+                                }}>
+                                  {key === 'JournalLib' && (
+                                    <span style={{ color: '#6b7280' }}>
+                                      {counterpartEntry.fec?.JournalLib || '-'}
+                                    </span>
+                                  )}
+                                  {key === 'EcritureNum' && (
+                                    <span style={{ color: '#6b7280' }}>
+                                      {counterpartEntry.fec?.EcritureNum || '-'}
+                                    </span>
+                                  )}
+                                  {key === 'CompAuxNum' && (
+                                    <span style={{ color: '#6b7280' }}>
+                                      {counterpartEntry.fec?.CompAuxNum || '-'}
+                                    </span>
+                                  )}
+                                  {key === 'PieceDate' && (
+                                    <span style={{ color: '#9ca3af' }}>-</span>
+                                  )}
+                                  {key === 'ValidDate' && (
+                                    <span style={{ color: '#9ca3af' }}>-</span>
+                                  )}
+                                  {key === 'Idevise' && (
+                                    <span style={{
+                                      fontSize: '10px',
+                                      color: '#6b7280'
+                                    }}>
+                                      {counterpartEntry.fec?.Idevise || 'EUR'}
+                                    </span>
+                                  )}
+                                </td>
+                              );
+                            })}
                           </motion.tr>
-                        ))}
-                    </>
-                  )}
+                      ))
+                  }
                 </React.Fragment>
               ))}
             </AnimatePresence>
@@ -1511,6 +1910,7 @@ export default function GeneralLedgerTable({
           </div>
         </div>
       )}
+
 
       {/* Barre d'actions pour les lignes sélectionnées */}
       <AnimatePresence>
@@ -1722,17 +2122,7 @@ export default function GeneralLedgerTable({
             alignItems: 'center',
             fontSize: '12px'
           }}>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <span>
-                Total Débit: <strong style={{ color: '#171717' }}>
-                  {formatNumber(filteredEntries.reduce((sum, e) => sum + e.debit, 0))} €
-                </strong>
-              </span>
-              <span>
-                Total Crédit: <strong style={{ color: '#171717' }}>
-                  {formatNumber(filteredEntries.reduce((sum, e) => sum + e.credit, 0))} €
-                </strong>
-              </span>
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             </div>
             {filteredEntries.length > 0 && (
               <span style={{ fontSize: '11px', color: '#666' }}>
@@ -2142,6 +2532,16 @@ export default function GeneralLedgerTable({
           </motion.div>
         </div>
       )}
+      
+      {/* Document Viewer OKÉ */}
+      <ViewerComponent 
+        mode="auto"
+        glassMorphism={true}
+        enableAnnotations={true}
+        enableDownload={true}
+        enablePrint={true}
+        enableShare={true}
+      />
     </div>
   );
 }

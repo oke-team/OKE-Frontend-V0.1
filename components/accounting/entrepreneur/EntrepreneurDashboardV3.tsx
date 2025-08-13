@@ -18,14 +18,14 @@ import {
   Wallet, Users, Package, Users2, Shield, Receipt, FileText, Package2, CreditCard,
   BarChart3, ShoppingCart, Briefcase, Building, Percent, AlertTriangle, Plus,
   Calculator, Trophy, TrendingUp, TrendingDown, ChevronRight, ArrowUp, ArrowDown,
-  Coins, HandCoins
+  Coins, HandCoins, Landmark, FileCheck, FileWarning, MoreHorizontal
 } from 'lucide-react';
 
 // Map des icônes
 const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
   Wallet, Users, Package, Users2, Shield, Receipt, FileText, Package2, CreditCard,
   BarChart3, ShoppingCart, Briefcase, Building, Percent, AlertTriangle, Plus,
-  Calculator, Trophy
+  Calculator, Trophy, Landmark, FileCheck, FileWarning, MoreHorizontal, TrendingUp
 };
 
 interface EntrepreneurDashboardV3Props {
@@ -51,6 +51,7 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
           cardId={navigationState.selectedCard}
           cardLabel={card.title}
           groups={groups}
+          cardColor={card.color}
         />
       );
     }
@@ -58,31 +59,35 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
 
   if (navigationState.level === 'timeline' && navigationState.selectedAccount) {
     const accountLabel = navigationState.breadcrumb[navigationState.breadcrumb.length - 1]?.label || 'Compte';
+    // Récupérer la couleur depuis le card parent
+    const parentCardId = navigationState.selectedCard;
+    const parentCard = [...bilanCards, ...resultatCards].find(c => c.id === parentCardId);
     
     return (
       <TimelineAdapter
         accountId={navigationState.selectedAccount}
         accountLabel={accountLabel}
+        cardColor={parentCard?.color}
       />
     );
   }
 
   // Séparer les cartes bilan en actif et passif
   const activeBilanCards = bilanCards.filter(card => 
-    ['treasury', 'clients', 'stocks'].includes(card.id)
+    ['immobilisations', 'treasury', 'clients', 'stocks', 'other_receivables'].includes(card.id)
   );
   
   const passiveBilanCards = bilanCards.filter(card => 
-    ['suppliers', 'payroll', 'social', 'vat', 'tax', 'debts'].includes(card.id)
+    ['capital', 'group_associates', 'debts', 'suppliers', 'payroll', 'social', 'vat', 'tax', 'other_debts'].includes(card.id)
   );
 
   // Séparer les cartes résultat en produits et charges
   const productCards = resultatCards.filter(card => 
-    ['revenue', 'other_income'].includes(card.id)
+    ['revenue', 'financial_income', 'other_income'].includes(card.id)
   );
   
   const chargeCards = resultatCards.filter(card => 
-    ['purchases', 'external', 'wages', 'taxes', 'financial', 'exceptional'].includes(card.id)
+    ['purchases', 'external', 'wages', 'taxes', 'financial', 'other_charges'].includes(card.id)
   );
 
   const renderCard = (card: typeof bilanCards[0] | typeof resultatCards[0], index: number, size: 'small' | 'normal' = 'normal') => {
@@ -94,19 +99,22 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
       return (hash * 1000) % 100000 + 10000;
     };
     
-    const getDefaultTrend = (id: string) => {
-      const hash = id.charCodeAt(0);
-      return ['up', 'down', 'stable'][hash % 3];
+    const getDefaultAmountN1 = (currentAmount: number, id: string) => {
+      // Génère un montant N-1 cohérent basé sur le montant actuel
+      const hash = id.charCodeAt(0) || 0;
+      const variation = (hash % 30 - 15) / 100; // Variation entre -15% et +15%
+      return Math.round(currentAmount / (1 + variation));
     };
     
-    const getDefaultEvolution = (id: string) => {
-      const hash = id.charCodeAt(1) || 0;
-      return ((hash % 20) - 10).toFixed(1);
+    const getDefaultTrend = (amount: number, amountN1: number) => {
+      if (amount > amountN1 * 1.02) return 'up';
+      if (amount < amountN1 * 0.98) return 'down';
+      return 'stable';
     };
     
     const amount = cardData.amount || getDefaultAmount(card.id);
-    const trend = cardData.trend || getDefaultTrend(card.id);
-    const evolution = cardData.evolution || getDefaultEvolution(card.id);
+    const amountN1 = cardData.amountN1 || getDefaultAmountN1(amount, card.id);
+    const trend = getDefaultTrend(amount, amountN1);
 
     const isSmall = size === 'small';
 
@@ -162,22 +170,32 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
           </div>
         </div>
 
-        {/* Tendance */}
+        {/* Comparaison N-1 */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            {trend === 'up' ? (
-              <TrendingUp className="w-3 h-3 text-green-500" />
-            ) : trend === 'down' ? (
-              <TrendingDown className="w-3 h-3 text-red-500" />
-            ) : null}
-            <span className={cn(
-              "text-xs font-medium",
-              trend === 'up' && "text-green-600",
-              trend === 'down' && "text-red-600",
-              trend === 'stable' && "text-neutral-600"
-            )}>
-              {trend === 'up' && '+'}{evolution}%
-            </span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              {trend === 'up' ? (
+                <TrendingUp className="w-3 h-3 text-green-500" />
+              ) : trend === 'down' ? (
+                <TrendingDown className="w-3 h-3 text-red-500" />
+              ) : (
+                <div className="w-3 h-3" />
+              )}
+              <span className="text-xs text-neutral-500">N-1:</span>
+              <span className={cn(
+                "text-xs font-medium",
+                trend === 'up' && "text-green-600",
+                trend === 'down' && "text-red-600",
+                trend === 'stable' && "text-neutral-600"
+              )}>
+                {new Intl.NumberFormat('fr-FR', {
+                  style: 'currency',
+                  currency: 'EUR',
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                }).format(amountN1)}
+              </span>
+            </div>
           </div>
           <span className="text-xs text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity">
             Détails →
@@ -191,13 +209,22 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
     const Icon = iconMap[card.icon];
     
     let value = 0;
+    let valueN1 = 0;
+    
     if (card.id === 'gross_margin') {
       const revenue = data.revenue?.amount || 285000;
       const purchases = data.purchases?.amount || 60000;
       value = revenue - purchases;
+      
+      const revenueN1 = data.revenue?.amountN1 || 250000;
+      const purchasesN1 = data.purchases?.amountN1 || 55000;
+      valueN1 = revenueN1 - purchasesN1;
     } else if (card.id === 'net_result') {
       value = data.netResult?.amount || 45000;
+      valueN1 = data.netResult?.amountN1 || 38000;
     }
+    
+    const trend = value > valueN1 * 1.02 ? 'up' : value < valueN1 * 0.98 ? 'down' : 'stable';
 
     return (
       <motion.div
@@ -228,19 +255,45 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
           </div>
         </div>
 
-        <div className="text-3xl font-bold">
-          <span className={cn(
-            "bg-gradient-to-r bg-clip-text text-transparent",
-            card.color === 'violet' && "from-violet-600 to-purple-600",
-            card.color === 'green' && "from-green-600 to-emerald-600"
-          )}>
-            {new Intl.NumberFormat('fr-FR', {
-              style: 'currency',
-              currency: 'EUR',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            }).format(value)}
-          </span>
+        <div className="space-y-2">
+          <div className="text-3xl font-bold">
+            <span className={cn(
+              "bg-gradient-to-r bg-clip-text text-transparent",
+              card.color === 'violet' && "from-violet-600 to-purple-600",
+              card.color === 'green' && "from-green-600 to-emerald-600"
+            )}>
+              {new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(value)}
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {trend === 'up' ? (
+              <TrendingUp className="w-3 h-3 text-green-500" />
+            ) : trend === 'down' ? (
+              <TrendingDown className="w-3 h-3 text-red-500" />
+            ) : (
+              <div className="w-3 h-3" />
+            )}
+            <span className="text-xs text-neutral-500">N-1:</span>
+            <span className={cn(
+              "text-sm font-medium",
+              trend === 'up' && "text-green-600",
+              trend === 'down' && "text-red-600",
+              trend === 'stable' && "text-neutral-600"
+            )}>
+              {new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(valueN1)}
+            </span>
+          </div>
         </div>
       </motion.div>
     );
@@ -291,14 +344,14 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Section Créances (Ce qu'on nous doit) */}
+            {/* Section ACTIF (Ce que l'entreprise possède) */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-2">
                 <HandCoins className="w-5 h-5 text-green-600" />
-                <h2 className="text-lg font-semibold text-neutral-800">Ce qu'on vous doit</h2>
-                <span className="text-sm text-neutral-500">(Créances)</span>
+                <h2 className="text-lg font-semibold text-neutral-800">Actif</h2>
+                <span className="text-sm text-neutral-500">(Ce que l'entreprise possède)</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {activeBilanCards.map((card, index) => renderCard(card, index))}
               </div>
             </div>
@@ -313,14 +366,14 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
               </div>
             </div>
 
-            {/* Section Dettes (Ce qu'on doit) */}
+            {/* Section PASSIF (D'où vient l'argent) */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-2">
                 <Coins className="w-5 h-5 text-orange-600" />
-                <h2 className="text-lg font-semibold text-neutral-800">Ce que vous devez</h2>
-                <span className="text-sm text-neutral-500">(Dettes)</span>
+                <h2 className="text-lg font-semibold text-neutral-800">Passif</h2>
+                <span className="text-sm text-neutral-500">(D'où vient l'argent)</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {passiveBilanCards.map((card, index) => renderCard(card, index))}
               </div>
             </div>
@@ -341,7 +394,7 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
                 <h2 className="text-lg font-semibold text-neutral-800">Vos revenus</h2>
                 <span className="text-sm text-neutral-500">(Produits)</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {productCards.map((card, index) => renderCard(card, index))}
               </div>
             </div>

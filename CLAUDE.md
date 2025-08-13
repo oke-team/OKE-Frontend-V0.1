@@ -115,6 +115,7 @@ export default function Component({ props }: ComponentProps) {
 - `/components/accounting/BalanceTable.tsx` - Table avec expansion de lignes
 - `/components/layout/AppLayout.tsx` - Layout principal avec navigation
 - `/components/dashboard/DashboardEnriched.tsx` - Dashboard avec widgets
+- **`/components/ui/DocumentViewerAdvanced.tsx`** - 🔴 **VIEWER OFFICIEL OKÉ POUR TOUS LES DOCUMENTS**
 
 ### Données de Référence
 - `/lib/accounting-data.ts` - Structure de données comptables
@@ -126,6 +127,7 @@ export default function Component({ props }: ComponentProps) {
 - `/docs/DESIGN_SYSTEM.md` - Design tokens et patterns
 - `/docs/COMPONENT_CATALOG.md` - Catalogue des composants
 - `/docs/MODULE_TEMPLATE.md` - Template pour nouveaux modules
+- **`/docs/DOCUMENT_VIEWER.md`** - 🔴 **GUIDE COMPLET DU DOCUMENTVIEWER (OBLIGATOIRE)**
 
 ## 🚀 Commandes Essentielles
 
@@ -156,6 +158,48 @@ npm install
 - Mobile : < 768px (cards, swipe, bottom nav)
 - Tablet : 768px - 1024px (hybride)
 - Desktop : > 1024px (tables, sidebar)
+
+## 📄 DocumentViewer OKÉ - COMPOSANT OBLIGATOIRE
+
+### ⚠️ Règle ABSOLUE
+**TOUJOURS utiliser le DocumentViewer OKÉ pour afficher des documents (PDF, images, etc.)**
+**JAMAIS créer un nouveau viewer ou utiliser une autre solution**
+
+### Utilisation Standard
+```typescript
+import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
+
+function MyComponent() {
+  const { open: openDocument, ViewerComponent } = useDocumentViewer();
+
+  const handleOpenDocument = () => {
+    openDocument({
+      src: '/documents/facture.pdf',
+      title: 'Facture Client',
+      type: 'pdf'
+    });
+  };
+
+  return (
+    <>
+      <button onClick={handleOpenDocument}>Voir document</button>
+      {/* TOUJOURS ajouter le ViewerComponent à la fin */}
+      <ViewerComponent mode="auto" glassMorphism={true} />
+    </>
+  );
+}
+```
+
+### Caractéristiques
+- ✅ Responsive mobile-first (swipe, pinch-to-zoom)
+- ✅ Design Liquid Glass Apple Vision Pro
+- ✅ Modes adaptatifs (Modal desktop, Sheet mobile)
+- ✅ Toutes les fonctionnalités PDF (zoom, rotation, vignettes)
+- ✅ Menu "Plus" intelligent sur petits écrans
+- ✅ Raccourcis clavier complets
+
+### Documentation Complète
+➡️ **LIRE OBLIGATOIREMENT** : `/docs/DOCUMENT_VIEWER.md`
 
 ## 🎨 Design System
 
@@ -195,6 +239,8 @@ npm install
 
 ### À JAMAIS Faire
 - ❌ Créer des composants dupliqués
+- ❌ **Créer un nouveau viewer de documents (utiliser DocumentViewer OKÉ)**
+- ❌ **Utiliser window.open() pour les PDFs (utiliser DocumentViewer OKÉ)**
 - ❌ Hardcoder des valeurs (utiliser tokens)
 - ❌ Ignorer les erreurs TypeScript
 - ❌ Faire des appels API (tout est mock)

@@ -142,26 +142,25 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
           className="text-primary-500 flex-shrink-0" 
         />
         
-        <div className="flex-1 min-w-0 text-left">
-          <div 
-            className="font-medium text-slate-900 truncate"
-            style={{ fontSize: currentStyle.fontSize }}
-          >
-            {compact && currentCompany.name.length > 15
-              ? `${currentCompany.name.substring(0, 15)}...`
-              : currentCompany.name
-            }
-          </div>
-          
-          {!compact && currentCompany.country && (
+        {!compact && (
+          <div className="flex-1 min-w-0 text-left">
             <div 
-              className="text-slate-500 truncate"
-              style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
+              className="font-medium text-slate-900 truncate"
+              style={{ fontSize: currentStyle.fontSize }}
             >
-              {currentCompany.country} · {currentCompany.currency}
+              {currentCompany.name}
             </div>
-          )}
-        </div>
+            
+            {currentCompany.country && (
+              <div 
+                className="text-slate-500 truncate"
+                style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
+              >
+                {currentCompany.country} · {currentCompany.currency}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Partie droite */}
@@ -169,8 +168,8 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
         {/* Badge plan */}
         <span
           style={{
-            padding: compact ? '2px 6px' : '3px 8px',
-            fontSize: compact ? '9px' : '10px',
+            padding: '3px 8px',
+            fontSize: '10px',
             fontWeight: 700,
             textTransform: 'uppercase' as const,
             borderRadius: '8px',
@@ -179,7 +178,7 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
             boxShadow: currentCompany.plan !== 'starter' ? '0 1px 3px rgba(0, 0, 0, 0.15)' : 'none'
           }}
         >
-          {compact ? currentCompany.plan.charAt(0).toUpperCase() : currentCompany.plan}
+          {currentCompany.plan}
         </span>
 
         {/* Chevron */}

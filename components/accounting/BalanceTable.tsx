@@ -97,6 +97,22 @@ export default function BalanceTable({
   // Filtrer pour ne pas afficher les classes (codes à 1 seul chiffre)
   const displayAccounts = accounts.filter(acc => acc.code.length > 1);
 
+  // Calculer le total des lignes sélectionnées
+  const calculateSelectedTotal = () => {
+    let total = 0;
+    accounts.forEach(account => {
+      if (selectedRows.has(account.id)) {
+        total += account.balance;
+      }
+      account.auxiliaryAccounts?.forEach(aux => {
+        if (selectedRows.has(aux.id)) {
+          total += aux.balance;
+        }
+      });
+    });
+    return total;
+  };
+
   const renderAccount = (account: Account, level: number = 0) => {
     const isExpanded = expandedAccounts.has(account.code);
     const hasAuxiliaries = account.auxiliaryAccounts && account.auxiliaryAccounts.length > 0;
@@ -341,30 +357,42 @@ export default function BalanceTable({
         </table>
       </div>
 
-      {/* Footer avec totaux */}
+      {/* Barre d'actions pour les lignes sélectionnées */}
+      {selectedRows.size > 0 && (
+        <div style={{
+          padding: '0.75rem 1rem',
+          borderTop: '1px solid rgba(229, 229, 229, 0.3)',
+          backgroundColor: 'rgba(94, 114, 255, 0.03)',
+          borderBottom: '1px solid rgba(94, 114, 255, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem'
+        }}>
+          <span style={{ fontSize: '12px', color: '#5e72ff', fontWeight: 500 }}>
+            {selectedRows.size} ligne{selectedRows.size > 1 ? 's' : ''} sélectionnée{selectedRows.size > 1 ? 's' : ''}
+          </span>
+          <span style={{ fontSize: '11px', color: '#666' }}>
+            Total: <strong style={{ 
+              color: calculateSelectedTotal() >= 0 ? '#10b981' : '#ef4444' 
+            }}>
+              {formatNumber(calculateSelectedTotal())} €
+            </strong>
+          </span>
+        </div>
+      )}
+
+      {/* Footer sans totaux */}
       <div style={{
         padding: compact ? '0.5rem 0.75rem' : '0.625rem 1rem',
         borderTop: '1px solid rgba(229, 229, 229, 0.3)',
         backgroundColor: 'rgba(250, 250, 250, 0.95)',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         fontSize: compact ? '11px' : '12px'
       }}>
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <span>
-            Total Débit: <strong style={{ color: '#171717' }}>
-              {formatNumber(accounts.reduce((sum, acc) => sum + acc.debit, 0))} €
-            </strong>
-          </span>
-          <span>
-            Total Crédit: <strong style={{ color: '#ef4444' }}>
-              {formatNumber(accounts.reduce((sum, acc) => sum + acc.credit, 0))} €
-            </strong>
-          </span>
-        </div>
-        <span style={{ fontSize: compact ? '10px' : '11px', color: '#666' }}>
-          {displayAccounts.length} comptes affichés
+        <span style={{ fontSize: compact ? '10px' : '11px', color: '#999' }}>
+          {selectedRows.size === 0 && 'Sélectionnez des lignes pour voir le total'}
         </span>
       </div>
     </div>

@@ -43,14 +43,14 @@ export const liquidGlass = {
     
     // Elevated glass (pour menus dropdown, modals)
     elevated: {
-      background: 'rgba(255, 255, 255, 0.85)',
+      background: 'rgba(255, 255, 255, 0.95)', // Augmenté de 0.85 à 0.95 pour moins de transparence
       backdropFilter: 'blur(20px) saturate(200%)',
       WebkitBackdropFilter: 'blur(20px) saturate(200%)',
-      border: '1px solid rgba(255, 255, 255, 0.4)',
+      border: '1px solid rgba(255, 255, 255, 0.5)', // Légèrement plus opaque
       boxShadow: `
         0 0 0 1px rgba(0, 0, 0, 0.04),
         0 8px 32px rgba(0, 0, 0, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8)
+        inset 0 1px 0 rgba(255, 255, 255, 0.9)
       `,
     },
     

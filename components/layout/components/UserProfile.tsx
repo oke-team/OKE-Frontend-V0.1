@@ -167,7 +167,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <motion.button
         onClick={handleMenuToggle}
         className={`
-          flex items-center ${config.container} p-1 rounded-lg hover:bg-slate-50/80 
+          flex items-center ${config.container} p-1 rounded-lg hover:bg-slate-50/95 
           transition-all duration-200 group
         `}
         whileHover={{ scale: 1.02 }}
@@ -325,7 +325,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 <div className="space-y-1">
                   <button
                     onClick={() => handleMenuAction('profile')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <User size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <span className="text-sm text-slate-700 group-hover:text-slate-900">
@@ -335,7 +335,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
                   <button
                     onClick={() => handleMenuAction('settings')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <Settings size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <span className="text-sm text-slate-700 group-hover:text-slate-900">
@@ -345,7 +345,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
                   <button
                     onClick={() => handleMenuAction('notifications')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <Bell size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <div className="flex-1 flex items-center justify-between">
@@ -358,7 +358,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
                   <button
                     onClick={() => handleMenuAction('billing')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <CreditCard size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <span className="text-sm text-slate-700 group-hover:text-slate-900">
@@ -368,7 +368,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
                   <button
                     onClick={() => handleMenuAction('team')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <Users size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <span className="text-sm text-slate-700 group-hover:text-slate-900">
@@ -382,7 +382,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 <div className="space-y-1">
                   <button
                     onClick={() => handleMenuAction('admin')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-amber-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-amber-50/95 transition-colors text-left group"
                   >
                     <Shield size={16} className="text-amber-500 group-hover:text-amber-600" />
                     <span className="text-sm text-amber-700 group-hover:text-amber-800">
@@ -395,7 +395,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
                   <button
                     onClick={() => handleMenuAction('help')}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                   >
                     <HelpCircle size={16} className="text-slate-400 group-hover:text-slate-600" />
                     <span className="text-sm text-slate-700 group-hover:text-slate-900">

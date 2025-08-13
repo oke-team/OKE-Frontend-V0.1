@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { CompanySelectorLiquid, Company } from '@/components/ui/CompanySelectorLiquid';
 import { PeriodSelectorLiquid } from '@/components/ui/PeriodSelectorLiquid';
+import { CompanySelectorMobile } from '@/components/ui/CompanySelectorMobile';
+import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
 import { usePathname } from 'next/navigation';
 import { TooltipSimple } from '@/components/ui/TooltipSimple';
 import { SearchGlobal } from '@/components/ui/SearchGlobal';
@@ -87,21 +89,30 @@ export default function HeaderSimple({
         </div>
         
         {/* Partie centrale : Sélecteurs */}
-        <div className="flex items-center gap-2 md:gap-3 flex-1 justify-center">
-          {/* Version mobile : badges compacts */}
-          <div className="md:hidden flex items-center gap-2">
-            <div className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full border border-blue-200">
-              {currentCompany.name.substring(0, 10)}...
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[45%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
+          {/* Version mobile : sélecteurs compacts */}
+          <div className="lg:hidden flex items-center gap-2 w-full">
+            <div className="flex-shrink-0">
+              <CompanySelectorMobile
+                companies={mockCompanies}
+                currentCompany={currentCompany}
+                onCompanyChange={onCompanyChange || (() => {})}
+                size="sm"
+                compact={true}
+              />
             </div>
             {isAccountingModule && (
-              <div className="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full border border-green-200">
-                2025
+              <div className="flex-shrink-0">
+                <PeriodSelectorMobile
+                  size="sm"
+                  compact={true}
+                />
               </div>
             )}
           </div>
           
           {/* Version desktop : sélecteurs complets */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             {/* Sélecteur d'entreprise */}
             <div className="w-56">
               <CompanySelectorLiquid
@@ -114,7 +125,7 @@ export default function HeaderSimple({
             </div>
             
             {/* Sélecteur de période ou espace réservé */}
-            <div className="h-5 w-px bg-gray-200" />
+            <div className="hidden sm:block h-5 w-px bg-gray-200" />
             <div className="w-48">
               {isAccountingModule ? (
                 <PeriodSelectorLiquid
@@ -129,7 +140,7 @@ export default function HeaderSimple({
         </div>
         
         {/* Partie droite : Actions */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2 flex-shrink-0">
           
           {/* Recherche globale */}
           <TooltipSimple
@@ -138,13 +149,13 @@ export default function HeaderSimple({
           >
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
             >
-              <Search size={18} />
+              <Search size={16} className="lg:w-[18px] lg:h-[18px]" />
             </button>
           </TooltipSimple>
           
-          <div className="h-5 w-px bg-gray-200" />
+          <div className="hidden sm:block h-5 w-px bg-gray-200" />
           
           {/* Mode Expert */}
           <TooltipSimple
@@ -156,13 +167,13 @@ export default function HeaderSimple({
           >
             <button
               onClick={toggleExpertMode}
-              className={`p-2 rounded-lg transition-all ${
+              className={`p-1.5 sm:p-1.5 lg:p-2 rounded-lg transition-all ${
                 expertMode 
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              <Sparkles size={18} />
+              <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
             </button>
           </TooltipSimple>
           
@@ -173,9 +184,9 @@ export default function HeaderSimple({
           >
             <button
               onClick={onMagicActions}
-              className="p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
+              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
             >
-              <Wand2 size={18} />
+              <Wand2 size={16} className="lg:w-[18px] lg:h-[18px]" />
             </button>
           </TooltipSimple>
           
@@ -186,9 +197,9 @@ export default function HeaderSimple({
           >
             <button
               onClick={onChatOpen}
-              className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
             >
-              <MessageSquare size={18} />
+              <MessageSquare size={16} className="lg:w-[18px] lg:h-[18px]" />
             </button>
           </TooltipSimple>
           
@@ -196,7 +207,7 @@ export default function HeaderSimple({
           <div ref={userMenuRef} className="relative">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-semibold hover:shadow-lg transition-shadow"
+              className="flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs lg:text-sm font-semibold hover:shadow-lg transition-shadow"
             >
               JD
             </button>

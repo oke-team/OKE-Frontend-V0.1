@@ -4,6 +4,52 @@
 
 Ce document liste tous les composants réutilisables disponibles dans l'application avec leurs props, exemples d'usage et patterns.
 
+## 🔴 COMPOSANT CRITIQUE - DOCUMENTVIEWER OKÉ
+
+### DocumentViewerAdvanced ⚠️ OBLIGATOIRE POUR TOUS LES DOCUMENTS
+**Chemin** : `/components/ui/DocumentViewerAdvanced.tsx`
+**Documentation complète** : `/docs/DOCUMENT_VIEWER.md`
+
+```tsx
+import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
+
+function MyComponent() {
+  const { open: openDocument, ViewerComponent } = useDocumentViewer();
+
+  const handleOpenDocument = () => {
+    openDocument({
+      src: '/documents/facture.pdf',
+      title: 'Facture Client',
+      type: 'pdf'
+    });
+  };
+
+  return (
+    <>
+      <button onClick={handleOpenDocument}>Voir document</button>
+      <ViewerComponent mode="auto" glassMorphism={true} />
+    </>
+  );
+}
+```
+
+**Props principales** :
+- `src` : URL du document
+- `title` : Titre affiché
+- `fileType` : 'pdf' | 'image' | 'document'
+- `mode` : 'auto' | 'modal' | 'sheet'
+- `glassMorphism` : Effet Liquid Glass
+- `enableDownload`, `enablePrint`, `enableShare` : Actions disponibles
+
+**Fonctionnalités** :
+- ✅ Responsive mobile-first (swipe, pinch-to-zoom)
+- ✅ Navigation tactile et clavier
+- ✅ Vignettes, rotation, zoom
+- ✅ Menu "Plus" intelligent sur petits écrans
+- ✅ Modes adaptatifs selon l'appareil
+
+**⚠️ IMPORTANT** : Ne JAMAIS créer un autre viewer. Toujours utiliser ce composant pour afficher des documents.
+
 ## 🧩 Composants UI (Atomiques)
 
 ### Button

@@ -30,6 +30,27 @@ export interface JournalEntry {
   attachmentType?: 'invoice' | 'receipt' | 'contract' | 'bank_statement' | 'other';
   attachmentName?: string;
   bankTransactionId?: string;
+  // FEC (Fichier des Écritures Comptables) mandatory fields
+  fec?: {
+    JournalCode: string;        // 1. Code journal
+    JournalLib: string;         // 2. Libellé journal
+    EcritureNum: string;        // 3. Numéro d'écriture
+    EcritureDate: string;       // 4. Date écriture (YYYYMMDD format)
+    CompteNum: string;          // 5. Numéro compte
+    CompteLib: string;          // 6. Libellé compte
+    CompAuxNum?: string;        // 7. Compte auxiliaire
+    CompAuxLib?: string;        // 8. Libellé compte auxiliaire
+    PieceRef: string;           // 9. Référence pièce
+    PieceDate: string;          // 10. Date pièce (YYYYMMDD format)
+    EcritureLib: string;        // 11. Libellé écriture
+    Debit: number;              // 12. Montant débit
+    Credit: number;             // 13. Montant crédit
+    Lettrage?: string;          // 14. Lettrage
+    DateLet?: string;           // 15. Date lettrage (YYYYMMDD format)
+    ValidDate: string;          // 16. Date validation (YYYYMMDD format)
+    Montantdevise?: number;     // 17. Montant devise
+    Idevise?: string;           // 18. Code devise
+  };
 }
 
 export interface BankTransaction {
@@ -1194,15 +1215,23 @@ export const journalEntries: JournalEntry[] = [
 
 // Fonction pour obtenir les écritures d'un compte spécifique
 export function getEntriesByAccount(accountCode: string): JournalEntry[] {
-  return journalEntries.filter(entry => 
+  const entries = journalEntries.filter(entry => 
     entry.accountCode === accountCode || 
     entry.accountCode.startsWith(accountCode)
   );
+  return entries.map(entry => ({
+    ...entry,
+    fec: generateFECData(entry)
+  }));
 }
 
 // Fonction pour obtenir toutes les lignes d'une même pièce comptable
 export function getEntriesByPiece(piece: string): JournalEntry[] {
-  return journalEntries.filter(entry => entry.piece === piece);
+  const entries = journalEntries.filter(entry => entry.piece === piece);
+  return entries.map(entry => ({
+    ...entry,
+    fec: generateFECData(entry)
+  }));
 }
 
 // Fonction pour calculer le solde progressif
@@ -1217,4 +1246,51 @@ export function calculateProgressiveBalance(entries: JournalEntry[]): JournalEnt
 // Fonction pour obtenir une transaction bancaire par ID
 export function getBankTransactionById(id: string): BankTransaction | undefined {
   return bankTransactions.find(transaction => transaction.id === id);
+}
+
+// Helper function to convert date from YYYY-MM-DD to YYYYMMDD for FEC format
+function formatDateForFEC(dateStr: string): string {
+  return dateStr.replace(/-/g, '');
+}
+
+// Helper function to generate FEC data for journal entries
+function generateFECData(entry: JournalEntry): JournalEntry['fec'] {
+  const journalLibMapping: Record<string, string> = {
+    'AC': 'ACHATS',
+    'BQ': 'BANQUE',
+    'VE': 'VENTES',
+    'PA': 'PAIE',
+    'OD': 'OPERATIONS DIVERSES'
+  };
+
+  const isAuxiliaryAccount = entry.accountCode.length > 6 || entry.accountCode.startsWith('0');
+  
+  return {
+    JournalCode: entry.journal,
+    JournalLib: journalLibMapping[entry.journal] || 'AUTRES',
+    EcritureNum: entry.id.replace('e', '').replace('-', ''),
+    EcritureDate: formatDateForFEC(entry.date),
+    CompteNum: isAuxiliaryAccount ? entry.accountCode.substring(0, 3) : entry.accountCode,
+    CompteLib: entry.accountLabel,
+    CompAuxNum: isAuxiliaryAccount ? entry.accountCode : undefined,
+    CompAuxLib: isAuxiliaryAccount ? entry.accountLabel : undefined,
+    PieceRef: entry.piece,
+    PieceDate: formatDateForFEC(entry.date),
+    EcritureLib: entry.description,
+    Debit: entry.debit,
+    Credit: entry.credit,
+    Lettrage: entry.lettrage,
+    DateLet: entry.lettrage ? formatDateForFEC(entry.date) : undefined,
+    ValidDate: formatDateForFEC(entry.date),
+    Montantdevise: undefined, // EUR is the base currency
+    Idevise: 'EUR'
+  };
+}
+
+// Function to enrich journal entries with FEC data
+export function getEntriesWithFEC(): JournalEntry[] {
+  return journalEntries.map(entry => ({
+    ...entry,
+    fec: generateFECData(entry)
+  }));
 }

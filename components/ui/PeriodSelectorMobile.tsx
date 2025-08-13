@@ -218,36 +218,39 @@ export const PeriodSelectorMobile: React.FC<PeriodSelectorMobileProps> = ({
       <div className="flex items-center gap-2 flex-1 min-w-0">
         {getIcon(currentPeriod.type, size === 'xs' ? 14 : size === 'sm' ? 16 : 18)}
         
-        <div className="flex-1 min-w-0 text-left">
-          <div 
-            className="font-medium text-slate-900 truncate"
-            style={{ fontSize: currentStyle.fontSize }}
-          >
-            {compact 
-              ? formatDisplayLabel(currentPeriod)
-              : currentPeriod.label
-            }
-          </div>
-          
-          {!compact && (
+        {!compact && (
+          <div className="flex-1 min-w-0 text-left">
+            <div 
+              className="font-medium text-slate-900 truncate"
+              style={{ fontSize: currentStyle.fontSize }}
+            >
+              {currentPeriod.label}
+            </div>
+            
             <div 
               className="text-slate-600 truncate"
               style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
             >
               {getTypeLabel(currentPeriod.type)} · {formatSublabel(currentPeriod)}
             </div>
-          )}
-        </div>
+          </div>
+        )}
+        
+        {compact && (
+          <div className="font-medium text-slate-900" style={{ fontSize: currentStyle.fontSize }}>
+            {formatDisplayLabel(currentPeriod)}
+          </div>
+        )}
       </div>
 
       {/* Partie droite */}
       <div className="flex items-center gap-2 flex-shrink-0">
         {/* Badge actuel */}
-        {currentPeriod.isCurrent && (
+        {currentPeriod.isCurrent && !compact && (
           <span
             style={{
-              padding: compact ? '2px 6px' : '3px 8px',
-              fontSize: compact ? '8px' : '9px',
+              padding: '3px 8px',
+              fontSize: '9px',
               fontWeight: 600,
               textTransform: 'uppercase' as const,
               borderRadius: '6px',
@@ -255,7 +258,7 @@ export const PeriodSelectorMobile: React.FC<PeriodSelectorMobileProps> = ({
               color: '#15803d'
             }}
           >
-            {compact ? '●' : 'ACTUEL'}
+            ACTUEL
           </span>
         )}
 

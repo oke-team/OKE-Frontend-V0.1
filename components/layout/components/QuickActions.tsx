@@ -311,7 +311,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({
                             onClick={() => handleActionClick(action)}
                             onMouseEnter={() => setHoveredAction(action.id)}
                             onMouseLeave={() => setHoveredAction(null)}
-                            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors text-left group"
+                            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50/95 transition-colors text-left group"
                             whileHover={{ x: 2 }}
                             whileTap={{ scale: 0.98 }}
                           >
