@@ -4,20 +4,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import ModeTooltip from '@/components/ui/ModeTooltip';
-import { CompanySelector } from '@/components/ui/CompanySelector';
+import { CompanySelector, Company } from '@/components/ui/CompanySelector';
 import { PeriodSelector } from '@/components/ui/PeriodSelector';
 import { usePathname } from 'next/navigation';
 import {
-  Building2,
-  ChevronDown,
-  Plus,
   Settings,
   User,
   LogOut,
   MessageSquare,
   HelpCircle,
   Users,
-  Shield,
   Wrench,
   Wand2,
   Sparkles,
@@ -33,15 +29,6 @@ import {
   Calculator
 } from 'lucide-react';
 import Image from 'next/image';
-
-interface Company {
-  id: string;
-  name: string;
-  logo?: string;
-  plan: 'starter' | 'pro' | 'enterprise';
-  country?: string;
-  currency?: string;
-}
 
 interface HeaderProps {
   currentCompany?: Company;
@@ -81,7 +68,7 @@ const moduleActions: Record<string, Array<{icon: React.ReactNode, label: string,
   ]
 };
 
-export default function HeaderFixed({
+export default function HeaderFixedNew({
   currentCompany = mockCompanies[0],
   onCompanyChange,
   onChatOpen,
@@ -93,7 +80,6 @@ export default function HeaderFixed({
   const [actionsDropdownOpen, setActionsDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
-  const [showOnboardingBadge, setShowOnboardingBadge] = useState(false);
   
   const userRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
@@ -107,7 +93,7 @@ export default function HeaderFixed({
         toggleExpertMode();
       }
       
-      // Ctrl/Cmd + H pour afficher l'aide (réinitialiser l'onboarding)
+      // Ctrl/Cmd + H pour afficher l'aide
       if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
         e.preventDefault();
         resetOnboarding();
@@ -131,12 +117,6 @@ export default function HeaderFixed({
     };
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
-    // Check onboarding status on client side only
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      setShowOnboardingBadge(!localStorage.getItem('onboardingCompleted'));
-    }
-    
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -162,11 +142,12 @@ export default function HeaderFixed({
     left: 0,
     right: 0,
     zIndex: 40,
-    height: '4rem',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    backdropFilter: 'blur(24px)',
-    WebkitBackdropFilter: 'blur(24px)',
-    borderBottom: '1px solid rgba(229, 229, 229, 0.3)'
+    height: isMobile ? '3.5rem' : '4rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    backdropFilter: 'blur(24px) saturate(150%)',
+    WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+    boxShadow: '0 1px 0 0 rgba(0, 0, 0, 0.05)'
   };
 
   const buttonStyle = {
@@ -213,7 +194,7 @@ export default function HeaderFixed({
   return (
     <header style={headerStyle}>
       <div style={{ height: '100%', padding: '0 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {/* Logo + Company Selector */}
+        {/* Logo + Selectors */}
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.5rem' : '1rem' }}>
           <Image
             src="/logo_oke_original.png"
@@ -223,247 +204,57 @@ export default function HeaderFixed({
             style={{ height: isMobile ? '2rem' : '2.25rem', width: 'auto' }}
           />
           
-          {/* Company Selector - Desktop */}
-          {!isMobile && (
-            <div style={{ position: 'relative' }}>
-              <CompanySelector
-                companies={mockCompanies}
-                currentCompany={currentCompany}
-                onCompanyChange={onCompanyChange || (() => {})}
-                size="sm"
-              />
-
-              <AnimatePresence>
-                {companyDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    style={{ ...dropdownStyle, left: 0, minWidth: '250px' }}
-                  >
-                    {mockCompanies.map((company) => (
-                      <button
-                        key={company.id}
-                        onClick={() => {
-                          onCompanyChange?.(company);
-                          setCompanyDropdownOpen(false);
-                        }}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.625rem',
-                          borderRadius: '0.375rem',
-                          backgroundColor: currentCompany.id === company.id ? 'rgba(94, 114, 255, 0.08)' : 'transparent',
-                          border: 'none',
-                          cursor: 'pointer',
-                          transition: 'background-color 0.15s'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (currentCompany.id !== company.id) {
-                            e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (currentCompany.id !== company.id) {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                          }
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-                          <Building2 size={16} style={{ color: currentCompany.id === company.id ? '#5e72ff' : '#666' }} />
-                          <div style={{ textAlign: 'left' }}>
-                            <div style={{ fontSize: '14px', fontWeight: 500 }}>{company.name}</div>
-                            <div style={{ fontSize: '11px', color: '#888' }}>{company.country} · {company.currency}</div>
-                          </div>
-                        </div>
-                        <span style={{ 
-                          fontSize: '10px', 
-                          padding: '2px 6px', 
-                          borderRadius: '9999px', 
-                          backgroundColor: currentCompany.id === company.id ? 'rgba(94, 114, 255, 0.15)' : 'rgba(0, 0, 0, 0.05)',
-                          color: currentCompany.id === company.id ? '#5e72ff' : '#666',
-                          textTransform: 'uppercase',
-                          fontWeight: 600
-                        }}>
-                          {company.plan}
-                        </span>
-                      </button>
-                    ))}
-                    
-                    <div style={{ borderTop: '1px solid rgba(229, 229, 229, 0.3)', marginTop: '0.5rem', paddingTop: '0.5rem' }}>
-                      <button style={{
-                        ...buttonStyle,
-                        width: '100%',
-                        justifyContent: 'flex-start',
-                        backgroundColor: 'transparent',
-                        color: '#5e72ff'
-                      }}>
-                        <Plus size={16} />
-                        <span>Ajouter une entreprise</span>
-                      </button>
-                    </div>
-                  </motion.div>
+          {/* Selectors container with proper spacing */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: isMobile ? '0.5rem' : '0.75rem',
+            position: 'relative'
+          }}>
+            {/* Glass effect background for selectors */}
+            <div style={{
+              position: 'absolute',
+              inset: '-4px',
+              background: 'linear-gradient(135deg, rgba(94, 114, 255, 0.02) 0%, rgba(209, 80, 218, 0.02) 100%)',
+              borderRadius: '16px',
+              pointerEvents: 'none',
+              opacity: 0.5
+            }} />
+            
+            {/* Company Selector - Always visible */}
+            <CompanySelector
+              companies={mockCompanies}
+              currentCompany={currentCompany}
+              onCompanyChange={onCompanyChange || (() => {})}
+              size={isMobile ? 'xs' : 'md'}
+            />
+            
+            {/* Period Selector - Visible on accounting pages */}
+            {pathname?.includes('/accounting') && (
+              <>
+                {!isMobile && (
+                  <div style={{
+                    width: '1px',
+                    height: '24px',
+                    backgroundColor: 'rgba(229, 229, 229, 0.4)',
+                    opacity: 0.5
+                  }} />
                 )}
-              </AnimatePresence>
-            </div>
-          )}
-
-          {/* Mobile Company Selector */}
-          {isMobile && (
-            <div ref={companyRef} style={{ position: 'relative' }}>
-              <button
-                onClick={() => setCompanyDropdownOpen(!companyDropdownOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.375rem',
-                  padding: '0.375rem 0.625rem',
-                  backgroundColor: 'rgba(94, 114, 255, 0.08)',
-                  borderRadius: '0.375rem',
-                  border: '1px solid rgba(94, 114, 255, 0.2)',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s'
-                }}
-              >
-                <Building2 size={14} style={{ color: '#5e72ff' }} />
-                <span style={{ 
-                  fontSize: '12px', 
-                  color: '#5e72ff',
-                  fontWeight: 600,
-                  maxWidth: '100px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}>
-                  {currentCompany.name}
-                </span>
-                <ChevronDown size={14} style={{ 
-                  color: '#5e72ff',
-                  transform: companyDropdownOpen ? 'rotate(180deg)' : 'none',
-                  transition: 'transform 0.2s'
-                }} />
-              </button>
-
-              <AnimatePresence>
-                {companyDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    style={{ 
-                      ...dropdownStyle, 
-                      left: 0,
-                      minWidth: '200px',
-                      marginTop: '0.5rem'
-                    }}
-                  >
-                    {mockCompanies.map((company) => (
-                      <button
-                        key={company.id}
-                        onClick={() => {
-                          onCompanyChange?.(company);
-                          setCompanyDropdownOpen(false);
-                        }}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.5rem',
-                          borderRadius: '0.375rem',
-                          backgroundColor: currentCompany.id === company.id ? 'rgba(94, 114, 255, 0.08)' : 'transparent',
-                          border: 'none',
-                          cursor: 'pointer',
-                          transition: 'background-color 0.15s'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (currentCompany.id !== company.id) {
-                            e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (currentCompany.id !== company.id) {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                          }
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <Building2 size={14} />
-                          <div style={{ textAlign: 'left' }}>
-                            <div style={{ fontSize: '13px', fontWeight: 500 }}>{company.name}</div>
-                            <div style={{ fontSize: '10px', color: '#888' }}>{company.country} · {company.currency}</div>
-                          </div>
-                        </div>
-                        <span style={{ 
-                          fontSize: '10px', 
-                          padding: '2px 5px', 
-                          borderRadius: '9999px', 
-                          backgroundColor: currentCompany.id === company.id ? 'rgba(94, 114, 255, 0.15)' : 'rgba(0, 0, 0, 0.05)',
-                          color: currentCompany.id === company.id ? '#5e72ff' : '#666',
-                          textTransform: 'uppercase',
-                          fontWeight: 600
-                        }}>
-                          {company.plan}
-                        </span>
-                      </button>
-                    ))}
-                    
-                    <div style={{ borderTop: '1px solid rgba(229, 229, 229, 0.3)', marginTop: '0.5rem', paddingTop: '0.5rem' }}>
-                      <button style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        width: '100%',
-                        padding: '0.5rem',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        borderRadius: '0.375rem',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        color: '#5e72ff',
-                        transition: 'background-color 0.15s'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(94, 114, 255, 0.05)'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                      >
-                        <Plus size={14} />
-                        <span>Ajouter une entreprise</span>
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-          
-          {/* Period Selector - Next to company selector */}
-          {pathname?.includes('/accounting') && !isMobile && (
-            <>
-              <div style={{
-                width: '1px',
-                height: '24px',
-                backgroundColor: 'rgba(229, 229, 229, 0.4)',
-                margin: '0 1rem'
-              }} />
-              <PeriodSelectorGlass aligned />
-            </>
-          )}
+                <PeriodSelector 
+                  size={isMobile ? 'xs' : 'md'}
+                />
+              </>
+            )}
+          </div>
         </div>
-
-        {/* Spacer for right alignment */}
-        <div className="flex-1"></div>
 
         {/* Right Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {/* Expert Mode Toggle - Version compacte */}
+          {/* Expert Mode Toggle */}
           <ModeTooltip isExpertMode={expertMode}>
             <motion.button
               onClick={toggleExpertMode}
               aria-label={`Mode ${expertMode ? 'expert' : 'entrepreneur'} activé`}
-              aria-pressed={expertMode}
-              role="switch"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="relative"

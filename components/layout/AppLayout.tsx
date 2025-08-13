@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import UnifiedBottomNav from '@/components/navigation/UnifiedBottomNav';
-import HeaderFixed from './HeaderFixed';
+import HeaderSimple from './HeaderSimple';
 import MagicActionsButton from '@/components/ui/MagicActionsButton';
 import Chatbot from '@/components/ui/Chatbot';
 
@@ -54,14 +54,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
     console.log('Actions magiques contextuelles');
   };
 
+  const handleSearch = (query: string) => {
+    console.log('Search query:', query);
+    // Implémentation de la recherche globale
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900">
-      {/* Header fixe en haut */}
-      <HeaderFixed
+      {/* Header fixe en haut - Simple et minimaliste */}
+      <HeaderSimple
         currentCompany={currentCompany}
         onCompanyChange={setCurrentCompany}
         onChatOpen={handleChatOpen}
-        activeModule={activeNavItem}
+        onMagicActions={handleMagicActions}
       />
 
       {/* Contenu principal avec padding pour header et navigation */}

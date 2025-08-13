@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./liquid-glass.css";
 
 @layer base {
   :root {
@@ -43,17 +44,44 @@
 }
 
 @layer components {
-  /* Glass Effects */
+  /* Liquid Glass Effects - OKÉ Design System */
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .dark .glass {
-    background: rgba(23, 23, 23, 0.7);
+    background: rgba(23, 23, 23, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Liquid Glass Dropdown Specific */
+  .glass-dropdown {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  
+  .glass-dropdown:hover {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+  
+  .dark .glass-dropdown {
+    background: rgba(23, 23, 23, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .glass-dropdown:hover {
+    background: rgba(23, 23, 23, 0.75);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   .glass-card {
@@ -171,6 +199,7 @@
     animation: slideInFromTop 0.3s ease-out;
   }
   
+  /* Liquid Glass Dropdown Animations */
   @keyframes pulseGlow {
     0%, 100% {
       box-shadow: 0 0 0 0 rgba(94, 114, 255, 0.4);
@@ -182,6 +211,76 @@
   
   .pulse-glow {
     animation: pulseGlow 2s infinite;
+  }
+  
+  /* Shimmer effect for dropdown items */
+  @keyframes shimmer {
+    from {
+      background-position: 200% center;
+    }
+    to {
+      background-position: -200% center;
+    }
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1s ease-out;
+  }
+  
+  /* Subtle pulse for badges */
+  @keyframes pulseSubtle {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+  }
+  
+  .animate-pulse-subtle {
+    animation: pulseSubtle 2s ease-in-out infinite;
+  }
+  
+  /* Single pulse for interactions */
+  @keyframes pulseOnce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .animate-pulse-once {
+    animation: pulseOnce 0.3s ease-out;
+  }
+  
+  /* Slide for mobile bottom sheets */
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0.9;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in-bottom {
+    animation: slideInFromBottom 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   }
   
   /* Focus states améliorés pour l'accessibilité */
@@ -244,5 +343,34 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Custom scrollbar for dropdowns */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thumb-neutral-300::-webkit-scrollbar-thumb {
+    background-color: rgb(212 212 212);
+    border-radius: 3px;
+  }
+  
+  .dark .scrollbar-thumb-neutral-700::-webkit-scrollbar-thumb {
+    background-color: rgb(64 64 64);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  /* Safe area padding for mobile */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

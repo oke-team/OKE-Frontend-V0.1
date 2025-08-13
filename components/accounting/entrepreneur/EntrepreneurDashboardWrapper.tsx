@@ -5,8 +5,8 @@ import dynamic from 'next/dynamic';
 import { DrillDownProvider } from '@/contexts/DrillDownContext';
 
 // Import dynamique pour éviter les problèmes d'hydratation
-const EntrepreneurDashboardV2 = dynamic(
-  () => import('./EntrepreneurDashboardV2').then(mod => mod.EntrepreneurDashboardV2),
+const EntrepreneurDashboardV3 = dynamic(
+  () => import('./EntrepreneurDashboardV3').then(mod => mod.EntrepreneurDashboardV3),
   { 
     ssr: false,
     loading: () => (
@@ -52,7 +52,7 @@ export const EntrepreneurDashboardWrapper: React.FC<EntrepreneurDashboardWrapper
 
   return (
     <DrillDownProvider>
-      <EntrepreneurDashboardV2 data={data} />
+      <EntrepreneurDashboardV3 data={data} />
     </DrillDownProvider>
   );
 };
