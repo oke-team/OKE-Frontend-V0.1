@@ -68,6 +68,7 @@ export default function GeneralLedgerTable({
   const [showLettrageDialog, setShowLettrageDialog] = useState(false);
   const [newAccountCode, setNewAccountCode] = useState('');
   const [newLettrage, setNewLettrage] = useState('');
+  const [actionsExpanded, setActionsExpanded] = useState(false);
 
   // États pour la gestion des colonnes FEC
   const [showColumnConfig, setShowColumnConfig] = useState(false);
@@ -1917,43 +1918,89 @@ export default function GeneralLedgerTable({
         {selectedRows.size > 0 && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ 
+              height: actionsExpanded && isMobile ? 'auto' : 'auto',
+              opacity: 1 
+            }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
+            drag={isMobile ? "y" : false}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e, info) => {
+              // Swipe up pour révéler les actions
+              if (info.offset.y < -50 && isMobile) {
+                setActionsExpanded(true);
+              }
+              // Swipe down pour cacher les actions
+              if (info.offset.y > 50 && isMobile) {
+                setActionsExpanded(false);
+              }
+            }}
             style={{
               backgroundColor: 'rgba(94, 114, 255, 0.05)',
               borderTop: '1px solid rgba(94, 114, 255, 0.2)',
               borderBottom: '1px solid rgba(94, 114, 255, 0.2)',
               padding: '0.75rem 1rem',
+              cursor: isMobile ? 'grab' : 'default',
+              userSelect: 'none'
+            }}
+          >
+            {/* Indicateur de swipe sur mobile */}
+            {isMobile && (
+              <div style={{
+                position: 'absolute',
+                top: '4px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '40px',
+                height: '4px',
+                backgroundColor: 'rgba(94, 114, 255, 0.3)',
+                borderRadius: '2px'
+              }} />
+            )}
+            
+            <div style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
-              gap: '0.75rem'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '12px', color: '#5e72ff', fontWeight: 500 }}>
-                {selectedRows.size} ligne{selectedRows.size > 1 ? 's' : ''} sélectionnée{selectedRows.size > 1 ? 's' : ''}
-              </span>
-              {/* Totaux des lignes sélectionnées */}
-              <span style={{ fontSize: '11px', color: '#666', marginLeft: '0.5rem' }}>
-                Débit: <strong>{formatNumber(
-                  filteredEntries
-                    .filter(e => selectedRows.has(e.id))
-                    .reduce((sum, e) => sum + e.debit, 0)
-                )}</strong>
-              </span>
-              <span style={{ fontSize: '11px', color: '#666' }}>
-                Crédit: <strong>{formatNumber(
-                  filteredEntries
-                    .filter(e => selectedRows.has(e.id))
-                    .reduce((sum, e) => sum + e.credit, 0)
-                )}</strong>
-              </span>
-            </div>
-            
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              gap: '0.75rem',
+              paddingTop: isMobile ? '8px' : '0'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '12px', color: '#5e72ff', fontWeight: 500 }}>
+                  {selectedRows.size} ligne{selectedRows.size > 1 ? 's' : ''} sélectionnée{selectedRows.size > 1 ? 's' : ''}
+                </span>
+                {/* Totaux des lignes sélectionnées */}
+                {!isMobile && (
+                  <>
+                    <span style={{ fontSize: '11px', color: '#666', marginLeft: '0.5rem' }}>
+                      Débit: <strong>{formatNumber(
+                        filteredEntries
+                          .filter(e => selectedRows.has(e.id))
+                          .reduce((sum, e) => sum + e.debit, 0)
+                      )}</strong>
+                    </span>
+                    <span style={{ fontSize: '11px', color: '#666' }}>
+                      Crédit: <strong>{formatNumber(
+                        filteredEntries
+                          .filter(e => selectedRows.has(e.id))
+                          .reduce((sum, e) => sum + e.credit, 0)
+                      )}</strong>
+                    </span>
+                  </>
+                )}
+                {isMobile && !actionsExpanded && (
+                  <span style={{ fontSize: '10px', color: '#999', marginLeft: '0.5rem' }}>
+                    ↑ Glisser pour actions
+                  </span>
+                )}
+              </div>
+              
+              {/* Actions visibles sur desktop ou quand expanded sur mobile */}
+              {(!isMobile || actionsExpanded) && (
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
               {/* Bouton Reclasser */}
               <button
                 onClick={() => setShowReclassDialog(true)}
@@ -2091,6 +2138,8 @@ export default function GeneralLedgerTable({
                 <X size={12} />
                 Annuler
               </button>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

@@ -16,6 +16,7 @@ import {
   Circle
 } from 'lucide-react';
 import { liquidGlass } from '@/lib/design-system/liquid-glass';
+import { useExpertMode } from '@/contexts/ExpertModeContext';
 
 interface UserProfileProps {
   size?: 'compact' | 'medium' | 'large';
@@ -53,6 +54,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   className = ''
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { expertMode, toggleExpertMode } = useExpertMode();
   const [user] = useState<User>({
     name: 'Jean Dupont',
     email: 'jean@techcorp.fr',
@@ -380,6 +382,32 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 <div className="my-2 h-px bg-slate-200/50"></div>
 
                 <div className="space-y-1">
+                  {/* Toggle Mode Expert */}
+                  <button
+                    onClick={toggleExpertMode}
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50/95 transition-colors text-left group"
+                  >
+                    <Sparkles size={16} className={expertMode ? "text-purple-600" : "text-slate-400 group-hover:text-purple-600"} />
+                    <div className="flex-1 flex items-center justify-between">
+                      <span className="text-sm text-slate-700 group-hover:text-slate-900">
+                        Mode Expert
+                      </span>
+                      <div 
+                        className={`
+                          relative w-10 h-5 rounded-full transition-colors duration-200
+                          ${expertMode ? 'bg-purple-600' : 'bg-slate-300'}
+                        `}
+                      >
+                        <div 
+                          className={`
+                            absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200
+                            ${expertMode ? 'translate-x-5' : 'translate-x-0.5'}
+                          `}
+                        />
+                      </div>
+                    </div>
+                  </button>
+
                   <button
                     onClick={() => handleMenuAction('admin')}
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-amber-50/95 transition-colors text-left group"
