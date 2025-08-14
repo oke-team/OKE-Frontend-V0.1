@@ -48,8 +48,16 @@ export default function HeaderSimple({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const actionsMenuRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -95,7 +103,7 @@ export default function HeaderSimple({
         
         {/* Partie centrale : Sélecteurs */}
         <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[45%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
-          {/* Version mobile : sélecteurs compacts */}
+          {/* Version mobile : seulement le sélecteur d'entreprise */}
           <div className="lg:hidden flex items-center gap-2 w-full">
             <div className="flex-shrink-0">
               <CompanySelectorMobile
@@ -106,14 +114,6 @@ export default function HeaderSimple({
                 compact={true}
               />
             </div>
-            {isAccountingModule && (
-              <div className="flex-shrink-0">
-                <PeriodSelectorMobile
-                  size="sm"
-                  compact={true}
-                />
-              </div>
-            )}
           </div>
           
           {/* Version desktop : sélecteurs complets */}
@@ -160,27 +160,31 @@ export default function HeaderSimple({
             </button>
           </TooltipSimple>
           
-          <div className="hidden sm:block h-5 w-px bg-gray-200" />
-          
-          {/* Mode Expert */}
-          <TooltipSimple
-            content={expertMode 
-              ? "Mode Expert: Interface épurée sans aide contextuelle" 
-              : "Mode Entrepreneur: Aide et explications activées"
-            }
-            position="bottom"
-          >
-            <button
-              onClick={toggleExpertMode}
-              className={`p-1.5 sm:p-1.5 lg:p-2 rounded-lg transition-all ${
-                expertMode 
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
-            </button>
-          </TooltipSimple>
+          {!isMobile && (
+            <>
+              <div className="hidden sm:block h-5 w-px bg-gray-200" />
+              
+              {/* Mode Expert - caché sur mobile */}
+              <TooltipSimple
+                content={expertMode 
+                  ? "Mode Expert: Interface épurée sans aide contextuelle" 
+                  : "Mode Entrepreneur: Aide et explications activées"
+                }
+                position="bottom"
+              >
+                <button
+                  onClick={toggleExpertMode}
+                  className={`p-1.5 sm:p-1.5 lg:p-2 rounded-lg transition-all ${
+                    expertMode 
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
+                </button>
+              </TooltipSimple>
+            </>
+          )}
           
           {/* Actions Magiques - Assistant Contextuel */}
           <div ref={actionsMenuRef} className="relative">
@@ -190,10 +194,10 @@ export default function HeaderSimple({
             >
               <button
                 onClick={() => {
+                  setActionsMenuOpen(!actionsMenuOpen);
                   if (selectedCount > 0) {
-                    setActionsMenuOpen(!actionsMenuOpen);
+                    onMagicActions?.();
                   }
-                  onMagicActions?.();
                 }}
                 className="relative p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
               >
@@ -211,6 +215,7 @@ export default function HeaderSimple({
               isOpen={actionsMenuOpen}
               onClose={() => setActionsMenuOpen(false)}
               selectedCount={selectedCount}
+              isMobile={isMobile}
               onLettrage={() => {
                 console.log('Lettrage depuis header');
                 alert(`Lettrage de ${selectedCount} écritures`);
