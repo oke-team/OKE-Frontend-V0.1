@@ -39,7 +39,7 @@ const mobileNavItems: NavItem[] = [
   { id: 'banking', label: 'Banque', icon: <Building2 size={18} /> },
   { id: 'add', label: '', icon: <Plus size={24} />, isCenter: true },
   { id: 'purchases', label: 'Achats', icon: <ShoppingCart size={18} /> },
-  { id: 'sales', label: 'Ventes', icon: <TrendingUp size={18} /> }
+  { id: 'accounting', label: 'Compta', icon: <Calculator size={18} /> }
 ];
 
 // Items de navigation desktop (tous les modules avec bouton + central)
