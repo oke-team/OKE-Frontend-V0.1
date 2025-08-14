@@ -1398,7 +1398,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed left-0 right-0 z-50 backdrop-blur-2xl bg-white/90 border-t border-gray-200/50"
-            style={{ bottom: isMobile ? '60px' : '0' }}
+            style={{ bottom: isMobile ? '60px' : '80px' }}
           >
             {/* Header de sélection */}
             <div className="px-4 py-2 flex items-center justify-between border-b border-gray-100">
