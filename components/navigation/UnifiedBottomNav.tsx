@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   Building2,
@@ -64,8 +65,27 @@ export default function UnifiedBottomNav({
   activeItem = 'dashboard', 
   onItemSelect 
 }: UnifiedBottomNavProps) {
+  const pathname = usePathname();
+  const router = useRouter();
   const [localActiveItem, setLocalActiveItem] = useState(activeItem);
   const [isDesktop, setIsDesktop] = useState(false);
+  
+  // Synchroniser avec l'URL actuelle
+  useEffect(() => {
+    if (pathname) {
+      if (pathname.includes('/accounting')) {
+        setLocalActiveItem('accounting');
+      } else if (pathname.includes('/dashboard')) {
+        setLocalActiveItem('dashboard');
+      } else if (pathname.includes('/bank')) {
+        setLocalActiveItem('banking');
+      } else if (pathname.includes('/purchases')) {
+        setLocalActiveItem('purchases');
+      } else if (pathname.includes('/sales')) {
+        setLocalActiveItem('sales');
+      }
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
@@ -75,8 +95,35 @@ export default function UnifiedBottomNav({
   }, []);
 
   const handleItemSelect = (id: string) => {
+    if (id === 'add') {
+      // Gérer le bouton + central
+      onItemSelect?.(id);
+      return;
+    }
+    
     setLocalActiveItem(id);
     onItemSelect?.(id);
+    
+    // Navigation vers la page correspondante
+    switch(id) {
+      case 'dashboard':
+        router.push('/dashboard');
+        break;
+      case 'banking':
+        router.push('/bank');
+        break;
+      case 'accounting':
+        router.push('/accounting');
+        break;
+      case 'purchases':
+        router.push('/purchases');
+        break;
+      case 'sales':
+        router.push('/sales');
+        break;
+      default:
+        break;
+    }
   };
 
   // Sélection des items selon la plateforme (structure simple et cohérente)
