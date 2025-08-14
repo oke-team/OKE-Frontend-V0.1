@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link2, GitMerge, CheckCircle, FileSpreadsheet, Archive, Calendar, Sparkles } from 'lucide-react';
+import { Link2, GitMerge, CheckCircle, FileSpreadsheet, Archive, Calendar, Sparkles, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
+import { SearchGlobal } from '@/components/ui/SearchGlobal';
 
 interface ContextualActionsMenuProps {
   isOpen: boolean;
@@ -35,6 +36,7 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
   const { expertMode, toggleExpertMode } = useExpertMode();
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   const [showPeriodSelector, setShowPeriodSelector] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   
   if (!isOpen) return null;
 
@@ -77,6 +79,23 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
               {/* Actions générales sur mobile */}
               {isMobile && (
                 <>
+                  {/* Recherche globale */}
+                  <button
+                    onClick={() => {
+                      setSearchOpen(true);
+                      onClose();
+                    }}
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group mb-2"
+                  >
+                    <div className="p-1.5 rounded-lg bg-slate-100 group-hover:bg-slate-200">
+                      <Search className="w-4 h-4 text-slate-600" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <div className="text-sm font-medium text-gray-900">Rechercher</div>
+                      <div className="text-xs text-gray-500">Dans toute l'application</div>
+                    </div>
+                  </button>
+                  
                   {/* Mode Expert */}
                   <button
                     onClick={toggleExpertMode}
@@ -212,6 +231,9 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
           </motion.div>
         </>
       )}
+      
+      {/* Search Global Overlay */}
+      <SearchGlobal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </AnimatePresence>
   );
 };

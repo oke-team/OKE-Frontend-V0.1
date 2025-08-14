@@ -147,18 +147,20 @@ export default function HeaderSimple({
         {/* Partie droite : Actions */}
         <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2 flex-shrink-0">
           
-          {/* Recherche globale */}
-          <TooltipSimple
-            content="Rechercher dans toute l'application"
-            position="bottom"
-          >
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+          {/* Recherche globale - cachée sur mobile */}
+          {!isMobile && (
+            <TooltipSimple
+              content="Rechercher dans toute l'application"
+              position="bottom"
             >
-              <Search size={16} className="lg:w-[18px] lg:h-[18px]" />
-            </button>
-          </TooltipSimple>
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+              >
+                <Search size={16} className="lg:w-[18px] lg:h-[18px]" />
+              </button>
+            </TooltipSimple>
+          )}
           
           {!isMobile && (
             <>
