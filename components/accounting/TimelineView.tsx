@@ -1,10 +1,12 @@
 'use client';
 
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Transaction, TransactionTotals } from '@/types/accounting';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
+import { useSelection } from '@/contexts/SelectionContext';
 import { cn } from '@/lib/utils';
+import { Link2, GitMerge, CheckCircle, X, Check } from 'lucide-react';
 
 interface TimelineViewProps {
   debits: Transaction[];
@@ -31,11 +33,16 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
   themeColor = 'violet'
 }) => {
   const { formatAmount, expertMode } = useExpertMode();
+  const { setSelectedCount } = useSelection();
   const [isMobile, setIsMobile] = useState(false);
   const [showLedgerModal, setShowLedgerModal] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<Transaction | null>(null);
   const [editingCell, setEditingCell] = useState<{row: number, field: string} | null>(null);
   const [editedValues, setEditedValues] = useState<Record<string, string | number>>({});
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const [selectionMode, setSelectionMode] = useState(false);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPress = useRef(false);
   const [lineTypes, setLineTypes] = useState<{main: boolean, line1: boolean, line2: boolean}>({  
     main: true, // true = débit, false = crédit
     line1: false,
@@ -144,18 +151,99 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  const handleTransactionClick = (transaction: Transaction) => {
-    // Afficher l'écriture dans un modal/drawer
-    setSelectedEntry(transaction);
-    setShowLedgerModal(true);
-    onTransactionSelect(transaction.id);
-    // Initialiser les types de lignes selon le type de transaction
-    const isDebit = transaction.type === 'invoice' || transaction.type === 'expense';
-    setLineTypes({
-      main: isDebit,
-      line1: !isDebit,
-      line2: !isDebit
-    });
+  const handleMouseDown = useCallback((transaction: Transaction) => {
+    isLongPress.current = false;
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      // Activer le mode sélection
+      if (!selectionMode) {
+        setSelectionMode(true);
+        setSelectedItems(new Set([transaction.id]));
+        setSelectedCount(1);
+        // Vibration légère si supportée
+        if (typeof window !== 'undefined' && navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+      }
+    }, 500);
+  }, [selectionMode]);
+
+  const handleMouseUp = useCallback(() => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  }, []);
+
+  const handleTransactionClick = useCallback((transaction: Transaction) => {
+    // Si c'était un long press, ne pas traiter le click
+    if (isLongPress.current) {
+      isLongPress.current = false;
+      return;
+    }
+
+    if (selectionMode) {
+      // En mode sélection, toggle la sélection
+      const newSelected = new Set(selectedItems);
+      if (newSelected.has(transaction.id)) {
+        newSelected.delete(transaction.id);
+      } else {
+        newSelected.add(transaction.id);
+      }
+      setSelectedItems(newSelected);
+      setSelectedCount(newSelected.size);
+      
+      // Si plus rien n'est sélectionné, quitter le mode sélection
+      if (newSelected.size === 0) {
+        setSelectionMode(false);
+      }
+    } else {
+      // Mode normal, afficher le détail
+      setSelectedEntry(transaction);
+      setShowLedgerModal(true);
+      onTransactionSelect(transaction.id);
+      // Initialiser les types de lignes selon le type de transaction
+      const isDebit = transaction.type === 'invoice' || transaction.type === 'expense';
+      setLineTypes({
+        main: isDebit,
+        line1: !isDebit,
+        line2: !isDebit
+      });
+    }
+  }, [selectionMode, selectedItems, onTransactionSelect]);
+
+  const clearSelection = () => {
+    setSelectedItems(new Set());
+    setSelectionMode(false);
+    setSelectedCount(0);
+  };
+
+  const selectAll = () => {
+    const allIds = allTransactions.map(t => t.id);
+    setSelectedItems(new Set(allIds));
+    setSelectedCount(allIds.length);
+  };
+
+  // Actions comptables
+  const handleLettrage = () => {
+    console.log('Lettrage des écritures:', Array.from(selectedItems));
+    // TODO: Implémenter le lettrage réel
+    alert(`Lettrage de ${selectedItems.size} écritures`);
+    clearSelection();
+  };
+
+  const handleRapprochement = () => {
+    console.log('Rapprochement bancaire:', Array.from(selectedItems));
+    // TODO: Implémenter le rapprochement réel
+    alert(`Rapprochement de ${selectedItems.size} écritures`);
+    clearSelection();
+  };
+
+  const handleValidation = () => {
+    console.log('Validation des écritures:', Array.from(selectedItems));
+    // TODO: Implémenter la validation réelle
+    alert(`Validation de ${selectedItems.size} écritures`);
+    clearSelection();
   };
 
   // Générer des transactions mockées pour les exercices précédents
@@ -314,33 +402,6 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
   return (
     <div className="bg-white rounded-xl p-3 sm:p-6 shadow-sm relative">
       
-      {/* Bouton flottant pour ajouter une transaction */}
-      <motion.button
-        onClick={() => setShowAddTransaction(!showAddTransaction)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className={cn(
-          "fixed bottom-20 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-200",
-          themeColor === 'violet' && "bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
-          themeColor === 'green' && "bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
-          themeColor === 'blue' && "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
-          themeColor === 'orange' && "bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
-          themeColor === 'red' && "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
-          !themeColor && "bg-gradient-to-br from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700"
-        )}
-      >
-        <motion.svg 
-          animate={{ rotate: showAddTransaction ? 45 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="w-6 h-6 text-white" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-        </motion.svg>
-      </motion.button>
-
       {/* Formulaire d'ajout de transaction */}
       <AnimatePresence>
         {showAddTransaction && (
@@ -570,19 +631,28 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                       onClick={() => toggleExercise(transactionYear)}
                       className="w-full flex items-center justify-center group"
                     >
-                      <div className="bg-white px-4 py-2 rounded-full border border-gray-300 shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-2">
+                      <div 
+                        className="px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(139, 92, 246, 0.12) 50%, rgba(167, 139, 250, 0.08) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          border: '1px solid rgba(139, 92, 246, 0.2)',
+                          boxShadow: '0 4px 12px rgba(139, 92, 246, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.3)',
+                        }}
+                      >
                         <motion.svg 
                           animate={{ rotate: isCollapsed ? -90 : 0 }}
                           transition={{ duration: 0.2 }}
-                          className="w-4 h-4 text-gray-500" 
+                          className="w-4 h-4 text-violet-600" 
                           fill="none" 
                           stroke="currentColor" 
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </motion.svg>
-                        <span className="text-sm font-semibold text-gray-600">Exercice {transactionYear}</span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-sm font-semibold text-violet-700">Exercice {transactionYear}</span>
+                        <span className="text-xs text-violet-500/70 font-medium">
                           {isCollapsed ? '(Replié)' : `(${allTransactions.filter(t => new Date(t.date).getFullYear() === transactionYear).length} transactions)`}
                         </span>
                       </div>
@@ -606,17 +676,52 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                   }`}>
                     <motion.div 
                       onClick={() => handleTransactionClick(transaction)}
+                      onMouseDown={() => handleMouseDown(transaction)}
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseUp}
+                      onTouchStart={() => handleMouseDown(transaction)}
+                      onTouchEnd={handleMouseUp}
+                      onContextMenu={(e) => {
+                        // Right click pour activer le mode sélection aussi
+                        e.preventDefault();
+                        if (!selectionMode) {
+                          setSelectionMode(true);
+                          setSelectedItems(new Set([transaction.id]));
+                          setSelectedCount(1);
+                        }
+                      }}
                       whileTap={{ scale: 0.98 }}
-                      className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 ${
-                        selectedTransaction === transaction.id 
-                          ? isDebit 
-                            ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-lg' 
-                            : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-lg'
-                          : 'bg-white hover:bg-gray-50 border-gray-200 hover:shadow-lg hover:border-gray-300'
-                      } ${
+                      className={cn(
+                        "relative p-4 rounded-xl border cursor-pointer transition-all duration-200",
+                        selectionMode && selectedItems.has(transaction.id)
+                          ? "bg-blue-50/80 border-blue-200 scale-[0.98]"
+                          : selectedTransaction === transaction.id 
+                            ? isDebit 
+                              ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-lg' 
+                              : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-lg'
+                            : 'bg-white hover:bg-gray-50 border-gray-200 hover:shadow-lg hover:border-gray-300',
                         !isMobile && isEven ? 'md:text-right' : ''
-                      }`}
+                      )}
                     >
+                      {/* Indicateur de sélection */}
+                      {selectionMode && (
+                        <div className={cn(
+                          "absolute -left-1 top-1/2 -translate-y-1/2 w-1 rounded-full bg-blue-500 transition-all",
+                          selectedItems.has(transaction.id) ? "h-12 opacity-100" : "h-8 opacity-0"
+                        )} />
+                      )}
+                      
+                      {/* Checkbox de sélection */}
+                      {selectionMode && (
+                        <div className={cn(
+                          "absolute right-3 top-3 w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center",
+                          selectedItems.has(transaction.id) 
+                            ? "bg-blue-500 border-blue-500" 
+                            : "bg-white border-gray-300"
+                        )}>
+                          {selectedItems.has(transaction.id) && <Check className="w-3 h-3 text-white" />}
+                        </div>
+                      )}
                     <div className={`flex justify-between items-start ${
                       !isMobile && isEven ? 'md:flex-row-reverse' : ''
                     }`}>
@@ -1284,6 +1389,68 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
           </motion.div>
         </motion.div>
       )}
+      {/* Bottom Action Bar */}
+      <AnimatePresence>
+        {selectionMode && selectedItems.size > 0 && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed left-0 right-0 z-50 backdrop-blur-2xl bg-white/90 border-t border-gray-200/50"
+            style={{ bottom: isMobile ? '60px' : '0' }}
+          >
+            {/* Header de sélection */}
+            <div className="px-4 py-2 flex items-center justify-between border-b border-gray-100">
+              <button onClick={clearSelection} className="p-1">
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+              <span className="font-medium text-gray-900">
+                {selectedItems.size} sélectionné{selectedItems.size > 1 ? 's' : ''}
+              </span>
+              <button onClick={selectAll} className="text-sm text-blue-600 font-medium">
+                Tout
+              </button>
+            </div>
+            
+            {/* Actions */}
+            <div className="px-4 pt-3 pb-6">
+              <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-3" />
+              <div className="grid grid-cols-3 gap-3">
+                <button 
+                  onClick={handleLettrage}
+                  disabled={selectedItems.size < 2}
+                  className={cn(
+                    "flex flex-col items-center gap-1 p-3 rounded-xl transition-all",
+                    selectedItems.size >= 2 
+                      ? "bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-200/50 active:scale-95" 
+                      : "bg-gray-50 border border-gray-200/50 opacity-50"
+                  )}
+                >
+                  <Link2 className="w-5 h-5 text-blue-600" />
+                  <span className="text-xs font-medium text-blue-900">Lettrer</span>
+                </button>
+                
+                <button 
+                  onClick={handleRapprochement}
+                  className="flex flex-col items-center gap-1 p-3 rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 border border-green-200/50 active:scale-95 transition-transform"
+                >
+                  <GitMerge className="w-5 h-5 text-green-600" />
+                  <span className="text-xs font-medium text-green-900">Rapprocher</span>
+                </button>
+                
+                <button 
+                  onClick={handleValidation}
+                  className="flex flex-col items-center gap-1 p-3 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 border border-purple-200/50 active:scale-95 transition-transform"
+                >
+                  <CheckCircle className="w-5 h-5 text-purple-600" />
+                  <span className="text-xs font-medium text-purple-900">Valider</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 });

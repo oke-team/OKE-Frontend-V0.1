@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSelection } from '@/contexts/SelectionContext';
 import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
 import {
   ChevronRight,
@@ -43,6 +44,7 @@ export default function GeneralLedgerTable({
   onEntryEdit,
   onSelectionChange 
 }: GeneralLedgerTableProps) {
+  const { setSelectedCount } = useSelection();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [editingCell, setEditingCell] = useState<{id: string, field: string} | null>(null);
   const [editedEntry, setEditedEntry] = useState<JournalEntry | null>(null);
@@ -166,9 +168,11 @@ export default function GeneralLedgerTable({
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows(new Set());
+      setSelectedCount(0);
     } else {
       const allIds = new Set(entries.map(e => e.id));
       setSelectedRows(allIds);
+      setSelectedCount(allIds.size);
     }
     setSelectAll(!selectAll);
     onSelectionChange?.(selectAll ? new Set() : selectedRows);
@@ -183,6 +187,7 @@ export default function GeneralLedgerTable({
     }
     setSelectedRows(newSelected);
     setSelectAll(false);
+    setSelectedCount(newSelected.size);
     onSelectionChange?.(newSelected);
   };
 

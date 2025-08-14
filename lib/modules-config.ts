@@ -187,7 +187,7 @@ export const mobileNavItems = [
     isPrimary: true
   },
   modules.find(m => m.id === 'purchases')!,
-  modules.find(m => m.id === 'sales')!
+  modules.find(m => m.id === 'accounting')!
 ];
 
 /**

@@ -10,6 +10,8 @@ import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
 import { usePathname } from 'next/navigation';
 import { TooltipSimple } from '@/components/ui/TooltipSimple';
 import { SearchGlobal } from '@/components/ui/SearchGlobal';
+import { useSelection } from '@/contexts/SelectionContext';
+import { ContextualActionsMenu } from '@/components/ui/ContextualActionsMenu';
 import {
   MessageSquare,
   Sparkles,
@@ -41,10 +43,13 @@ export default function HeaderSimple({
   onMagicActions
 }: HeaderSimpleProps) {
   const { expertMode, toggleExpertMode } = useExpertMode();
+  const { selectedCount } = useSelection();
   const pathname = usePathname();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const actionsMenuRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -177,18 +182,57 @@ export default function HeaderSimple({
             </button>
           </TooltipSimple>
           
-          {/* Actions Magiques */}
-          <TooltipSimple
-            content="Actions rapides et automatisations"
-            position="bottom"
-          >
-            <button
-              onClick={onMagicActions}
-              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
+          {/* Actions Magiques - Assistant Contextuel */}
+          <div ref={actionsMenuRef} className="relative">
+            <TooltipSimple
+              content={selectedCount > 0 ? `${selectedCount} éléments sélectionnés` : "Actions suggérées"}
+              position="bottom"
             >
-              <Wand2 size={16} className="lg:w-[18px] lg:h-[18px]" />
-            </button>
-          </TooltipSimple>
+              <button
+                onClick={() => {
+                  if (selectedCount > 0) {
+                    setActionsMenuOpen(!actionsMenuOpen);
+                  }
+                  onMagicActions?.();
+                }}
+                className="relative p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
+              >
+                <Wand2 size={16} className="lg:w-[18px] lg:h-[18px]" />
+                {selectedCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-purple-600 text-white text-[10px] rounded-full flex items-center justify-center">
+                    {selectedCount}
+                  </span>
+                )}
+              </button>
+            </TooltipSimple>
+            
+            {/* Menu contextuel */}
+            <ContextualActionsMenu
+              isOpen={actionsMenuOpen}
+              onClose={() => setActionsMenuOpen(false)}
+              selectedCount={selectedCount}
+              onLettrage={() => {
+                console.log('Lettrage depuis header');
+                alert(`Lettrage de ${selectedCount} écritures`);
+              }}
+              onRapprochement={() => {
+                console.log('Rapprochement depuis header');
+                alert(`Rapprochement de ${selectedCount} écritures`);
+              }}
+              onValidation={() => {
+                console.log('Validation depuis header');
+                alert(`Validation de ${selectedCount} écritures`);
+              }}
+              onExport={() => {
+                console.log('Export depuis header');
+                alert(`Export de ${selectedCount} écritures`);
+              }}
+              onReclassement={() => {
+                console.log('Reclassement depuis header');
+                alert(`Reclassement de ${selectedCount} écritures`);
+              }}
+            />
+          </div>
           
           {/* Chat */}
           <TooltipSimple
