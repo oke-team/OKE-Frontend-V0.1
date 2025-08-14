@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
-import { SearchGlobal } from '@/components/ui/SearchGlobal';
 
 interface ContextualActionsMenuProps {
   isOpen: boolean;
@@ -19,6 +18,7 @@ interface ContextualActionsMenuProps {
   onExport?: () => void;
   onReclassement?: () => void;
   isMobile?: boolean;
+  onSearchOpen?: () => void;
 }
 
 export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
@@ -30,13 +30,13 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
   onValidation,
   onExport,
   onReclassement,
-  isMobile = false
+  isMobile = false,
+  onSearchOpen
 }) => {
   const pathname = usePathname();
   const { expertMode, toggleExpertMode } = useExpertMode();
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   const [showPeriodSelector, setShowPeriodSelector] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   
   if (!isOpen) return null;
 
@@ -82,8 +82,9 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
                   {/* Recherche globale */}
                   <button
                     onClick={() => {
-                      setSearchOpen(true);
                       onClose();
+                      // Délai court pour laisser le menu se fermer avant d'ouvrir la recherche
+                      setTimeout(() => onSearchOpen?.(), 150);
                     }}
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group mb-2"
                   >
@@ -231,9 +232,6 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
           </motion.div>
         </>
       )}
-      
-      {/* Search Global Overlay */}
-      <SearchGlobal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </AnimatePresence>
   );
 };

@@ -74,7 +74,7 @@ export default function HeaderSimple({
   
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-gray-200/50 z-50">
-      <div className="flex items-center justify-between h-full px-4 md:px-6">
+      <div className="flex items-center justify-between h-full px-3 sm:px-4 md:px-6">
         
         {/* Partie gauche : Logo + Badge Version */}
         <div className="flex items-center gap-3 flex-shrink-0">
@@ -103,15 +103,15 @@ export default function HeaderSimple({
         
         {/* Partie centrale : Sélecteurs */}
         <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[45%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
-          {/* Version mobile : seulement le sélecteur d'entreprise */}
+          {/* Version mobile : seulement le sélecteur d'entreprise avec nom complet */}
           <div className="lg:hidden flex items-center gap-2 w-full">
-            <div className="flex-shrink-0">
+            <div className="flex-1">
               <CompanySelectorMobile
                 companies={mockCompanies}
                 currentCompany={currentCompany}
                 onCompanyChange={onCompanyChange || (() => {})}
-                size="sm"
-                compact={true}
+                size="md"
+                compact={false}
               />
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function HeaderSimple({
         </div>
         
         {/* Partie droite : Actions */}
-        <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-2 lg:gap-2 flex-shrink-0 h-full">
           
           {/* Recherche globale - cachée sur mobile */}
           {!isMobile && (
@@ -201,11 +201,21 @@ export default function HeaderSimple({
                     onMagicActions?.();
                   }
                 }}
-                className="relative p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors"
+                className={cn(
+                  "relative rounded-lg transition-all",
+                  isMobile 
+                    ? "p-2.5 bg-gradient-to-r from-purple-100 to-purple-50 text-purple-700 hover:from-purple-200 hover:to-purple-100 shadow-sm" 
+                    : "p-1.5 sm:p-1.5 lg:p-2 bg-purple-100 text-purple-600 hover:bg-purple-200"
+                )}
               >
-                <Wand2 size={16} className="lg:w-[18px] lg:h-[18px]" />
+                <Wand2 size={isMobile ? 20 : 16} className="lg:w-[18px] lg:h-[18px]" />
                 {selectedCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-purple-600 text-white text-[10px] rounded-full flex items-center justify-center">
+                  <span className={cn(
+                    "absolute bg-purple-600 text-white rounded-full flex items-center justify-center",
+                    isMobile 
+                      ? "-top-1.5 -right-1.5 w-5 h-5 text-xs" 
+                      : "-top-1 -right-1 w-4 h-4 text-[10px]"
+                  )}>
                     {selectedCount}
                   </span>
                 )}
@@ -218,6 +228,7 @@ export default function HeaderSimple({
               onClose={() => setActionsMenuOpen(false)}
               selectedCount={selectedCount}
               isMobile={isMobile}
+              onSearchOpen={() => setSearchOpen(true)}
               onLettrage={() => {
                 console.log('Lettrage depuis header');
                 alert(`Lettrage de ${selectedCount} écritures`);
@@ -248,9 +259,12 @@ export default function HeaderSimple({
           >
             <button
               onClick={onChatOpen}
-              className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+              className={cn(
+                "rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors",
+                isMobile ? "p-2.5" : "p-1.5 sm:p-1.5 lg:p-2"
+              )}
             >
-              <MessageSquare size={16} className="lg:w-[18px] lg:h-[18px]" />
+              <MessageSquare size={isMobile ? 20 : 16} className="lg:w-[18px] lg:h-[18px]" />
             </button>
           </TooltipSimple>
           
@@ -258,7 +272,12 @@ export default function HeaderSimple({
           <div ref={userMenuRef} className="relative">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs lg:text-sm font-semibold hover:shadow-lg transition-shadow"
+              className={cn(
+                "flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg transition-shadow",
+                isMobile 
+                  ? "w-10 h-10 text-sm" 
+                  : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 text-xs lg:text-sm"
+              )}
             >
               JD
             </button>
