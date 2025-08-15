@@ -18,7 +18,8 @@ import {
   Mail,
   Calendar,
   Zap,
-  Plus
+  Plus,
+  MoreHorizontal
 } from 'lucide-react';
 
 export interface Module {
@@ -171,10 +172,40 @@ export const modules: Module[] = [
 ];
 
 /**
- * Configuration de la navigation mobile (5 icônes)
+ * Configuration de la navigation mobile (5 icônes avec + au centre)
  */
 export const mobileNavItems = [
   modules.find(m => m.id === 'dashboard')!,
+  modules.find(m => m.id === 'accounting')!,
+  {
+    id: 'add',
+    label: 'Ajouter',
+    icon: Plus,
+    href: '#',
+    description: 'Ajouter ou scanner',
+    category: 'core' as const,
+    mobileVisible: true,
+    isPrimary: true
+  },
+  modules.find(m => m.id === 'bank')!,
+  {
+    id: 'more',
+    label: 'Autres',
+    icon: MoreHorizontal,
+    href: '#',
+    description: 'Tous les modules',
+    category: 'core' as const,
+    mobileVisible: true,
+    isMore: true
+  }
+];
+
+/**
+ * Configuration de la navigation tablette (7 items avec + au centre)
+ */
+export const tabletNavItems = [
+  modules.find(m => m.id === 'dashboard')!,
+  modules.find(m => m.id === 'accounting')!,
   modules.find(m => m.id === 'bank')!,
   {
     id: 'add',
@@ -187,13 +218,46 @@ export const mobileNavItems = [
     isPrimary: true
   },
   modules.find(m => m.id === 'purchases')!,
-  modules.find(m => m.id === 'accounting')!
+  modules.find(m => m.id === 'sales')!,
+  {
+    id: 'more',
+    label: 'Plus',
+    icon: MoreHorizontal,
+    href: '#',
+    description: 'Autres modules',
+    category: 'core' as const,
+    mobileVisible: true,
+    isMore: true
+  }
 ];
 
 /**
- * Configuration de la navigation desktop (tous les modules)
+ * Configuration de la navigation desktop (13 modules avec + au centre)
  */
-export const desktopNavItems = modules.filter(m => m.category !== 'system');
+export const desktopNavItems = [
+  modules.find(m => m.id === 'dashboard')!,
+  modules.find(m => m.id === 'accounting')!,
+  modules.find(m => m.id === 'bank')!,
+  modules.find(m => m.id === 'purchases')!,
+  modules.find(m => m.id === 'sales')!,
+  modules.find(m => m.id === 'documents')!,
+  {
+    id: 'add',
+    label: 'Ajouter',
+    icon: Plus,
+    href: '#',
+    description: 'Ajouter ou scanner',
+    category: 'core' as const,
+    mobileVisible: true,
+    isPrimary: true
+  },
+  modules.find(m => m.id === 'stocks')!,
+  modules.find(m => m.id === 'tax')!,
+  modules.find(m => m.id === 'reporting')!,
+  modules.find(m => m.id === 'payroll')!,
+  modules.find(m => m.id === 'organization')!,
+  modules.find(m => m.id === 'automations')!
+];
 
 /**
  * Obtenir un module par son ID

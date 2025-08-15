@@ -6,6 +6,8 @@ import BottomNav from '@/components/navigation/BottomNav';
 import HeaderSimple from './HeaderSimple';
 import MagicActionsButton from '@/components/ui/MagicActionsButton';
 import Chatbot from '@/components/ui/Chatbot';
+import AddMenu from '@/components/ui/AddMenu';
+import ModulesGrid from '@/components/ui/ModulesGrid';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -28,6 +30,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
     plan: 'pro' as const
   });
   const [chatOpen, setChatOpen] = useState(false);
+  const [addMenuOpen, setAddMenuOpen] = useState(false);
+  const [modulesGridOpen, setModulesGridOpen] = useState(false);
 
   // Synchroniser l'item actif avec l'URL
   useEffect(() => {
@@ -37,8 +41,13 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
 
   const handleNavigation = (itemId: string) => {
     if (itemId === 'add') {
-      // Gérer le bouton d'ajout spécialement
-      console.log('Bouton Ajouter cliqué');
+      // Ouvrir le menu d'ajout
+      setAddMenuOpen(true);
+      return;
+    }
+    if (itemId === 'more') {
+      // Ouvrir la grille de modules
+      setModulesGridOpen(true);
       return;
     }
     setActiveNavItem(itemId);
@@ -71,11 +80,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
 
       {/* Contenu principal avec padding pour header et navigation */}
       <main className={`pt-16 min-h-screen ${className || ''}`}>
-        <div className="pb-24 md:pb-8">
+        <div className="pb-24">
           {children}
         </div>
-        {/* Spacer pour éviter que le contenu soit caché par la navbar sur mobile */}
-        <div className="h-20 md:hidden" aria-hidden="true" />
+        {/* Spacer pour éviter que le contenu soit caché par la navbar flottante */}
+        <div className="h-24" aria-hidden="true" />
       </main>
 
       {/* Navigation inférieure unifiée */}
@@ -88,6 +97,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
       <Chatbot 
         isOpen={chatOpen} 
         onClose={() => setChatOpen(false)} 
+      />
+      
+      {/* Menu d'ajout */}
+      <AddMenu
+        isOpen={addMenuOpen}
+        onClose={() => setAddMenuOpen(false)}
+      />
+      
+      {/* Grille de modules */}
+      <ModulesGrid
+        isOpen={modulesGridOpen}
+        onClose={() => setModulesGridOpen(false)}
+        currentModule={activeNavItem}
       />
     </div>
   );

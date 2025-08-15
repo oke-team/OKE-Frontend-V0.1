@@ -25,6 +25,8 @@ export interface NavItem {
   isActive?: boolean;
   /** Si l'item est le bouton d'action primaire (bouton "+") */
   isPrimary?: boolean;
+  /** Si l'item est le bouton "Autres" pour afficher tous les modules */
+  isMore?: boolean;
   /** Catégorie pour le filtrage responsive */
   category?: NavCategory;
   /** Si l'item est désactivé */

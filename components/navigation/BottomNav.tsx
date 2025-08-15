@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NavItem, BottomNavProps } from './types';
 import { useOptimizedAnimations } from '@/lib/performance-utils';
-import { mobileNavItems, desktopNavItems } from '@/lib/modules-config';
+import { mobileNavItems, tabletNavItems, desktopNavItems } from '@/lib/modules-config';
 
 // Conversion des modules en NavItems
-const convertToNavItems = (modules: typeof mobileNavItems): NavItem[] => {
+const convertToNavItems = (modules: any[]): NavItem[] => {
   return modules.map(module => ({
     id: module.id,
     label: module.label,
     icon: module.icon,
     href: module.href,
     category: module.category,
-    isPrimary: module.isPrimary || false,
+    isPrimary: (module as any).isPrimary || false,
+    isMore: (module as any).isMore || false,
     badgeCount: module.badge
   }));
 };
@@ -37,18 +38,15 @@ const NavItemComponent: React.FC<{
   const itemVariants = {
     inactive: { 
       scale: 1, 
-      y: 0,
-      filter: "brightness(0.7)"
+      y: 0
     },
     active: { 
-      scale: isMobile ? 1.1 : 1.05,
-      y: isMobile ? -2 : -1,
-      filter: "brightness(1.2)"
+      scale: 1,
+      y: 0
     },
     hover: { 
-      scale: isMobile ? 1.05 : 1.02,
-      y: isMobile ? -1 : -0.5,
-      filter: "brightness(1.1)"
+      scale: 1.02,
+      y: 0
     }
   };
 
@@ -67,30 +65,29 @@ const NavItemComponent: React.FC<{
     }
   };
 
-  if (item.isPrimary && isMobile) {
+  if (item.isPrimary) {
     // Bouton primaire central avec effet spécial
     return (
       <motion.button
         onClick={() => onSelect(item.id)}
         className={cn(
           "relative flex flex-col items-center justify-center",
-          "w-14 h-14 landscape:w-12 landscape:h-12 rounded-2xl landscape:rounded-xl",
-          "bg-gradient-to-br from-primary-400 via-primary-500 to-primary-600",
-          "shadow-glass-lg shadow-primary-500/25",
-          "border border-white/20",
-          "backdrop-blur-md",
+          "w-11 h-11 rounded-2xl",
           "transition-all duration-300",
-          "hover:shadow-glow-sm hover:shadow-primary-400/30",
+          "hover:shadow-xl hover:shadow-rose-500/60 hover:scale-110",
           "active:scale-95"
         )}
-        variants={itemVariants}
-        initial="inactive"
-        animate={isActive ? "active" : "inactive"}
-        whileHover="hover"
+        style={{
+          background: 'linear-gradient(135deg, rgb(167, 139, 250) 0%, rgb(217, 70, 239) 50%, rgb(251, 146, 176) 100%)',
+          boxShadow: '0 10px 25px -5px rgba(217, 70, 239, 0.5)',
+          border: '1px solid rgba(255, 255, 255, 0.5)',
+          filter: 'brightness(1.1) saturate(1.25)'
+        }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
         {/* Effet de glow intérieur */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-60" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-transparent opacity-70" />
         
         {/* Particules flottantes pour le bouton primaire - Optimisé pour mobile */}
         <AnimatePresence>
@@ -125,32 +122,29 @@ const NavItemComponent: React.FC<{
           )}
         </AnimatePresence>
 
-        <motion.div
-          variants={iconVariants}
-          initial="inactive"
-          animate={isActive ? "active" : "inactive"}
-          whileHover="hover"
-        >
+        <div className="relative z-10">
           <Icon 
-            size={isMobile ? 20 : 20} 
-            className="text-white drop-shadow-sm landscape:w-4 landscape:h-4" 
+            size={16} 
+            className="text-white drop-shadow-lg" 
           />
-        </motion.div>
+        </div>
       </motion.button>
     );
   }
 
-  // Item de navigation standard
+  // Item de navigation standard avec style Liquid Glass
   return (
     <motion.button
       onClick={() => onSelect(item.id)}
       className={cn(
-        "flex flex-col items-center justify-center gap-1",
-        "min-h-[60px] landscape:min-h-[50px] px-3 py-2 rounded-xl",
+        "flex flex-col items-center justify-center gap-0.5",
+        "min-h-[48px] px-2 py-1.5 rounded-xl",
         "transition-all duration-300",
-        "hover:bg-white/5 active:bg-white/10",
-        // Optimisation des touch targets pour mobile
-        isMobile ? "flex-1 min-w-[44px] touch-manipulation" : "min-w-[80px]"
+        // Effet hover Liquid Glass
+        "hover:bg-white/10 active:bg-white/15",
+        "hover:backdrop-blur-sm",
+        // Taille unifiée
+        isMobile ? "min-w-[50px]" : "min-w-[65px]"
       )}
       variants={itemVariants}
       initial="inactive"
@@ -163,28 +157,25 @@ const NavItemComponent: React.FC<{
         initial="inactive"
         animate={isActive ? "active" : "inactive"}
         whileHover="hover"
-        className={cn(
-          "relative",
-          isActive && "text-primary-400",
-          !isActive && "text-neutral-400"
-        )}
+        className="relative"
       >
-        <Icon size={isMobile ? 20 : 18} className="landscape:w-4 landscape:h-4" />
+        <Icon 
+          size={18} 
+          className={cn(
+            isActive ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
+            "transition-colors duration-200"
+          )}
+        />
         
-        {/* Indicateur actif - Optimisé pour mobile */}
+        {/* Indicateur actif - Glow rose */}
         <AnimatePresence>
           {isActive && (
             <motion.div
-              className={cn(
-                "absolute -inset-1 rounded-lg",
-                isMobile 
-                  ? "bg-primary-500/30 shadow-sm" // Plus simple sur mobile
-                  : "bg-primary-500/20 blur-sm" // Effet blur sur desktop
-              )}
+              className="absolute -inset-2 rounded-lg bg-fuchsia-500/20 blur-md"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: isMobile ? 0.15 : 0.2 }}
+              transition={{ duration: 0.2 }}
             />
           )}
         </AnimatePresence>
@@ -192,17 +183,23 @@ const NavItemComponent: React.FC<{
 
       <motion.span 
         className={cn(
-          "text-xs font-medium transition-colors duration-200",
-          isActive ? "text-primary-300" : "text-neutral-500",
-          isMobile ? "text-2xs landscape:text-[10px]" : "text-xs"
+          "text-[10px] font-medium transition-colors duration-200",
+          isActive ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500"
         )}
-        animate={{
-          opacity: isActive ? 1 : 0.7,
-          y: isActive ? 0 : 1
-        }}
       >
         {item.label}
       </motion.span>
+      
+      {/* Barre indicatrice active */}
+      {isActive && (
+        <motion.div
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-fuchsia-500 to-rose-500 rounded-full"
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: 20, opacity: 1 }}
+          exit={{ width: 0, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
     </motion.button>
   );
 };
@@ -214,16 +211,48 @@ const BottomNav: React.FC<BottomNavProps> = ({
   className
 }) => {
   const [localActiveItem, setLocalActiveItem] = useState(activeItem);
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const animationSettings = useOptimizedAnimations();
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setScreenSize('mobile');
+      } else if (width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const handleItemSelect = (itemId: string) => {
     setLocalActiveItem(itemId);
     onItemSelect?.(itemId);
   };
 
-  // Utilisation des configurations spécifiques mobile/desktop
-  const mobileItems = mobileNavigationItems;
-  const desktopItems = desktopNavigationItems;
+  // Sélection des items selon la taille d'écran
+  const getNavItems = () => {
+    switch (screenSize) {
+      case 'mobile':
+        return convertToNavItems(mobileNavItems);
+      case 'tablet':
+        return convertToNavItems(tabletNavItems);
+      case 'desktop':
+        return convertToNavItems(desktopNavItems);
+      default:
+        return convertToNavItems(desktopNavItems);
+    }
+  };
+
+  const navItems = getNavItems();
+  const isMobile = screenSize === 'mobile';
 
   // Animation du conteneur optimisée
   const containerVariants = {
@@ -263,8 +292,8 @@ const BottomNav: React.FC<BottomNavProps> = ({
       <motion.div
         className={cn(
           "absolute bottom-1 h-1 rounded-full",
-          "bg-gradient-to-r from-primary-400 to-primary-500",
-          "shadow-glow-sm shadow-primary-500/50"
+          "bg-gradient-to-r from-primary-500 to-primary-600",
+          "shadow-glow-sm shadow-primary-500/70"
         )}
         style={{ 
           width: pillWidth,
@@ -281,87 +310,96 @@ const BottomNav: React.FC<BottomNavProps> = ({
   };
 
   return (
-    <>
-      {/* Version Mobile */}
-      <motion.nav
-        className={cn(
-          "fixed bottom-0 left-0 right-0 z-50",
-          "desktop:hidden", // Caché sur desktop
-          "h-16 landscape:h-14 phone-landscape:h-10 px-4 pb-4 landscape:pb-2",
-          "safe-area-bottom",
-          "iphone-se:h-12 iphone-se:pb-2",
-          className
-        )}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Effet Liquid Glass - Amélioré pour mobile */}
-        <div className="absolute inset-0 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl" />
-        <div className="absolute inset-0 bg-gradient-to-t from-glass-medium dark:from-glass-dark to-transparent" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neutral-300/50 dark:via-glass-light to-transparent" />
-        
-        {/* Contenu */}
-        <div className="relative h-full flex items-center justify-between">
-          {mobileItems.map((item) => (
+    // Une seule navbar flottante unifiée avec design Liquid Glass
+    <motion.nav
+      className={cn(
+        "fixed bottom-6 left-1/2 -translate-x-1/2 z-50",
+        "flex items-center gap-1.5",
+        "px-3 py-2.5 rounded-2xl",
+        // Style Liquid Glass avec teinte rose subtile
+        "backdrop-blur-2xl",
+        "shadow-2xl",
+        // Largeur adaptative mais toujours centrée
+        screenSize === 'mobile' && "scale-90",
+        screenSize === 'tablet' && "w-auto",
+        screenSize === 'desktop' && "w-auto",
+        className
+      )}
+      style={{
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(251, 207, 232, 0.15) 50%, rgba(255, 255, 255, 0.85) 100%)',
+        border: '1px solid rgba(251, 207, 232, 0.3)',
+        boxShadow: '0 20px 40px -10px rgba(217, 70, 239, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)'
+      }}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Effet Liquid Glass avec reflet rose */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-fuchsia-100/10 to-transparent opacity-60" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-rose-100/5 to-white/10" />
+      
+      {/* Contenu unifié avec même espacement */}
+      <div className={cn(
+        "relative flex items-center gap-1",
+        screenSize === 'tablet' && "gap-1.5"
+      )}>
+        {navItems.map((item) => {
+          // Gestion spéciale pour le bouton "Autres"
+          if ((item as any).isMore) {
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => onItemSelect?.(item.id)}
+                className={cn(
+                  "flex flex-col items-center justify-center gap-0.5",
+                  "min-h-[48px] px-2 py-1.5 rounded-xl",
+                  "transition-all duration-300",
+                  "hover:bg-white/10 active:bg-white/15",
+                  "hover:backdrop-blur-sm",
+                  screenSize === 'mobile' ? "min-w-[50px]" : "min-w-[65px]"
+                )}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <item.icon 
+                  size={18} 
+                  className={cn(
+                    localActiveItem === item.id ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
+                    "transition-colors duration-200"
+                  )}
+                />
+                <span className={cn(
+                  "text-[10px] font-medium",
+                  localActiveItem === item.id ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500",
+                  "transition-colors duration-200"
+                )}>
+                  {item.label}
+                </span>
+              </motion.button>
+            );
+          }
+          
+          return (
             <NavItemComponent
               key={item.id}
               item={item}
               isActive={localActiveItem === item.id}
-              isMobile={true}
+              isMobile={isMobile}
               onSelect={handleItemSelect}
             />
-          ))}
-          
-          {/* Indicateur actif */}
-          <ActiveIndicator 
-            items={mobileItems} 
-            activeId={localActiveItem} 
-            isMobile={true} 
-          />
-        </div>
-      </motion.nav>
-
-      {/* Version Desktop */}
-      <motion.nav
-        className={cn(
-          "hidden md:fixed md:bottom-6 md:left-1/2 md:-translate-x-1/2 z-50",
-          "md:flex md:items-center md:gap-2",
-          "px-4 py-3 rounded-2xl",
-          "backdrop-blur-2xl bg-glass-light",
-          "border border-white/10",
-          "shadow-glass-lg",
-          className
-        )}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Effet Liquid Glass Desktop */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-glass-white via-transparent to-transparent" />
-        <div className="absolute inset-0 rounded-2xl shadow-inner-glow" />
+          );
+        })}
         
-        {/* Contenu Desktop */}
-        <div className="relative flex items-center gap-1">
-          {desktopItems.map((item) => (
-            <NavItemComponent
-              key={item.id}
-              item={item}
-              isActive={localActiveItem === item.id}
-              isMobile={false}
-              onSelect={handleItemSelect}
-            />
-          ))}
-          
-          {/* Indicateur actif desktop */}
+        {/* Indicateur actif */}
+        {!isMobile && (
           <ActiveIndicator 
-            items={desktopItems} 
+            items={navItems} 
             activeId={localActiveItem} 
-            isMobile={false} 
+            isMobile={isMobile} 
           />
-        </div>
-      </motion.nav>
-    </>
+        )}
+      </div>
+    </motion.nav>
   );
 };
 
