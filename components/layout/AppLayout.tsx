@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import UnifiedBottomNav from '@/components/navigation/UnifiedBottomNav';
+import BottomNav from '@/components/navigation/BottomNav';
 import HeaderSimple from './HeaderSimple';
 import MagicActionsButton from '@/components/ui/MagicActionsButton';
 import Chatbot from '@/components/ui/Chatbot';
@@ -79,7 +79,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
       </main>
 
       {/* Navigation inférieure unifiée */}
-      <UnifiedBottomNav
+      <BottomNav
         activeItem={activeNavItem}
         onItemSelect={handleNavigation}
       />

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { CompanySelectorLiquid, Company } from '@/components/ui/CompanySelectorLiquid';
 import { PeriodSelectorLiquid } from '@/components/ui/PeriodSelectorLiquid';

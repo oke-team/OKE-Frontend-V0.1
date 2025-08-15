@@ -33,7 +33,7 @@ interface EntrepreneurDashboardV3Props {
   loading?: boolean;
 }
 
-export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = ({
+export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(({
   data = {},
   loading = false,
 }) => {
@@ -439,4 +439,6 @@ export const EntrepreneurDashboardV3: React.FC<EntrepreneurDashboardV3Props> = (
       </AnimatePresence>
     </div>
   );
-};
+});
+
+EntrepreneurDashboardV3.displayName = 'EntrepreneurDashboardV3';

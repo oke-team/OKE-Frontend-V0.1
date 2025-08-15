@@ -38,12 +38,12 @@ interface GeneralLedgerTableProps {
   onSelectionChange?: (selected: Set<string>) => void;
 }
 
-export default function GeneralLedgerTable({ 
+const GeneralLedgerTable = React.memo(({ 
   selectedAccount, 
   selectedAccountLabel = '',
   onEntryEdit,
   onSelectionChange 
-}: GeneralLedgerTableProps) {
+}: GeneralLedgerTableProps) => {
   const { setSelectedCount } = useSelection();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [editingCell, setEditingCell] = useState<{id: string, field: string} | null>(null);
@@ -2598,4 +2598,8 @@ export default function GeneralLedgerTable({
       />
     </div>
   );
-}
+});
+
+GeneralLedgerTable.displayName = 'GeneralLedgerTable';
+
+export default GeneralLedgerTable;
