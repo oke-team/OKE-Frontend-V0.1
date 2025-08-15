@@ -761,21 +761,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <div className={`font-medium ${isTablet ? 'text-base' : 'text-sm'} truncate`}>{transaction.label}</div>
-                              {transaction.attachments && transaction.attachments > 0 && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleOpenAttachment(transaction);
-                                  }}
-                                  className="flex-shrink-0 p-1 rounded hover:bg-gray-100 transition-colors"
-                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
-                                >
-                                  <Paperclip className="w-3 h-3 text-gray-500" />
-                                  {transaction.attachments > 1 && (
-                                    <span className="ml-0.5 text-[9px] text-gray-500">{transaction.attachments}</span>
-                                  )}
-                                </button>
-                              )}
+                              {/* Pièce jointe déplacée dans le footer sur mobile/tablette */}
                             </div>
                             {transaction.reference && (
                               <div className="text-[11px] text-neutral-500 truncate mt-0.5">
