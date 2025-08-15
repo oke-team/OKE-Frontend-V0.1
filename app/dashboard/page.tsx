@@ -24,9 +24,6 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Tableau de bord
           </h1>
-          <p className="text-neutral-600 dark:text-neutral-400 mt-2">
-            Bienvenue dans votre espace de gestion OKÉ
-          </p>
         </div>
 
         {/* Dashboard Enriched avec Widgets et Graphiques */}

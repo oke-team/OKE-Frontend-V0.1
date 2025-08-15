@@ -45,6 +45,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       invoiceNumber: 'FA-2025-001',
       status: 'pending' as const,
       description: 'Prestation de service janvier',
+      attachments: 1, // Ajout de pièce jointe
     },
     {
       id: '2',
@@ -55,6 +56,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       invoiceNumber: 'FA-2024-042',
       status: 'paid' as const,
       description: 'Règlement facture décembre',
+      attachments: 2, // 2 pièces jointes
     },
     {
       id: '3',
@@ -75,6 +77,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       invoiceNumber: 'FA-2024-038',
       status: 'overdue' as const,
       description: 'Vente marchandises',
+      attachments: 1, // Ajout de pièce jointe
     },
     {
       id: '5',
@@ -85,6 +88,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       invoiceNumber: 'FA-2024-035',
       status: 'partial' as const,
       description: 'Acompte sur commande',
+      attachments: 3, // 3 pièces jointes
     },
   ];
 

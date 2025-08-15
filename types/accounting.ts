@@ -19,6 +19,7 @@ export interface BaseTransaction {
   linkedTo?: string[]; // Références des transactions liées (pour le lettrage)
   attachments?: number;
   description?: string;
+  lettrageCode?: string; // Code de lettrage (A, B, C, etc.)
 }
 
 // Transaction pour ClientDetailView

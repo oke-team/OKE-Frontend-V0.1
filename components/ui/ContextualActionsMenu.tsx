@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link2, GitMerge, CheckCircle, FileSpreadsheet, Archive, Calendar, Sparkles, Search } from 'lucide-react';
+import { Link2, GitMerge, CheckCircle, FileSpreadsheet, Archive, Calendar, Sparkles, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
@@ -37,6 +37,21 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
   const { expertMode, toggleExpertMode } = useExpertMode();
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   const [showPeriodSelector, setShowPeriodSelector] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  
+  // Fermer le menu en cliquant à l'extérieur
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen, onClose]);
   
   if (!isOpen) return null;
 
@@ -49,22 +64,17 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 z-40" 
-            onClick={onClose}
-          />
-          
           {/* Menu */}
           <motion.div
+            ref={menuRef}
             initial={{ opacity: 0, scale: 0.95, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.15 }}
             className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200/50 overflow-hidden z-50"
           >
-            {/* Header */}
-            <div className="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/50 border-b border-purple-200/30">
+            {/* Header avec croix de fermeture */}
+            <div className="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/50 border-b border-purple-200/30 flex items-center justify-between">
               <p className="text-sm font-medium text-purple-900">
                 {selectedCount > 0 ? (
                   <>{selectedCount} élément{selectedCount > 1 ? 's' : ''} sélectionné{selectedCount > 1 ? 's' : ''}</>
@@ -72,6 +82,12 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
                   'Actions rapides'
                 )}
               </p>
+              <button
+                onClick={onClose}
+                className="p-1 hover:bg-purple-200/50 rounded-lg transition-colors"
+              >
+                <X className="w-4 h-4 text-purple-700" />
+              </button>
             </div>
 
             {/* Actions */}

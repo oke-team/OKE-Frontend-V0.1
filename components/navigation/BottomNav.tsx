@@ -142,14 +142,14 @@ const NavItemComponent: React.FC<{
       onClick={() => onSelect(item.id)}
       className={cn(
         "flex flex-col items-center justify-center gap-0.5",
-        isMobile ? "min-h-[54px] px-3 py-2" : "min-h-[48px] px-2 py-1.5",
+        isMobile ? "min-h-[54px] py-2" : "min-h-[48px] px-2 py-1.5",
         "rounded-xl",
         "transition-all duration-300",
         // Effet hover Liquid Glass
         "hover:bg-white/10 active:bg-white/15",
         "hover:backdrop-blur-sm",
-        // Taille adaptée
-        isMobile ? "flex-1" : "min-w-[65px]"
+        // Largeur fixe et identique pour tous sur mobile
+        isMobile ? "w-[58px]" : "min-w-[65px]"
       )}
       variants={itemVariants}
       initial="inactive"
@@ -177,12 +177,13 @@ const NavItemComponent: React.FC<{
 
       <motion.span 
         className={cn(
-          isMobile ? "text-[11px]" : "text-[10px]",
+          isMobile ? "text-[10px]" : "text-[10px]",
           "font-medium transition-colors duration-200",
+          "truncate max-w-[50px]",
           isReallyActive ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500"
         )}
       >
-        {item.label}
+        {item.label.length > 7 && isMobile ? `${item.label.slice(0, 5)}...` : item.label}
       </motion.span>
       
     </motion.button>
@@ -277,12 +278,11 @@ const BottomNav: React.FC<BottomNavProps> = ({
         "fixed z-50",
         // Position adaptée pour mobile avec safe area iOS
         screenSize === 'mobile' 
-          ? "bottom-[env(safe-area-inset-bottom,20px)] left-3 right-3" // Safe area iOS
+          ? "bottom-[env(safe-area-inset-bottom,20px)] left-1/2 -translate-x-1/2" // Centré horizontalement
           : "bottom-6 left-1/2 -translate-x-1/2",
-        "flex items-center",
-        screenSize === 'mobile' ? "justify-around" : "gap-1.5",
-        // Padding plus généreux sur mobile
-        screenSize === 'mobile' ? "px-4 py-3.5" : "px-3 py-2.5",
+        "flex items-center justify-center",
+        // Padding optimisé pour le centrage
+        screenSize === 'mobile' ? "px-2 py-3.5" : "px-3 py-2.5",
         "rounded-2xl",
         // Style Liquid Glass avec teinte rose subtile
         "backdrop-blur-2xl",
@@ -302,11 +302,10 @@ const BottomNav: React.FC<BottomNavProps> = ({
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-fuchsia-100/10 to-transparent opacity-60" />
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-rose-100/5 to-white/10" />
       
-      {/* Contenu avec gestion du centrage mobile */}
+      {/* Contenu avec gestion du centrage mobile - SIMPLIFIÉ */}
       <div className={cn(
-        "relative flex items-center",
-        screenSize === 'mobile' ? "w-full justify-evenly" : "gap-1.5",
-        screenSize === 'tablet' && "gap-1.5"
+        "relative flex items-center justify-center",
+        screenSize === 'mobile' ? "gap-1.5" : "gap-1.5"
       )}>
         {navItems.map((item) => {
           // Gestion spéciale pour le bouton "Autres"
@@ -317,12 +316,12 @@ const BottomNav: React.FC<BottomNavProps> = ({
                 onClick={() => onItemSelect?.(item.id)}
                 className={cn(
                   "flex flex-col items-center justify-center gap-0.5",
-                  screenSize === 'mobile' ? "min-h-[54px] px-3 py-2 flex-1" : "min-h-[48px] px-2 py-1.5",
+                  screenSize === 'mobile' ? "min-h-[54px] py-2 w-[58px]" : "min-h-[48px] px-2 py-1.5",
                   "rounded-xl",
                   "transition-all duration-300",
                   "hover:bg-white/10 active:bg-white/15",
                   "hover:backdrop-blur-sm",
-                  screenSize === 'mobile' ? "min-w-[50px]" : "min-w-[65px]"
+                  screenSize === 'mobile' ? "" : "min-w-[65px]"
                 )}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -335,12 +334,12 @@ const BottomNav: React.FC<BottomNavProps> = ({
                   )}
                 />
                 <span className={cn(
-                  screenSize === 'mobile' ? "text-[11px]" : "text-[10px]",
-                  "font-medium",
+                  screenSize === 'mobile' ? "text-[10px]" : "text-[10px]",
+                  "font-medium truncate max-w-[50px]",
                   localActiveItem === item.id ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500",
                   "transition-colors duration-200"
                 )}>
-                  {item.label}
+                  {item.label.length > 7 && screenSize === 'mobile' ? `${item.label.slice(0, 5)}...` : item.label}
                 </span>
               </motion.button>
             );

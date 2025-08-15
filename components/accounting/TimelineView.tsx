@@ -6,7 +6,8 @@ import { Transaction, TransactionTotals } from '@/types/accounting';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { useSelection } from '@/contexts/SelectionContext';
 import { cn } from '@/lib/utils';
-import { Link2, GitMerge, CheckCircle, X, Check } from 'lucide-react';
+import { Link2, GitMerge, CheckCircle, X, Check, Paperclip } from 'lucide-react';
+import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
 
 interface TimelineViewProps {
   debits: Transaction[];
@@ -34,7 +35,9 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
 }) => {
   const { formatAmount, expertMode } = useExpertMode();
   const { setSelectedCount } = useSelection();
+  const { open: openDocument, ViewerComponent } = useDocumentViewer();
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [showLedgerModal, setShowLedgerModal] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<Transaction | null>(null);
   const [editingCell, setEditingCell] = useState<{row: number, field: string} | null>(null);
@@ -83,15 +86,79 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
 
   const colors = getThemeColors();
 
-  // Détecter si on est sur mobile
+  // Fonction pour déterminer le tag de la transaction selon le contexte
+  const getTransactionTag = (transaction: Transaction, isDebit: boolean, expertMode: boolean) => {
+    // En mode expert, toujours débit/crédit
+    if (expertMode) {
+      return isDebit ? 'Débit' : 'Crédit';
+    }
+    
+    // Selon le label de la transaction, déterminer le type
+    const label = transaction.label.toLowerCase();
+    
+    // Catégorie TVA
+    if (label.includes('tva') || label.includes('taxe')) {
+      return isDebit ? 'TVA déductible' : 'TVA collectée';
+    }
+    
+    // Catégorie Salaires/Charges sociales
+    if (label.includes('salaire') || label.includes('paie')) {
+      return 'Salaire';
+    }
+    if (label.includes('urssaf') || label.includes('cotisation') || label.includes('sociale')) {
+      return 'Charges sociales';
+    }
+    
+    // Catégorie Dividendes
+    if (label.includes('dividende')) {
+      return 'Dividendes';
+    }
+    
+    // Catégorie Emprunt/Prêt
+    if (label.includes('emprunt') || label.includes('prêt')) {
+      return isDebit ? 'Remboursement' : 'Emprunt';
+    }
+    
+    // Catégorie Loyer
+    if (label.includes('loyer') || label.includes('bail')) {
+      return 'Loyer';
+    }
+    
+    // Catégorie Assurance
+    if (label.includes('assurance')) {
+      return 'Assurance';
+    }
+    
+    // Catégorie Honoraires
+    if (label.includes('honoraire') || label.includes('consultant')) {
+      return 'Honoraires';
+    }
+    
+    // Catégorie Fournitures
+    if (label.includes('fourniture') || label.includes('matériel')) {
+      return 'Fournitures';
+    }
+    
+    // Catégories par défaut selon le type
+    if (transaction.type === 'invoice') return 'Facture';
+    if (transaction.type === 'payment') return 'Paiement';
+    if (transaction.type === 'credit_note') return 'Avoir';
+    if (transaction.type === 'expense') return 'Dépense';
+    
+    return isDebit ? 'Débit' : 'Crédit';
+  };
+
+  // Détecter si on est sur mobile ou tablette
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
     };
     
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
   const handleMouseDown = useCallback((transaction: Transaction) => {
@@ -165,6 +232,19 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
     const allIds = allTransactions.map(t => t.id);
     setSelectedItems(new Set(allIds));
     setSelectedCount(allIds.length);
+  };
+
+  // Fonction pour ouvrir une pièce jointe
+  const handleOpenAttachment = (transaction: Transaction) => {
+    // Utiliser la facture Pennylane hardcodée pour la démo
+    const documentUrl = '/documents/facture-pennylane.pdf';
+    const documentTitle = `${transaction.label} - ${transaction.reference || ''}`;
+    
+    openDocument({
+      src: documentUrl,
+      title: documentTitle,
+      type: 'pdf'
+    });
   };
 
   // Actions comptables
@@ -475,15 +555,453 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
         )}
       </AnimatePresence>
       
-      {/* Report à nouveau - Solde initial */}
+
+      {/* Timeline unifiée pour desktop et mobile */}
+      <div className="relative">
+        {/* Ligne verticale centrale avec couleur du thème - étendue pour couvrir toute la hauteur */}
+        <div className={`absolute left-5 md:left-1/2 top-0 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2`} style={{ height: 'calc(100% + 2rem)' }} />
+        
+        {/* Liste des transactions */}
+        <div className="space-y-3 md:space-y-6">
+          {allTransactions.map((transaction, index) => {
+            const isDebit = transaction.type === 'invoice' || transaction.type === 'expense';
+            const linkedTransactions = findLinkedTransactions(transaction.id);
+            const isEven = index % 2 === 0;
+            
+            // Ajouter un séparateur d'exercice si nécessaire
+            const transactionYear = new Date(transaction.date).getFullYear();
+            const prevTransaction = allTransactions[index - 1];
+            const prevYear = prevTransaction ? new Date(prevTransaction.date).getFullYear() : null;
+            const showYearSeparator = prevYear && prevYear !== transactionYear;
+            const isCollapsed = collapsedExercises.includes(transactionYear);
+            const progressiveBalance = transactionBalances[transaction.id] || 0;
+            
+            // Si l'exercice est replié, ne pas afficher la transaction
+            if (isCollapsed && !showYearSeparator) {
+              return null;
+            }
+            
+            return (
+              <React.Fragment key={transaction.id}>
+                {showYearSeparator && (
+                  <>
+                    {/* Report à nouveau de l'exercice précédent */}
+                    {!isCollapsed && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="relative mb-6"
+                      >
+                        <div className="relative">
+                          {/* Ligne de connexion depuis la timeline */}
+                          <div className={`absolute left-6 md:left-1/2 -top-4 h-4 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2`} />
+                          
+                          {/* Carte Report à nouveau de l'exercice */}
+                          <div className="bg-gradient-to-br from-gray-50/50 to-white/50 rounded-xl border border-gray-200/50 p-3 md:p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                {/* Point sur la timeline */}
+                                <div className={`w-3 h-3 rounded-full ring-4 ring-white shadow-sm bg-gradient-to-br from-gray-400 to-gray-500`} />
+                                <div>
+                                  <div className="text-sm font-medium text-gray-600">Report à nouveau</div>
+                                  <div className="text-xs text-gray-500">Solde au 31/12/{transactionYear - 1}</div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                {/* Solde simulé pour l'exercice précédent */}
+                                {(() => {
+                                  // Calculer un solde plus réaliste basé sur l'année
+                                  const baseAmount = 15000;
+                                  const yearFactor = (2025 - transactionYear) * 0.15;
+                                  const isDebitBalance = transactionYear % 2 === 0;
+                                  const simulatedBalance = isDebitBalance 
+                                    ? -(baseAmount * (1 + yearFactor))
+                                    : (baseAmount * (1 - yearFactor));
+                                  return (
+                                    <>
+                                      <div className={`text-lg font-bold ${
+                                        simulatedBalance >= 0 ? colors.soldePositif : colors.soldeNegatif
+                                      }`}>
+                                        {formatAmount(Math.abs(simulatedBalance))}
+                                      </div>
+                                      <span className="text-xs text-gray-500 ml-1">
+                                        ({simulatedBalance >= 0 ? 'créditeur' : 'débiteur'})
+                                      </span>
+                                    </>
+                                  );
+                                })()}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                    
+                    {/* Séparateur d'exercice avec bouton repli/dépli */}
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="relative my-8"
+                    >
+                      <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gray-300 via-transparent to-gray-300 md:-translate-x-1/2" />
+                      <button
+                        onClick={() => toggleExercise(transactionYear)}
+                        className="w-full flex items-center justify-center group"
+                      >
+                        <div 
+                          className="px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(139, 92, 246, 0.12) 50%, rgba(167, 139, 250, 0.08) 100%)',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)',
+                            border: '1px solid rgba(139, 92, 246, 0.2)',
+                            boxShadow: '0 4px 12px rgba(139, 92, 246, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.3)',
+                          }}
+                        >
+                          <motion.svg 
+                            animate={{ rotate: isCollapsed ? -90 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="w-4 h-4 text-violet-600" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </motion.svg>
+                          <span className="text-sm font-semibold text-violet-700">Exercice {transactionYear}</span>
+                          <span className="text-xs text-violet-500/70 font-medium">
+                            {isCollapsed ? '(Replié)' : `(${allTransactions.filter(t => new Date(t.date).getFullYear() === transactionYear).length} transactions)`}
+                          </span>
+                        </div>
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+                {!isCollapsed && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.02 }}
+                    className="relative"
+                  >
+                {/* Conteneur pour l'alignement desktop */}
+                <div className={`md:grid md:grid-cols-2 md:gap-8 md:items-center`}>
+                  {/* Carte de transaction - position alternée sur desktop */}
+                  <div className={`${
+                    !isMobile && isEven ? 'md:col-start-2' : 'md:col-start-1'
+                  } ${
+                    isMobile ? 'pl-10' : ''
+                  }`}>
+                    <motion.div 
+                      onClick={() => handleTransactionClick(transaction)}
+                      onMouseDown={() => handleMouseDown(transaction)}
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseUp}
+                      onTouchStart={() => handleMouseDown(transaction)}
+                      onTouchEnd={handleMouseUp}
+                      onContextMenu={(e) => {
+                        // Right click pour activer le mode sélection aussi
+                        e.preventDefault();
+                        if (!selectionMode) {
+                          setSelectionMode(true);
+                          setSelectedItems(new Set([transaction.id]));
+                          setSelectedCount(1);
+                        }
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                      className={cn(
+                        "relative p-3 sm:p-4 rounded-lg sm:rounded-xl border cursor-pointer transition-all duration-200",
+                        selectionMode && selectedItems.has(transaction.id)
+                          ? "bg-blue-50/80 border-blue-200 scale-[0.98]"
+                          : selectedTransaction === transaction.id 
+                            ? isDebit 
+                              ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-lg' 
+                              : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-lg'
+                            : 'bg-white hover:bg-gray-50 border-gray-200 hover:shadow-lg hover:border-gray-300',
+                        !isMobile && isEven ? 'md:text-right' : ''
+                      )}
+                    >
+                      {/* Indicateur de sélection */}
+                      {selectionMode && (
+                        <div className={cn(
+                          "absolute -left-1 top-1/2 -translate-y-1/2 w-1 rounded-full bg-blue-500 transition-all",
+                          selectedItems.has(transaction.id) ? "h-12 opacity-100" : "h-8 opacity-0"
+                        )} />
+                      )}
+                      
+                      {/* Checkbox de sélection */}
+                      {selectionMode && (
+                        <div className={cn(
+                          "absolute right-3 top-3 w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center",
+                          selectedItems.has(transaction.id) 
+                            ? "bg-blue-500 border-blue-500" 
+                            : "bg-white border-gray-300"
+                        )}>
+                          {selectedItems.has(transaction.id) && <Check className="w-3 h-3 text-white" />}
+                        </div>
+                      )}
+                    {/* Layout mobile et tablette optimisé */}
+                    {(isMobile || isTablet) ? (
+                      <div className="space-y-2">
+                        {/* En-tête avec badge et date */}
+                        <div className="flex items-center justify-between gap-2">
+                          <span className={`inline-block px-2.5 py-1 rounded-full ${isTablet ? 'text-xs' : 'text-[10px]'} font-bold uppercase tracking-wider ${
+                            isDebit ? 'bg-red-100 text-red-700' : colors.badgeCredit
+                          }`}>
+                            {getTransactionTag(transaction, isDebit, expertMode)}
+                          </span>
+                          <span className={`${isTablet ? 'text-xs' : 'text-[11px]'} text-neutral-500`}>
+                            {new Date(transaction.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                          </span>
+                        </div>
+                        
+                        {/* Libellé et montant */}
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <div className={`font-medium ${isTablet ? 'text-base' : 'text-sm'} truncate`}>{transaction.label}</div>
+                              {transaction.attachments && transaction.attachments > 0 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenAttachment(transaction);
+                                  }}
+                                  className="flex-shrink-0 p-1 rounded hover:bg-gray-100 transition-colors"
+                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                                >
+                                  <Paperclip className="w-3 h-3 text-gray-500" />
+                                  {transaction.attachments > 1 && (
+                                    <span className="ml-0.5 text-[9px] text-gray-500">{transaction.attachments}</span>
+                                  )}
+                                </button>
+                              )}
+                            </div>
+                            {transaction.reference && (
+                              <div className="text-[11px] text-neutral-500 truncate mt-0.5">
+                                {transaction.reference}
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <div className={`text-base font-bold ${
+                              isDebit ? 'text-red-600' : 'text-green-600'
+                            }`}>
+                              {formatAmount(transaction.amount)}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Footer avec statut, lettrage et solde */}
+                        <div className="flex items-center justify-between gap-2 pt-1 border-t border-gray-100">
+                          <div className="flex items-center gap-1.5">
+                            <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                              transaction.status === 'paid' ? 'text-green-700 bg-green-100/80' :
+                              transaction.status === 'partial' ? 'text-blue-700 bg-blue-100/80' :
+                              transaction.status === 'pending' ? 'text-amber-700 bg-amber-100/80' :
+                              transaction.status === 'overdue' ? 'text-red-700 bg-red-100/80' :
+                              'text-neutral-700 bg-neutral-100/80'
+                            }`}>
+                              {expertMode ? (
+                                transaction.status === 'paid' ? 'Lettré' :
+                                transaction.status === 'partial' ? 'Partiel' :
+                                transaction.status === 'pending' ? 'Non lettré' :
+                                transaction.status === 'overdue' ? 'Échu' : transaction.status
+                              ) : (
+                                transaction.status === 'paid' ? 'Payé' :
+                                transaction.status === 'partial' ? 'Partiel' :
+                                transaction.status === 'pending' ? 'En attente' :
+                                transaction.status === 'overdue' ? 'En retard' : transaction.status
+                              )}
+                            </span>
+                            {transaction.lettrageCode && (
+                              <span className="inline-block px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
+                                {transaction.lettrageCode}
+                              </span>
+                            )}
+                            {transaction.attachments && transaction.attachments > 0 && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenAttachment(transaction);
+                                }}
+                                className="flex-shrink-0 p-0.5 rounded hover:bg-gray-100 transition-colors"
+                                title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                              >
+                                <Paperclip className="w-3 h-3 text-gray-500" />
+                                {transaction.attachments > 1 && (
+                                  <span className="ml-0.5 text-[8px] text-gray-500">{transaction.attachments}</span>
+                                )}
+                              </button>
+                            )}
+                          </div>
+                          
+                          <div className="text-right">
+                            <div className="text-[10px] text-gray-500">Solde</div>
+                            <div className="flex items-baseline gap-1">
+                              <span className={`text-xs font-semibold ${
+                                progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                              }`}>
+                                {formatAmount(Math.abs(progressiveBalance))}
+                              </span>
+                              <span className="text-[9px] text-gray-500">
+                                ({progressiveBalance >= 0 ? 'créditeur' : 'débiteur'})
+                              </span>
+                            </div>
+                            {transaction.lettrageCode && (
+                              <span className="inline-block mt-1 px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
+                                {transaction.lettrageCode}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Layout desktop original */
+                      <div className={`flex justify-between items-start ${
+                        !isMobile && isEven ? 'md:flex-row-reverse' : ''
+                      }`}>
+                        <div className="flex-1">
+                          <div className={`flex items-center gap-2 ${
+                            !isMobile && isEven ? 'md:justify-end' : ''
+                          }`}>
+                            <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r ${
+                              isDebit ? colors.badgeDebit : colors.badgeCredit
+                            }`}>
+                              {getTransactionTag(transaction, isDebit, expertMode)}
+                            </span>
+                            <span className="text-xs text-neutral-500">
+                              {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                            </span>
+                          </div>
+                          
+                          <div className="mt-2">
+                            <div className="flex items-center gap-2">
+                              <div className="font-medium text-sm">{transaction.label}</div>
+                              {transaction.attachments && transaction.attachments > 0 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenAttachment(transaction);
+                                  }}
+                                  className="flex-shrink-0 p-1 rounded hover:bg-gray-100 transition-colors inline-flex items-center"
+                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                                >
+                                  <Paperclip className="w-4 h-4 text-gray-500" />
+                                  {transaction.attachments > 1 && (
+                                    <span className="ml-1 text-xs text-gray-500">{transaction.attachments}</span>
+                                  )}
+                                </button>
+                              )}
+                            </div>
+                            <div className="text-xs text-neutral-500 mt-1">
+                              {transaction.reference}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className={`ml-3 ${
+                          !isMobile && isEven ? 'md:ml-0 md:mr-3 md:text-left' : 'text-right'
+                        }`}>
+                          <div className={`text-lg font-bold ${
+                            isDebit 
+                              ? 'bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent' 
+                              : 'bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'
+                          }`}>
+                            {formatAmount(transaction.amount)}
+                          </div>
+                          <div className="flex items-center gap-2 justify-end mt-1">
+                          <span className={`inline-block px-2 py-0.5 rounded-full text-2xs font-medium ${
+                            transaction.status === 'paid' ? 'text-green-700 bg-green-100/80' :
+                            transaction.status === 'partial' ? 'text-blue-700 bg-blue-100/80' :
+                            transaction.status === 'pending' ? 'text-amber-700 bg-amber-100/80' :
+                            transaction.status === 'overdue' ? 'text-red-700 bg-red-100/80' :
+                            'text-neutral-700 bg-neutral-100/80'
+                          }`}>
+                            {expertMode ? (
+                              transaction.status === 'paid' ? 'Lettré' :
+                              transaction.status === 'partial' ? 'Partiel' :
+                              transaction.status === 'pending' ? 'Non lettré' :
+                              transaction.status === 'overdue' ? 'Échu' : transaction.status
+                            ) : (
+                              transaction.status === 'paid' ? 'Payé' :
+                              transaction.status === 'partial' ? 'Partiel' :
+                              transaction.status === 'pending' ? 'En attente' :
+                              transaction.status === 'overdue' ? 'En retard' : transaction.status
+                            )}
+                          </span>
+                          {transaction.lettrageCode && (
+                            <span className="inline-block px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-2xs font-bold">
+                              {transaction.lettrageCode}
+                            </span>
+                          )}
+                          </div>
+                          {/* Solde progressif */}
+                          <div className="mt-1">
+                            <div className="text-2xs text-gray-500">Solde</div>
+                            <div className="flex items-baseline gap-1">
+                              <span className={`text-sm font-semibold ${
+                                progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                              }`}>
+                                {formatAmount(Math.abs(progressiveBalance))}
+                              </span>
+                              <span className="text-2xs text-gray-500">
+                                ({progressiveBalance >= 0 ? 'créditeur' : 'débiteur'})
+                              </span>
+                            </div>
+                            {transaction.lettrageCode && (
+                              <span className="inline-block mt-1 px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-2xs font-bold">
+                                Lettrage {transaction.lettrageCode}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    </motion.div>
+                  </div>
+                  
+                  {/* Espace vide pour l'autre côté sur desktop */}
+                  {!isMobile && (
+                    <div className={`hidden md:block ${
+                      isEven ? 'md:col-start-1' : 'md:col-start-2'
+                    }`} />
+                  )}
+                </div>
+                
+                {/* Point sur la timeline */}
+                <div className={`absolute left-5 md:left-1/2 top-1/2 -translate-y-1/2 md:-translate-x-1/2 z-10`}>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: index * 0.02 + 0.2 }}
+                    className={`w-3 md:w-4 h-3 md:h-4 rounded-full ring-4 ring-white shadow-md bg-gradient-to-br ${
+                      isDebit 
+                        ? colors.pointDebit
+                        : colors.pointCredit
+                    }`}
+                  />
+                </div>
+                </motion.div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
+      
+      {/* Report à nouveau - Solde initial EN BAS */}
       <motion.div 
-        className="mb-4"
-        initial={{ opacity: 0, y: -20 }}
+        className="mt-4"
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
+        transition={{ delay: 0.3 }}
       >
         <div className="relative">
-          {/* Carte Report à nouveau initial */}
+          {/* Ligne de connexion depuis la timeline */}
+          <div className={`absolute left-6 md:left-1/2 -top-4 h-4 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2`} />
+          
+          {/* Carte Report à nouveau */}
           <div className="bg-gradient-to-br from-gray-50/50 to-white/50 rounded-xl border border-gray-200/50 p-3 md:p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -515,15 +1033,8 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                       }`}>
                         {formatAmount(Math.abs(initialBalance))}
                       </div>
-                      <div className={`text-xs font-medium px-1.5 py-0.5 rounded-full inline-block ${
-                        initialBalance >= 0 
-                          ? 'bg-[#4C34CE]/10 text-[#4C34CE]' 
-                          : 'bg-orange-100 text-orange-700'
-                      }`}>
-                        {expertMode 
-                          ? (initialBalance >= 0 ? 'CR' : 'DB')
-                          : (initialBalance >= 0 ? 'Créditeur' : 'Débiteur')
-                        }
+                      <div className="text-xs text-gray-600 mt-1">
+                        {initialBalance >= 0 ? 'Solde créditeur' : 'Solde débiteur'}
                       </div>
                     </>
                   );
@@ -531,256 +1042,8 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
               </div>
             </div>
           </div>
-          {/* Ligne de connexion vers la timeline */}
-          <div className={`absolute left-6 md:left-1/2 bottom-0 h-4 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2`} />
         </div>
       </motion.div>
-
-      {/* Timeline unifiée pour desktop et mobile */}
-      <div className="relative">
-        {/* Ligne verticale centrale avec couleur du thème */}
-        <div className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2`} />
-        
-        {/* Liste des transactions */}
-        <div className="space-y-4 md:space-y-6">
-          {allTransactions.map((transaction, index) => {
-            const isDebit = transaction.type === 'invoice' || transaction.type === 'expense';
-            const linkedTransactions = findLinkedTransactions(transaction.id);
-            const isEven = index % 2 === 0;
-            
-            // Ajouter un séparateur d'exercice si nécessaire
-            const transactionYear = new Date(transaction.date).getFullYear();
-            const prevTransaction = allTransactions[index - 1];
-            const prevYear = prevTransaction ? new Date(prevTransaction.date).getFullYear() : null;
-            const showYearSeparator = prevYear && prevYear !== transactionYear;
-            const isCollapsed = collapsedExercises.includes(transactionYear);
-            const progressiveBalance = transactionBalances[transaction.id] || 0;
-            
-            // Si l'exercice est replié, ne pas afficher la transaction
-            if (isCollapsed && !showYearSeparator) {
-              return null;
-            }
-            
-            return (
-              <React.Fragment key={transaction.id}>
-                {showYearSeparator && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="relative my-8"
-                  >
-                    <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gray-300 via-transparent to-gray-300 md:-translate-x-1/2" />
-                    <button
-                      onClick={() => toggleExercise(transactionYear)}
-                      className="w-full flex items-center justify-center group"
-                    >
-                      <div 
-                        className="px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
-                        style={{
-                          background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(139, 92, 246, 0.12) 50%, rgba(167, 139, 250, 0.08) 100%)',
-                          backdropFilter: 'blur(12px)',
-                          WebkitBackdropFilter: 'blur(12px)',
-                          border: '1px solid rgba(139, 92, 246, 0.2)',
-                          boxShadow: '0 4px 12px rgba(139, 92, 246, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.3)',
-                        }}
-                      >
-                        <motion.svg 
-                          animate={{ rotate: isCollapsed ? -90 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="w-4 h-4 text-violet-600" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </motion.svg>
-                        <span className="text-sm font-semibold text-violet-700">Exercice {transactionYear}</span>
-                        <span className="text-xs text-violet-500/70 font-medium">
-                          {isCollapsed ? '(Replié)' : `(${allTransactions.filter(t => new Date(t.date).getFullYear() === transactionYear).length} transactions)`}
-                        </span>
-                      </div>
-                    </button>
-                  </motion.div>
-                )}
-                {!isCollapsed && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.02 }}
-                    className="relative"
-                  >
-                {/* Conteneur pour l'alignement desktop */}
-                <div className={`md:grid md:grid-cols-2 md:gap-8 md:items-center`}>
-                  {/* Carte de transaction - position alternée sur desktop */}
-                  <div className={`${
-                    !isMobile && isEven ? 'md:col-start-2' : 'md:col-start-1'
-                  } ${
-                    isMobile ? 'pl-12' : ''
-                  }`}>
-                    <motion.div 
-                      onClick={() => handleTransactionClick(transaction)}
-                      onMouseDown={() => handleMouseDown(transaction)}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseUp}
-                      onTouchStart={() => handleMouseDown(transaction)}
-                      onTouchEnd={handleMouseUp}
-                      onContextMenu={(e) => {
-                        // Right click pour activer le mode sélection aussi
-                        e.preventDefault();
-                        if (!selectionMode) {
-                          setSelectionMode(true);
-                          setSelectedItems(new Set([transaction.id]));
-                          setSelectedCount(1);
-                        }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      className={cn(
-                        "relative p-4 rounded-xl border cursor-pointer transition-all duration-200",
-                        selectionMode && selectedItems.has(transaction.id)
-                          ? "bg-blue-50/80 border-blue-200 scale-[0.98]"
-                          : selectedTransaction === transaction.id 
-                            ? isDebit 
-                              ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-lg' 
-                              : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-lg'
-                            : 'bg-white hover:bg-gray-50 border-gray-200 hover:shadow-lg hover:border-gray-300',
-                        !isMobile && isEven ? 'md:text-right' : ''
-                      )}
-                    >
-                      {/* Indicateur de sélection */}
-                      {selectionMode && (
-                        <div className={cn(
-                          "absolute -left-1 top-1/2 -translate-y-1/2 w-1 rounded-full bg-blue-500 transition-all",
-                          selectedItems.has(transaction.id) ? "h-12 opacity-100" : "h-8 opacity-0"
-                        )} />
-                      )}
-                      
-                      {/* Checkbox de sélection */}
-                      {selectionMode && (
-                        <div className={cn(
-                          "absolute right-3 top-3 w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center",
-                          selectedItems.has(transaction.id) 
-                            ? "bg-blue-500 border-blue-500" 
-                            : "bg-white border-gray-300"
-                        )}>
-                          {selectedItems.has(transaction.id) && <Check className="w-3 h-3 text-white" />}
-                        </div>
-                      )}
-                    <div className={`flex justify-between items-start ${
-                      !isMobile && isEven ? 'md:flex-row-reverse' : ''
-                    }`}>
-                      <div className="flex-1">
-                        <div className={`flex items-center gap-2 ${
-                          !isMobile && isEven ? 'md:justify-end' : ''
-                        }`}>
-                          <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r ${
-                            isDebit ? colors.badgeDebit : colors.badgeCredit
-                          }`}>
-                            {isDebit ? (
-                              expertMode ? 'Débit' : (
-                                transaction.type === 'invoice' ? 'Facture' : 'Dépense'
-                              )
-                            ) : (
-                              expertMode ? 'Crédit' : (
-                                transaction.type === 'payment' ? 'Paiement' : 'Avoir'
-                              )
-                            )}
-                          </span>
-                          <span className="text-xs text-neutral-500">
-                            {new Date(transaction.date).toLocaleDateString('fr-FR')}
-                          </span>
-                        </div>
-                        
-                        <div className="mt-2">
-                          <div className="font-medium text-sm">{transaction.label}</div>
-                          <div className="text-xs text-neutral-500 mt-1">
-                            {transaction.reference}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className={`ml-3 ${
-                        !isMobile && isEven ? 'md:ml-0 md:mr-3 md:text-left' : 'text-right'
-                      }`}>
-                        <div className={`text-lg font-bold ${
-                          isDebit 
-                            ? 'bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent' 
-                            : 'bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'
-                        }`}>
-                          {formatAmount(transaction.amount)}
-                        </div>
-                        <div className="flex items-center gap-2 justify-end mt-1">
-                          <span className={`inline-block px-2 py-0.5 rounded-full text-2xs font-medium ${
-                            transaction.status === 'paid' ? 'text-green-700 bg-green-100/80' :
-                            transaction.status === 'partial' ? 'text-blue-700 bg-blue-100/80' :
-                            transaction.status === 'pending' ? 'text-amber-700 bg-amber-100/80' :
-                            transaction.status === 'overdue' ? 'text-red-700 bg-red-100/80' :
-                            'text-neutral-700 bg-neutral-100/80'
-                          }`}>
-                            {expertMode ? (
-                              transaction.status === 'paid' ? 'Lettré' :
-                              transaction.status === 'partial' ? 'Partiel' :
-                              transaction.status === 'pending' ? 'Non lettré' :
-                              transaction.status === 'overdue' ? 'Échu' : transaction.status
-                            ) : (
-                              transaction.status === 'paid' ? 'Payé' :
-                              transaction.status === 'partial' ? 'Partiel' :
-                              transaction.status === 'pending' ? 'En attente' :
-                              transaction.status === 'overdue' ? 'En retard' : transaction.status
-                            )}
-                          </span>
-                        </div>
-                        {/* Solde progressif */}
-                        <div className="mt-1 text-xs">
-                          <span className="text-gray-500">Solde: </span>
-                          <span className={`font-semibold ${
-                            progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
-                          }`}>
-                            {formatAmount(Math.abs(progressiveBalance))}
-                          </span>
-                          <span className={`ml-1 text-2xs font-medium px-1.5 py-0.5 rounded-full ${
-                            progressiveBalance >= 0 
-                              ? 'bg-[#4C34CE]/10 text-[#4C34CE]' 
-                              : 'bg-orange-100 text-orange-700'
-                          }`}>
-                            {expertMode 
-                              ? (progressiveBalance >= 0 ? 'CR' : 'DB')
-                              : (progressiveBalance >= 0 ? 'Créditeur' : 'Débiteur')
-                            }
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  </div>
-                  
-                  {/* Espace vide pour l'autre côté sur desktop */}
-                  {!isMobile && (
-                    <div className={`hidden md:block ${
-                      isEven ? 'md:col-start-1' : 'md:col-start-2'
-                    }`} />
-                  )}
-                </div>
-                
-                {/* Point sur la timeline */}
-                <div className={`absolute left-6 md:left-1/2 top-1/2 -translate-y-1/2 md:-translate-x-1/2 z-10`}>
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: index * 0.02 + 0.2 }}
-                    className={`w-4 h-4 rounded-full ring-4 ring-white shadow-md bg-gradient-to-br ${
-                      isDebit 
-                        ? colors.pointDebit
-                        : colors.pointCredit
-                    }`}
-                  />
-                </div>
-                </motion.div>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
       
       {/* Report à nouveau - Exercice précédent ou Tout l'historique */}
       {!showAllHistory && (
@@ -799,33 +1062,24 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                 {/* Ligne de continuation */}
                 <div className={`absolute left-6 md:left-1/2 -top-4 h-4 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2 opacity-50`} />
                 
-                {/* Carte Report à nouveau */}
+                {/* Carte Report à nouveau - simplifiée */}
                 <div className="bg-gradient-to-br from-[#4C34CE]/5 to-indigo-50 rounded-xl border border-[#4C34CE]/20 p-4 hover:shadow-lg transition-all duration-200 hover:border-[#4C34CE]/30 hover:from-[#4C34CE]/10 hover:to-indigo-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      {/* Icône de continuité */}
-                      <div className="p-2 bg-white rounded-lg shadow-sm">
-                        <svg className="w-4 h-4 text-[#4C34CE]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m0 0l-4-4m4 4l4-4" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-[#4C34CE]">Charger l'exercice précédent</div>
-                        <div className="text-xs text-[#4C34CE]/70">Exercice {Math.min(...loadedExercises) - 1} • Cliquez pour ajouter</div>
-                      </div>
+                      <svg className="w-5 h-5 text-[#4C34CE]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m0 0l-4-4m4 4l4-4" />
+                      </svg>
+                      <span className="text-sm font-semibold text-[#4C34CE]">
+                        Charger l'exercice précédent
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <div className="text-xs text-gray-500 uppercase tracking-wider">Report à nouveau</div>
-                        <div className={`text-xl font-bold ${
-                          totals.balance * 0.85 > 0 ? 'text-[#4C34CE]' : 'text-orange-600'
-                        }`}>
-                          {formatAmount(Math.abs(totals.balance * 0.85))}
-                        </div>
-                      </div>
-                      <svg className="w-5 h-5 text-[#4C34CE]/40 group-hover:text-[#4C34CE] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
-                      </svg>
+                      <span className="text-xs text-gray-500 uppercase tracking-wider">REPORT</span>
+                      <span className={`text-lg font-bold ${
+                        totals.balance * 0.85 > 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                      }`}>
+                        {formatAmount(Math.abs(totals.balance * 0.85))}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -1394,6 +1648,9 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* Document Viewer OKÉ */}
+      <ViewerComponent mode="auto" glassMorphism={true} />
     </div>
   );
 });

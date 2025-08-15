@@ -20,7 +20,8 @@ import {
   Settings,
   LogOut,
   User,
-  Search
+  Search,
+  X
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -293,10 +294,18 @@ export default function HeaderSimple({
                   transition={{ duration: 0.15 }}
                   className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200/50 overflow-hidden"
                 >
-                  {/* Header du menu */}
-                  <div className="px-4 py-3 border-b border-gray-200/50 bg-gray-50">
-                    <p className="font-semibold text-gray-900">Jean Dupont</p>
-                    <p className="text-sm text-gray-500">jean@techcorp.fr</p>
+                  {/* Header du menu avec croix de fermeture */}
+                  <div className="px-4 py-3 border-b border-gray-200/50 bg-gray-50 flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-gray-900">Jean Dupont</p>
+                      <p className="text-sm text-gray-500">jean@techcorp.fr</p>
+                    </div>
+                    <button
+                      onClick={() => setUserMenuOpen(false)}
+                      className="p-1 hover:bg-gray-200/50 rounded-lg transition-colors"
+                    >
+                      <X className="w-4 h-4 text-gray-600" />
+                    </button>
                   </div>
                   
                   {/* Options du menu */}
