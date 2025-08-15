@@ -46,6 +46,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       status: 'pending' as const,
       description: 'Prestation de service janvier',
       attachments: 1, // Ajout de pièce jointe
+      lettrageCode: 'A'
     },
     {
       id: '2',
@@ -57,6 +58,7 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       status: 'paid' as const,
       description: 'Règlement facture décembre',
       attachments: 2, // 2 pièces jointes
+      lettrageCode: 'B'
     },
     {
       id: '3',

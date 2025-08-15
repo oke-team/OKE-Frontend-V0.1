@@ -683,8 +683,21 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className="relative"
+                    className="relative mt-8"
                   >
+                {/* Badge de date sur la timeline */}
+                <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 -top-7 z-20">
+                  <div 
+                    className="px-3 py-1 rounded-full text-[10px] font-medium text-gray-700 shadow-sm"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.25) 100%)',
+                      backdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(251, 207, 232, 0.4)',
+                    }}
+                  >
+                    {new Date(transaction.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                  </div>
+                </div>
                 {/* Conteneur pour l'alignement desktop */}
                 <div className={`md:grid md:grid-cols-2 md:gap-8 md:items-center`}>
                   {/* Carte de transaction - position alternée sur desktop */}
@@ -744,15 +757,12 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                     {/* Layout mobile et tablette optimisé */}
                     {(isMobile || isTablet) ? (
                       <div className="space-y-2">
-                        {/* En-tête avec badge et date */}
+                        {/* En-tête avec badge sans date */}
                         <div className="flex items-center justify-between gap-2">
                           <span className={`inline-block px-2.5 py-1 rounded-full ${isTablet ? 'text-xs' : 'text-[10px]'} font-bold uppercase tracking-wider ${
                             isDebit ? 'bg-red-100 text-red-700' : colors.badgeCredit
                           }`}>
                             {getTransactionTag(transaction, isDebit, expertMode)}
-                          </span>
-                          <span className={`${isTablet ? 'text-xs' : 'text-[11px]'} text-neutral-500`}>
-                            {new Date(transaction.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                           </span>
                         </div>
                         
@@ -801,7 +811,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                               )}
                             </span>
                             {transaction.lettrageCode && (
-                              <span className="inline-block px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
+                              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[9px] font-bold shadow-sm">
                                 {transaction.lettrageCode}
                               </span>
                             )}
@@ -823,22 +833,14 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                           </div>
                           
                           <div className="text-right">
-                            <div className="text-[10px] text-gray-500">Solde</div>
-                            <div className="flex items-baseline gap-1">
-                              <span className={`text-xs font-semibold ${
-                                progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
-                              }`}>
-                                {formatAmount(Math.abs(progressiveBalance))}
-                              </span>
-                              <span className="text-[9px] text-gray-500">
-                                ({progressiveBalance >= 0 ? 'créditeur' : 'débiteur'})
-                              </span>
+                            <div className="text-[9px] text-gray-500">
+                              {progressiveBalance >= 0 ? 'Solde créditeur' : 'Solde débiteur'}
                             </div>
-                            {transaction.lettrageCode && (
-                              <span className="inline-block mt-1 px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
-                                {transaction.lettrageCode}
-                              </span>
-                            )}
+                            <div className={`text-xs font-semibold ${
+                              progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                            }`}>
+                              {formatAmount(Math.abs(progressiveBalance))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -856,9 +858,11 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                             }`}>
                               {getTransactionTag(transaction, isDebit, expertMode)}
                             </span>
-                            <span className="text-xs text-neutral-500">
-                              {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                          {transaction.lettrageCode && (
+                            <span className="inline-flex items-center justify-center ml-2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-2xs font-bold shadow-sm">
+                              {transaction.lettrageCode}
                             </span>
+                          )}
                           </div>
                           
                           <div className="mt-2">
@@ -917,29 +921,21 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                             )}
                           </span>
                           {transaction.lettrageCode && (
-                            <span className="inline-block px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-2xs font-bold">
+                            <span className="inline-flex items-center justify-center ml-2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-2xs font-bold shadow-sm">
                               {transaction.lettrageCode}
                             </span>
                           )}
                           </div>
                           {/* Solde progressif */}
                           <div className="mt-1">
-                            <div className="text-2xs text-gray-500">Solde</div>
-                            <div className="flex items-baseline gap-1">
-                              <span className={`text-sm font-semibold ${
-                                progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
-                              }`}>
-                                {formatAmount(Math.abs(progressiveBalance))}
-                              </span>
-                              <span className="text-2xs text-gray-500">
-                                ({progressiveBalance >= 0 ? 'créditeur' : 'débiteur'})
-                              </span>
+                            <div className="text-2xs text-gray-500">
+                              {progressiveBalance >= 0 ? 'Solde créditeur' : 'Solde débiteur'}
                             </div>
-                            {transaction.lettrageCode && (
-                              <span className="inline-block mt-1 px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-2xs font-bold">
-                                Lettrage {transaction.lettrageCode}
-                              </span>
-                            )}
+                            <div className={`text-sm font-semibold ${
+                              progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                            }`}>
+                              {formatAmount(Math.abs(progressiveBalance))}
+                            </div>
                           </div>
                         </div>
                       </div>
