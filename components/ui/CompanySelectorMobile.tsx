@@ -122,16 +122,21 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
     <button
       className={cn(
         'flex items-center justify-between w-full',
-        'bg-white/80 backdrop-blur-sm',
-        'border border-slate-200/60 rounded-xl',
-        'hover:bg-white/90 hover:border-slate-300/60',
-        'active:scale-98 transition-all duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-primary-500/20',
+        'backdrop-blur-xl',
+        'rounded-xl',
+        'hover:shadow-xl hover:scale-[1.01]',
+        'active:scale-[0.99] transition-all duration-200',
+        'focus:outline-none focus:ring-2 focus:ring-violet-500/20',
         compact && 'rounded-lg',
         className
       )}
       style={{
         ...currentStyle,
+        background: 'linear-gradient(135deg, rgba(94, 114, 255, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(94, 114, 255, 0.2)',
+        boxShadow: '0 4px 16px rgba(94, 114, 255, 0.1)',
         gap: compact ? '6px' : '8px'
       }}
     >
@@ -142,44 +147,44 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
           className="text-primary-500 flex-shrink-0" 
         />
         
-        {!compact && (
-          <div className="flex-1 min-w-0 text-left">
-            <div 
-              className="font-medium text-slate-900 truncate"
-              style={{ fontSize: currentStyle.fontSize }}
-            >
-              {currentCompany.name}
-            </div>
-            
-            {currentCompany.country && (
-              <div 
-                className="text-slate-500 truncate"
-                style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
-              >
-                {currentCompany.country} · {currentCompany.currency}
-              </div>
-            )}
+        <div className="flex-1 min-w-0 text-left">
+          <div 
+            className="font-medium text-slate-900 truncate"
+            style={{ fontSize: compact ? '12px' : currentStyle.fontSize }}
+          >
+            {currentCompany.name}
           </div>
-        )}
+          
+          {!compact && currentCompany.country && (
+            <div 
+              className="text-slate-500 truncate"
+              style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
+            >
+              {currentCompany.country} · {currentCompany.currency}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Partie droite */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        {/* Badge plan */}
-        <span
-          style={{
-            padding: '3px 8px',
-            fontSize: '10px',
-            fontWeight: 700,
-            textTransform: 'uppercase' as const,
-            borderRadius: '8px',
-            background: getPlanColor(currentCompany.plan),
-            color: getPlanTextColor(currentCompany.plan),
-            boxShadow: currentCompany.plan !== 'starter' ? '0 1px 3px rgba(0, 0, 0, 0.15)' : 'none'
-          }}
-        >
-          {currentCompany.plan}
-        </span>
+        {/* Badge plan - caché en mode compact */}
+        {!compact && (
+          <span
+            style={{
+              padding: '3px 8px',
+              fontSize: '10px',
+              fontWeight: 700,
+              textTransform: 'uppercase' as const,
+              borderRadius: '8px',
+              background: getPlanColor(currentCompany.plan),
+              color: getPlanTextColor(currentCompany.plan),
+              boxShadow: currentCompany.plan !== 'starter' ? '0 1px 3px rgba(0, 0, 0, 0.15)' : 'none'
+            }}
+          >
+            {currentCompany.plan}
+          </span>
+        )}
 
         {/* Chevron */}
         <svg

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Building2, Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { 
   Dropdown, 
   DropdownTrigger, 

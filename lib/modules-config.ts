@@ -172,7 +172,7 @@ export const modules: Module[] = [
 ];
 
 /**
- * Configuration de la navigation mobile (5 icônes avec + au centre)
+ * Configuration de la navigation mobile (5 icônes avec + au centre absolu)
  */
 export const mobileNavItems = [
   modules.find(m => m.id === 'dashboard')!,
@@ -185,7 +185,8 @@ export const mobileNavItems = [
     description: 'Ajouter ou scanner',
     category: 'core' as const,
     mobileVisible: true,
-    isPrimary: true
+    isPrimary: true,
+    isCenter: true  // Nouveau flag pour centrage absolu
   },
   modules.find(m => m.id === 'bank')!,
   {

@@ -50,8 +50,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
       setModulesGridOpen(true);
       return;
     }
+    // Toujours mettre à jour l'état actif, même si c'est le même
     setActiveNavItem(itemId);
-    router.push(`/${itemId}`);
+    if (itemId !== activeNavItem) {
+      router.push(`/${itemId}`);
+    }
   };
 
   const handleChatOpen = () => {

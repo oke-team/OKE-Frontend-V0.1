@@ -46,14 +46,14 @@ export default function AccountingModule() {
 
   return (
     <div style={{
-      height: 'calc(100vh - 10rem)', // Plus d'espace avec la navbar
+      height: '100%',
       display: 'flex',
-      padding: isDesktop ? '1rem' : '0',
+      flexDirection: 'column',
+      padding: isDesktop ? '0' : '0',
       gap: isDesktop ? '1rem' : '0',
-      backgroundColor: '#fafafa',
+      backgroundColor: 'transparent',
       position: 'relative',
       overflow: 'hidden',
-      marginBottom: '2rem', // Espace avec la navbar du bas
       width: '100%'
     }}>
 
@@ -65,7 +65,9 @@ export default function AccountingModule() {
           gridTemplateColumns: 'minmax(400px, 1fr) minmax(600px, 2fr)',
           gap: '1rem',
           minHeight: 0,
-          width: '100%'
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden'
         }}>
           <motion.div
             initial={{ opacity: 0, x: -20 }}

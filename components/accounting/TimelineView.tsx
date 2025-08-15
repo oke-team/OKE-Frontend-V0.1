@@ -66,76 +66,19 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
     reference: ''
   });
 
-  // Obtenir les couleurs selon le thème
+  // Design unifié OKÉ - toujours les mêmes couleurs
   const getThemeColors = () => {
-    switch(themeColor) {
-      case 'violet':
-        return {
-          line: 'from-purple-200 via-purple-300 to-purple-200',
-          pointDebit: 'from-purple-400 to-pink-500',
-          pointCredit: 'from-purple-500 to-indigo-500',
-          badgeDebit: 'from-purple-100 to-pink-100 text-purple-700',
-          badgeCredit: 'from-purple-100 to-indigo-100 text-purple-700',
-          soldePositif: 'text-purple-600',
-          soldeNegatif: 'text-pink-600',
-          soldeBg: 'from-purple-50 to-indigo-50 border-purple-100'
-        };
-      case 'green':
-        return {
-          line: 'from-green-200 via-green-300 to-green-200',
-          pointDebit: 'from-orange-400 to-red-500',
-          pointCredit: 'from-green-400 to-emerald-500',
-          badgeDebit: 'from-orange-100 to-red-100 text-orange-700',
-          badgeCredit: 'from-green-100 to-emerald-100 text-green-700',
-          soldePositif: 'text-green-600',
-          soldeNegatif: 'text-orange-600',
-          soldeBg: 'from-green-50 to-emerald-50 border-green-100'
-        };
-      case 'blue':
-        return {
-          line: 'from-blue-200 via-blue-300 to-blue-200',
-          pointDebit: 'from-red-400 to-orange-500',
-          pointCredit: 'from-blue-400 to-cyan-500',
-          badgeDebit: 'from-red-100 to-orange-100 text-red-700',
-          badgeCredit: 'from-blue-100 to-cyan-100 text-blue-700',
-          soldePositif: 'text-blue-600',
-          soldeNegatif: 'text-orange-600',
-          soldeBg: 'from-blue-50 to-cyan-50 border-blue-100'
-        };
-      case 'orange':
-        return {
-          line: 'from-orange-200 via-orange-300 to-orange-200',
-          pointDebit: 'from-red-400 to-rose-500',
-          pointCredit: 'from-orange-400 to-amber-500',
-          badgeDebit: 'from-red-100 to-rose-100 text-red-700',
-          badgeCredit: 'from-orange-100 to-amber-100 text-orange-700',
-          soldePositif: 'text-orange-600',
-          soldeNegatif: 'text-red-600',
-          soldeBg: 'from-orange-50 to-amber-50 border-orange-100'
-        };
-      case 'red':
-        return {
-          line: 'from-red-200 via-red-300 to-red-200',
-          pointDebit: 'from-red-400 to-rose-500',
-          pointCredit: 'from-green-400 to-emerald-500',
-          badgeDebit: 'from-red-100 to-rose-100 text-red-700',
-          badgeCredit: 'from-green-100 to-emerald-100 text-green-700',
-          soldePositif: 'text-red-600',
-          soldeNegatif: 'text-green-600',
-          soldeBg: 'from-red-50 to-rose-50 border-red-100'
-        };
-      default:
-        return {
-          line: 'from-gray-200 via-gray-300 to-gray-200',
-          pointDebit: 'from-red-400 to-pink-500',
-          pointCredit: 'from-green-400 to-emerald-500',
-          badgeDebit: 'from-red-100 to-pink-100 text-red-700',
-          badgeCredit: 'from-green-100 to-emerald-100 text-green-700',
-          soldePositif: 'text-blue-600',
-          soldeNegatif: 'text-orange-600',
-          soldeBg: 'from-gray-50 to-white border-gray-100'
-        };
-    }
+    // On utilise toujours le style violet OKÉ, peu importe themeColor
+    return {
+      line: 'from-[#4C34CE]/20 via-[#4C34CE]/30 to-[#4C34CE]/20',
+      pointDebit: 'from-red-400 to-pink-500',
+      pointCredit: 'from-[#4C34CE] to-indigo-500',
+      badgeDebit: 'from-red-100 to-pink-100 text-red-700',
+      badgeCredit: 'bg-[#4C34CE]/10 text-[#4C34CE]',
+      soldePositif: 'text-[#4C34CE]',
+      soldeNegatif: 'text-pink-600',
+      soldeBg: 'from-[#4C34CE]/5 to-indigo-50 border-[#4C34CE]/20'
+    };
   };
 
   const colors = getThemeColors();
@@ -574,7 +517,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                       </div>
                       <div className={`text-xs font-medium px-1.5 py-0.5 rounded-full inline-block ${
                         initialBalance >= 0 
-                          ? 'bg-blue-100 text-blue-700' 
+                          ? 'bg-[#4C34CE]/10 text-[#4C34CE]' 
                           : 'bg-orange-100 text-orange-700'
                       }`}>
                         {expertMode 
@@ -790,13 +733,13 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                         <div className="mt-1 text-xs">
                           <span className="text-gray-500">Solde: </span>
                           <span className={`font-semibold ${
-                            progressiveBalance >= 0 ? 'text-blue-600' : 'text-orange-600'
+                            progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
                           }`}>
                             {formatAmount(Math.abs(progressiveBalance))}
                           </span>
                           <span className={`ml-1 text-2xs font-medium px-1.5 py-0.5 rounded-full ${
                             progressiveBalance >= 0 
-                              ? 'bg-blue-100 text-blue-700' 
+                              ? 'bg-[#4C34CE]/10 text-[#4C34CE]' 
                               : 'bg-orange-100 text-orange-700'
                           }`}>
                             {expertMode 
@@ -857,30 +800,30 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                 <div className={`absolute left-6 md:left-1/2 -top-4 h-4 w-0.5 bg-gradient-to-b ${colors.line} md:-translate-x-1/2 opacity-50`} />
                 
                 {/* Carte Report à nouveau */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-4 hover:shadow-lg transition-all duration-200 hover:border-blue-300 hover:from-blue-100 hover:to-indigo-100">
+                <div className="bg-gradient-to-br from-[#4C34CE]/5 to-indigo-50 rounded-xl border border-[#4C34CE]/20 p-4 hover:shadow-lg transition-all duration-200 hover:border-[#4C34CE]/30 hover:from-[#4C34CE]/10 hover:to-indigo-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       {/* Icône de continuité */}
                       <div className="p-2 bg-white rounded-lg shadow-sm">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-[#4C34CE]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m0 0l-4-4m4 4l4-4" />
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-blue-900">Charger l'exercice précédent</div>
-                        <div className="text-xs text-blue-600">Exercice {Math.min(...loadedExercises) - 1} • Cliquez pour ajouter</div>
+                        <div className="text-sm font-semibold text-[#4C34CE]">Charger l'exercice précédent</div>
+                        <div className="text-xs text-[#4C34CE]/70">Exercice {Math.min(...loadedExercises) - 1} • Cliquez pour ajouter</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <div className="text-xs text-gray-500 uppercase tracking-wider">Report à nouveau</div>
                         <div className={`text-xl font-bold ${
-                          totals.balance * 0.85 > 0 ? 'text-blue-600' : 'text-orange-600'
+                          totals.balance * 0.85 > 0 ? 'text-[#4C34CE]' : 'text-orange-600'
                         }`}>
                           {formatAmount(Math.abs(totals.balance * 0.85))}
                         </div>
                       </div>
-                      <svg className="w-5 h-5 text-blue-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-[#4C34CE]/40 group-hover:text-[#4C34CE] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
                       </svg>
                     </div>
@@ -900,13 +843,13 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
               onClick={loadAllHistory}
               className="w-full group"
             >
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border border-purple-200 p-3 hover:shadow-lg transition-all duration-200 hover:border-purple-300 hover:from-purple-100 hover:to-pink-100">
+              <div className="bg-gradient-to-br from-[#4C34CE]/5 to-pink-50 rounded-xl border border-[#4C34CE]/20 p-3 hover:shadow-lg transition-all duration-200 hover:border-[#4C34CE]/30 hover:from-[#4C34CE]/10 hover:to-pink-100">
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#4C34CE]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-sm font-semibold text-purple-900">Afficher tout l'historique depuis le début</span>
-                  <svg className="w-4 h-4 text-purple-400 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-sm font-semibold text-[#4C34CE]">Afficher tout l'historique depuis le début</span>
+                  <svg className="w-4 h-4 text-[#4C34CE]/40 group-hover:text-[#4C34CE] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                   </svg>
                 </div>

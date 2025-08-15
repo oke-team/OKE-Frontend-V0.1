@@ -95,58 +95,16 @@ export const AccountListView: React.FC<AccountListViewProps> = ({
 
   const isAllExpanded = expandedGroups.length === groups.length;
 
-  // Couleurs basées sur la couleur du widget parent
+  // Design unifié OKÉ - toujours les mêmes couleurs
   const getGroupColors = () => {
-    switch(cardColor) {
-      case 'violet':
-        return {
-          gradient: 'from-violet-50 to-purple-50',
-          border: 'border-purple-200',
-          borderLeft: ['border-l-violet-400', 'border-l-purple-400', 'border-l-indigo-400'],
-          title: 'from-purple-600 to-purple-500',
-          total: 'from-purple-600 to-purple-400'
-        };
-      case 'green':
-        return {
-          gradient: 'from-green-50 to-emerald-50',
-          border: 'border-green-200',
-          borderLeft: ['border-l-green-400', 'border-l-emerald-400', 'border-l-teal-400'],
-          title: 'from-green-600 to-green-500',
-          total: 'from-green-600 to-green-400'
-        };
-      case 'blue':
-        return {
-          gradient: 'from-blue-50 to-cyan-50',
-          border: 'border-blue-200',
-          borderLeft: ['border-l-blue-400', 'border-l-cyan-400', 'border-l-sky-400'],
-          title: 'from-blue-600 to-blue-500',
-          total: 'from-blue-600 to-blue-400'
-        };
-      case 'orange':
-        return {
-          gradient: 'from-orange-50 to-amber-50',
-          border: 'border-orange-200',
-          borderLeft: ['border-l-orange-400', 'border-l-amber-400', 'border-l-yellow-400'],
-          title: 'from-orange-600 to-orange-500',
-          total: 'from-orange-600 to-orange-400'
-        };
-      case 'red':
-        return {
-          gradient: 'from-red-50 to-rose-50',
-          border: 'border-red-200',
-          borderLeft: ['border-l-red-400', 'border-l-rose-400', 'border-l-pink-400'],
-          title: 'from-red-600 to-red-500',
-          total: 'from-red-600 to-red-400'
-        };
-      default:
-        return {
-          gradient: 'from-gray-50 to-slate-50',
-          border: 'border-gray-200',
-          borderLeft: ['border-l-gray-400', 'border-l-slate-400', 'border-l-zinc-400'],
-          title: 'from-gray-600 to-gray-500',
-          total: 'from-gray-600 to-gray-400'
-        };
-    }
+    // On utilise toujours le style violet OKÉ, peu importe cardColor
+    return {
+      gradient: 'from-violet-50 to-purple-50',
+      border: 'border-purple-200',
+      borderLeft: ['border-l-[#4C34CE]', 'border-l-purple-400', 'border-l-indigo-400'],
+      title: 'text-[#4C34CE]',
+      total: 'text-[#4C34CE]'
+    };
   };
 
   const colors = getGroupColors();
@@ -182,7 +140,7 @@ export const AccountListView: React.FC<AccountListViewProps> = ({
               <ChevronLeft className="w-5 h-5 text-gray-700" />
             </button>
             <h1 className={cn(
-              "text-xl md:text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent",
+              "text-xl md:text-2xl font-bold",
               colors.title
             )}>
               {cardLabel}
@@ -214,7 +172,7 @@ export const AccountListView: React.FC<AccountListViewProps> = ({
             {/* Section montant */}
             <div className="flex-1 sm:flex-initial text-left sm:text-right">
               <div className={cn(
-                "text-2xl md:text-3xl font-bold bg-gradient-to-r bg-clip-text text-transparent",
+                "text-2xl md:text-3xl font-bold",
                 colors.total
               )}>
                 {formatCurrency(totalBalance)}

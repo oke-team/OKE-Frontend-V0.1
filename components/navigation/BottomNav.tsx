@@ -35,6 +35,9 @@ const NavItemComponent: React.FC<{
 }> = ({ item, isActive, isMobile, onSelect }) => {
   const Icon = item.icon;
   
+  // Protection absolue : le bouton + n'est jamais actif
+  const isReallyActive = item.id === 'add' ? false : isActive;
+  
   const itemVariants = {
     inactive: { 
       scale: 1, 
@@ -71,8 +74,9 @@ const NavItemComponent: React.FC<{
       <motion.button
         onClick={() => onSelect(item.id)}
         className={cn(
-          "relative flex flex-col items-center justify-center",
-          "w-11 h-11 rounded-2xl",
+          "flex items-center justify-center",
+          isMobile ? "w-14 h-14" : "w-11 h-11",
+          "rounded-2xl",
           "transition-all duration-300",
           "hover:shadow-xl hover:shadow-rose-500/60 hover:scale-110",
           "active:scale-95"
@@ -124,7 +128,7 @@ const NavItemComponent: React.FC<{
 
         <div className="relative z-10">
           <Icon 
-            size={16} 
+            size={isMobile ? 22 : 16} 
             className="text-white drop-shadow-lg" 
           />
         </div>
@@ -138,68 +142,49 @@ const NavItemComponent: React.FC<{
       onClick={() => onSelect(item.id)}
       className={cn(
         "flex flex-col items-center justify-center gap-0.5",
-        "min-h-[48px] px-2 py-1.5 rounded-xl",
+        isMobile ? "min-h-[54px] px-3 py-2" : "min-h-[48px] px-2 py-1.5",
+        "rounded-xl",
         "transition-all duration-300",
         // Effet hover Liquid Glass
         "hover:bg-white/10 active:bg-white/15",
         "hover:backdrop-blur-sm",
-        // Taille unifiée
-        isMobile ? "min-w-[50px]" : "min-w-[65px]"
+        // Taille adaptée
+        isMobile ? "flex-1" : "min-w-[65px]"
       )}
       variants={itemVariants}
       initial="inactive"
-      animate={isActive ? "active" : "inactive"}
+      animate={isReallyActive ? "active" : "inactive"}
       whileHover="hover"
       whileTap={{ scale: 0.98 }}
     >
       <motion.div
         variants={iconVariants}
         initial="inactive"
-        animate={isActive ? "active" : "inactive"}
+        animate={isReallyActive ? "active" : "inactive"}
         whileHover="hover"
         className="relative"
       >
         <Icon 
-          size={18} 
+          size={isMobile ? 20 : 18} 
           className={cn(
-            isActive ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
+            isReallyActive ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
             "transition-colors duration-200"
           )}
         />
         
-        {/* Indicateur actif - Glow rose */}
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              className="absolute -inset-2 rounded-lg bg-fuchsia-500/20 blur-md"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-            />
-          )}
-        </AnimatePresence>
+        {/* Indicateur actif - Supprimé pour plus d'élégance */}
       </motion.div>
 
       <motion.span 
         className={cn(
-          "text-[10px] font-medium transition-colors duration-200",
-          isActive ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500"
+          isMobile ? "text-[11px]" : "text-[10px]",
+          "font-medium transition-colors duration-200",
+          isReallyActive ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500"
         )}
       >
         {item.label}
       </motion.span>
       
-      {/* Barre indicatrice active */}
-      {isActive && (
-        <motion.div
-          className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-fuchsia-500 to-rose-500 rounded-full"
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: 20, opacity: 1 }}
-          exit={{ width: 0, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
     </motion.button>
   );
 };
@@ -210,9 +195,19 @@ const BottomNav: React.FC<BottomNavProps> = ({
   onItemSelect,
   className
 }) => {
-  const [localActiveItem, setLocalActiveItem] = useState(activeItem);
+  // S'assurer que 'add' n'est jamais l'item actif par défaut
+  const [localActiveItem, setLocalActiveItem] = useState(
+    activeItem === 'add' ? 'dashboard' : activeItem
+  );
   const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const animationSettings = useOptimizedAnimations();
+  
+  // Synchroniser avec la prop activeItem
+  useEffect(() => {
+    if (activeItem && activeItem !== 'add') {
+      setLocalActiveItem(activeItem);
+    }
+  }, [activeItem]);
 
   // Détection de la taille d'écran
   useEffect(() => {
@@ -233,7 +228,10 @@ const BottomNav: React.FC<BottomNavProps> = ({
   }, []);
 
   const handleItemSelect = (itemId: string) => {
-    setLocalActiveItem(itemId);
+    // Ne pas activer le bouton + comme item actif
+    if (itemId !== 'add') {
+      setLocalActiveItem(itemId);
+    }
     onItemSelect?.(itemId);
   };
 
@@ -271,58 +269,24 @@ const BottomNav: React.FC<BottomNavProps> = ({
     }
   };
 
-  // Indicateur actif fluide (pill)
-  const ActiveIndicator: React.FC<{ items: NavItem[], activeId: string, isMobile: boolean }> = ({ 
-    items, 
-    activeId, 
-    isMobile 
-  }) => {
-    const activeIndex = items.findIndex(item => item.id === activeId);
-    const activeItem = items[activeIndex];
-    
-    if (activeIndex === -1 || activeItem?.isPrimary) return null;
-
-    const pillWidth = isMobile ? "44px" : "52px";
-    const itemWidth = isMobile ? "20%" : `${100 / items.length}%`;
-    const leftPosition = isMobile ? 
-      `calc(${activeIndex * 20}% + 10%)` : 
-      `calc(${activeIndex * (100 / items.length)}% + ${(100 / items.length) / 2}% - 26px)`;
-
-    return (
-      <motion.div
-        className={cn(
-          "absolute bottom-1 h-1 rounded-full",
-          "bg-gradient-to-r from-primary-500 to-primary-600",
-          "shadow-glow-sm shadow-primary-500/70"
-        )}
-        style={{ 
-          width: pillWidth,
-          left: leftPosition
-        }}
-        layoutId="activeIndicator"
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30
-        }}
-      />
-    );
-  };
 
   return (
     // Une seule navbar flottante unifiée avec design Liquid Glass
     <motion.nav
       className={cn(
-        "fixed bottom-6 left-1/2 -translate-x-1/2 z-50",
-        "flex items-center gap-1.5",
-        "px-3 py-2.5 rounded-2xl",
+        "fixed z-50",
+        // Position adaptée pour mobile avec safe area iOS
+        screenSize === 'mobile' 
+          ? "bottom-[env(safe-area-inset-bottom,20px)] left-3 right-3" // Safe area iOS
+          : "bottom-6 left-1/2 -translate-x-1/2",
+        "flex items-center",
+        screenSize === 'mobile' ? "justify-around" : "gap-1.5",
+        // Padding plus généreux sur mobile
+        screenSize === 'mobile' ? "px-4 py-3.5" : "px-3 py-2.5",
+        "rounded-2xl",
         // Style Liquid Glass avec teinte rose subtile
         "backdrop-blur-2xl",
         "shadow-2xl",
-        // Largeur adaptative mais toujours centrée
-        screenSize === 'mobile' && "scale-90",
-        screenSize === 'tablet' && "w-auto",
-        screenSize === 'desktop' && "w-auto",
         className
       )}
       style={{
@@ -338,9 +302,10 @@ const BottomNav: React.FC<BottomNavProps> = ({
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-fuchsia-100/10 to-transparent opacity-60" />
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-rose-100/5 to-white/10" />
       
-      {/* Contenu unifié avec même espacement */}
+      {/* Contenu avec gestion du centrage mobile */}
       <div className={cn(
-        "relative flex items-center gap-1",
+        "relative flex items-center",
+        screenSize === 'mobile' ? "w-full justify-evenly" : "gap-1.5",
         screenSize === 'tablet' && "gap-1.5"
       )}>
         {navItems.map((item) => {
@@ -352,7 +317,8 @@ const BottomNav: React.FC<BottomNavProps> = ({
                 onClick={() => onItemSelect?.(item.id)}
                 className={cn(
                   "flex flex-col items-center justify-center gap-0.5",
-                  "min-h-[48px] px-2 py-1.5 rounded-xl",
+                  screenSize === 'mobile' ? "min-h-[54px] px-3 py-2 flex-1" : "min-h-[48px] px-2 py-1.5",
+                  "rounded-xl",
                   "transition-all duration-300",
                   "hover:bg-white/10 active:bg-white/15",
                   "hover:backdrop-blur-sm",
@@ -362,14 +328,15 @@ const BottomNav: React.FC<BottomNavProps> = ({
                 whileTap={{ scale: 0.95 }}
               >
                 <item.icon 
-                  size={18} 
+                  size={screenSize === 'mobile' ? 20 : 18} 
                   className={cn(
                     localActiveItem === item.id ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
                     "transition-colors duration-200"
                   )}
                 />
                 <span className={cn(
-                  "text-[10px] font-medium",
+                  screenSize === 'mobile' ? "text-[11px]" : "text-[10px]",
+                  "font-medium",
                   localActiveItem === item.id ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500",
                   "transition-colors duration-200"
                 )}>
@@ -383,21 +350,13 @@ const BottomNav: React.FC<BottomNavProps> = ({
             <NavItemComponent
               key={item.id}
               item={item}
-              isActive={localActiveItem === item.id}
+              isActive={item.id !== 'add' && localActiveItem === item.id}
               isMobile={isMobile}
               onSelect={handleItemSelect}
             />
           );
         })}
         
-        {/* Indicateur actif */}
-        {!isMobile && (
-          <ActiveIndicator 
-            items={navItems} 
-            activeId={localActiveItem} 
-            isMobile={isMobile} 
-          />
-        )}
       </div>
     </motion.nav>
   );

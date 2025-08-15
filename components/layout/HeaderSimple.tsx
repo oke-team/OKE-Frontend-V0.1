@@ -103,16 +103,16 @@ export default function HeaderSimple({
         </div>
         
         {/* Partie centrale : Sélecteurs */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[45%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
-          {/* Version mobile : seulement le sélecteur d'entreprise avec nom complet */}
-          <div className="lg:hidden flex items-center gap-2 w-full">
-            <div className="flex-1">
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[40%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
+          {/* Version mobile et tablette : sélecteur d'entreprise limité */}
+          <div className="lg:hidden flex items-center gap-2 justify-center w-full">
+            <div className="w-full sm:w-auto sm:min-w-[250px] sm:max-w-[300px]">
               <CompanySelectorMobile
                 companies={mockCompanies}
                 currentCompany={currentCompany}
                 onCompanyChange={onCompanyChange || (() => {})}
-                size="md"
-                compact={false}
+                size="sm"
+                compact={isMobile}
               />
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function HeaderSimple({
                 currentCompany={currentCompany}
                 onCompanyChange={onCompanyChange || (() => {})}
                 size="sm"
-                fullWidth
+                fullWidth={false}
               />
             </div>
             
@@ -146,7 +146,7 @@ export default function HeaderSimple({
         </div>
         
         {/* Partie droite : Actions */}
-        <div className="flex items-center gap-2 sm:gap-2 lg:gap-2 flex-shrink-0 h-full">
+        <div className="flex items-center gap-1 sm:gap-2 lg:gap-2 flex-shrink-0">
           
           {/* Recherche globale - cachée sur mobile */}
           {!isMobile && (
@@ -156,7 +156,7 @@ export default function HeaderSimple({
             >
               <button
                 onClick={() => setSearchOpen(true)}
-                className="p-1.5 sm:p-1.5 lg:p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                className="w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-100 to-violet-100 text-indigo-600 hover:from-indigo-200 hover:to-violet-200 transition-all"
               >
                 <Search size={16} className="lg:w-[18px] lg:h-[18px]" />
               </button>
@@ -165,7 +165,7 @@ export default function HeaderSimple({
           
           {!isMobile && (
             <>
-              <div className="hidden sm:block h-5 w-px bg-gray-200" />
+              <div className="hidden sm:block h-6 w-px bg-gray-200/50" />
               
               {/* Mode Expert - caché sur mobile */}
               <TooltipSimple
@@ -177,11 +177,12 @@ export default function HeaderSimple({
               >
                 <button
                   onClick={toggleExpertMode}
-                  className={`p-1.5 sm:p-1.5 lg:p-2 rounded-lg transition-all ${
+                  className={cn(
+                    "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg transition-all",
                     expertMode 
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30' 
+                      : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 hover:from-purple-200 hover:to-pink-200'
+                  )}
                 >
                   <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
                 </button>
@@ -203,10 +204,9 @@ export default function HeaderSimple({
                   }
                 }}
                 className={cn(
-                  "relative rounded-lg transition-all",
-                  isMobile 
-                    ? "p-2.5 bg-gradient-to-r from-purple-100 to-purple-50 text-purple-700 hover:from-purple-200 hover:to-purple-100 shadow-sm" 
-                    : "p-1.5 sm:p-1.5 lg:p-2 bg-purple-100 text-purple-600 hover:bg-purple-200"
+                  "relative flex items-center justify-center rounded-lg transition-all",
+                  "bg-gradient-to-r from-violet-100 to-purple-100 text-violet-600 hover:from-violet-200 hover:to-purple-200",
+                  isMobile ? "w-10 h-10" : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9"
                 )}
               >
                 <Wand2 size={isMobile ? 20 : 16} className="lg:w-[18px] lg:h-[18px]" />
@@ -261,8 +261,8 @@ export default function HeaderSimple({
             <button
               onClick={onChatOpen}
               className={cn(
-                "rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors",
-                isMobile ? "p-2.5" : "p-1.5 sm:p-1.5 lg:p-2"
+                "flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-600 hover:from-blue-200 hover:to-cyan-200 transition-all",
+                isMobile ? "w-10 h-10" : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9"
               )}
             >
               <MessageSquare size={isMobile ? 20 : 16} className="lg:w-[18px] lg:h-[18px]" />
@@ -274,7 +274,7 @@ export default function HeaderSimple({
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
               className={cn(
-                "flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg transition-shadow",
+                "flex items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white font-semibold shadow-lg shadow-fuchsia-500/30 hover:shadow-xl hover:shadow-fuchsia-500/40 transition-all",
                 isMobile 
                   ? "w-10 h-10 text-sm" 
                   : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 text-xs lg:text-sm"
