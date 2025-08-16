@@ -118,7 +118,6 @@ export default function DashboardEnriched() {
   const [selectedAccount, setSelectedAccount] = useState(bankAccounts[0].id);
   const [widgetOrder, setWidgetOrder] = useState<Widget[]>(defaultWidgetOrder);
   const [isCustomizing, setIsCustomizing] = useState(false);
-  const dragControls = useDragControls();
   
   // Charger l'ordre des widgets depuis le localStorage
   useEffect(() => {
@@ -818,52 +817,48 @@ export default function DashboardEnriched() {
 
       {/* Grille de widgets réorganisable */}
       {isCustomizing ? (
-        <Reorder.Group 
-          values={widgetOrder} 
-          onReorder={saveWidgetOrder}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          as="div"
-        >
-          {widgetOrder.map((widget) => (
-            <Reorder.Item 
-              key={widget.id} 
-              value={widget}
-              className={cn(
-                "relative group",
-                widget.size === 'full' ? "col-span-full" :
-                widget.size === 'large' ? "md:col-span-2 col-span-1" :
-                "col-span-1"
-              )}
-              dragListener={false}
-              dragControls={undefined}
-              style={{ position: "relative" }}
-            >
-              <div 
-                className="absolute -top-2 -left-2 z-30 p-2 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-move"
-                onPointerDown={(e) => {
-                  const item = e.currentTarget.parentElement as HTMLElement;
-                  if (item) {
-                    item.style.cursor = 'grabbing';
-                    item.setAttribute('data-dragging', 'true');
-                  }
-                }}
-              >
-                <GripVertical className="w-4 h-4" />
-              </div>
-              <motion.div
+        <div className="relative">
+          <Reorder.Group 
+            values={widgetOrder} 
+            onReorder={saveWidgetOrder}
+            className="flex flex-wrap gap-6"
+            as="div"
+            axis="xy"
+          >
+            {widgetOrder.map((widget) => (
+              <Reorder.Item 
+                key={widget.id} 
+                value={widget}
+                className={cn(
+                  "relative group cursor-move",
+                  widget.size === 'full' ? "w-full" :
+                  widget.size === 'large' ? "w-full lg:w-[calc(66.666%-0.75rem)]" :
+                  "w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+                )}
                 whileDrag={{ 
                   scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-                  zIndex: 1000
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+                  zIndex: 1000,
+                  transition: { duration: 0 }
                 }}
-                dragElastic={0.2}
-                className="h-full"
+                dragElastic={0.5}
+                dragMomentum={false}
+                layout
+                layoutId={widget.id}
               >
-                {renderWidget(widget)}
-              </motion.div>
-            </Reorder.Item>
-          ))}
-        </Reorder.Group>
+                <div className="absolute -top-2 -left-2 z-20 p-2 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+                  <GripVertical className="w-4 h-4" />
+                </div>
+                <div className="h-full">
+                  {renderWidget(widget)}
+                </div>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
+          <div className="mt-4 text-center text-sm text-neutral-500">
+            Glissez-déposez les cartes pour les réorganiser
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {widgetOrder.map((widget) => (

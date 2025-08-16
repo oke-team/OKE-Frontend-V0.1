@@ -760,25 +760,34 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                           !isMobile && isEven ? "order-2 rounded-l-none rounded-r-lg border-l border-r-0" : "order-1"
                         )}>
                           {transaction.attachments && transaction.attachments > 0 ? (
-                            // Pièce jointe PDF
+                            // Pièce jointe PDF - Miniature réelle
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleOpenAttachment(transaction);
                               }}
-                              className="w-full h-full p-3 hover:bg-gray-100 transition-colors group relative"
+                              className="w-full h-full p-2 hover:bg-gray-100 transition-colors group relative"
                               title="Voir la pièce jointe"
                             >
-                              {/* Miniature PDF */}
-                              <div className="w-full h-full min-h-[120px] bg-white rounded border border-gray-300 shadow-sm group-hover:shadow-md transition-shadow flex flex-col items-center justify-center">
-                                <svg className="w-12 h-12 text-red-600 mb-2" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20" />
-                                </svg>
-                                <span className="text-xs text-gray-600 font-medium">Facture PDF</span>
-                                <span className="text-[10px] text-gray-500 mt-1">Cliquer pour voir</span>
+                              {/* Miniature du document réel */}
+                              <div className="w-full h-full min-h-[140px] bg-white rounded-lg border border-gray-300 shadow-sm group-hover:shadow-lg transition-all overflow-hidden relative">
+                                {/* Utilisation d'un iframe pour afficher le PDF en miniature */}
+                                <iframe 
+                                  src="/documents/facture-pennylane.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                                  className="w-full h-full pointer-events-none"
+                                  style={{ transform: 'scale(1)', transformOrigin: 'top left' }}
+                                  title="Aperçu facture"
+                                />
+                                
+                                {/* Overlay au hover */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                  <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[10px] font-medium text-gray-700 shadow-sm">
+                                    Cliquer pour voir
+                                  </div>
+                                </div>
                               </div>
                               {transaction.attachments > 1 && (
-                                <span className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                                <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                                   {transaction.attachments}
                                 </span>
                               )}
