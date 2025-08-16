@@ -751,29 +751,27 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                           {selectedItems.has(transaction.id) && <Check className="w-3 h-3 text-white" />}
                         </div>
                       )}
-                    {/* Layout mobile et tablette - NOUVEAU DESIGN */}
+                    {/* Layout mobile et tablette - DESIGN OPTIMISÉ */}
                     {(isMobile || isTablet) ? (
                       <div className="relative">
-                        {/* Badge de date dans le coin supérieur gauche */}
-                        <div className="absolute -top-3 left-0 z-10">
+                        {/* Badge de date aligné avec la timeline */}
+                        <div className="absolute -top-2 -left-8 md:-left-12">
                           <div 
-                            className="px-2 py-0.5 rounded-md text-[9px] font-medium text-gray-600 shadow-sm"
+                            className="px-2 py-0.5 rounded text-[10px] font-medium text-gray-600"
                             style={{
-                              background: 'rgba(255, 255, 255, 0.95)',
-                              backdropFilter: 'blur(10px)',
-                              border: '1px solid rgba(251, 207, 232, 0.3)',
+                              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.15) 100%)',
+                              backdropFilter: 'blur(8px)',
+                              border: '1px solid rgba(251, 207, 232, 0.25)',
                             }}
                           >
                             {new Date(transaction.date).toLocaleDateString('fr-FR')}
                           </div>
                         </div>
                         
-                        <div className="pt-3 space-y-2">
-                          {/* Première ligne : Date et Montant */}
-                          <div className="flex justify-between items-start">
-                            <div className="text-[10px] text-gray-500">
-                              {/* Espace pour la date qui est en position absolue */}
-                            </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          {/* Colonne gauche : Infos principales */}
+                          <div className="space-y-3">
+                            {/* Montant avec couleur selon contexte */}
                             <div className={`text-lg font-bold ${
                               // Couleurs inversées selon le contexte
                               accountLabel.includes('Charges') || accountLabel.includes('Produits') 
@@ -782,73 +780,99 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                             }`}>
                               {formatAmount(transaction.amount)}
                             </div>
+                            
+                            {/* Libellé */}
+                            <div className="font-medium text-sm text-gray-900 leading-tight">
+                              {transaction.label}
+                            </div>
+                            
+                            {/* Solde progressif */}
+                            <div>
+                              <div className="text-[10px] text-gray-500">
+                                Solde {progressiveBalance >= 0 ? 'créditeur' : 'débiteur'} =
+                              </div>
+                              <div className={`text-base font-semibold ${
+                                // Mêmes codes couleur que le montant
+                                accountLabel.includes('Charges') || accountLabel.includes('Produits')
+                                  ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
+                                  : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
+                              }`}>
+                                {formatAmount(Math.abs(progressiveBalance))}
+                              </div>
+                            </div>
                           </div>
                           
-                          {/* Deuxième ligne : Libellé */}
-                          <div className="font-medium text-sm text-gray-900">
-                            {transaction.label}
-                          </div>
-                          
-                          {/* Troisième ligne : Solde */}
-                          <div className="flex items-baseline gap-1">
-                            <span className="text-[10px] text-gray-500">
-                              Solde {progressiveBalance >= 0 ? 'créditeur' : 'débiteur'} =
-                            </span>
-                            <span className={`text-sm font-semibold ${
-                              // Mêmes codes couleur que le montant
-                              accountLabel.includes('Charges') || accountLabel.includes('Produits')
-                                ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
-                                : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
-                            }`}>
-                              {formatAmount(Math.abs(progressiveBalance))}
-                            </span>
-                          </div>
-                          
-                          {/* Section droite : Badges et infos */}
-                          <div className="flex justify-between items-end pt-2 border-t border-gray-100">
-                            <div className="space-y-1">
-                              {/* Badge type de flux */}
-                              <span className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                          {/* Colonne droite : Métadonnées */}
+                          <div className="flex flex-col justify-between items-end text-right">
+                            {/* En haut : Type de flux */}
+                            <div className="space-y-2">
+                              <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                 isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
                               }`}>
                                 {getTransactionTag(transaction, isDebit, expertMode)}
                               </span>
                               
-                              {/* Nom du compte comptable */}
-                              <div className="text-[9px] text-gray-500">
-                                {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
-                              </div>
+                              {/* Compte comptable - uniquement en mode expert */}
+                              {expertMode && (
+                                <div className="text-[10px] text-gray-500">
+                                  {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
+                                </div>
+                              )}
                               
                               {/* Badge lettrage */}
                               {transaction.lettrageCode && (
-                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[8px] font-bold shadow-sm">
-                                  {transaction.lettrageCode}
-                                </span>
+                                <div className="flex justify-end">
+                                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[10px] font-bold shadow-sm">
+                                    {transaction.lettrageCode}
+                                  </span>
+                                </div>
                               )}
                             </div>
                             
-                            {/* Pictos additionnels */}
-                            <div className="flex items-center gap-1">
-                              {transaction.attachments && transaction.attachments > 0 && (
+                            {/* En bas : Miniature de pièce jointe */}
+                            {transaction.attachments && transaction.attachments > 0 && (
+                              <div className="mt-2">
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleOpenAttachment(transaction);
                                   }}
-                                  className="p-1 rounded hover:bg-gray-100 transition-colors"
-                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                                  className="relative group"
+                                  title="Voir la pièce jointe"
                                 >
-                                  <Paperclip className="w-3 h-3 text-gray-500" />
+                                  <div className="w-12 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded border border-gray-300 shadow-sm group-hover:shadow-md transition-shadow overflow-hidden">
+                                    {/* Icône PDF */}
+                                    <div className="w-full h-full flex flex-col items-center justify-center">
+                                      <svg className="w-5 h-5 text-red-600 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,13H8V11H10V13M10,17H8V15H10V17M10,9H8V7H10V9M6,11V13H6V15H6V17H14V15H14V13H14V11H6Z" />
+                                      </svg>
+                                      <span className="text-[8px] text-gray-600 font-medium">PDF</span>
+                                    </div>
+                                  </div>
                                   {transaction.attachments > 1 && (
-                                    <span className="text-[8px] text-gray-500">{transaction.attachments}</span>
+                                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+                                      {transaction.attachments}
+                                    </span>
                                   )}
                                 </button>
-                              )}
-                              {/* Icône transaction bancaire si rapprochée */}
+                              </div>
+                            )}
+                            
+                            {/* Icônes additionnelles */}
+                            <div className="flex items-center gap-1 mt-1">
+                              {/* Transaction bancaire */}
                               {transaction.status === 'paid' && (
-                                <div className="p-1" title="Transaction bancaire rapprochée">
-                                  <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="p-1 rounded-lg bg-green-50" title="Transaction bancaire rapprochée">
+                                  <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                  </svg>
+                                </div>
+                              )}
+                              {/* Commentaire */}
+                              {transaction.description && (
+                                <div className="p-1 rounded-lg hover:bg-gray-100" title={transaction.description}>
+                                  <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                                   </svg>
                                 </div>
                               )}
@@ -857,29 +881,31 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                         </div>
                       </div>
                     ) : (
-                      /* Layout desktop - NOUVEAU DESIGN */
+                      /* Layout desktop - DESIGN OPTIMISÉ */
                       <div className="relative">
-                        {/* Badge de date dans le coin supérieur */}
-                        <div className="absolute -top-3 left-0 z-10">
+                        {/* Badge de date aligné avec la timeline */}
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
                           <div 
-                            className="px-3 py-1 rounded-md text-xs font-medium text-gray-600 shadow-sm"
+                            className="px-3 py-1 rounded-lg text-xs font-medium text-gray-600 shadow-sm"
                             style={{
-                              background: 'rgba(255, 255, 255, 0.95)',
-                              backdropFilter: 'blur(10px)',
-                              border: '1px solid rgba(251, 207, 232, 0.3)',
+                              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.15) 100%)',
+                              backdropFilter: 'blur(8px)',
+                              border: '1px solid rgba(251, 207, 232, 0.25)',
                             }}
                           >
                             {new Date(transaction.date).toLocaleDateString('fr-FR')}
                           </div>
                         </div>
                         
-                        <div className={`pt-4 flex justify-between items-start ${
-                          !isMobile && isEven ? 'md:flex-row-reverse' : ''
+                        <div className={`pt-6 grid grid-cols-2 gap-8 ${
+                          !isMobile && isEven ? 'md:grid-flow-dense' : ''
                         }`}>
-                          {/* Partie gauche : Date, Montant, Libellé, Solde */}
-                          <div className="flex-1 space-y-2">
-                            {/* Montant à droite de la date */}
-                            <div className={`text-xl font-bold ${
+                          {/* Partie gauche/droite selon position */}
+                          <div className={`space-y-3 ${
+                            !isMobile && isEven ? 'md:col-start-2 md:text-right' : ''
+                          }`}>
+                            {/* Montant */}
+                            <div className={`text-2xl font-bold ${
                               // Couleurs inversées selon le contexte
                               accountLabel.includes('Charges') || accountLabel.includes('Produits') 
                                 ? (isDebit ? 'text-green-600' : 'text-red-600')  // Compte de résultat
@@ -894,72 +920,99 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                             </div>
                             
                             {/* Solde */}
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-sm text-gray-500">
+                            <div>
+                              <div className="text-sm text-gray-500">
                                 Solde {progressiveBalance >= 0 ? 'créditeur' : 'débiteur'} =
-                              </span>
-                              <span className={`text-base font-semibold ${
+                              </div>
+                              <div className={`text-lg font-semibold mt-1 ${
                                 // Mêmes codes couleur que le montant
                                 accountLabel.includes('Charges') || accountLabel.includes('Produits')
                                   ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
                                   : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
                               }`}>
                                 {formatAmount(Math.abs(progressiveBalance))}
-                              </span>
+                              </div>
                             </div>
                           </div>
                           
-                          {/* Partie droite : Badges et infos */}
-                          <div className={`ml-6 space-y-2 ${
-                            !isMobile && isEven ? 'md:ml-0 md:mr-6' : ''
+                          {/* Partie métadonnées */}
+                          <div className={`flex flex-col justify-between ${
+                            !isMobile && isEven ? 'md:col-start-1 md:items-start' : 'items-end'
                           }`}>
-                            {/* Badge type de flux */}
-                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                              isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                            {/* Section supérieure : Type et compte */}
+                            <div className={`space-y-2 ${
+                              !isMobile && isEven ? '' : 'text-right'
                             }`}>
-                              {getTransactionTag(transaction, isDebit, expertMode)}
-                            </span>
-                            
-                            {/* Nom du compte comptable */}
-                            <div className="text-xs text-gray-500">
-                              {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
+                              {/* Badge type de flux */}
+                              <div>
+                                <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
+                                  isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                                }`}>
+                                  {getTransactionTag(transaction, isDebit, expertMode)}
+                                </span>
+                              </div>
+                              
+                              {/* Compte comptable - uniquement en mode expert */}
+                              {expertMode && (
+                                <div className="text-sm text-gray-500">
+                                  {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
+                                </div>
+                              )}
+                              
+                              {/* Badge lettrage */}
+                              {transaction.lettrageCode && (
+                                <div className={`${
+                                  !isMobile && isEven ? '' : 'flex justify-end'
+                                }`}>
+                                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-sm font-bold shadow-lg">
+                                    {transaction.lettrageCode}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                             
-                            {/* Badge lettrage */}
-                            {transaction.lettrageCode && (
-                              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs font-bold shadow-sm">
-                                {transaction.lettrageCode}
-                              </span>
-                            )}
-                            
-                            {/* Pictos additionnels */}
-                            <div className="flex items-center gap-2 mt-2">
+                            {/* Section inférieure : Miniature et icônes */}
+                            <div className="flex items-end gap-3 mt-3">
+                              {/* Miniature de pièce jointe */}
                               {transaction.attachments && transaction.attachments > 0 && (
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleOpenAttachment(transaction);
                                   }}
-                                  className="p-1 rounded hover:bg-gray-100 transition-colors"
-                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                                  className="relative group"
+                                  title="Voir la pièce jointe"
                                 >
-                                  <Paperclip className="w-4 h-4 text-gray-500" />
+                                  <div className="w-16 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg border border-gray-300 shadow-sm group-hover:shadow-lg transition-all overflow-hidden">
+                                    {/* Icône PDF */}
+                                    <div className="w-full h-full flex flex-col items-center justify-center">
+                                      <svg className="w-6 h-6 text-red-600 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,13H8V11H10V13M10,17H8V15H10V17M10,9H8V7H10V9M6,11V13H6V15H6V17H14V15H14V13H14V11H6Z" />
+                                      </svg>
+                                      <span className="text-[10px] text-gray-600 font-medium">PDF</span>
+                                    </div>
+                                  </div>
                                   {transaction.attachments > 1 && (
-                                    <span className="text-xs text-gray-500 ml-1">{transaction.attachments}</span>
+                                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                      {transaction.attachments}
+                                    </span>
                                   )}
                                 </button>
                               )}
-                              {/* Icône transaction bancaire si rapprochée */}
+                              
+                              {/* Autres icônes */}
+                              <div className="flex items-center gap-2">
+                              {/* Transaction bancaire */}
                               {transaction.status === 'paid' && (
-                                <div className="p-1" title="Transaction bancaire rapprochée">
+                                <div className="p-1.5 rounded-lg bg-green-50" title="Transaction bancaire rapprochée">
                                   <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                   </svg>
                                 </div>
                               )}
-                              {/* Commentaire si présent */}
+                              {/* Commentaire */}
                               {transaction.description && (
-                                <div className="p-1" title={transaction.description}>
+                                <div className="p-1.5 rounded-lg hover:bg-gray-100" title={transaction.description}>
                                   <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                                   </svg>
