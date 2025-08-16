@@ -31,6 +31,7 @@ import {
   Plus,
   RefreshCw,
   MapPin,
+  Upload,
   Phone,
   Video,
   AlertTriangle,

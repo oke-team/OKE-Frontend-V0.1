@@ -85,6 +85,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
   };
 
   const colors = getThemeColors();
+  const [accountLabel, setAccountLabel] = useState('');
 
   // Fonction pour déterminer le tag de la transaction selon le contexte
   const getTransactionTag = (transaction: Transaction, isDebit: boolean, expertMode: boolean) => {
@@ -147,6 +148,15 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
     
     return isDebit ? 'Débit' : 'Crédit';
   };
+
+  // Récupérer le libellé du compte depuis les props ou le contexte
+  useEffect(() => {
+    // Simuler la récupération du libellé du compte
+    const label = window.location.pathname.includes('charges') ? 'Charges' : 
+                  window.location.pathname.includes('produits') ? 'Produits' : 
+                  'Clients';
+    setAccountLabel(label);
+  }, []);
 
   // Détecter si on est sur mobile ou tablette
   useEffect(() => {
@@ -683,21 +693,8 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className="relative mt-8"
+                    className="relative"
                   >
-                {/* Badge de date sur la timeline */}
-                <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 -top-7 z-20">
-                  <div 
-                    className="px-3 py-1 rounded-full text-[10px] font-medium text-gray-700 shadow-sm"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.25) 100%)',
-                      backdropFilter: 'blur(12px)',
-                      border: '1px solid rgba(251, 207, 232, 0.4)',
-                    }}
-                  >
-                    {new Date(transaction.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                  </div>
-                </div>
                 {/* Conteneur pour l'alignement desktop */}
                 <div className={`md:grid md:grid-cols-2 md:gap-8 md:items-center`}>
                   {/* Carte de transaction - position alternée sur desktop */}
@@ -754,187 +751,220 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                           {selectedItems.has(transaction.id) && <Check className="w-3 h-3 text-white" />}
                         </div>
                       )}
-                    {/* Layout mobile et tablette optimisé */}
+                    {/* Layout mobile et tablette - NOUVEAU DESIGN */}
                     {(isMobile || isTablet) ? (
-                      <div className="space-y-2">
-                        {/* En-tête avec badge sans date */}
-                        <div className="flex items-center justify-between gap-2">
-                          <span className={`inline-block px-2.5 py-1 rounded-full ${isTablet ? 'text-xs' : 'text-[10px]'} font-bold uppercase tracking-wider ${
-                            isDebit ? 'bg-red-100 text-red-700' : colors.badgeCredit
-                          }`}>
-                            {getTransactionTag(transaction, isDebit, expertMode)}
-                          </span>
+                      <div className="relative">
+                        {/* Badge de date dans le coin supérieur gauche */}
+                        <div className="absolute -top-3 left-0 z-10">
+                          <div 
+                            className="px-2 py-0.5 rounded-md text-[9px] font-medium text-gray-600 shadow-sm"
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.95)',
+                              backdropFilter: 'blur(10px)',
+                              border: '1px solid rgba(251, 207, 232, 0.3)',
+                            }}
+                          >
+                            {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                          </div>
                         </div>
                         
-                        {/* Libellé et montant */}
-                        <div className="flex justify-between items-start gap-2">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <div className={`font-medium ${isTablet ? 'text-base' : 'text-sm'} truncate`}>{transaction.label}</div>
-                              {/* Pièce jointe déplacée dans le footer sur mobile/tablette */}
+                        <div className="pt-3 space-y-2">
+                          {/* Première ligne : Date et Montant */}
+                          <div className="flex justify-between items-start">
+                            <div className="text-[10px] text-gray-500">
+                              {/* Espace pour la date qui est en position absolue */}
                             </div>
-                            {transaction.reference && (
-                              <div className="text-[11px] text-neutral-500 truncate mt-0.5">
-                                {transaction.reference}
-                              </div>
-                            )}
-                          </div>
-                          <div className="text-right flex-shrink-0">
-                            <div className={`text-base font-bold ${
-                              isDebit ? 'text-red-600' : 'text-green-600'
+                            <div className={`text-lg font-bold ${
+                              // Couleurs inversées selon le contexte
+                              accountLabel.includes('Charges') || accountLabel.includes('Produits') 
+                                ? (isDebit ? 'text-green-600' : 'text-red-600')  // Compte de résultat
+                                : (isDebit ? 'text-red-600' : 'text-green-600')  // Bilan
                             }`}>
                               {formatAmount(transaction.amount)}
                             </div>
                           </div>
-                        </div>
-                        
-                        {/* Footer avec statut, lettrage et solde */}
-                        <div className="flex items-center justify-between gap-2 pt-1 border-t border-gray-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                              transaction.status === 'paid' ? 'text-green-700 bg-green-100/80' :
-                              transaction.status === 'partial' ? 'text-blue-700 bg-blue-100/80' :
-                              transaction.status === 'pending' ? 'text-amber-700 bg-amber-100/80' :
-                              transaction.status === 'overdue' ? 'text-red-700 bg-red-100/80' :
-                              'text-neutral-700 bg-neutral-100/80'
-                            }`}>
-                              {expertMode ? (
-                                transaction.status === 'paid' ? 'Lettré' :
-                                transaction.status === 'partial' ? 'Partiel' :
-                                transaction.status === 'pending' ? 'Non lettré' :
-                                transaction.status === 'overdue' ? 'Échu' : transaction.status
-                              ) : (
-                                transaction.status === 'paid' ? 'Payé' :
-                                transaction.status === 'partial' ? 'Partiel' :
-                                transaction.status === 'pending' ? 'En attente' :
-                                transaction.status === 'overdue' ? 'En retard' : transaction.status
-                              )}
-                            </span>
-                            {transaction.lettrageCode && (
-                              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[9px] font-bold shadow-sm">
-                                {transaction.lettrageCode}
-                              </span>
-                            )}
-                            {transaction.attachments && transaction.attachments > 0 && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenAttachment(transaction);
-                                }}
-                                className="flex-shrink-0 p-0.5 rounded hover:bg-gray-100 transition-colors"
-                                title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
-                              >
-                                <Paperclip className="w-3 h-3 text-gray-500" />
-                                {transaction.attachments > 1 && (
-                                  <span className="ml-0.5 text-[8px] text-gray-500">{transaction.attachments}</span>
-                                )}
-                              </button>
-                            )}
+                          
+                          {/* Deuxième ligne : Libellé */}
+                          <div className="font-medium text-sm text-gray-900">
+                            {transaction.label}
                           </div>
                           
-                          <div className="text-right">
-                            <div className="text-[9px] text-gray-500">
-                              {progressiveBalance >= 0 ? 'Solde créditeur' : 'Solde débiteur'}
-                            </div>
-                            <div className={`text-xs font-semibold ${
-                              progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
+                          {/* Troisième ligne : Solde */}
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-[10px] text-gray-500">
+                              Solde {progressiveBalance >= 0 ? 'créditeur' : 'débiteur'} =
+                            </span>
+                            <span className={`text-sm font-semibold ${
+                              // Mêmes codes couleur que le montant
+                              accountLabel.includes('Charges') || accountLabel.includes('Produits')
+                                ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
+                                : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
                             }`}>
                               {formatAmount(Math.abs(progressiveBalance))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      /* Layout desktop original */
-                      <div className={`flex justify-between items-start ${
-                        !isMobile && isEven ? 'md:flex-row-reverse' : ''
-                      }`}>
-                        <div className="flex-1">
-                          <div className={`flex items-center gap-2 ${
-                            !isMobile && isEven ? 'md:justify-end' : ''
-                          }`}>
-                            <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r ${
-                              isDebit ? colors.badgeDebit : colors.badgeCredit
-                            }`}>
-                              {getTransactionTag(transaction, isDebit, expertMode)}
                             </span>
-                          {transaction.lettrageCode && (
-                            <span className="inline-flex items-center justify-center ml-2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-2xs font-bold shadow-sm">
-                              {transaction.lettrageCode}
-                            </span>
-                          )}
                           </div>
                           
-                          <div className="mt-2">
-                            <div className="flex items-center gap-2">
-                              <div className="font-medium text-sm">{transaction.label}</div>
+                          {/* Section droite : Badges et infos */}
+                          <div className="flex justify-between items-end pt-2 border-t border-gray-100">
+                            <div className="space-y-1">
+                              {/* Badge type de flux */}
+                              <span className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                                isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                              }`}>
+                                {getTransactionTag(transaction, isDebit, expertMode)}
+                              </span>
+                              
+                              {/* Nom du compte comptable */}
+                              <div className="text-[9px] text-gray-500">
+                                {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
+                              </div>
+                              
+                              {/* Badge lettrage */}
+                              {transaction.lettrageCode && (
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[8px] font-bold shadow-sm">
+                                  {transaction.lettrageCode}
+                                </span>
+                              )}
+                            </div>
+                            
+                            {/* Pictos additionnels */}
+                            <div className="flex items-center gap-1">
                               {transaction.attachments && transaction.attachments > 0 && (
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleOpenAttachment(transaction);
                                   }}
-                                  className="flex-shrink-0 p-1 rounded hover:bg-gray-100 transition-colors inline-flex items-center"
+                                  className="p-1 rounded hover:bg-gray-100 transition-colors"
+                                  title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
+                                >
+                                  <Paperclip className="w-3 h-3 text-gray-500" />
+                                  {transaction.attachments > 1 && (
+                                    <span className="text-[8px] text-gray-500">{transaction.attachments}</span>
+                                  )}
+                                </button>
+                              )}
+                              {/* Icône transaction bancaire si rapprochée */}
+                              {transaction.status === 'paid' && (
+                                <div className="p-1" title="Transaction bancaire rapprochée">
+                                  <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                  </svg>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Layout desktop - NOUVEAU DESIGN */
+                      <div className="relative">
+                        {/* Badge de date dans le coin supérieur */}
+                        <div className="absolute -top-3 left-0 z-10">
+                          <div 
+                            className="px-3 py-1 rounded-md text-xs font-medium text-gray-600 shadow-sm"
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.95)',
+                              backdropFilter: 'blur(10px)',
+                              border: '1px solid rgba(251, 207, 232, 0.3)',
+                            }}
+                          >
+                            {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                          </div>
+                        </div>
+                        
+                        <div className={`pt-4 flex justify-between items-start ${
+                          !isMobile && isEven ? 'md:flex-row-reverse' : ''
+                        }`}>
+                          {/* Partie gauche : Date, Montant, Libellé, Solde */}
+                          <div className="flex-1 space-y-2">
+                            {/* Montant à droite de la date */}
+                            <div className={`text-xl font-bold ${
+                              // Couleurs inversées selon le contexte
+                              accountLabel.includes('Charges') || accountLabel.includes('Produits') 
+                                ? (isDebit ? 'text-green-600' : 'text-red-600')  // Compte de résultat
+                                : (isDebit ? 'text-red-600' : 'text-green-600')  // Bilan
+                            }`}>
+                              {formatAmount(transaction.amount)}
+                            </div>
+                            
+                            {/* Libellé */}
+                            <div className="font-medium text-base text-gray-900">
+                              {transaction.label}
+                            </div>
+                            
+                            {/* Solde */}
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-sm text-gray-500">
+                                Solde {progressiveBalance >= 0 ? 'créditeur' : 'débiteur'} =
+                              </span>
+                              <span className={`text-base font-semibold ${
+                                // Mêmes codes couleur que le montant
+                                accountLabel.includes('Charges') || accountLabel.includes('Produits')
+                                  ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
+                                  : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
+                              }`}>
+                                {formatAmount(Math.abs(progressiveBalance))}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {/* Partie droite : Badges et infos */}
+                          <div className={`ml-6 space-y-2 ${
+                            !isMobile && isEven ? 'md:ml-0 md:mr-6' : ''
+                          }`}>
+                            {/* Badge type de flux */}
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                              isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                            }`}>
+                              {getTransactionTag(transaction, isDebit, expertMode)}
+                            </span>
+                            
+                            {/* Nom du compte comptable */}
+                            <div className="text-xs text-gray-500">
+                              {isDebit ? '401 - Fournisseurs' : '411 - Clients'}
+                            </div>
+                            
+                            {/* Badge lettrage */}
+                            {transaction.lettrageCode && (
+                              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs font-bold shadow-sm">
+                                {transaction.lettrageCode}
+                              </span>
+                            )}
+                            
+                            {/* Pictos additionnels */}
+                            <div className="flex items-center gap-2 mt-2">
+                              {transaction.attachments && transaction.attachments > 0 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenAttachment(transaction);
+                                  }}
+                                  className="p-1 rounded hover:bg-gray-100 transition-colors"
                                   title={`${transaction.attachments} pièce${transaction.attachments > 1 ? 's' : ''} jointe${transaction.attachments > 1 ? 's' : ''}`}
                                 >
                                   <Paperclip className="w-4 h-4 text-gray-500" />
                                   {transaction.attachments > 1 && (
-                                    <span className="ml-1 text-xs text-gray-500">{transaction.attachments}</span>
+                                    <span className="text-xs text-gray-500 ml-1">{transaction.attachments}</span>
                                   )}
                                 </button>
                               )}
-                            </div>
-                            <div className="text-xs text-neutral-500 mt-1">
-                              {transaction.reference}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className={`ml-3 ${
-                          !isMobile && isEven ? 'md:ml-0 md:mr-3 md:text-left' : 'text-right'
-                        }`}>
-                          <div className={`text-lg font-bold ${
-                            isDebit 
-                              ? 'bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent' 
-                              : 'bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent'
-                          }`}>
-                            {formatAmount(transaction.amount)}
-                          </div>
-                          <div className="flex items-center gap-2 justify-end mt-1">
-                          <span className={`inline-block px-2 py-0.5 rounded-full text-2xs font-medium ${
-                            transaction.status === 'paid' ? 'text-green-700 bg-green-100/80' :
-                            transaction.status === 'partial' ? 'text-blue-700 bg-blue-100/80' :
-                            transaction.status === 'pending' ? 'text-amber-700 bg-amber-100/80' :
-                            transaction.status === 'overdue' ? 'text-red-700 bg-red-100/80' :
-                            'text-neutral-700 bg-neutral-100/80'
-                          }`}>
-                            {expertMode ? (
-                              transaction.status === 'paid' ? 'Lettré' :
-                              transaction.status === 'partial' ? 'Partiel' :
-                              transaction.status === 'pending' ? 'Non lettré' :
-                              transaction.status === 'overdue' ? 'Échu' : transaction.status
-                            ) : (
-                              transaction.status === 'paid' ? 'Payé' :
-                              transaction.status === 'partial' ? 'Partiel' :
-                              transaction.status === 'pending' ? 'En attente' :
-                              transaction.status === 'overdue' ? 'En retard' : transaction.status
-                            )}
-                          </span>
-                          {transaction.lettrageCode && (
-                            <span className="inline-flex items-center justify-center ml-2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-2xs font-bold shadow-sm">
-                              {transaction.lettrageCode}
-                            </span>
-                          )}
-                          </div>
-                          {/* Solde progressif */}
-                          <div className="mt-1">
-                            <div className="text-2xs text-gray-500">
-                              {progressiveBalance >= 0 ? 'Solde créditeur' : 'Solde débiteur'}
-                            </div>
-                            <div className={`text-sm font-semibold ${
-                              progressiveBalance >= 0 ? 'text-[#4C34CE]' : 'text-orange-600'
-                            }`}>
-                              {formatAmount(Math.abs(progressiveBalance))}
+                              {/* Icône transaction bancaire si rapprochée */}
+                              {transaction.status === 'paid' && (
+                                <div className="p-1" title="Transaction bancaire rapprochée">
+                                  <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                  </svg>
+                                </div>
+                              )}
+                              {/* Commentaire si présent */}
+                              {transaction.description && (
+                                <div className="p-1" title={transaction.description}>
+                                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                  </svg>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
