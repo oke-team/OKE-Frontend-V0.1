@@ -309,7 +309,7 @@ export default function DashboardEnriched() {
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 backdrop-blur-xl rounded-2xl border border-blue-200/30 shadow-glass overflow-hidden">
               <div className="p-6 border-b border-blue-100/30">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-base font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+                  <h3 className="text-sm font-semibold text-neutral-800">
                     Comptes bancaires
                   </h3>
                   <button className="p-1.5 hover:bg-white/50 rounded-md transition-all backdrop-blur">
@@ -821,9 +821,7 @@ export default function DashboardEnriched() {
           <Reorder.Group 
             values={widgetOrder} 
             onReorder={saveWidgetOrder}
-            className="flex flex-wrap gap-6"
-            as="div"
-            axis="xy"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {widgetOrder.map((widget) => (
               <Reorder.Item 
@@ -831,20 +829,17 @@ export default function DashboardEnriched() {
                 value={widget}
                 className={cn(
                   "relative group cursor-move",
-                  widget.size === 'full' ? "w-full" :
-                  widget.size === 'large' ? "w-full lg:w-[calc(66.666%-0.75rem)]" :
-                  "w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+                  widget.size === 'full' ? "col-span-full" :
+                  widget.size === 'large' ? "md:col-span-2 col-span-1" :
+                  "col-span-1"
                 )}
                 whileDrag={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-                  zIndex: 1000,
-                  transition: { duration: 0 }
+                  zIndex: 1000
                 }}
-                dragElastic={0.5}
+                dragElastic={0.2}
                 dragMomentum={false}
-                layout
-                layoutId={widget.id}
               >
                 <div className="absolute -top-2 -left-2 z-20 p-2 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
                   <GripVertical className="w-4 h-4" />

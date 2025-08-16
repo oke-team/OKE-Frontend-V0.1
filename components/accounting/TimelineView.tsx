@@ -752,11 +752,14 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                         </div>
                       )}
                     {/* NOUVELLE STRUCTURE À DEUX COLONNES */}
-                      <div className="flex gap-0 h-full">
+                      <div className={cn(
+                        "flex gap-0",
+                        isMobile ? "h-[100px]" : "h-full"
+                      )}>
                         {/* ZONE JUSTIFICATIF - Côté timeline */}
                         <div className={cn(
                           "flex-shrink-0 bg-gradient-to-b from-gray-50 to-gray-100 border-r border-gray-200 overflow-hidden rounded-l-lg",
-                          isMobile ? "w-[100px]" : isTablet ? "w-[140px]" : "w-[180px]",
+                          isMobile ? "w-[70px]" : isTablet ? "w-[140px]" : "w-[180px]",
                           !isMobile && isEven ? "order-2 rounded-l-none rounded-r-lg border-l border-r-0" : "order-1"
                         )}>
                           {transaction.attachments && transaction.attachments > 0 ? (
@@ -766,11 +769,17 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                                 e.stopPropagation();
                                 handleOpenAttachment(transaction);
                               }}
-                              className="w-full h-full p-2 hover:bg-gray-100 transition-colors group relative"
+                              className={cn(
+                                "w-full h-full hover:bg-gray-100 transition-colors group relative",
+                                isMobile ? "p-1" : "p-2"
+                              )}
                               title="Voir la pièce jointe"
                             >
-                              {/* Miniature du document réel */}
-                              <div className="w-full h-full min-h-[140px] bg-white rounded-lg border border-gray-300 shadow-sm group-hover:shadow-lg transition-all overflow-hidden relative">
+                              {/* Miniature du document réel - Format A4 */}
+                              <div className={cn(
+                                "bg-white rounded border border-gray-300 shadow-sm group-hover:shadow-lg transition-all overflow-hidden relative",
+                                isMobile ? "w-full h-full" : "w-full h-full min-h-[140px]"
+                              )}>
                                 {/* Utilisation d'un iframe pour afficher le PDF en miniature */}
                                 <iframe 
                                   src="/documents/facture-pennylane.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
@@ -779,10 +788,14 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                                   title="Aperçu facture"
                                 />
                                 
-                                {/* Overlay au hover */}
+                                {/* Overlay au hover - Plus petit sur mobile */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                  <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[10px] font-medium text-gray-700 shadow-sm">
-                                    Cliquer pour voir
+                                  <div className={cn(
+                                    "bg-white/90 backdrop-blur-sm rounded shadow-sm",
+                                    isMobile ? "px-1.5 py-0.5 text-[8px]" : "px-3 py-1.5 text-[10px]",
+                                    "font-medium text-gray-700"
+                                  )}>
+                                    {isMobile ? "Voir" : "Cliquer pour voir"}
                                   </div>
                                 </div>
                               </div>
@@ -794,30 +807,51 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                             </button>
                           ) : transaction.status === 'paid' ? (
                             // Transaction bancaire - Affichage des données brutes
-                            <div className="w-full h-full p-2 bg-gradient-to-b from-blue-50 to-gray-50">
-                              <div className="h-full flex flex-col text-[9px] md:text-[10px] font-mono text-gray-700">
+                            <div className={cn(
+                              "w-full h-full bg-gradient-to-b from-blue-50 to-gray-50",
+                              isMobile ? "p-1" : "p-2"
+                            )}>
+                              <div className={cn(
+                                "h-full flex flex-col font-mono text-gray-700",
+                                isMobile ? "text-[7px]" : "text-[9px] md:text-[10px]"
+                              )}>
                                 {/* En-tête banque */}
-                                <div className="pb-1 mb-1 border-b border-gray-300">
-                                  <div className="font-bold text-blue-800">CRÉDIT MUTUEL</div>
-                                  <div className="text-gray-600">{new Date(transaction.date).toLocaleDateString('fr-FR')} 14:32</div>
+                                <div className={cn(
+                                  "border-b border-gray-300",
+                                  isMobile ? "pb-0.5 mb-0.5" : "pb-1 mb-1"
+                                )}>
+                                  <div className="font-bold text-blue-800">CRÉDIT</div>
+                                  <div className="text-gray-600">{new Date(transaction.date).toLocaleDateString('fr-FR')}</div>
                                 </div>
                                 
-                                {/* Libellé bancaire */}
-                                <div className="flex-1 py-1 overflow-hidden">
-                                  <div className="text-[8px] md:text-[9px] leading-tight break-words">
-                                    {transaction.bankLabel || 'VIR SEPA RECU /DE: SARL ENTREPRISE MARTIN ET ASSOCIES /MOTIF: FACTURE FA-2024-0892 PRESTATION DECEMBRE /REF: NOTPROVIDED'}
+                                {/* Libellé bancaire - Plus court sur mobile */}
+                                <div className="flex-1 overflow-hidden">
+                                  <div className={cn(
+                                    "leading-tight break-words",
+                                    isMobile ? "text-[6px] line-clamp-3" : "text-[8px] md:text-[9px]"
+                                  )}>
+                                    {isMobile 
+                                      ? (transaction.bankLabel || 'VIR SEPA RECU').slice(0, 60) + '...'
+                                      : (transaction.bankLabel || 'VIR SEPA RECU /DE: SARL ENTREPRISE MARTIN ET ASSOCIES /MOTIF: FACTURE FA-2024-0892 PRESTATION DECEMBRE /REF: NOTPROVIDED')
+                                    }
                                   </div>
                                 </div>
                                 
                                 {/* Montant et codes */}
-                                <div className="pt-1 mt-auto border-t border-gray-300">
+                                <div className={cn(
+                                  "mt-auto border-t border-gray-300",
+                                  isMobile ? "pt-0.5" : "pt-1"
+                                )}>
                                   <div className={cn(
-                                    "font-bold text-base",
+                                    "font-bold",
+                                    isMobile ? "text-sm" : "text-base",
                                     isDebit ? "text-red-600" : "text-green-600"
                                   )}>
                                     {isDebit ? '-' : '+'}{formatAmount(transaction.amount)}
                                   </div>
-                                  <div className="text-gray-600">Op: VIR • Val: J+1</div>
+                                  {!isMobile && (
+                                    <div className="text-gray-600">Op: VIR • Val: J+1</div>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -839,50 +873,113 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
 
                         {/* ZONE ENRICHIE - Côté extérieur */}
                         <div className={cn(
-                          "flex-1 p-3 md:p-4",
+                          "flex-1",
+                          isMobile ? "p-2" : "p-3 md:p-4",
                           !isMobile && isEven ? "order-1 text-right" : "order-2"
                         )}>
-                          {/* Badge de date */}
-                          <div className="mb-2">
-                            <span 
-                              className="inline-block px-2 py-0.5 rounded text-[10px] font-medium text-gray-600"
-                              style={{
-                                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.15) 100%)',
-                                backdropFilter: 'blur(8px)',
-                                border: '1px solid rgba(251, 207, 232, 0.25)',
-                              }}
-                            >
-                              {new Date(transaction.date).toLocaleDateString('fr-FR')}
-                            </span>
-                          </div>
-                          
-                          {/* Montant principal */}
-                          <div className={cn(
-                            "text-xl md:text-2xl font-bold mb-1",
-                            accountLabel.includes('Charges') || accountLabel.includes('Produits') 
-                              ? (isDebit ? 'text-green-600' : 'text-red-600')
-                              : (isDebit ? 'text-red-600' : 'text-green-600')
-                          )}>
-                            {formatAmount(transaction.amount)}
-                          </div>
-                          
-                          {/* Solde après opération */}
-                          <div className="mb-3">
-                            <span className="text-[10px] text-gray-500">Solde: </span>
-                            <span className={cn(
-                              "text-sm font-semibold",
-                              accountLabel.includes('Charges') || accountLabel.includes('Produits')
-                                ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
-                                : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
-                            )}>
-                              {formatAmount(Math.abs(progressiveBalance))}
-                            </span>
-                          </div>
-                          
-                          {/* Libellé enrichi */}
-                          <div className="font-medium text-sm text-gray-900 mb-3">
-                            {transaction.label}
-                          </div>
+                          {isMobile ? (
+                            // Layout mobile compact
+                            <div className="flex flex-col h-full justify-between">
+                              {/* Ligne du haut : Date et montant */}
+                              <div className="flex justify-between items-start">
+                                <span 
+                                  className="inline-block px-1.5 py-0.5 rounded text-[9px] font-medium text-gray-600"
+                                  style={{
+                                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.15) 100%)',
+                                    backdropFilter: 'blur(8px)',
+                                    border: '1px solid rgba(251, 207, 232, 0.25)',
+                                  }}
+                                >
+                                  {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                                </span>
+                                <div className={cn(
+                                  "text-base font-bold",
+                                  accountLabel.includes('Charges') || accountLabel.includes('Produits') 
+                                    ? (isDebit ? 'text-green-600' : 'text-red-600')
+                                    : (isDebit ? 'text-red-600' : 'text-green-600')
+                                )}>
+                                  {formatAmount(transaction.amount)}
+                                </div>
+                              </div>
+                              
+                              {/* Milieu : Libellé */}
+                              <div className="font-medium text-xs text-gray-900 line-clamp-2">
+                                {transaction.label}
+                              </div>
+                              
+                              {/* Bas : Solde et badges */}
+                              <div className="flex justify-between items-end">
+                                <div>
+                                  <span className="text-[9px] text-gray-500">Solde: </span>
+                                  <span className={cn(
+                                    "text-xs font-semibold",
+                                    accountLabel.includes('Charges') || accountLabel.includes('Produits')
+                                      ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
+                                      : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
+                                  )}>
+                                    {formatAmount(Math.abs(progressiveBalance))}
+                                  </span>
+                                </div>
+                                <div className="flex gap-1">
+                                  {/* Mini badges */}
+                                  <span className={cn(
+                                    "inline-block px-1.5 py-0.5 rounded-full text-[8px] font-bold uppercase",
+                                    isDebit ? 'bg-red-100 text-red-700' : 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                                  )}>
+                                    {getTransactionTag(transaction, isDebit, expertMode).slice(0, 3)}
+                                  </span>
+                                  {transaction.lettrageCode && (
+                                    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[8px] font-bold">
+                                      {transaction.lettrageCode}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            // Layout desktop/tablette standard
+                            <>
+                              {/* Badge de date */}
+                              <div className="mb-2">
+                                <span 
+                                  className="inline-block px-2 py-0.5 rounded text-[10px] font-medium text-gray-600"
+                                  style={{
+                                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 207, 232, 0.15) 100%)',
+                                    backdropFilter: 'blur(8px)',
+                                    border: '1px solid rgba(251, 207, 232, 0.25)',
+                                  }}
+                                >
+                                  {new Date(transaction.date).toLocaleDateString('fr-FR')}
+                                </span>
+                              </div>
+                              
+                              {/* Montant principal */}
+                              <div className={cn(
+                                "text-xl md:text-2xl font-bold mb-1",
+                                accountLabel.includes('Charges') || accountLabel.includes('Produits') 
+                                  ? (isDebit ? 'text-green-600' : 'text-red-600')
+                                  : (isDebit ? 'text-red-600' : 'text-green-600')
+                              )}>
+                                {formatAmount(transaction.amount)}
+                              </div>
+                              
+                              {/* Solde après opération */}
+                              <div className="mb-3">
+                                <span className="text-[10px] text-gray-500">Solde: </span>
+                                <span className={cn(
+                                  "text-sm font-semibold",
+                                  accountLabel.includes('Charges') || accountLabel.includes('Produits')
+                                    ? (progressiveBalance < 0 ? 'text-green-600' : 'text-red-600')
+                                    : (progressiveBalance < 0 ? 'text-red-600' : 'text-green-600')
+                                )}>
+                                  {formatAmount(Math.abs(progressiveBalance))}
+                                </span>
+                              </div>
+                              
+                              {/* Libellé enrichi */}
+                              <div className="font-medium text-sm text-gray-900 mb-3">
+                                {transaction.label}
+                              </div>
                           
                           {/* Tags et badges */}
                           <div className={cn(
