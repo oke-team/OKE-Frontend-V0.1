@@ -256,20 +256,25 @@ const BottomNav: React.FC<BottomNavProps> = ({
   // Animation du conteneur optimisée
   const containerVariants = {
     hidden: { 
-      y: animationSettings.shouldReduceMotion ? 20 : 100, 
+      y: 20, 
       opacity: 0 
     },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: animationSettings.duration,
-        ease: animationSettings.ease,
-        staggerChildren: animationSettings.staggerDelay
+        duration: 0.3,
+        ease: "easeOut",
+        staggerChildren: 0.05
       }
     }
   };
 
+  // État monté pour éviter les problèmes d'hydratation
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     // Une seule navbar flottante unifiée avec design Liquid Glass
@@ -295,7 +300,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
         boxShadow: '0 20px 40px -10px rgba(217, 70, 239, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)'
       }}
       variants={containerVariants}
-      initial="hidden"
+      initial={mounted ? "hidden" : "visible"}
       animate="visible"
     >
       {/* Effet Liquid Glass avec reflet rose */}

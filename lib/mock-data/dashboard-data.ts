@@ -43,6 +43,8 @@ export interface SalesInvoice {
   dueDate: string;
   status: 'draft' | 'sent' | 'partial' | 'paid' | 'overdue';
   daysOverdue?: number;
+  uploadedAt: string;
+  updatedAt: string;
 }
 
 export interface Purchase {
@@ -54,6 +56,8 @@ export interface Purchase {
   category: string;
   status: 'pending' | 'validated' | 'paid';
   hasDocument: boolean;
+  uploadedAt: string;
+  updatedAt: string;
 }
 
 export interface Receivable {
@@ -359,7 +363,7 @@ export const taxDeadlines: TaxDeadline[] = [
   }
 ];
 
-// Dernières ventes
+// Dernières ventes (triées par date de mise à jour)
 export const recentSales: SalesInvoice[] = [
   {
     id: 'fa-001',
@@ -368,7 +372,9 @@ export const recentSales: SalesInvoice[] = [
     amount: 12500,
     date: '2024-08-05',
     dueDate: '2024-09-05',
-    status: 'paid'
+    status: 'paid',
+    uploadedAt: '2024-08-05 14:30',
+    updatedAt: '2024-08-08 10:15'
   },
   {
     id: 'fa-002',
@@ -377,7 +383,9 @@ export const recentSales: SalesInvoice[] = [
     amount: 8420,
     date: '2024-08-04',
     dueDate: '2024-09-04',
-    status: 'sent'
+    status: 'sent',
+    uploadedAt: '2024-08-04 09:00',
+    updatedAt: '2024-08-08 09:45'
   },
   {
     id: 'fa-003',
@@ -387,7 +395,9 @@ export const recentSales: SalesInvoice[] = [
     date: '2024-08-03',
     dueDate: '2024-08-18',
     status: 'overdue',
-    daysOverdue: 3
+    daysOverdue: 3,
+    uploadedAt: '2024-08-03 16:20',
+    updatedAt: '2024-08-08 08:00'
   },
   {
     id: 'fa-004',
@@ -396,7 +406,9 @@ export const recentSales: SalesInvoice[] = [
     amount: 3200,
     date: '2024-08-02',
     dueDate: '2024-09-02',
-    status: 'partial'
+    status: 'partial',
+    uploadedAt: '2024-08-02 11:30',
+    updatedAt: '2024-08-07 17:30'
   },
   {
     id: 'fa-005',
@@ -405,11 +417,13 @@ export const recentSales: SalesInvoice[] = [
     amount: 15600,
     date: '2024-08-01',
     dueDate: '2024-08-31',
-    status: 'sent'
+    status: 'sent',
+    uploadedAt: '2024-08-01 13:45',
+    updatedAt: '2024-08-07 14:20'
   }
-];
+].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
-// Derniers achats
+// Derniers achats (triés par date de mise à jour)
 export const recentPurchases: Purchase[] = [
   {
     id: 'ach-001',
@@ -419,7 +433,9 @@ export const recentPurchases: Purchase[] = [
     date: '2024-08-07',
     category: 'Services Cloud',
     status: 'validated',
-    hasDocument: true
+    hasDocument: true,
+    uploadedAt: '2024-08-07 15:20',
+    updatedAt: '2024-08-08 11:30'
   },
   {
     id: 'ach-002',
@@ -429,7 +445,9 @@ export const recentPurchases: Purchase[] = [
     date: '2024-08-06',
     category: 'Énergie',
     status: 'paid',
-    hasDocument: true
+    hasDocument: true,
+    uploadedAt: '2024-08-06 10:15',
+    updatedAt: '2024-08-08 09:00'
   },
   {
     id: 'ach-003',
@@ -439,7 +457,9 @@ export const recentPurchases: Purchase[] = [
     date: '2024-08-05',
     category: 'Fournitures',
     status: 'validated',
-    hasDocument: true
+    hasDocument: true,
+    uploadedAt: '2024-08-05 14:00',
+    updatedAt: '2024-08-07 16:45'
   },
   {
     id: 'ach-004',
@@ -449,7 +469,9 @@ export const recentPurchases: Purchase[] = [
     date: '2024-08-04',
     category: 'Télécom',
     status: 'paid',
-    hasDocument: false
+    hasDocument: false,
+    uploadedAt: '2024-08-04 08:30',
+    updatedAt: '2024-08-07 10:00'
   },
   {
     id: 'ach-005',
@@ -459,9 +481,11 @@ export const recentPurchases: Purchase[] = [
     date: '2024-08-03',
     category: 'Logiciels',
     status: 'paid',
-    hasDocument: true
+    hasDocument: true,
+    uploadedAt: '2024-08-03 12:00',
+    updatedAt: '2024-08-06 14:30'
   }
-];
+].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
 // Principales créances clients
 export const topReceivables: Receivable[] = [

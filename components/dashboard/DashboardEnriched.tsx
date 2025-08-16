@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, Reorder, useDragControls } from 'framer-motion';
+import { motion, Reorder } from 'framer-motion';
 import {
   TrendingUp,
   TrendingDown,
@@ -298,84 +298,117 @@ export default function DashboardEnriched() {
           );
 
         case 'bank':
+          const allTransactions = selectedAccount === 'all' 
+            ? bankAccounts.flatMap(acc => 
+                acc.transactions.map(t => ({ ...t, bank: acc.bank, bankColor: acc.color }))
+              ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            : selectedBankAccount.transactions;
+          
+          const displayBalance = selectedAccount === 'all' ? totalBalance : selectedBankAccount.balance;
+          
           return (
-            <div className="bg-white/90 backdrop-blur-xl rounded-2xl border border-neutral-200/30 shadow-glass">
-              <div className="p-6 border-b border-neutral-200/30">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 backdrop-blur-xl rounded-2xl border border-blue-200/30 shadow-glass overflow-hidden">
+              <div className="p-6 border-b border-blue-100/30">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-semibold text-neutral-800">Comptes bancaires</h3>
-                  <button className="p-1.5 hover:bg-neutral-100 rounded-md transition-colors">
-                    <RefreshCw className="w-3.5 h-3.5 text-neutral-400" />
+                  <h3 className="text-base font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+                    Comptes bancaires
+                  </h3>
+                  <button className="p-1.5 hover:bg-white/50 rounded-md transition-all backdrop-blur">
+                    <RefreshCw className="w-3.5 h-3.5 text-primary-500" />
                   </button>
                 </div>
                 
-                <div className="flex gap-2 mb-4 overflow-x-auto">
+                <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                  <button
+                    onClick={() => setSelectedAccount('all')}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap backdrop-blur",
+                      selectedAccount === 'all'
+                        ? "bg-gradient-to-r from-primary-500 to-purple-500 text-white shadow-lg"
+                        : "bg-white/50 text-neutral-600 hover:bg-white/70 border border-neutral-200/50"
+                    )}
+                  >
+                    <Wallet className="w-4 h-4" />
+                    <span className="text-sm font-medium">Tous</span>
+                  </button>
                   {bankAccounts.map((account) => (
                     <button
                       key={account.id}
                       onClick={() => setSelectedAccount(account.id)}
                       className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg transition-all whitespace-nowrap",
+                        "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap backdrop-blur",
                         selectedAccount === account.id
-                          ? "bg-primary-50 text-primary-600 border border-primary-200"
-                          : "bg-neutral-50 text-neutral-600 hover:bg-neutral-100"
+                          ? "bg-gradient-to-r from-primary-500 to-purple-500 text-white shadow-lg"
+                          : "bg-white/50 text-neutral-600 hover:bg-white/70 border border-neutral-200/50"
                       )}
                     >
                       {getBankIcon(account.bank)}
-                      <span className="text-sm font-medium">{account.bank}</span>
+                      <span className="text-sm font-medium hidden sm:inline">{account.bank}</span>
                       <span className="text-xs">({account.accountNumber})</span>
                     </button>
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div>
-                    <p className="text-3xl font-bold text-neutral-900">
-                      {selectedBankAccount.balance.toLocaleString('fr-FR')}€
+                    <p className="text-3xl font-bold bg-gradient-to-r from-neutral-900 to-neutral-700 bg-clip-text text-transparent">
+                      {displayBalance.toLocaleString('fr-FR')}€
                     </p>
                     <p className="text-sm text-neutral-500 mt-1">
-                      {selectedBankAccount.name} • Sync {selectedBankAccount.lastSync}
+                      {selectedAccount === 'all' ? 'Solde total • 3 comptes' : `${selectedBankAccount.name} • Sync ${selectedBankAccount.lastSync}`}
                     </p>
                   </div>
-                  <div className={cn(
-                    "px-3 py-1.5 rounded-full text-sm font-semibold",
-                    selectedBankAccount.trend === 'up' ? "bg-green-50 text-green-600" :
-                    selectedBankAccount.trend === 'down' ? "bg-red-50 text-red-600" :
-                    "bg-neutral-50 text-neutral-600"
-                  )}>
-                    {selectedBankAccount.trend === 'up' ? <TrendingUp className="inline w-3.5 h-3.5 mr-1" /> :
-                     selectedBankAccount.trend === 'down' ? <TrendingDown className="inline w-3.5 h-3.5 mr-1" /> :
-                     <Activity className="inline w-3.5 h-3.5 mr-1" />}
-                    {selectedBankAccount.change > 0 ? '+' : ''}{selectedBankAccount.change}%
-                  </div>
+                  {selectedAccount !== 'all' && (
+                    <div className={cn(
+                      "px-3 py-1.5 rounded-full text-sm font-semibold self-start sm:self-auto",
+                      selectedBankAccount.trend === 'up' ? "bg-green-50 text-green-600" :
+                      selectedBankAccount.trend === 'down' ? "bg-red-50 text-red-600" :
+                      "bg-neutral-50 text-neutral-600"
+                    )}>
+                      {selectedBankAccount.trend === 'up' ? <TrendingUp className="inline w-3.5 h-3.5 mr-1" /> :
+                       selectedBankAccount.trend === 'down' ? <TrendingDown className="inline w-3.5 h-3.5 mr-1" /> :
+                       <Activity className="inline w-3.5 h-3.5 mr-1" />}
+                      {selectedBankAccount.change > 0 ? '+' : ''}{selectedBankAccount.change}%
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="p-6">
-                <h4 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">Dernières transactions</h4>
-                <div className="space-y-1">
-                  {selectedBankAccount.transactions.slice(0, 4).map((transaction) => (
+                <h4 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">
+                  {selectedAccount === 'all' ? 'Toutes les transactions' : 'Dernières transactions'}
+                </h4>
+                <div className="space-y-1 max-h-[400px] overflow-y-auto">
+                  {allTransactions.slice(0, selectedAccount === 'all' ? 6 : 4).map((transaction) => (
                     <div
-                      key={transaction.id}
-                      className="group flex items-center justify-between py-2.5 px-3 -mx-3 hover:bg-neutral-50/70 rounded-lg transition-all cursor-pointer"
+                      key={`${transaction.id}-${transaction.bank || ''}`}
+                      className="group flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 px-3 -mx-3 hover:bg-gradient-to-r hover:from-transparent hover:to-primary-50/20 rounded-lg transition-all cursor-pointer"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 mb-2 sm:mb-0">
                         <div className={cn(
-                          "w-7 h-7 rounded-full flex items-center justify-center transition-transform group-hover:scale-110",
-                          transaction.type === 'credit' ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
+                          "w-8 h-8 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm",
+                          transaction.type === 'credit' ? "bg-gradient-to-br from-green-400 to-green-500" : "bg-gradient-to-br from-red-400 to-red-500"
                         )}>
                           {transaction.type === 'credit' ? 
-                            <ArrowDownRight className="w-3.5 h-3.5 text-green-600" /> :
-                            <ArrowUpRight className="w-3.5 h-3.5 text-red-600" />
+                            <ArrowDownRight className="w-4 h-4 text-white" /> :
+                            <ArrowUpRight className="w-4 h-4 text-white" />
                           }
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-neutral-800 group-hover:text-neutral-900">{transaction.label}</p>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-neutral-800 group-hover:text-neutral-900">
+                            {transaction.label}
+                            {selectedAccount === 'all' && transaction.bank && (
+                              <span className={cn("ml-2 text-xs px-1.5 py-0.5 rounded-full", transaction.bankColor || 'bg-neutral-100')}>
+                                {transaction.bank}
+                              </span>
+                            )}
+                          </p>
                           <p className="text-xs text-neutral-400">{transaction.date} • {transaction.category}</p>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right pl-11 sm:pl-0">
                         <p className={cn(
-                          "text-sm font-semibold tabular-nums",
+                          "text-sm font-bold tabular-nums",
                           transaction.type === 'credit' ? "text-green-600" : "text-neutral-700"
                         )}>
                           {transaction.type === 'credit' ? '+' : '-'}{Math.abs(transaction.amount).toLocaleString('fr-FR')}€
@@ -387,7 +420,7 @@ export default function DashboardEnriched() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50/50 rounded-lg transition-all">
+                <button className="w-full mt-4 py-2 bg-gradient-to-r from-primary-50 to-purple-50 text-primary-600 font-medium rounded-lg hover:from-primary-100 hover:to-purple-100 transition-all">
                   Voir toutes les transactions →
                 </button>
               </div>
@@ -412,7 +445,13 @@ export default function DashboardEnriched() {
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-neutral-800 truncate group-hover:text-neutral-900">{sale.client}</p>
-                      <p className="text-xs text-neutral-400">{sale.reference}</p>
+                      <div className="flex items-center gap-2 text-xs text-neutral-400">
+                        <span>{sale.reference}</span>
+                        <span className="text-neutral-300">•</span>
+                        <span title={`Uploadé le ${sale.uploadedAt}`}>
+                          MAJ: {sale.updatedAt.split(' ')[0].split('-').slice(1).reverse().join('/')}
+                        </span>
+                      </div>
                     </div>
                     <div className="text-right ml-2">
                       <p className="text-sm font-semibold text-neutral-700 tabular-nums">
@@ -459,7 +498,13 @@ export default function DashboardEnriched() {
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-neutral-800 truncate group-hover:text-neutral-900">{purchase.supplier}</p>
-                      <p className="text-xs text-neutral-400">{purchase.category}</p>
+                      <div className="flex items-center gap-2 text-xs text-neutral-400">
+                        <span>{purchase.category}</span>
+                        <span className="text-neutral-300">•</span>
+                        <span title={`Uploadé le ${purchase.uploadedAt}`}>
+                          MAJ: {purchase.updatedAt.split(' ')[0].split('-').slice(1).reverse().join('/')}
+                        </span>
+                      </div>
                     </div>
                     <div className="text-right ml-2">
                       <p className="text-sm font-semibold text-neutral-700 tabular-nums">
@@ -749,28 +794,7 @@ export default function DashboardEnriched() {
       }
     };
 
-    return (
-      <motion.div
-        layout
-        className={cn(
-          "relative group",
-          widget.size === 'full' ? "col-span-full" :
-          widget.size === 'large' ? "col-span-2" :
-          widget.size === 'medium' ? "col-span-1" :
-          "col-span-1"
-        )}
-      >
-        {isCustomizing && (
-          <div
-            className="absolute -top-2 -left-2 z-10 p-1.5 bg-white rounded-lg shadow-lg cursor-move opacity-0 group-hover:opacity-100 transition-opacity"
-            onPointerDown={(e) => dragControls.start(e)}
-          >
-            <GripVertical className="w-4 h-4 text-neutral-400" />
-          </div>
-        )}
-        {widgetContent()}
-      </motion.div>
-    );
+    return widgetContent();
   };
 
   return (
@@ -795,29 +819,71 @@ export default function DashboardEnriched() {
       {/* Grille de widgets réorganisable */}
       {isCustomizing ? (
         <Reorder.Group 
-          axis="y" 
           values={widgetOrder} 
           onReorder={saveWidgetOrder}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          as="div"
         >
           {widgetOrder.map((widget) => (
             <Reorder.Item 
               key={widget.id} 
               value={widget}
-              dragControls={dragControls}
               className={cn(
+                "relative group",
                 widget.size === 'full' ? "col-span-full" :
-                widget.size === 'large' ? "md:col-span-2" :
+                widget.size === 'large' ? "md:col-span-2 col-span-1" :
                 "col-span-1"
               )}
+              dragListener={false}
+              dragControls={undefined}
+              style={{ position: "relative" }}
             >
-              {renderWidget(widget)}
+              <div 
+                className="absolute -top-2 -left-2 z-30 p-2 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-move"
+                onPointerDown={(e) => {
+                  const item = e.currentTarget.parentElement as HTMLElement;
+                  if (item) {
+                    item.style.cursor = 'grabbing';
+                    item.setAttribute('data-dragging', 'true');
+                  }
+                }}
+              >
+                <GripVertical className="w-4 h-4" />
+              </div>
+              <motion.div
+                whileDrag={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                  zIndex: 1000
+                }}
+                dragElastic={0.2}
+                className="h-full"
+              >
+                {renderWidget(widget)}
+              </motion.div>
             </Reorder.Item>
           ))}
         </Reorder.Group>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {widgetOrder.map((widget) => renderWidget(widget))}
+          {widgetOrder.map((widget) => (
+            <div 
+              key={widget.id}
+              className={cn(
+                widget.size === 'full' ? "col-span-full" :
+                widget.size === 'large' ? "md:col-span-2 col-span-1" :
+                "col-span-1"
+              )}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: widgetOrder.indexOf(widget) * 0.05 }}
+              >
+                {renderWidget(widget)}
+              </motion.div>
+            </div>
+          ))}
         </div>
       )}
     </div>

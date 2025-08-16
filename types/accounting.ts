@@ -20,6 +20,7 @@ export interface BaseTransaction {
   attachments?: number;
   description?: string;
   lettrageCode?: string; // Code de lettrage (A, B, C, etc.)
+  bankLabel?: string; // Libellé bancaire original pour les transactions rapprochées
 }
 
 // Transaction pour ClientDetailView

@@ -57,7 +57,8 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       invoiceNumber: 'FA-2024-042',
       status: 'paid' as const,
       description: 'Règlement facture décembre',
-      attachments: 2, // 2 pièces jointes
+      bankLabel: 'VIR SEPA RECU /DE: SARL ENTREPRISE XYZ TECHNOLOGIES /MOTIF: REGLEMENT FACTURE FA-2024-042 PRESTATION DECEMBRE 2024 /REF: XYZ-2025-001',
+      attachments: 0, // Transaction bancaire, pas de pièce jointe
       lettrageCode: 'B'
     },
     {
@@ -88,9 +89,10 @@ export const TimelineAdapter: React.FC<TimelineAdapterProps> = ({
       amount: 2000,
       clientId: 'JKL',
       invoiceNumber: 'FA-2024-035',
-      status: 'partial' as const,
+      status: 'paid' as const,
       description: 'Acompte sur commande',
-      attachments: 3, // 3 pièces jointes
+      bankLabel: 'VIR SEPA RECU /DE: JKL CONSULTING GROUP /MOTIF: ACOMPTE 50% COMMANDE PROJET WEB /REF: JKL-CMD-2024-089',
+      attachments: 0, // Transaction bancaire
     },
   ];
 
