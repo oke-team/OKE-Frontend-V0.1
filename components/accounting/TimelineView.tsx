@@ -1017,6 +1017,8 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                               </span>
                             )}
                           </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     </motion.div>

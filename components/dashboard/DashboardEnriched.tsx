@@ -321,9 +321,9 @@ export default function DashboardEnriched() {
                   <button
                     onClick={() => setSelectedAccount('all')}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap backdrop-blur",
+                      "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap",
                       selectedAccount === 'all'
-                        ? "bg-gradient-to-r from-primary-500 to-purple-500 text-white shadow-lg"
+                        ? "bg-primary-600 text-white"
                         : "bg-white/50 text-neutral-600 hover:bg-white/70 border border-neutral-200/50"
                     )}
                   >
@@ -335,9 +335,9 @@ export default function DashboardEnriched() {
                       key={account.id}
                       onClick={() => setSelectedAccount(account.id)}
                       className={cn(
-                        "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap backdrop-blur",
+                        "flex items-center gap-2 px-3 py-2 rounded-lg transition-all whitespace-nowrap",
                         selectedAccount === account.id
-                          ? "bg-gradient-to-r from-primary-500 to-purple-500 text-white shadow-lg"
+                          ? "bg-primary-600 text-white"
                           : "bg-white/50 text-neutral-600 hover:bg-white/70 border border-neutral-200/50"
                       )}
                     >
@@ -350,7 +350,7 @@ export default function DashboardEnriched() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div>
-                    <p className="text-3xl font-bold bg-gradient-to-r from-neutral-900 to-neutral-700 bg-clip-text text-transparent">
+                    <p className="text-3xl font-bold text-neutral-900">
                       {displayBalance.toLocaleString('fr-FR')}€
                     </p>
                     <p className="text-sm text-neutral-500 mt-1">
