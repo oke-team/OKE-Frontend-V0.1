@@ -1018,6 +1018,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
                                   </svg>
                                 </div>
                               )}
+                              </div>
                             </div>
                           </div>
                         </div>
