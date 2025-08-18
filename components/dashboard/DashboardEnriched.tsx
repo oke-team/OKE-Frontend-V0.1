@@ -797,10 +797,9 @@ export default function DashboardEnriched() {
   };
 
   return (
-    <div className="p-4 md:p-6 max-w-[1600px] mx-auto">
+    <div className="max-w-[1600px] mx-auto">
       {/* Barre de personnalisation */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-neutral-800">Tableau de bord</h2>
+      <div className="flex items-center justify-end mb-4">
         <button
           onClick={() => setIsCustomizing(!isCustomizing)}
           className={cn(
