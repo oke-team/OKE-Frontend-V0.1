@@ -238,7 +238,7 @@ export const bankAccounts: BankAccount[] = [
     trend: 'down',
     change: -5.2,
     lastSync: 'Il y a 1h',
-    color: 'bg-blue-500',
+    color: 'bg-primary',
     transactions: [
       {
         id: 't5',
@@ -278,7 +278,7 @@ export const bankAccounts: BankAccount[] = [
     trend: 'stable',
     change: 0.1,
     lastSync: 'Il y a 10 min',
-    color: 'bg-purple-500',
+    color: 'bg-secondary',
     transactions: [
       {
         id: 't8',
@@ -794,7 +794,7 @@ export const upcomingAppointments: Appointment[] = [
     participants: ['Jean Dupont', 'Marie Martin', 'Client GlobalTech'],
     location: 'Bureau Paris',
     type: 'meeting',
-    color: 'bg-blue-500'
+    color: 'bg-primary'
   },
   {
     id: 'rdv-002',
@@ -804,7 +804,7 @@ export const upcomingAppointments: Appointment[] = [
     duration: '45min',
     participants: ['Direction', 'Investisseurs'],
     type: 'video',
-    color: 'bg-purple-500'
+    color: 'bg-secondary'
   },
   {
     id: 'rdv-003',

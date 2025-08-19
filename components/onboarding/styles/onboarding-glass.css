@@ -1,0 +1,307 @@
+/* Styles globaux pour le tunnel d'onboarding avec effets Liquid Glass */
+
+/* Scrollbar personnalisée pour l'onboarding */
+.onboarding-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.onboarding-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 100px;
+}
+
+.onboarding-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FAA016 0%, #4C34CE 100%);
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.onboarding-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FAA016 0%, #4C34CE 100%);
+  opacity: 0.8;
+}
+
+/* Masquer la scrollbar sur mobile tout en gardant le scroll */
+.onboarding-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.onboarding-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Effet de blur amélioré pour le backdrop */
+@supports (backdrop-filter: blur(20px)) {
+  .onboarding-backdrop {
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+}
+
+/* Animation de gradient fluide */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-animated {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Effet de lueur pour les éléments actifs */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(250, 160, 22, 0.3),
+      0 0 40px rgba(76, 52, 206, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(250, 160, 22, 0.4),
+      0 0 60px rgba(76, 52, 206, 0.3),
+      inset 0 0 30px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.glow-effect {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Transition fluide pour les changements d'orientation */
+.onboarding-orientation-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Amélioration des performances avec GPU */
+.onboarding-modal,
+.onboarding-content {
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Effet de particules flottantes */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(30px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  animation: float-particle 20s linear infinite;
+}
+
+/* Effet de verre liquide pour les inputs au focus */
+.glass-input-focus {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-input-focus::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(250, 160, 22, 0.1) 0%,
+    rgba(76, 52, 206, 0.1) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.glass-input-focus:focus-within::before {
+  opacity: 1;
+}
+
+/* Animation de shimmer pour les éléments de chargement */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Effet de morphisme pour les cartes */
+.glass-morph {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.08),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Amélioration de la lisibilité du texte sur fond glass */
+.text-glass-contrast {
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Effet de réflexion pour les boutons */
+.button-reflection {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-reflection::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 100%
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.button-reflection:hover::after {
+  animation: reflection-sweep 0.5s ease;
+}
+
+@keyframes reflection-sweep {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Optimisation pour les animations sur mobile */
+@media (max-width: 768px) {
+  .onboarding-modal,
+  .onboarding-content {
+    /* Réduire la complexité des animations sur mobile */
+    animation-duration: 0.3s !important;
+  }
+  
+  /* Désactiver certains effets gourmands sur mobile */
+  @media (hover: none) {
+    .glow-effect {
+      animation: none;
+    }
+    
+    .particle {
+      display: none;
+    }
+  }
+}
+
+/* Support pour le mode sombre du système */
+@media (prefers-color-scheme: dark) {
+  .onboarding-modal {
+    color-scheme: dark;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
+  }
+}
+
+/* Styles pour l'indicateur de progression liquide */
+.liquid-progress {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-progress::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(250, 160, 22, 0.8),
+    rgba(76, 52, 206, 0.8),
+    transparent
+  );
+  animation: liquid-flow 3s linear infinite;
+}
+
+@keyframes liquid-flow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Effet de distorsion liquide au hover */
+.liquid-distortion {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.liquid-distortion:hover {
+  transform: scale(1.05) rotate(0.5deg);
+}
+
+.liquid-distortion:active {
+  transform: scale(0.98) rotate(-0.5deg);
+}

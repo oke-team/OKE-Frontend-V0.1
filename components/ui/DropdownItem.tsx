@@ -56,17 +56,17 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
 
   const selectedColors = {
     default: 'bg-neutral-100/70 dark:bg-neutral-800/70',
-    company: 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 ring-1 ring-primary-500/20',
+    company: 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 ring-1 ring-primary/20',
     period: 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 ring-1 ring-green-500/20',
-    action: 'bg-secondary-50 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-300 ring-1 ring-secondary-500/20',
+    action: 'bg-secondary-50 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-300 ring-1 ring-secondary/20',
     user: 'bg-neutral-100/70 dark:bg-neutral-800/70',
   };
   
   // Add selected indicator bar for better visual feedback
   const selectedIndicator = {
-    company: 'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-500 before:rounded-full',
+    company: 'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary before:rounded-full',
     period: 'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-green-500 before:rounded-full',
-    action: 'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-secondary-500 before:rounded-full',
+    action: 'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-secondary before:rounded-full',
     default: '',
     user: '',
   };

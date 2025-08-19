@@ -7,13 +7,11 @@
 // Legacy components
 export { default as AppLayout } from './AppLayout';
 
-// New Header System
-export { default as HeaderNew } from './HeaderNew';
-export { default as HeaderDesktop } from './HeaderDesktop';
-export { default as HeaderTablet } from './HeaderTablet';
-
-// Export HeaderMobile with both named and default export for compatibility
-export { default as HeaderMobileNew } from './HeaderMobile';
+// New Header System (neutralisé pour éviter imports manquants)
+// export { default as HeaderNew } from './HeaderNew';
+// export { default as HeaderDesktop } from './HeaderDesktop';
+// export { default as HeaderTablet } from './HeaderTablet';
+// export { default as HeaderMobileNew } from './HeaderMobile';
 
 // Component exports
 export * from './components';

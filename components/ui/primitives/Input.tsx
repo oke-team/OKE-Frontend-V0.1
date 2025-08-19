@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   // Classes conditionnelles
   const stateClasses = error
     ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
-    : 'border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500';
+    : 'border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-primary focus:border-primary';
 
   const iconPadding = [
     leftIcon && 'pl-10',
@@ -122,7 +122,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
   
   const stateClasses = error
     ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
-    : 'border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500';
+    : 'border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-primary focus:border-primary';
 
   const combinedClasses = `${baseClasses} ${stateClasses} ${className}`;
 

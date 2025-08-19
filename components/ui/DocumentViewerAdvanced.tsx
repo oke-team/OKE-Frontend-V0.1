@@ -179,8 +179,8 @@ export const DocumentViewerAdvanced: React.FC<DocumentViewerAdvancedProps> = ({
   // Effet de transition Liquid Glass
   const glassEffect = glassMorphism ? {
     backdropFilter: 'blur(20px)',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    background: 'colors.glass.white[10]',
+    border: '1px solid colors.glass.white[20]',
   } : {};
   
   // Rendu selon le mode

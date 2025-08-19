@@ -39,7 +39,7 @@ export default function TransitionNotification() {
             className={`
               px-6 py-4 rounded-xl backdrop-blur-xl border
               ${expertMode 
-                ? 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30' 
+                ? 'bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/30' 
                 : 'bg-white/95 border-gray-200'
               }
             `}
@@ -57,8 +57,8 @@ export default function TransitionNotification() {
                 className={`
                   p-2 rounded-lg
                   ${expertMode 
-                    ? 'bg-gradient-to-br from-blue-500 to-purple-600' 
-                    : 'bg-gradient-to-br from-blue-400 to-blue-500'
+                    ? 'bg-gradient-to-br from-primary to-purple-600' 
+                    : 'bg-gradient-to-br from-blue-400 to-primary'
                   }
                 `}
               >
@@ -88,7 +88,7 @@ export default function TransitionNotification() {
                   initial={{ width: '0%' }}
                   animate={{ width: '100%' }}
                   transition={{ duration: 2.8, ease: 'linear' }}
-                  className="h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mt-2"
+                  className="h-1 bg-gradient-to-r from-primary to-purple-600 rounded-full mt-2"
                 />
               </div>
 
@@ -109,9 +109,10 @@ export default function TransitionNotification() {
             {/* Particules décoratives */}
             {isTransitioning && (
               <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
-                {[...Array(5)].map((_, i) => (
+                {[...Array(5)].map((_, i) => ( // safe key uses index because purely decorative
+
                   <motion.div
-                    key={i}
+                    key={`particle-${i}`}
                     initial={{ 
                       x: Math.random() * 100 - 50,
                       y: 50,
@@ -127,7 +128,7 @@ export default function TransitionNotification() {
                       delay: i * 0.1,
                       ease: 'easeOut'
                     }}
-                    className="absolute w-1 h-1 bg-blue-500 rounded-full"
+                    className="absolute w-1 h-1 bg-primary rounded-full"
                     style={{ left: '50%' }}
                   />
                 ))}

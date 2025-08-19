@@ -31,7 +31,7 @@ export const cardTokens = {
   // Couleurs spécifiques aux cartes
   colors: {
     treasury: {
-      gradient: 'linear-gradient(135deg, #5e72ff 0%, #8b5cf6 50%, #d150da 100%)',
+      gradient: 'linear-gradient(135deg, #FAA016 0%, #4C34CE 50%, #4C34CE 100%)',
       glass: 'rgba(94, 114, 255, 0.05)',
       border: 'rgba(139, 92, 246, 0.2)',
       glow: '0 0 40px rgba(139, 92, 246, 0.15)',
@@ -56,7 +56,7 @@ export const cardTokens = {
       glass: 'rgba(16, 185, 129, 0.08)',
     },
     result: {
-      gradient: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
+      gradient: 'linear-gradient(135deg, #FAA016 0%, #60a5fa 100%)',
       glass: 'rgba(59, 130, 246, 0.08)',
     },
   },
@@ -82,14 +82,14 @@ export const cardTokens = {
   // Shadows et effets
   effects: {
     glass: {
-      background: 'rgba(255, 255, 255, 0.1)',
+      background: 'colors.glass.white[10]',
       backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
+      border: '1px solid colors.glass.white[20]',
     },
     darkGlass: {
       background: 'rgba(38, 38, 38, 0.6)',
       backdropFilter: 'blur(24px)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      border: '1px solid colors.glass.white[10]',
     },
     glow: {
       violet: '0 0 40px rgba(139, 92, 246, 0.15)',

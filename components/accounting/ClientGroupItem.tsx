@@ -174,7 +174,7 @@ const ClientGroupItem = memo<ClientGroupItemProps>(({
               <div className="space-y-2 mb-4">
                 {group.transactions.map((transaction) => (
                   <div
-                    key={transaction.id}
+                    key={`${transaction.type}-${transaction.id}`}
                     className="flex items-center justify-between p-3 bg-white rounded-lg"
                   >
                     <div className="flex items-center gap-3">

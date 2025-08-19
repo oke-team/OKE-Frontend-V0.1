@@ -301,7 +301,7 @@ const LoadingSkeleton: React.FC<{ fileType: DocumentFileType }> = ({ fileType })
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full"
+            className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full"
           />
           Chargement du document...
         </div>

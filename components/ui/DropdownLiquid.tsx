@@ -111,21 +111,21 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
   
   const sizeStyles = {
     sm: {
-      padding: '6px 12px',
+      padding: '8px 12px',
       fontSize: '13px',
-      minHeight: '32px',
-      borderRadius: '8px'
+      minHeight: '40px',
+      borderRadius: '10px'
     },
     md: {
-      padding: '8px 14px',
+      padding: '10px 14px',
       fontSize: '14px',
-      minHeight: '38px',
+      minHeight: '44px',
       borderRadius: '10px'
     },
     lg: {
-      padding: '10px 18px',
+      padding: '12px 18px',
       fontSize: '15px',
-      minHeight: '44px',
+      minHeight: '48px',
       borderRadius: '12px'
     }
   };
@@ -139,15 +139,12 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
         'w-full flex items-center justify-between gap-2',
         'transition-all duration-200',
         'hover:scale-[1.02] active:scale-[0.98]',
-        'focus:outline-none focus:ring-2 focus:ring-offset-2',
-        variant === 'primary' && 'focus:ring-primary-500/30',
-        variant === 'success' && 'focus:ring-emerald-500/30',
-        variant === 'warning' && 'focus:ring-amber-500/30',
-        variant === 'default' && 'focus:ring-slate-500/20',
+        'focus:outline-none',
         className
       )}
       style={{
-        ...glassStyle,
+        background: 'white',
+        border: '1px solid #FAA016',
         ...currentSize,
         transition: liquidGlass.transitions.medium
       }}
@@ -155,22 +152,24 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
       {/* Contenu gauche */}
       <div className="flex items-center gap-2 flex-1 min-w-0">
         {icon && (
-          <span className="flex-shrink-0 opacity-70">
+          <span className="flex-shrink-0" style={{ color: '#4C34CE' }}>
             {icon}
           </span>
         )}
         
         <div className="flex-1 text-left min-w-0">
-          <div className="font-medium text-slate-900 truncate" style={{ lineHeight: '1.2' }}>
+          <div className="font-medium truncate" style={{ lineHeight: '1.2', color: '#4C34CE' }}>
             {children}
           </div>
           {sublabel && (
             <div 
-              className="text-slate-500 truncate"
+              className="truncate"
               style={{ 
                 fontSize: `${parseInt(currentSize.fontSize) - 3}px`,
                 lineHeight: '1.2',
-                marginTop: '1px'
+                marginTop: '1px',
+                color: '#4C34CE',
+                opacity: 0.7
               }}
             >
               {sublabel}
@@ -215,7 +214,9 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
 }) => {
   const { isOpen, isMobile, size } = useDropdown();
   
-  const menuStyle = applyLiquidGlass('elevated');
+  let menuStyle = applyLiquidGlass('elevated');
+  // Supprimer la bordure et boxShadow par défaut pour éviter la double bordure noire
+  menuStyle = { ...menuStyle, border: 'none', boxShadow: 'none' };
   
   const sizeStyles = {
     sm: { padding: '4px', marginTop: '4px' },
@@ -280,11 +281,14 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
             className
           )}
           style={{
-            ...menuStyle,
+            background: 'white',
             ...currentSize,
             maxHeight,
             overflowY: 'auto',
-            transition: liquidGlass.transitions.fast
+            transition: liquidGlass.transitions.fast,
+            border: '1px solid #FAA016',
+            outline: 'none',
+            boxShadow: '0 8px 32px rgba(250, 160, 22, 0.1)'
           }}
         >
           {children}
@@ -355,7 +359,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       {icon && (
         <span className={cn(
           'flex-shrink-0',
-          selected ? 'text-primary-500' : 'text-slate-400'
+          selected ? 'text-primary' : 'text-slate-400'
         )}>
           {icon}
         </span>
@@ -388,7 +392,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       
       {/* Indicateur de sélection */}
       {selected && (
-        <span className="flex-shrink-0 w-2 h-2 rounded-full bg-primary-500" />
+        <span className="flex-shrink-0 w-2 h-2 rounded-full bg-primary" />
       )}
     </button>
   );

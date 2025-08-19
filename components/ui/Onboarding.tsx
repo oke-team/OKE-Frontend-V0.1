@@ -35,7 +35,7 @@ const onboardingSteps = [
   {
     title: "Mode Entrepreneur",
     subtitle: "Pour une gestion simplifiée",
-    icon: <Zap className="w-8 h-8 text-blue-500" />,
+    icon: <Zap className="w-8 h-8 text-primary" />,
     content: (
       <div className="space-y-4">
         <div className="space-y-3">
@@ -73,7 +73,7 @@ const onboardingSteps = [
   {
     title: "Mode Expert",
     subtitle: "Pour les utilisateurs expérimentés",
-    icon: <Shield className="w-8 h-8 text-purple-500" />,
+    icon: <Shield className="w-8 h-8 text-secondary" />,
     content: (
       <div className="space-y-4">
         <div className="space-y-3">
@@ -127,12 +127,12 @@ const onboardingSteps = [
               <span className="text-sm font-medium">Mode Entrepreneur</span>
             </div>
             <ChevronRight className="w-5 h-5 text-gray-400" />
-            <div className="flex items-center gap-2 px-4 py-2 bg-blue-500 bg-opacity-10 rounded-lg shadow-sm border-2 border-blue-500">
-              <div className="w-9 h-5 bg-blue-500 rounded-full relative">
+            <div className="flex items-center gap-2 px-4 py-2 bg-primary bg-opacity-10 rounded-lg shadow-sm border-2 border-primary">
+              <div className="w-9 h-5 bg-primary rounded-full relative">
                 <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm" />
               </div>
-              <Shield className="w-4 h-4 text-blue-500" />
-              <span className="text-sm font-medium text-blue-500">Mode Expert</span>
+              <Shield className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Mode Expert</span>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function Onboarding() {
           >
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 p-6 text-white">
+              <div className="relative bg-gradient-to-br from-primary to-purple-600 p-6 text-white">
                 <button
                   onClick={completeOnboarding}
                   className="absolute top-4 right-4 p-1 rounded-lg hover:bg-white hover:bg-opacity-20 transition-colors"
@@ -278,7 +278,7 @@ export default function Onboarding() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={isLastStep ? completeOnboarding : nextOnboardingStep}
-                    className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                    className="px-6 py-2.5 bg-gradient-to-r from-primary to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
                   >
                     {isLastStep ? (
                       <>

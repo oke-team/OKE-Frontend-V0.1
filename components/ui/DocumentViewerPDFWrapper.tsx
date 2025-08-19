@@ -11,7 +11,7 @@ const DocumentViewerPDF = dynamic(
     loading: () => (
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-500" />
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-secondary" />
           <p className="text-sm text-gray-500">Chargement du viewer PDF...</p>
         </div>
       </div>

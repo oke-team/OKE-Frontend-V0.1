@@ -1,0 +1,157 @@
+/* Optimisations spécifiques pour le tunnel d'onboarding mobile */
+
+/* Très petits écrans (< 375px) */
+@media (max-width: 374px) {
+  .onboarding-modal {
+    padding: 0.5rem;
+  }
+  
+  .onboarding-content {
+    padding: 0.75rem;
+  }
+  
+  .onboarding-input {
+    height: 2.75rem; /* h-11 equivalent */
+    font-size: 0.875rem;
+  }
+  
+  .onboarding-button {
+    height: 2.75rem;
+    font-size: 0.875rem;
+    min-height: 44px; /* iOS touch target */
+  }
+}
+
+/* Mode paysage mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .onboarding-modal {
+    height: 100vh;
+    max-height: none;
+  }
+  
+  .onboarding-header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .onboarding-step-indicator {
+    margin-bottom: 0.5rem;
+  }
+  
+  .onboarding-content {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  /* Masquer certains éléments décoratifs */
+  .onboarding-decorative {
+    display: none;
+  }
+  
+  /* Réduire les marges */
+  .onboarding-spacing {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Écrans très hauts (iPhone Pro Max, etc.) */
+@media (min-height: 900px) and (max-width: 430px) {
+  .onboarding-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Support pour les Safe Area (iOS) */
+@supports (padding: max(0px)) {
+  .onboarding-modal {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  
+  .onboarding-header {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .onboarding-footer {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Optimisations pour les appareils à faible performance */
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-animation {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .onboarding-transform {
+    transform: none !important;
+  }
+}
+
+/* Mode contraste élevé */
+@media (prefers-contrast: high) {
+  .onboarding-border {
+    border-width: 2px;
+  }
+  
+  .onboarding-text-muted {
+    color: rgb(163, 163, 163);
+  }
+}
+
+/* Mode sombre système */
+@media (prefers-color-scheme: dark) {
+  .onboarding-backdrop {
+    background-color: colors.glass.black[80];
+  }
+}
+
+/* Écrans larges mais courts (tablettes en paysage) */
+@media (min-width: 768px) and (max-height: 600px) {
+  .onboarding-modal {
+    max-height: 95vh;
+  }
+  
+  .onboarding-sidebar {
+    display: none; /* Masquer la sidebar sur tablettes courtes */
+  }
+}
+
+/* Optimisations pour les interactions tactiles */
+.onboarding-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Smooth scrolling pour les listes longues */
+.onboarding-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* États de focus améliorés pour navigation clavier */
+.onboarding-focus:focus-visible {
+  outline: 2px solid #FAA016;
+  outline-offset: 2px;
+}
+
+/* Transition smooth pour les changements d'orientation */
+.onboarding-orientation-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Masquer le scrollbar mais garder la fonctionnalité */
+.onboarding-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.onboarding-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

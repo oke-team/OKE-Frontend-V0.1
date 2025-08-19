@@ -97,7 +97,7 @@ export const modules: Module[] = [
   },
   {
     id: 'accounting',
-    label: 'Comptabilité',
+    label: 'Compta',
     icon: Calculator,
     href: '/accounting',
     description: 'Balance, grand livre, auxiliaires, révision, immobilisations',
@@ -178,7 +178,7 @@ export const mobileNavItems = [
   modules.find(m => m.id === 'dashboard')!,
   modules.find(m => m.id === 'accounting')!,
   {
-    id: 'add',
+    id: 'add-mobile',
     label: 'Ajouter',
     icon: Plus,
     href: '#',
@@ -190,7 +190,7 @@ export const mobileNavItems = [
   },
   modules.find(m => m.id === 'bank')!,
   {
-    id: 'more',
+    id: 'more-mobile',
     label: 'Autres',
     icon: MoreHorizontal,
     href: '#',
@@ -209,7 +209,7 @@ export const tabletNavItems = [
   modules.find(m => m.id === 'accounting')!,
   modules.find(m => m.id === 'bank')!,
   {
-    id: 'add',
+    id: 'add-tablet',
     label: 'Ajouter',
     icon: Plus,
     href: '#',
@@ -221,7 +221,7 @@ export const tabletNavItems = [
   modules.find(m => m.id === 'purchases')!,
   modules.find(m => m.id === 'sales')!,
   {
-    id: 'more',
+    id: 'more-tablet',
     label: 'Plus',
     icon: MoreHorizontal,
     href: '#',
@@ -243,7 +243,7 @@ export const desktopNavItems = [
   modules.find(m => m.id === 'sales')!,
   modules.find(m => m.id === 'documents')!,
   {
-    id: 'add',
+    id: 'add-desktop',
     label: 'Ajouter',
     icon: Plus,
     href: '#',

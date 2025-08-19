@@ -244,7 +244,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({
                     transition: 'all 0.2s ease'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#5e72ff';
+                    e.target.style.borderColor = '#FAA016';
                     e.target.style.backgroundColor = 'white';
                   }}
                   onBlur={(e) => {
@@ -306,7 +306,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({
                       {/* Icône */}
                       {option.icon && (
                         <div style={{ 
-                          color: isSelected ? '#5e72ff' : '#6b7280',
+                          color: isSelected ? '#FAA016' : '#6b7280',
                           flexShrink: 0 
                         }}>
                           {option.icon}
@@ -318,7 +318,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({
                         <div style={{
                           fontSize: '16px',
                           fontWeight: 500,
-                          color: isSelected ? '#5e72ff' : '#111827',
+                          color: isSelected ? '#FAA016' : '#111827',
                           marginBottom: option.sublabel ? '2px' : 0
                         }}>
                           {option.label}
@@ -344,7 +344,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({
                       {/* Indicateur de sélection */}
                       {isSelected && (
                         <div style={{ 
-                          color: '#5e72ff',
+                          color: '#FAA016',
                           flexShrink: 0 
                         }}>
                           <Check size={20} />

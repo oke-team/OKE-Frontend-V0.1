@@ -2,7 +2,7 @@
 
 import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Transaction, TransactionTotals } from '@/types/accounting';
+import { Transaction, TransactionTotals, TransactionType } from '@/types/accounting';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { useSelection } from '@/contexts/SelectionContext';
 import { cn } from '@/lib/utils';
@@ -280,55 +280,55 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
   };
 
   // Générer des transactions mockées pour les exercices précédents
-  const generatePreviousExerciseTransactions = (year: number) => {
-    const mockDebits = [
-      {
+  const generatePreviousExerciseTransactions = (year: number) : { debits: Transaction[]; credits: Transaction[] } => {
+    const mockDebits: Transaction[] = [
+{
         id: `${year}-d1`,
-        date: new Date(`${year}-12-15`),
+        date: `${year}-12-15`,
         label: `Avoir client fin ${year}`,
         amount: 2500,
-        type: 'credit' as const,
+        type: 'credit_note',
         reference: `AV-${year}-012`,
-        status: 'paid' as const,
+        status: 'paid',
       },
       {
         id: `${year}-d2`,
-        date: new Date(`${year}-11-20`),
+        date: `${year}-11-20`,
         label: `Remise commerciale ${year}`,
         amount: 800,
-        type: 'credit' as const,
+        type: 'credit_note',
         reference: `REM-${year}-008`,
-        status: 'paid' as const,
+        status: 'paid',
       },
     ];
     
-    const mockCredits = [
+    const mockCredits: Transaction[] = [
       {
         id: `${year}-c1`,
-        date: new Date(`${year}-12-28`),
+        date: `${year}-12-28`,
         label: `Facture client décembre ${year}`,
         amount: 12500,
-        type: 'invoice' as const,
+        type: 'invoice',
         reference: `FA-${year}-125`,
-        status: 'paid' as const,
+        status: 'paid',
       },
       {
         id: `${year}-c2`,
-        date: new Date(`${year}-10-15`),
+        date: `${year}-10-15`,
         label: `Paiement reçu ${year}`,
         amount: 8000,
-        type: 'payment' as const,
+        type: 'payment',
         reference: `PAY-${year}-089`,
-        status: 'paid' as const,
+        status: 'paid',
       },
       {
         id: `${year}-c3`,
-        date: new Date(`${year}-09-10`),
+        date: `${year}-09-10`,
         label: `Facture client septembre ${year}`,
         amount: 6500,
-        type: 'invoice' as const,
+        type: 'invoice',
         reference: `FA-${year}-098`,
-        status: 'paid' as const,
+        status: 'paid',
       },
     ];
     
@@ -592,7 +592,7 @@ const TimelineView = memo<ExtendedTimelineViewProps>(({
             }
             
             return (
-              <React.Fragment key={transaction.id}>
+              <React.Fragment key={`${transaction.type}-${transaction.id}`}>
                 {showYearSeparator && (
                   <>
                     {/* Report à nouveau de l'exercice précédent */}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture OKÉ - Format A4</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        @media screen {
+            body {
+                background: #e0e0e0;
+            }
+            .page {
+                margin: 20px auto;
+            }
+        }
+        
+        /* En-tête */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4C34CE;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #4C34CE 0%, #D946EF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .invoice-info {
+            text-align: right;
+        }
+        
+        .invoice-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4C34CE;
+            margin-bottom: 5px;
+        }
+        
+        .invoice-date {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Adresses */
+        .addresses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .address-block h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .address-block p {
+            margin: 0;
+            line-height: 1.8;
+        }
+        
+        .client-address {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4C34CE;
+        }
+        
+        /* Tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #4C34CE 0%, #D946EF 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        th:last-child {
+            text-align: right;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Totaux */
+        .totals {
+            margin-left: auto;
+            width: 300px;
+            margin-top: 30px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .total-row.grand-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4C34CE;
+            border-bottom: 3px double #4C34CE;
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+        
+        /* Pied de page */
+        .footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 20mm;
+            right: 20mm;
+            text-align: center;
+            color: #666;
+            font-size: 10px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .stamp {
+            position: absolute;
+            top: 100px;
+            right: 40px;
+            width: 120px;
+            height: 120px;
+            border: 3px solid #4C34CE;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-15deg);
+            opacity: 0.3;
+            font-weight: bold;
+            color: #4C34CE;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Tampon PAYÉ -->
+        <div class="stamp">PAYÉ</div>
+        
+        <!-- En-tête -->
+        <div class="header">
+            <div>
+                <div class="logo">OKÉ</div>
+                <p style="margin: 5px 0; color: #666; font-size: 14px;">Gestion d'entreprise intelligente</p>
+            </div>
+            <div class="invoice-info">
+                <div class="invoice-number">FA-2025-001</div>
+                <div class="invoice-date">15 janvier 2025</div>
+            </div>
+        </div>
+        
+        <!-- Adresses -->
+        <div class="addresses">
+            <div class="address-block">
+                <h3>Émetteur</h3>
+                <p>
+                    <strong>OKÉ SAS</strong><br>
+                    123 Avenue des Champs-Élysées<br>
+                    75008 Paris<br>
+                    Tél: +33 1 23 45 67 89<br>
+                    Email: contact@oke.fr
+                </p>
+            </div>
+            <div class="address-block client-address">
+                <h3>Client</h3>
+                <p>
+                    <strong>Centre de Santé Blaise Pascal</strong><br>
+                    45 Rue de la Santé<br>
+                    75013 Paris<br>
+                    N° TVA: FR12345678901
+                </p>
+            </div>
+        </div>
+        
+        <!-- Tableau des prestations -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Description</th>
+                    <th style="width: 15%;">Quantité</th>
+                    <th style="width: 15%;">Prix unit. HT</th>
+                    <th style="width: 20%;">Montant HT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Abonnement OKÉ Pro</strong><br>
+                        <span style="color: #666; font-size: 11px;">Licence mensuelle - Janvier 2025</span>
+                    </td>
+                    <td>1</td>
+                    <td>€ 79,00</td>
+                    <td>€ 79,00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Formation utilisateurs</strong><br>
+                        <span style="color: #666; font-size: 11px;">Session de 2 heures en visio</span>
+                    </td>
+                    <td>2</td>
+                    <td>€ 150,00</td>
+                    <td>€ 300,00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Personnalisation interface</strong><br>
+                        <span style="color: #666; font-size: 11px;">Adaptation aux besoins spécifiques</span>
+                    </td>
+                    <td>1</td>
+                    <td>€ 450,00</td>
+                    <td>€ 450,00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Support technique premium</strong><br>
+                        <span style="color: #666; font-size: 11px;">Assistance prioritaire 24/7</span>
+                    </td>
+                    <td>1</td>
+                    <td>€ 120,00</td>
+                    <td>€ 120,00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Totaux -->
+        <div class="totals">
+            <div class="total-row">
+                <span>Sous-total HT</span>
+                <span>€ 949,00</span>
+            </div>
+            <div class="total-row">
+                <span>TVA 20%</span>
+                <span>€ 189,80</span>
+            </div>
+            <div class="total-row grand-total">
+                <span>TOTAL TTC</span>
+                <span>€ 1 138,80</span>
+            </div>
+        </div>
+        
+        <!-- Conditions de paiement -->
+        <div style="margin-top: 50px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+            <h3 style="font-size: 12px; text-transform: uppercase; color: #666; margin-bottom: 10px;">
+                Conditions de paiement
+            </h3>
+            <p style="margin: 0; font-size: 11px; color: #666;">
+                Paiement à 30 jours date de facture<br>
+                IBAN: FR76 1234 5678 9012 3456 7890 123<br>
+                BIC: OKEFRPPXXX
+            </p>
+        </div>
+        
+        <!-- Pied de page -->
+        <div class="footer">
+            OKÉ SAS - Capital social: 50 000€ - RCS Paris 123 456 789<br>
+            N° TVA Intracommunautaire: FR12345678901
+        </div>
+    </div>
+</body>
+</html>

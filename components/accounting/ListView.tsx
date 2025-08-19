@@ -74,7 +74,7 @@ const ListView = memo<ListViewProps>(({ transactions, totals }) => {
           </thead>
           <tbody className="divide-y divide-neutral-100">
             {sortedTransactions.map((transaction) => (
-              <tr key={transaction.id} className="hover:bg-neutral-50">
+              <tr key={`${transaction.type}-${transaction.id}`} className="hover:bg-neutral-50">
                 <td className="px-4 py-3 text-sm">
                   {new Date(transaction.date).toLocaleDateString('fr-FR')}
                 </td>

@@ -56,7 +56,7 @@ const commonItems: AddMenuItem[] = [
     id: 'expense-note',
     label: 'Note de frais',
     icon: Receipt,
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-primary to-cyan-500',
     description: 'Dépense personnelle remboursable',
     hint: 'Payée par vous, à rembourser',
     acceptedFormats: ['.pdf', '.jpg', '.png'],
@@ -96,7 +96,7 @@ const accountingConfig: ModuleAddConfig = {
       id: 'fec-import',
       label: 'Fichier FEC',
       icon: Database,
-      color: 'from-purple-500 to-violet-600',
+      color: 'from-secondary to-violet-600',
       description: 'Fichier des Écritures Comptables',
       hint: 'Export officiel pour l\'administration fiscale',
       acceptedFormats: ['.txt', '.csv', '.xml']
@@ -143,7 +143,7 @@ const bankConfig: ModuleAddConfig = {
       id: 'bank-statement-pdf',
       label: 'Relevé bancaire PDF',
       icon: FileText,
-      color: 'from-blue-500 to-indigo-600',
+      color: 'from-primary to-indigo-600',
       description: 'Extraction intelligente du PDF',
       hint: 'Nous lisons automatiquement vos relevés',
       acceptedFormats: ['.pdf']
@@ -161,7 +161,7 @@ const bankConfig: ModuleAddConfig = {
       id: 'payment-list',
       label: 'Liste de paiements',
       icon: CreditCard,
-      color: 'from-purple-500 to-violet-600',
+      color: 'from-secondary to-violet-600',
       description: 'Paiements effectués ou à venir',
       hint: 'Virements, prélèvements, chèques...',
       acceptedFormats: ['.csv', '.xlsx', '.txt']
@@ -190,7 +190,7 @@ const purchasesConfig: ModuleAddConfig = {
       id: 'delivery-note',
       label: 'Bon de livraison',
       icon: Package,
-      color: 'from-purple-500 to-pink-600',
+      color: 'from-secondary to-pink-600',
       description: 'Confirmation de réception',
       hint: 'Réception de marchandises',
       acceptedFormats: ['.pdf', '.jpg']
@@ -228,7 +228,7 @@ const salesConfig: ModuleAddConfig = {
       id: 'customer-list',
       label: 'Liste de clients',
       icon: Users,
-      color: 'from-purple-500 to-violet-600',
+      color: 'from-secondary to-violet-600',
       description: 'Import base clients',
       hint: 'CSV ou Excel avec contacts',
       acceptedFormats: ['.csv', '.xlsx']
@@ -255,7 +255,7 @@ const stocksConfig: ModuleAddConfig = {
       id: 'inventory',
       label: 'Inventaire',
       icon: Package,
-      color: 'from-blue-500 to-indigo-600',
+      color: 'from-primary to-indigo-600',
       description: 'Import inventaire',
       acceptedFormats: ['.csv', '.xlsx']
     },

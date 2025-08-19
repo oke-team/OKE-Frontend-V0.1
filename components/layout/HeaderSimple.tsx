@@ -6,8 +6,6 @@ import { cn } from '@/lib/utils';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { CompanySelectorLiquid, Company } from '@/components/ui/CompanySelectorLiquid';
 import { PeriodSelectorLiquid } from '@/components/ui/PeriodSelectorLiquid';
-import { CompanySelectorMobile } from '@/components/ui/CompanySelectorMobile';
-import { PeriodSelectorMobile } from '@/components/ui/PeriodSelectorMobile';
 import { usePathname } from 'next/navigation';
 import { TooltipSimple } from '@/components/ui/TooltipSimple';
 import { SearchGlobal } from '@/components/ui/SearchGlobal';
@@ -21,7 +19,8 @@ import {
   LogOut,
   User,
   Search,
-  X
+  X,
+  Rocket
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -75,7 +74,7 @@ export default function HeaderSimple({
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-gray-200/50 z-50">
+    <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b-2 border-[#FAA016] z-50">
       <div className="flex items-center justify-between h-full px-3 sm:px-4 md:px-6">
         
         {/* Partie gauche : Logo + Badge Version */}
@@ -89,7 +88,7 @@ export default function HeaderSimple({
             priority
           />
           <span 
-            className="hidden md:inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 hover:scale-105"
+            className="hidden sm:inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 hover:scale-105"
             style={{
               background: 'linear-gradient(135deg, rgba(76, 52, 206, 0.08) 0%, rgba(250, 160, 22, 0.08) 100%)',
               backdropFilter: 'blur(8px)',
@@ -103,25 +102,32 @@ export default function HeaderSimple({
           </span>
         </div>
         
-        {/* Partie centrale : Sélecteurs */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-[40%] sm:max-w-[60%] lg:max-w-none lg:justify-center">
-          {/* Version mobile et tablette : sélecteur d'entreprise limité */}
-          <div className="lg:hidden flex items-center gap-2 justify-center w-full">
-            <div className="w-full sm:w-auto sm:min-w-[250px] sm:max-w-[300px]">
-              <CompanySelectorMobile
-                companies={mockCompanies}
-                currentCompany={currentCompany}
-                onCompanyChange={onCompanyChange || (() => {})}
-                size="sm"
-                compact={isMobile}
-              />
-            </div>
+        {/* Slogan avec fusée - visible uniquement sur desktop large */}
+        <div className="hidden xl:flex items-center gap-2 ml-8 h-8">
+          <span className="font-bold text-sm tracking-tight">
+            <span style={{ color: '#4C34CE' }}>Une Super App</span>
+            {' '}
+            <span style={{ color: '#FAA016' }}>pour des Supers Entrepreneurs</span>
+          </span>
+          <div className="flex items-center">
+            <Rocket 
+              className="w-6 h-6 transform -rotate-45" 
+              style={{ 
+                fill: '#FAA016',
+                stroke: '#4C34CE',
+                strokeWidth: 1.5,
+                filter: 'drop-shadow(0 2px 4px rgba(76, 52, 206, 0.3))'
+              }} 
+            />
           </div>
-          
-          {/* Version desktop : sélecteurs complets */}
-          <div className="hidden lg:flex items-center gap-3">
+        </div>
+        
+        {/* Partie centrale : Sélecteurs alignés à gauche avec espacement */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-1">
+          {/* Utiliser le même sélecteur pour toutes les tailles d'écran */}
+          <div className="flex items-center gap-3 sm:ml-4 md:ml-6 lg:ml-8">
             {/* Sélecteur d'entreprise */}
-            <div className="w-56">
+            <div className="w-full sm:w-auto sm:min-w-[200px] md:w-56">
               <CompanySelectorLiquid
                 companies={mockCompanies}
                 currentCompany={currentCompany}
@@ -131,18 +137,18 @@ export default function HeaderSimple({
               />
             </div>
             
-            {/* Sélecteur de période ou espace réservé */}
-            <div className="hidden sm:block h-5 w-px bg-gray-200" />
-            <div className="w-48">
-              {isAccountingModule ? (
-                <PeriodSelectorLiquid
-                  size="sm"
-                  fullWidth
-                />
-              ) : (
-                <div className="h-8" />
-              )}
-            </div>
+            {/* Sélecteur de période - uniquement sur desktop et dans le module accounting */}
+            {!isMobile && isAccountingModule && (
+              <>
+                <div className="hidden sm:block h-5 w-px bg-gray-200" />
+                <div className="w-48">
+                  <PeriodSelectorLiquid
+                    size="sm"
+                    fullWidth
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
         
@@ -157,7 +163,7 @@ export default function HeaderSimple({
             >
               <button
                 onClick={() => setSearchOpen(true)}
-                className="w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-100 to-violet-100 text-indigo-600 hover:from-indigo-200 hover:to-violet-200 transition-all"
+                className="w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-100 to-violet-100 text-indigo-600 hover:from-indigo-200 hover:to-violet-200 transition-all border border-[#FAA016]/50"
               >
                 <Search size={16} className="lg:w-[18px] lg:h-[18px]" />
               </button>
@@ -179,10 +185,10 @@ export default function HeaderSimple({
                 <button
                   onClick={toggleExpertMode}
                   className={cn(
-                    "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg transition-all",
+                    "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg transition-all border",
                     expertMode 
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30' 
-                      : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 hover:from-purple-200 hover:to-pink-200'
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30 border-[#FAA016]' 
+                      : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 hover:from-purple-200 hover:to-pink-200 border-[#FAA016]/50'
                   )}
                 >
                   <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
@@ -205,7 +211,7 @@ export default function HeaderSimple({
                   }
                 }}
                 className={cn(
-                  "relative flex items-center justify-center rounded-lg transition-all",
+                  "relative flex items-center justify-center rounded-lg transition-all border border-[#FAA016]/50",
                   "bg-gradient-to-r from-violet-100 to-purple-100 text-violet-600 hover:from-violet-200 hover:to-purple-200",
                   isMobile ? "w-10 h-10" : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9"
                 )}
@@ -262,7 +268,7 @@ export default function HeaderSimple({
             <button
               onClick={onChatOpen}
               className={cn(
-                "flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-600 hover:from-blue-200 hover:to-cyan-200 transition-all",
+                "flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-600 hover:from-blue-200 hover:to-cyan-200 transition-all border border-[#FAA016]/50",
                 isMobile ? "w-10 h-10" : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9"
               )}
             >

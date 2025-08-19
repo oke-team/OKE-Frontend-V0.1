@@ -162,7 +162,7 @@ export const mockClientDetails: Record<string, ClientDetail> = {
     creditLimit: 50000,
     customerSince: 'Janvier 2023',
     lastActivity: 'Il y a 2 jours',
-    color: 'bg-gradient-to-br from-blue-500 to-indigo-600',
+    color: 'bg-gradient-to-br from-primary to-indigo-600',
     type: 'client' as const
   },
   'societe-abc': {
@@ -192,7 +192,7 @@ export const mockClientDetails: Record<string, ClientDetail> = {
     creditLimit: 20000,
     customerSince: 'Septembre 2023',
     lastActivity: 'Il y a 5 jours',
-    color: 'bg-gradient-to-br from-purple-500 to-pink-600',
+    color: 'bg-gradient-to-br from-secondary to-pink-600',
     type: 'client' as const
   }
 };
@@ -219,7 +219,7 @@ export const mockClientGroups: ClientGroup[] = [
       email: 'contact@lesquen.fr',
       phone: '+33 6 12 34 56 78'
     },
-    color: 'bg-gradient-to-br from-blue-500 to-indigo-600'
+    color: 'bg-gradient-to-br from-primary to-indigo-600'
   },
   {
     id: 'societe-abc',
@@ -263,7 +263,7 @@ export const mockClientGroups: ClientGroup[] = [
       email: 'finance@xyz-corp.fr',
       phone: '+33 4 56 78 90 12'
     },
-    color: 'bg-gradient-to-br from-purple-500 to-pink-600'
+    color: 'bg-gradient-to-br from-secondary to-pink-600'
   },
   {
     id: 'tech-solutions',

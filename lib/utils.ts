@@ -6,8 +6,8 @@ import { twMerge } from "tailwind-merge";
  * Combine clsx pour la logique conditionnelle et tailwind-merge pour éviter les conflits Tailwind
  * 
  * @example
- * cn("px-2 py-1", condition && "bg-blue-500", "text-white")
- * cn(["px-2", "py-1"], { "bg-blue-500": isActive }, "text-white")
+ * cn("px-2 py-1", condition && "bg-primary", "text-white")
+ * cn(["px-2", "py-1"], { "bg-primary": isActive }, "text-white")
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,7 +34,7 @@ export function glassEffect(
   const bgColor = {
     white: `bg-white/${opacity}`,
     black: `bg-black/${opacity}`,
-    primary: `bg-primary-500/${opacity}`,
+    primary: `bg-primary/${opacity}`,
   };
 
   return cn(
@@ -59,29 +59,29 @@ export function colorVariant(
 ) {
   const variants = {
     solid: {
-      primary: "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700",
-      secondary: "bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700",
+      primary: "bg-primary text-white hover:bg-primary-600 active:bg-primary-700",
+      secondary: "bg-secondary text-white hover:bg-secondary-600 active:bg-secondary-700",
       accent: "bg-accent-pink text-white hover:opacity-90 active:opacity-80",
       neutral: "bg-neutral-700 text-white hover:bg-neutral-800 active:bg-neutral-900",
       destructive: "bg-red-500 text-white hover:bg-red-600 active:bg-red-700",
     },
     outline: {
-      primary: "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950",
-      secondary: "border-2 border-secondary-500 text-secondary-500 hover:bg-secondary-50 dark:hover:bg-secondary-950",
+      primary: "border-2 border-primary text-primary hover:bg-primary-50 dark:hover:bg-primary-950",
+      secondary: "border-2 border-secondary text-secondary hover:bg-secondary-50 dark:hover:bg-secondary-950",
       accent: "border-2 border-accent-pink text-accent-pink hover:bg-accent-pink/10",
       neutral: "border-2 border-neutral-300 text-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900",
       destructive: "border-2 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-950",
     },
     ghost: {
-      primary: "text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950",
-      secondary: "text-secondary-500 hover:bg-secondary-50 dark:hover:bg-secondary-950",
+      primary: "text-primary hover:bg-primary-50 dark:hover:bg-primary-950",
+      secondary: "text-secondary hover:bg-secondary-50 dark:hover:bg-secondary-950",
       accent: "text-accent-pink hover:bg-accent-pink/10",
       neutral: "text-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900",
       destructive: "text-red-500 hover:bg-red-50 dark:hover:bg-red-950",
     },
     glass: {
-      primary: "backdrop-blur-md bg-primary-500/10 text-primary-500 border border-primary-500/20 hover:bg-primary-500/20",
-      secondary: "backdrop-blur-md bg-secondary-500/10 text-secondary-500 border border-secondary-500/20 hover:bg-secondary-500/20",
+      primary: "backdrop-blur-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20",
+      secondary: "backdrop-blur-md bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary/20",
       accent: "backdrop-blur-md bg-accent-pink/10 text-accent-pink border border-accent-pink/20 hover:bg-accent-pink/20",
       neutral: "backdrop-blur-md bg-white/10 text-neutral-700 border border-white/20 hover:bg-white/20 dark:text-neutral-200",
       destructive: "backdrop-blur-md bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20",
@@ -141,8 +141,8 @@ export function glowEffect(
   intensity: "sm" | "md" | "lg" = "md"
 ) {
   const colors = {
-    primary: "94, 114, 255", // RGB pour primary-500
-    secondary: "209, 80, 218", // RGB pour secondary-500
+    primary: "94, 114, 255", // RGB pour primary
+    secondary: "209, 80, 218", // RGB pour secondary
     accent: "255, 107, 157", // RGB pour accent-pink
     white: "255, 255, 255",
   };
@@ -227,8 +227,8 @@ export function container(maxWidth: "sm" | "md" | "lg" | "xl" | "2xl" | "full" =
  */
 export function focusRing(color: "primary" | "secondary" | "accent" = "primary") {
   const colors = {
-    primary: "focus:ring-primary-500",
-    secondary: "focus:ring-secondary-500",
+    primary: "focus:ring-primary",
+    secondary: "focus:ring-secondary",
     accent: "focus:ring-accent-pink",
   };
 

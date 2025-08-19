@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useCallback, useMemo, memo, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import GlassContainer from '@/components/ui/GlassContainer';
+import OnboardingTrigger from '@/components/onboarding/OnboardingTrigger';
+import { useOnboardingModal } from '@/components/onboarding/hooks/useOnboardingModal';
 
 interface AuthWidgetProps {
   className?: string;
@@ -34,6 +36,13 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
   const [loading, setLoading] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const router = useRouter();
+  const { openModal, hasActiveSession } = useOnboardingModal();
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('AuthWidget - openModal function:', openModal);
+    console.log('AuthWidget - hasActiveSession function:', hasActiveSession);
+  }, [openModal, hasActiveSession]);
 
   const handleInputChange = useCallback((field: keyof FormData) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -107,79 +116,119 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
                 : 'text-white/80 hover:text-white hover:bg-white/10 active:bg-white/20'
             }`}
           >
-            S&apos;inscrire gratuitement
+            Créer mon compte
           </button>
         </div>
 
         {/* Auth Form */}
-        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-          {authMode === 'signup' && (
-            <motion.div
-              initial={{ opacity: 0, height: shouldReduceMotion ? 'auto' : 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: shouldReduceMotion ? 'auto' : 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-              className="space-y-3"
-            >
-              <div className="grid grid-cols-2 gap-3">
+        {authMode === 'signup' ? (
+          // Mode inscription simple et classique
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
                 <input
                   type="text"
                   placeholder="Prénom"
-                  value={formData.firstName || ''}
+                  value={formData.firstName}
                   onChange={handleInputChange('firstName')}
                   className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
                   autoComplete="given-name"
-                  required={authMode === 'signup'}
-                />
-                <input
-                  type="text"
-                  placeholder="Nom"
-                  value={formData.lastName || ''}
-                  onChange={handleInputChange('lastName')}
-                  className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
-                  autoComplete="family-name"
-                  required={authMode === 'signup'}
+                  required
                 />
               </div>
               <div>
                 <input
-                  type="tel"
-                  placeholder="Téléphone mobile"
-                  value={formData.phone || ''}
-                  onChange={handleInputChange('phone')}
+                  type="text"
+                  placeholder="Nom"
+                  value={formData.lastName}
+                  onChange={handleInputChange('lastName')}
                   className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
-                  autoComplete="tel"
-                  required={authMode === 'signup'}
+                  autoComplete="family-name"
+                  required
                 />
               </div>
-            </motion.div>
-          )}
-          
-          <div>
-            <input
-              type="email"
-              placeholder="Email professionnel"
-              value={formData.email}
-              onChange={handleInputChange('email')}
-              className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
-              autoComplete={authMode === 'login' ? 'email' : 'email'}
-              required
-            />
-          </div>
-          
-          <div>
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              value={formData.password}
-              onChange={handleInputChange('password')}
-              className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
-              autoComplete={authMode === 'login' ? 'current-password' : 'new-password'}
-              required
-            />
-          </div>
+            </div>
+            
+            <div>
+              <input
+                type="email"
+                placeholder="Email professionnel"
+                value={formData.email}
+                onChange={handleInputChange('email')}
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
+                autoComplete="email"
+                required
+              />
+            </div>
+            
+            <div>
+              <input
+                type="password"
+                placeholder="Mot de passe"
+                value={formData.password}
+                onChange={handleInputChange('password')}
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
+                autoComplete="new-password"
+                required
+              />
+            </div>
 
-          {authMode === 'login' && (
+            <motion.button
+              type="submit"
+              disabled={loading}
+              whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="w-full bg-[#FAA016] hover:bg-[#E8941A] active:bg-[#D8841A] text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg min-h-[48px] disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation focus-visible:ring-2 focus-visible:ring-[#FAA016]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span>Créer mon compte</span>
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </motion.button>
+            
+            <p className="text-xs text-white/60 text-center">
+              En créant un compte, vous acceptez nos{' '}
+              <a href="#" className="text-[#FAA016] hover:text-[#E8941A]">
+                Conditions d'utilisation
+              </a>{' '}
+              et notre{' '}
+              <a href="#" className="text-[#FAA016] hover:text-[#E8941A]">
+                Politique de confidentialité
+              </a>
+            </p>
+          </form>
+        ) : (
+          // Mode connexion (existant)
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div>
+              <input
+                type="email"
+                placeholder="Email professionnel"
+                value={formData.email}
+                onChange={handleInputChange('email')}
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
+                autoComplete="email"
+                required
+              />
+            </div>
+            
+            <div>
+              <input
+                type="password"
+                placeholder="Mot de passe"
+                value={formData.password}
+                onChange={handleInputChange('password')}
+                className="w-full px-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 focus:border-[#FAA016] focus:ring-2 focus:ring-[#FAA016]/20 focus:outline-none transition-all min-h-[44px] text-base backdrop-blur-sm touch-manipulation"
+                autoComplete="current-password"
+                required
+              />
+            </div>
+
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center text-white/80 cursor-pointer">
                 <input 
@@ -194,28 +243,26 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
                 Mot de passe oublié ?
               </a>
             </div>
-          )}
 
-          <motion.button
-            type="submit"
-            disabled={loading}
-            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
-            whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="w-full bg-[#FAA016] hover:bg-[#E8941A] active:bg-[#D8841A] text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg min-h-[48px] disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation focus-visible:ring-2 focus-visible:ring-[#FAA016]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <>
-                <span>
-                  {authMode === 'login' ? 'Se connecter' : 'Commencer gratuitement'}
-                </span>
-                <ArrowRight className="w-5 h-5" />
-              </>
-            )}
-          </motion.button>
-        </form>
+            <motion.button
+              type="submit"
+              disabled={loading}
+              whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="w-full bg-[#FAA016] hover:bg-[#E8941A] active:bg-[#D8841A] text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg min-h-[48px] disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation focus-visible:ring-2 focus-visible:ring-[#FAA016]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span>Se connecter</span>
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </motion.button>
+          </form>
+        )}
 
         {/* Social Login */}
         <div className="mt-8 pt-6 border-t border-white/20">

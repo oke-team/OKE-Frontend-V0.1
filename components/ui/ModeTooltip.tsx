@@ -72,8 +72,8 @@ export default function ModeTooltip({ isExpertMode, children }: ModeTooltipProps
                 <div className={`
                   p-2 rounded-lg
                   ${isExpertMode 
-                    ? 'bg-gradient-to-br from-purple-500 to-purple-600' 
-                    : 'bg-gradient-to-br from-blue-500 to-blue-600'
+                    ? 'bg-gradient-to-br from-secondary to-purple-600' 
+                    : 'bg-gradient-to-br from-primary to-blue-600'
                   }
                 `}>
                   <div className="text-white">
@@ -102,7 +102,7 @@ export default function ModeTooltip({ isExpertMode, children }: ModeTooltipProps
                   >
                     <div className={`
                       w-1.5 h-1.5 rounded-full
-                      ${isExpertMode ? 'bg-purple-500' : 'bg-blue-500'}
+                      ${isExpertMode ? 'bg-secondary' : 'bg-primary'}
                     `} />
                     <span className="text-gray-700">{feature}</span>
                   </motion.div>

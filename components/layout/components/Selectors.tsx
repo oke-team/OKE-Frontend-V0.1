@@ -12,7 +12,7 @@ import {
   MapPin
 } from 'lucide-react';
 import { liquidGlass } from '@/lib/design-system/liquid-glass';
-import { Company } from '../HeaderNew';
+type Company = { id: string; name: string; plan: 'starter' | 'pro' | 'enterprise'; country: string; currency: string };
 
 interface SelectorsProps {
   currentCompany?: Company;

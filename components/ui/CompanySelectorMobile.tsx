@@ -36,7 +36,7 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
       case 'enterprise':
         return 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)';
       case 'pro':
-        return 'linear-gradient(135deg, #5e72ff 0%, #d150da 100%)';
+        return '#4C34CE';
       default:
         return '#e5e7eb';
     }
@@ -76,7 +76,7 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
   options.push({
     id: 'add-company',
     label: 'Ajouter une entreprise',
-    icon: <Plus size={16} style={{ color: '#5e72ff' }} />,
+    icon: <Plus size={16} style={{ color: '#FAA016' }} />,
   });
 
   const handleSelect = (option: any) => {
@@ -126,17 +126,17 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
         'rounded-xl',
         'hover:shadow-xl hover:scale-[1.01]',
         'active:scale-[0.99] transition-all duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-violet-500/20',
+        'focus:outline-none focus:ring-2 focus:ring-secondary/20',
         compact && 'rounded-lg',
         className
       )}
       style={{
         ...currentStyle,
-        background: 'linear-gradient(135deg, rgba(94, 114, 255, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%)',
+        background: 'transparent',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(94, 114, 255, 0.2)',
-        boxShadow: '0 4px 16px rgba(94, 114, 255, 0.1)',
+        border: '1px solid #FAA016',
+        boxShadow: '0 4px 16px rgba(250, 160, 22, 0.1)',
         gap: compact ? '6px' : '8px'
       }}
     >
@@ -144,21 +144,29 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
       <div className="flex items-center gap-2 flex-1 min-w-0">
         <Building2 
           size={size === 'xs' ? 14 : size === 'sm' ? 16 : 18} 
-          className="text-primary-500 flex-shrink-0" 
+          style={{ color: '#4C34CE' }}
+          className="flex-shrink-0" 
         />
         
         <div className="flex-1 min-w-0 text-left">
           <div 
-            className="font-medium text-slate-900 truncate"
-            style={{ fontSize: compact ? '12px' : currentStyle.fontSize }}
+            className="font-medium truncate"
+            style={{ 
+              fontSize: compact ? '12px' : currentStyle.fontSize,
+              color: '#4C34CE'
+            }}
           >
             {currentCompany.name}
           </div>
           
           {!compact && currentCompany.country && (
             <div 
-              className="text-slate-500 truncate"
-              style={{ fontSize: `${parseInt(currentStyle.fontSize) - 2}px` }}
+              className="truncate"
+              style={{ 
+                fontSize: `${parseInt(currentStyle.fontSize) - 2}px`,
+                color: '#4C34CE',
+                opacity: 0.7
+              }}
             >
               {currentCompany.country} · {currentCompany.currency}
             </div>

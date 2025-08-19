@@ -37,9 +37,9 @@ export default function ModulesGrid({ isOpen, onClose, currentModule }: ModulesG
   };
 
   const categoryColors = {
-    core: 'from-blue-500 to-indigo-600',
+    core: 'from-primary to-indigo-600',
     business: 'from-green-500 to-emerald-600',
-    tools: 'from-purple-500 to-violet-600',
+    tools: 'from-secondary to-violet-600',
     system: 'from-gray-500 to-slate-600'
   };
 
@@ -130,14 +130,14 @@ export default function ModulesGrid({ isOpen, onClose, currentModule }: ModulesG
                               "hover:shadow-lg hover:border-gray-300",
                               "transition-all duration-200",
                               "group",
-                              isActive && "ring-2 ring-blue-500 bg-blue-50/50"
+                              isActive && "ring-2 ring-primary bg-blue-50/50"
                             )}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                           >
                             {/* Badge actif */}
                             {isActive && (
-                              <div className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                              <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full animate-pulse" />
                             )}
 
                             {/* Icône avec gradient */}
@@ -162,7 +162,7 @@ export default function ModulesGrid({ isOpen, onClose, currentModule }: ModulesG
                             </p>
 
                             {/* Effet hover Liquid Glass */}
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/0 to-secondary/0 group-hover:from-primary/5 group-hover:to-secondary/5 transition-all duration-300 pointer-events-none" />
                           </motion.button>
                         );
                       })}

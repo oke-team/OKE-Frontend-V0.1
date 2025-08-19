@@ -178,7 +178,7 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                         "rounded-xl overflow-hidden",
                         "bg-white dark:bg-gray-800",
                         "border border-gray-200 dark:border-gray-700",
-                        selectedItem === item.id && "ring-2 ring-violet-500"
+                        selectedItem === item.id && "ring-2 ring-secondary"
                       )}
                     >
                       {/* Header avec info de l'item */}
@@ -260,7 +260,7 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                       "rounded-xl",
                       "bg-white dark:bg-gray-800",
                       "border border-gray-200 dark:border-gray-700",
-                      selectedItem === item.id && "ring-2 ring-violet-500",
+                      selectedItem === item.id && "ring-2 ring-secondary",
                       "hover:shadow-lg transition-shadow duration-200",
                       "flex flex-col sm:flex-row"
                     )}

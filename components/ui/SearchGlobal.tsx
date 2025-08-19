@@ -113,7 +113,7 @@ export const SearchGlobal: React.FC<SearchGlobalProps> = ({ isOpen, onClose }) =
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Rechercher un compte, une transaction, un client..."
-                    className="w-full pl-12 pr-12 py-3 text-lg bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:bg-white transition-all"
+                    className="w-full pl-12 pr-12 py-3 text-lg bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:bg-white transition-all"
                   />
                   <button
                     onClick={onClose}
@@ -133,7 +133,7 @@ export const SearchGlobal: React.FC<SearchGlobalProps> = ({ isOpen, onClose }) =
                       <div className="flex flex-wrap gap-2">
                         {recentSearches.map((search, index) => (
                           <button
-                            key={index}
+                            key={`recent-${search.replace(/\s+/g,'-')}-${index}`}
                             onClick={() => setQuery(search)}
                             className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 transition-colors"
                           >
@@ -147,7 +147,7 @@ export const SearchGlobal: React.FC<SearchGlobalProps> = ({ isOpen, onClose }) =
                 ) : isSearching ? (
                   <div className="p-8 text-center">
                     <div className="inline-flex items-center gap-2 text-gray-500">
-                      <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
                       Recherche en cours...
                     </div>
                   </div>

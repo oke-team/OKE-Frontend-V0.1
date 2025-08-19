@@ -38,40 +38,42 @@ export const CardBase: React.FC<CardBaseProps> = ({
 
   const baseClasses = cn(
     'relative overflow-hidden rounded-2xl transition-all duration-300',
-    glass && 'backdrop-blur-xl bg-white/80 dark:bg-neutral-900/80',
-    !glass && 'bg-white dark:bg-neutral-900',
-    'border border-white/20 dark:border-white/10',
-    'shadow-lg',
+    'bg-white dark:bg-neutral-900',
+    'border border-white/20',
     variant === 'hero' && 'col-span-2 row-span-2 min-h-[320px] p-8',
     variant === 'standard' && 'min-h-[160px] p-6',
     variant === 'compact' && 'min-h-[120px] p-4',
     variant === 'calculation' && 'min-h-[180px] p-5',
-    isClickable && 'cursor-pointer hover:shadow-xl hover:-translate-y-1',
+    isClickable && 'cursor-pointer hover:-translate-y-1',
     disabled && 'opacity-50 cursor-not-allowed',
     loading && 'animate-pulse',
     className
   );
 
   const accentStyles = {
-    violet: 'hover:shadow-violet-500/10 hover:border-violet-500/30',
-    green: 'hover:shadow-green-500/10 hover:border-green-500/30',
-    red: 'hover:shadow-red-500/10 hover:border-red-500/30',
-    blue: 'hover:shadow-blue-500/10 hover:border-blue-500/30',
-    orange: 'hover:shadow-orange-500/10 hover:border-orange-500/30',
+    violet: '',
+    green: '',
+    red: '',
+    blue: '',
+    orange: '',
   };
 
   const glowStyles = {
-    violet: 'before:bg-gradient-to-br before:from-violet-500/20 before:to-transparent',
+    violet: 'before:bg-gradient-to-br before:from-secondary/20 before:to-transparent',
     green: 'before:bg-gradient-to-br before:from-green-500/20 before:to-transparent',
     red: 'before:bg-gradient-to-br before:from-red-500/20 before:to-transparent',
-    blue: 'before:bg-gradient-to-br before:from-blue-500/20 before:to-transparent',
+    blue: 'before:bg-gradient-to-br before:from-primary/20 before:to-transparent',
     orange: 'before:bg-gradient-to-br before:from-orange-500/20 before:to-transparent',
   };
+
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <motion.div
       className={cn(baseClasses, isClickable && accentStyles[accentColor])}
       onClick={isClickable ? onClick : undefined}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       whileHover={isClickable ? cardTokens.animations.cardHover : undefined}
       whileTap={isClickable ? cardTokens.animations.cardTap : undefined}
       initial={cardTokens.animations.cardEntrance.initial}
@@ -81,17 +83,14 @@ export const CardBase: React.FC<CardBaseProps> = ({
       aria-busy={loading}
       role={isClickable ? 'button' : 'article'}
       tabIndex={isClickable ? 0 : undefined}
+      style={{
+        boxShadow: isHovered && isClickable
+          ? '0 8px 24px rgba(76, 52, 206, 0.15), 0 4px 8px rgba(250, 160, 22, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08)'
+          : '0 4px 12px rgba(76, 52, 206, 0.08), 0 2px 4px rgba(250, 160, 22, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04)',
+        transition: 'box-shadow 0.3s ease'
+      }}
     >
-      {/* Accent glow effect */}
-      {glass && (
-        <div
-          className={cn(
-            'absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl',
-            'before:absolute before:inset-0 before:rounded-full',
-            glowStyles[accentColor]
-          )}
-        />
-      )}
+      {/* Accent glow effect - supprimé pour plus de clarté */}
 
       {/* Badge */}
       {badge && (
@@ -122,7 +121,7 @@ export const CardBase: React.FC<CardBaseProps> = ({
       {/* Loading overlay */}
       {loading && (
         <div className="absolute inset-0 bg-white/50 dark:bg-black/50 rounded-2xl flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
         </div>
       )}
     </motion.div>

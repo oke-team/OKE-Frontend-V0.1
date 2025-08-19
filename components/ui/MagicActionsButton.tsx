@@ -164,7 +164,7 @@ export default function MagicActionsButton({
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-lg",
-          "bg-gradient-to-r from-purple-500 to-pink-500",
+          "bg-gradient-to-r from-secondary to-pink-500",
           "text-white hover:shadow-glow transition-all duration-200",
           "group",
           className
@@ -247,8 +247,8 @@ export default function MagicActionsButton({
                 className={cn(
                   "w-full flex items-center gap-3",
                   "px-3 py-2 rounded-lg",
-                  "bg-gradient-to-r from-purple-500/10 to-pink-500/10",
-                  "hover:from-purple-500/20 hover:to-pink-500/20",
+                  "bg-gradient-to-r from-secondary/10 to-pink-500/10",
+                  "hover:from-secondary/20 hover:to-pink-500/20",
                   "transition-colors group"
                 )}
               >

@@ -387,7 +387,7 @@ export default function CategoryDetailView({
           <AnimatePresence>
           {filteredTransactions.map((transaction, index) => (
             <motion.div
-              key={transaction.id}
+              key={`${transaction.type}-${transaction.id}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -476,9 +476,9 @@ export default function CategoryDetailView({
                   animate={{ height: 'auto', opacity: 1 }}
                   className="mt-4 pt-4 border-t flex flex-wrap gap-2"
                 >
-                  {getCategoryActions().map((action) => (
+                  {getCategoryActions().map((action, actionIndex) => (
                     <button
-                      key={action}
+                      key={`${transaction.id}-action-${actionIndex}`}
                       className="px-3 py-1.5 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 text-sm font-medium transition-colors"
                       onClick={(e) => {
                         e.stopPropagation();

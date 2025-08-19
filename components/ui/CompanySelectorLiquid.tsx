@@ -45,12 +45,12 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
         text: 'ENTERPRISE'
       },
       pro: {
-        background: 'linear-gradient(135deg, #5e72ff 0%, #d150da 100%)',
+        background: '#FAA016',
         color: 'white',
         text: 'PRO'
       },
       starter: {
-        background: 'rgba(229, 231, 235, 0.5)',
+        background: '#e5e7eb',
         color: '#6b7280',
         text: 'STARTER'
       }
@@ -84,7 +84,7 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
       className={className}
     >
       <DropdownTrigger
-        icon={<Building2 size={16} className="text-primary-500" />}
+        icon={<Building2 size={16} style={{ color: '#4C34CE' }} />}
         badge={getPlanBadge(currentCompany.plan)}
         sublabel={`${currentCompany.country || 'FR'} · ${currentCompany.currency || 'EUR'}`}
       >
@@ -109,7 +109,7 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
         
         <DropdownItem
           onClick={() => console.log('Add company')}
-          icon={<Plus size={16} className="text-primary-500" />}
+          icon={<Plus size={16} className="text-primary" />}
         >
           Ajouter une entreprise
         </DropdownItem>

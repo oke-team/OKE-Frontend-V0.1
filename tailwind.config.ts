@@ -24,37 +24,38 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         
-        // Couleurs primaires avec nuances pastels
+        // Couleurs primaires OKÉ - Orange
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          50: "#f0f4ff",
-          100: "#e0e8ff",
-          200: "#c7d6ff",
-          300: "#a5b9ff",
-          400: "#7f94ff",
-          500: "#5e72ff",
-          600: "#4a5eff",
-          700: "#3b4ded",
-          800: "#3142c6",
-          900: "#2b3aa1",
-          950: "#1a2260",
+          DEFAULT: "#FAA016",
+          foreground: "#ffffff",
+          50: "#fff7ed",
+          100: "#ffedd5",
+          200: "#fed7aa",
+          300: "#fdba74",
+          400: "#fb923c",
+          500: "#FAA016", // Couleur principale officielle OKÉ
+          600: "#ea580c",
+          700: "#c2410c",
+          800: "#9a3412",
+          900: "#7c2d12",
+          950: "#431407",
         },
         
-        // Couleurs secondaires pastels
+        // Couleurs secondaires OKÉ - Violet
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          50: "#fdf2fe",
-          100: "#fae5fc",
-          200: "#f5cbf9",
-          300: "#eda8f4",
-          400: "#e279ea",
-          500: "#d150da",
-          600: "#b432bc",
-          700: "#942799",
-          800: "#7a237d",
-          900: "#662364",
+          DEFAULT: "#4C34CE",
+          foreground: "#ffffff",
+          50: "#f5f3ff",
+          100: "#ede9fe",
+          200: "#ddd6fe",
+          300: "#c4b5fd",
+          400: "#a78bfa",
+          500: "#4C34CE", // Couleur secondaire officielle OKÉ
+          600: "#3730a3",
+          700: "#312e81",
+          800: "#1e1b4b",
+          900: "#1e1b4b",
+          950: "#0f0e2e",
         },
         
         // Accents pastels

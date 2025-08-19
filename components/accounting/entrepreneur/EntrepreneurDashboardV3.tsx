@@ -126,11 +126,21 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
         transition={{ delay: index * 0.05 }}
         onClick={() => navigateToAccounts(card.id, card.title)}
         className={cn(
-          "relative bg-white/80 backdrop-blur-xl rounded-xl border border-white/20",
+          "relative bg-white rounded-xl border border-white/20",
           isSmall ? "p-4" : "p-6",
-          "cursor-pointer hover:shadow-lg transition-all duration-300",
+          "cursor-pointer transition-all duration-300",
           "hover:-translate-y-1 group"
         )}
+        style={{
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)',
+          transition: 'box-shadow 0.3s ease, transform 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.10)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)';
+        }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-3">
@@ -233,11 +243,12 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.05 }}
         className={cn(
-          "relative bg-gradient-to-br",
-          card.color === 'violet' && "from-violet-50 to-purple-50",
-          card.color === 'green' && "from-green-50 to-emerald-50",
+          "relative bg-white",
           "rounded-xl border border-white/20 p-6"
         )}
+        style={{
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)'
+        }}
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -300,7 +311,7 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
   };
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto p-4 space-y-6">
+    <div className="w-full max-w-[1600px] mx-auto px-6 py-4 space-y-6">
       {/* Tabs */}
       <div className="flex gap-1 p-1 bg-gray-100/50 backdrop-blur-sm rounded-xl">
         <button
@@ -351,7 +362,7 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
                 <h2 className="text-lg font-semibold text-neutral-800">Actif</h2>
                 <span className="text-sm text-neutral-500">(Ce que l'entreprise possède)</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                 {activeBilanCards.map((card, index) => renderCard(card, index))}
               </div>
             </div>
@@ -373,7 +384,7 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
                 <h2 className="text-lg font-semibold text-neutral-800">Passif</h2>
                 <span className="text-sm text-neutral-500">(D'où vient l'argent)</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                 {passiveBilanCards.map((card, index) => renderCard(card, index))}
               </div>
             </div>

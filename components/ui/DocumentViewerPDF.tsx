@@ -358,7 +358,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
   const loadingComponent = useMemo(() => (
     <div className="flex items-center justify-center h-full">
       <div className="text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-500" />
+        <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-secondary" />
         <p className="text-sm text-gray-500">Chargement du PDF...</p>
       </div>
     </div>
@@ -376,7 +376,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
 
   const pageLoadingComponent = useMemo(() => (
     <div className="flex items-center justify-center p-8">
-      <Loader2 className="h-6 w-6 animate-spin text-purple-500" />
+      <Loader2 className="h-6 w-6 animate-spin text-secondary" />
     </div>
   ), []);
 
@@ -589,7 +589,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                 <>
                   {Array.from({ length: numPages }, (_, i) => i + 1).map(pageNum => (
                     <div 
-                      key={pageNum}
+                      key={`page-${pageNum}`}
                       className="shadow-lg rounded-lg overflow-hidden bg-white mb-3"
                     >
                       <Page
@@ -617,7 +617,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
             </span>
             <div className="flex-1 relative h-2 bg-gray-200 rounded-full overflow-hidden">
               <div 
-                className="absolute inset-y-0 left-0 bg-purple-500 transition-all duration-300"
+                className="absolute inset-y-0 left-0 bg-secondary transition-all duration-300"
                 style={{ width: `${(currentPage / numPages) * 100}%` }}
               />
               <input
@@ -720,7 +720,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                 className="px-1 py-1 text-xs border rounded w-16"
               >
                 {ZOOM_LEVELS.map(level => (
-                  <option key={level} value={level}>{level}%</option>
+                  <option key={`zoom-level-${level}`} value={level}>{level}%</option>
                 ))}
               </select>
               
@@ -763,7 +763,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                 className={cn(
                   "h-8 w-8 p-0 rounded-lg transition-all duration-200",
                   viewMode === 'single' 
-                    ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                    ? "bg-gradient-to-br from-secondary/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
                     : "hover:bg-gray-100 text-gray-600"
                 )}
                 title="Page unique"
@@ -776,7 +776,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                 className={cn(
                   "h-8 w-8 p-0 rounded-lg transition-all duration-200",
                   viewMode === 'continuous' 
-                    ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                    ? "bg-gradient-to-br from-secondary/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
                     : "hover:bg-gray-100 text-gray-600"
                 )}
                 title="Scroll continu"
@@ -790,7 +790,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                   className={cn(
                     "h-8 w-8 p-0 rounded-lg transition-all duration-200",
                     viewMode === 'double' 
-                      ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                      ? "bg-gradient-to-br from-secondary/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
                       : "hover:bg-gray-100 text-gray-600"
                   )}
                   title="Double page"
@@ -815,7 +815,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
               className={cn(
                 "h-8 w-8 p-0 rounded-lg transition-all duration-200 hidden lg:block",
                 fitMode === 'width'
-                  ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30"
+                  ? "bg-gradient-to-br from-secondary/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30"
                   : "hover:bg-gray-100 text-gray-600"
               )}
               title={fitMode === 'width' ? "Taille réelle" : "Adapter à la largeur"}
@@ -844,7 +844,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
               className={cn(
                 "h-8 w-8 p-0 rounded-lg transition-all duration-200",
                 showThumbnails 
-                  ? "bg-gradient-to-br from-purple-500/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
+                  ? "bg-gradient-to-br from-secondary/10 to-purple-600/10 text-purple-700 shadow-sm backdrop-blur-sm border border-purple-200/30" 
                   : "hover:bg-gray-100 text-gray-600"
               )}
               title="Vignettes"
@@ -992,7 +992,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                     className={cn(
                       "cursor-pointer border-2 rounded-lg overflow-hidden transition-all hover:scale-105",
                       currentPage === page 
-                        ? "border-purple-500 shadow-lg ring-2 ring-purple-500/20" 
+                        ? "border-secondary shadow-lg ring-2 ring-secondary/20" 
                         : "border-gray-200 hover:border-gray-300"
                     )}
                   >
@@ -1008,7 +1008,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                       <div className={cn(
                         "absolute bottom-0 left-0 right-0 px-2 py-1 text-xs text-center font-medium",
                         currentPage === page
-                          ? "bg-purple-500 text-white"
+                          ? "bg-secondary text-white"
                           : "bg-gray-900/70 text-white"
                       )}>
                         Page {page}
@@ -1032,7 +1032,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
           }}
           className="flex-1 overflow-auto p-4 relative"
           style={{
-            background: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%)',
+            background: 'radial-gradient(circle at center, colors.glass.white[10] 0%, transparent 70%)',
             touchAction: isPinching ? 'none' : 'auto'
           }}
         >
@@ -1045,7 +1045,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
           {loading && (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-500" />
+                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-secondary" />
                 <p className="text-sm text-gray-500">Chargement du document...</p>
               </div>
             </div>
@@ -1089,7 +1089,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                 <>
                   {numPages > 0 && Array.from({ length: numPages }, (_, i) => i + 1).map(pageNum => (
                     <div 
-                      key={pageNum}
+                      key={`page-${pageNum}`}
                       id={`page-${pageNum}`}
                       className="shadow-lg rounded-lg overflow-hidden bg-white mb-4"
                     >
@@ -1111,7 +1111,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                   <div className="shadow-2xl rounded-lg overflow-hidden bg-white">
                     <Page
                       pageNumber={currentPage}
-                      width={getPageWidth() ? getPageWidth() / 2.1 : undefined}
+                      width={getPageWidth() || undefined}
                       rotate={rotation}
                       renderTextLayer={false}
                       renderAnnotationLayer={false}
@@ -1123,7 +1123,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
                     <div className="shadow-2xl rounded-lg overflow-hidden bg-white">
                       <Page
                         pageNumber={currentPage + 1}
-                        width={getPageWidth() ? getPageWidth() / 2.1 : undefined}
+                        width={getPageWidth() || undefined}
                         rotate={rotation}
                         renderTextLayer={false}
                         renderAnnotationLayer={false}
@@ -1149,7 +1149,7 @@ const DocumentViewerPDFComponent: React.FC<DocumentViewerPDFProps> = ({
               </span>
               <div className="flex-1 relative h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div 
-                  className="absolute inset-y-0 left-0 bg-purple-500 transition-all duration-300"
+                  className="absolute inset-y-0 left-0 bg-secondary transition-all duration-300"
                   style={{ width: `${(currentPage / numPages) * 100}%` }}
                 />
                 <input

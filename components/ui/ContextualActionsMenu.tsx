@@ -121,7 +121,7 @@ export const ContextualActionsMenu: React.FC<ContextualActionsMenuProps> = ({
                     <div className={cn(
                       "p-1.5 rounded-lg transition-colors",
                       expertMode 
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500" 
+                        ? "bg-gradient-to-r from-secondary to-pink-500" 
                         : "bg-purple-100 group-hover:bg-purple-200"
                     )}>
                       <Sparkles className={cn(

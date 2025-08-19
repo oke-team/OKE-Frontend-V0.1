@@ -36,7 +36,7 @@ const NavItemComponent: React.FC<{
   const Icon = item.icon;
   
   // Protection absolue : le bouton + n'est jamais actif
-  const isReallyActive = item.id === 'add' ? false : isActive;
+  const isReallyActive = item.id.startsWith('add-') ? false : isActive;
   
   const itemVariants = {
     inactive: { 
@@ -78,14 +78,14 @@ const NavItemComponent: React.FC<{
           isMobile ? "w-14 h-14" : "w-11 h-11",
           "rounded-2xl",
           "transition-all duration-300",
-          "hover:shadow-xl hover:shadow-rose-500/60 hover:scale-110",
+          "hover:shadow-xl hover:shadow-purple-500/60 hover:scale-110",
           "active:scale-95"
         )}
         style={{
-          background: 'linear-gradient(135deg, rgb(167, 139, 250) 0%, rgb(217, 70, 239) 50%, rgb(251, 146, 176) 100%)',
-          boxShadow: '0 10px 25px -5px rgba(217, 70, 239, 0.5)',
-          border: '1px solid rgba(255, 255, 255, 0.5)',
-          filter: 'brightness(1.1) saturate(1.25)'
+          background: 'linear-gradient(135deg, #4C34CE 0%, #6D4FE8 50%, #8B6FF5 100%)',
+          boxShadow: '0 10px 25px -5px rgba(76, 52, 206, 0.6)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          filter: 'brightness(1.1) saturate(1.3)'
         }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -148,8 +148,8 @@ const NavItemComponent: React.FC<{
         // Effet hover Liquid Glass
         "hover:bg-white/10 active:bg-white/15",
         "hover:backdrop-blur-sm",
-        // Largeur fixe et identique pour tous sur mobile
-        isMobile ? "w-[58px]" : "min-w-[65px]"
+        // Largeur plus large sur mobile pour éviter la troncature
+        isMobile ? "w-[72px]" : "min-w-[65px]"
       )}
       variants={itemVariants}
       initial="inactive"
@@ -167,7 +167,7 @@ const NavItemComponent: React.FC<{
         <Icon 
           size={isMobile ? 20 : 18} 
           className={cn(
-            isReallyActive ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
+            isReallyActive ? "text-[#4C34CE]" : "text-neutral-600 dark:text-neutral-400",
             "transition-colors duration-200"
           )}
         />
@@ -179,11 +179,11 @@ const NavItemComponent: React.FC<{
         className={cn(
           isMobile ? "text-[10px]" : "text-[10px]",
           "font-medium transition-colors duration-200",
-          "truncate max-w-[50px]",
-          isReallyActive ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500"
+          "truncate max-w-[65px]",
+          isReallyActive ? "text-[#4C34CE] font-semibold" : "text-neutral-600 dark:text-neutral-500"
         )}
       >
-        {item.label.length > 7 && isMobile ? `${item.label.slice(0, 5)}...` : item.label}
+        {item.label.length > 9 && isMobile ? `${item.label.slice(0, 7)}...` : item.label}
       </motion.span>
       
     </motion.button>
@@ -198,14 +198,14 @@ const BottomNav: React.FC<BottomNavProps> = ({
 }) => {
   // S'assurer que 'add' n'est jamais l'item actif par défaut
   const [localActiveItem, setLocalActiveItem] = useState(
-    activeItem === 'add' ? 'dashboard' : activeItem
+    activeItem?.startsWith('add-') ? 'dashboard' : activeItem
   );
   const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const animationSettings = useOptimizedAnimations();
   
   // Synchroniser avec la prop activeItem
   useEffect(() => {
-    if (activeItem && activeItem !== 'add') {
+    if (activeItem && !activeItem.startsWith('add-')) {
       setLocalActiveItem(activeItem);
     }
   }, [activeItem]);
@@ -230,7 +230,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
 
   const handleItemSelect = (itemId: string) => {
     // Ne pas activer le bouton + comme item actif
-    if (itemId !== 'add') {
+    if (!itemId.startsWith('add-')) {
       setLocalActiveItem(itemId);
     }
     onItemSelect?.(itemId);
@@ -281,13 +281,13 @@ const BottomNav: React.FC<BottomNavProps> = ({
     <motion.nav
       className={cn(
         "fixed z-50",
-        // Position adaptée pour mobile avec safe area iOS
+        // Position adaptée pour mobile avec safe area iOS et largeur définie
         screenSize === 'mobile' 
-          ? "bottom-[env(safe-area-inset-bottom,20px)] left-1/2 -translate-x-1/2" // Centré horizontalement
+          ? "bottom-[env(safe-area-inset-bottom,20px)] left-4 right-4" // Marges latérales fixes
           : "bottom-6 left-1/2 -translate-x-1/2",
         "flex items-center justify-center",
         // Padding optimisé pour le centrage
-        screenSize === 'mobile' ? "px-2 py-3.5" : "px-3 py-2.5",
+        screenSize === 'mobile' ? "px-3 py-3.5" : "px-3 py-2.5",
         "rounded-2xl",
         // Style Liquid Glass avec teinte rose subtile
         "backdrop-blur-2xl",
@@ -296,21 +296,21 @@ const BottomNav: React.FC<BottomNavProps> = ({
       )}
       style={{
         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(251, 207, 232, 0.15) 50%, rgba(255, 255, 255, 0.85) 100%)',
-        border: '1px solid rgba(251, 207, 232, 0.3)',
-        boxShadow: '0 20px 40px -10px rgba(217, 70, 239, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)'
+        border: '2px solid #FAA016',
+        boxShadow: '0 20px 40px -10px rgba(250, 160, 22, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)'
       }}
       variants={containerVariants}
       initial={mounted ? "hidden" : "visible"}
       animate="visible"
     >
-      {/* Effet Liquid Glass avec reflet rose */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-fuchsia-100/10 to-transparent opacity-60" />
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-rose-100/5 to-white/10" />
+      {/* Effet Liquid Glass avec reflet bleu */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-blue-100/10 to-transparent opacity-60" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-blue-100/5 to-white/10" />
       
       {/* Contenu avec gestion du centrage mobile - SIMPLIFIÉ */}
       <div className={cn(
-        "relative flex items-center justify-center",
-        screenSize === 'mobile' ? "gap-1.5" : "gap-1.5"
+        "relative flex items-center",
+        screenSize === 'mobile' ? "gap-2 justify-around w-full" : "gap-1.5 justify-center"
       )}>
         {navItems.map((item) => {
           // Gestion spéciale pour le bouton "Autres"
@@ -321,7 +321,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
                 onClick={() => onItemSelect?.(item.id)}
                 className={cn(
                   "flex flex-col items-center justify-center gap-0.5",
-                  screenSize === 'mobile' ? "min-h-[54px] py-2 w-[58px]" : "min-h-[48px] px-2 py-1.5",
+                  screenSize === 'mobile' ? "min-h-[54px] py-2 w-[72px]" : "min-h-[48px] px-2 py-1.5",
                   "rounded-xl",
                   "transition-all duration-300",
                   "hover:bg-white/10 active:bg-white/15",
@@ -334,17 +334,17 @@ const BottomNav: React.FC<BottomNavProps> = ({
                 <item.icon 
                   size={screenSize === 'mobile' ? 20 : 18} 
                   className={cn(
-                    localActiveItem === item.id ? "text-fuchsia-500" : "text-neutral-600 dark:text-neutral-400",
+                    localActiveItem === item.id ? "text-[#4C34CE]" : "text-neutral-600 dark:text-neutral-400",
                     "transition-colors duration-200"
                   )}
                 />
                 <span className={cn(
                   screenSize === 'mobile' ? "text-[10px]" : "text-[10px]",
                   "font-medium truncate max-w-[50px]",
-                  localActiveItem === item.id ? "text-fuchsia-500 font-semibold" : "text-neutral-600 dark:text-neutral-500",
+                  localActiveItem === item.id ? "text-[#4C34CE] font-semibold" : "text-neutral-600 dark:text-neutral-500",
                   "transition-colors duration-200"
                 )}>
-                  {item.label.length > 7 && screenSize === 'mobile' ? `${item.label.slice(0, 5)}...` : item.label}
+                  {item.label.length > 9 && screenSize === 'mobile' ? `${item.label.slice(0, 7)}...` : item.label}
                 </span>
               </motion.button>
             );
@@ -354,7 +354,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
             <NavItemComponent
               key={item.id}
               item={item}
-              isActive={item.id !== 'add' && localActiveItem === item.id}
+              isActive={!item.id.startsWith('add-') && localActiveItem === item.id}
               isMobile={isMobile}
               onSelect={handleItemSelect}
             />

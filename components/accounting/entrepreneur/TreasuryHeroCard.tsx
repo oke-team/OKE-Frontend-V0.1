@@ -134,7 +134,7 @@ export const TreasuryHeroCard: React.FC<TreasuryHeroCardProps> = ({
         <div className="h-16 bg-gradient-to-r from-violet-500/5 to-purple-500/5 rounded-lg flex items-end justify-around p-2">
           {[40, 65, 45, 70, 85, 60, 75].map((height, i) => (
             <motion.div
-              key={i}
+              key={`bar-${i}`}
               className="w-2 bg-gradient-to-t from-violet-500 to-purple-500 rounded-t"
               initial={{ height: 0 }}
               animate={{ height: `${height}%` }}

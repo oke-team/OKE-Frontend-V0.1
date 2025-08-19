@@ -10,16 +10,8 @@ export default function DashboardPage() {
 
   return (
     <AppLayout>
-      <div className="w-full h-[calc(100vh-64px-96px)] px-4 sm:px-6 lg:px-8 pt-4 overflow-hidden">
-        {/* Dashboard Header - Optimisé */}
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
-          Tableau de bord
-        </h1>
-
-        {/* Dashboard Enriched avec Widgets et Graphiques */}
-        <div className="h-[calc(100%-3rem-1rem)] overflow-y-auto">
-          <DashboardEnriched />
-        </div>
+      <div className="w-full min-h-[calc(100vh-64px)] px-4 sm:px-6 lg:px-8 py-6 overflow-y-auto">
+        <DashboardEnriched />
       </div>
 
       {/* Chatbot */}

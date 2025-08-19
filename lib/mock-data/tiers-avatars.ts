@@ -22,7 +22,7 @@ export const tiersAvatars: TierAvatar[] = [
     type: 'client',
     logo: '🏢',
     initials: 'ABC',
-    color: 'bg-blue-500',
+    color: 'bg-primary',
     category: 'Entreprise'
   },
   {
@@ -31,7 +31,7 @@ export const tiersAvatars: TierAvatar[] = [
     type: 'client',
     logo: '🚀',
     initials: 'XYZ',
-    color: 'bg-purple-500',
+    color: 'bg-secondary',
     category: 'Startup'
   },
   {
@@ -240,9 +240,9 @@ export const getDefaultAvatar = (name: string, type: 'client' | 'supplier' | 'or
     .slice(0, 2);
 
   const colors = {
-    client: 'bg-blue-500',
+    client: 'bg-primary',
     supplier: 'bg-orange-500',
-    organism: 'bg-purple-500',
+    organism: 'bg-secondary',
     bank: 'bg-green-500'
   };
 

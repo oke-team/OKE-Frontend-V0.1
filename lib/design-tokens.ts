@@ -17,11 +17,11 @@ export const designTokens = {
       200: "#c7d6ff",
       300: "#a5b9ff",
       400: "#7f94ff",
-      500: "#5e72ff", // Couleur principale
-      600: "#4a5eff",
-      700: "#3b4ded",
-      800: "#3142c6",
-      900: "#2b3aa1",
+      500: "#FAA016", // Couleur principale
+      600: "#FAA016",
+      700: "#FAA016",
+      800: "#ea580c",
+      900: "#c2410c",
       950: "#1a2260",
     },
     
@@ -32,9 +32,9 @@ export const designTokens = {
       200: "#f5cbf9",
       300: "#eda8f4",
       400: "#e279ea",
-      500: "#d150da", // Couleur principale
-      600: "#b432bc",
-      700: "#942799",
+      500: "#4C34CE", // Couleur principale
+      600: "#4C34CE",
+      700: "#3730a3",
       800: "#7a237d",
       900: "#662364",
     },
@@ -77,7 +77,7 @@ export const designTokens = {
       success: "#10b981",
       warning: "#f59e0b",
       error: "#ef4444",
-      info: "#3b82f6",
+      info: "#FAA016",
     },
   },
   
@@ -300,19 +300,19 @@ export const designTokens = {
     // Couleurs spécifiques aux cartes
     colors: {
       background: {
-        default: "rgba(255, 255, 255, 0.05)",
+        default: "colors.glass.white[5]",
         hover: "rgba(255, 255, 255, 0.08)",
-        active: "rgba(255, 255, 255, 0.1)",
+        active: "colors.glass.white[10]",
         glass: "rgba(255, 255, 255, 0.03)",
       },
       border: {
-        default: "rgba(255, 255, 255, 0.1)",
-        hover: "rgba(255, 255, 255, 0.15)",
+        default: "colors.glass.white[10]",
+        hover: "colors.glass.white[15]",
         active: "rgba(94, 114, 255, 0.3)",
         focus: "rgba(94, 114, 255, 0.5)",
       },
       accent: {
-        violet: "#8b5cf6",
+        violet: "#4C34CE",
         violetLight: "rgba(139, 92, 246, 0.1)",
         green: "#10b981",
         greenLight: "rgba(16, 185, 129, 0.1)",
@@ -405,7 +405,7 @@ export const cardStates = {
   },
   disabled: {
     background: "rgba(255, 255, 255, 0.02)",
-    border: "rgba(255, 255, 255, 0.05)",
+    border: "colors.glass.white[5]",
     opacity: "0.5",
     pointerEvents: "none",
   },
@@ -481,7 +481,7 @@ export const usageExamples = {
   
   // Titre avec effet de texte gradient
   gradientTitle: `
-    <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+    <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
       Titre avec gradient
     </h1>
   `,
@@ -498,7 +498,7 @@ export const usageExamples = {
   // Input avec focus ring
   inputWithFocus: `
     <input 
-      className="w-full px-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      className="w-full px-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       placeholder="Entrez votre texte..."
     />
   `,

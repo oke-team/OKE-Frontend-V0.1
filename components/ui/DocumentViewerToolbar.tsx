@@ -201,7 +201,7 @@ const NavigationGroup: React.FC<{
             onChange={(e) => setPageInputValue(e.target.value)}
             onKeyDown={onKeyDown}
             onBlur={onBlur}
-            className="w-12 px-2 py-1 text-sm text-center border border-neutral-200 dark:border-neutral-700 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="w-12 px-2 py-1 text-sm text-center border border-neutral-200 dark:border-neutral-700 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-primary"
           />
           <span className="text-sm text-neutral-600 dark:text-neutral-400">
             sur {totalPages}

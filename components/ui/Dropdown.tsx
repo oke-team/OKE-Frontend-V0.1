@@ -103,10 +103,10 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
       text-neutral-700 dark:text-neutral-200
       shadow-[0_2px_12px_rgba(94,114,255,0.08)]
       hover:bg-white/75 dark:hover:bg-neutral-900/75
-      hover:border-primary-500/20 dark:hover:border-primary-400/20
+      hover:border-primary/20 dark:hover:border-primary-400/20
       hover:shadow-[0_4px_20px_rgba(94,114,255,0.12)]
       after:absolute after:inset-0 after:rounded-[inherit]
-      after:bg-gradient-to-br after:from-primary-500/5 after:to-secondary-500/5
+      after:bg-gradient-to-br after:from-primary/5 after:to-secondary/5
       after:opacity-0 after:transition-opacity after:duration-300
       hover:after:opacity-100
     `,
@@ -131,10 +131,10 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
       text-neutral-700 dark:text-neutral-200
       shadow-[0_2px_12px_rgba(209,80,218,0.08)]
       hover:bg-white/75 dark:hover:bg-neutral-900/75
-      hover:border-secondary-500/20 dark:hover:border-secondary-400/20
+      hover:border-secondary/20 dark:hover:border-secondary-400/20
       hover:shadow-[0_4px_20px_rgba(209,80,218,0.12)]
       after:absolute after:inset-0 after:rounded-[inherit]
-      after:bg-gradient-to-br after:from-purple-500/5 after:to-pink-500/5
+      after:bg-gradient-to-br after:from-secondary/5 after:to-pink-500/5
       after:opacity-0 after:transition-opacity after:duration-300
       hover:after:opacity-100
     `,
@@ -153,9 +153,9 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
   // Enhanced focus states based on variant
   const focusRingColors = {
     default: 'focus:ring-neutral-500/20',
-    company: 'focus:ring-primary-500/20',
+    company: 'focus:ring-primary/20',
     period: 'focus:ring-green-500/20',
-    action: 'focus:ring-secondary-500/20',
+    action: 'focus:ring-secondary/20',
     user: 'focus:ring-neutral-500/20'
   };
 
@@ -169,9 +169,9 @@ export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
     sizeClasses[size],
     variantClasses[variant],
     isOpen && 'ring-2 ring-offset-2',
-    isOpen && variant === 'company' && 'ring-primary-500/20',
+    isOpen && variant === 'company' && 'ring-primary/20',
     isOpen && variant === 'period' && 'ring-green-500/20',
-    isOpen && variant === 'action' && 'ring-secondary-500/20',
+    isOpen && variant === 'action' && 'ring-secondary/20',
     className
   );
 
