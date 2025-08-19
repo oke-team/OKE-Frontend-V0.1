@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
@@ -37,6 +37,14 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
   fullWidth = false,
   className
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const getPlanBadge = (plan: string) => {
     const styles = {
       enterprise: {
@@ -85,8 +93,8 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
     >
       <DropdownTrigger
         icon={<Building2 size={16} style={{ color: '#4C34CE' }} />}
-        badge={getPlanBadge(currentCompany.plan)}
-        sublabel={`${currentCompany.country || 'FR'} · ${currentCompany.currency || 'EUR'}`}
+        badge={!isMobile ? getPlanBadge(currentCompany.plan) : undefined}
+        sublabel={!isMobile ? `${currentCompany.country || 'FR'} · ${currentCompany.currency || 'EUR'}` : undefined}
       >
         {currentCompany.name}
       </DropdownTrigger>

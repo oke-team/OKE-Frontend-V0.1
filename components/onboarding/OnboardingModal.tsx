@@ -29,8 +29,8 @@ import StepIndicator from './ui/StepIndicator';
 import PersonalInfoStepV2 from './steps/PersonalInfoStepV2';
 import CountrySelectionStepV2 from './steps/CountrySelectionStepV2';
 import CompanySearchStepV2 from './steps/CompanySearchStepV2';
-import DataCollectionStep from './steps/DataCollectionStep';
-import LogoFinalizationStep from './steps/LogoFinalizationStep';
+import DataCollectionStepV2 from './steps/DataCollectionStepV2';
+import LogoFinalizationStepV2 from './steps/LogoFinalizationStepV2';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -205,7 +205,9 @@ export default function OnboardingModal({
             selectedCountry={formState.country || { code: 'FR', name: 'France', flag: '🇫🇷' }}
             onCountrySelect={(country) => updateFormData('country', country)}
             onNext={handleNext}
+            onPrevious={handlePrevious}
             canProceed={canProceed()}
+            canGoBack={canGoBack()}
           />
         );
 
@@ -215,29 +217,35 @@ export default function OnboardingModal({
             selectedCompany={formState.company}
             onCompanySelect={(company) => updateFormData('company', company)}
             onNext={handleNext}
+            onPrevious={handlePrevious}
             canProceed={canProceed()}
+            canGoBack={canGoBack()}
           />
         );
 
       case 3:
         return (
-          <DataCollectionStep
+          <DataCollectionStepV2
             selectedCompany={formState.company}
             collectedData={formState.collectedData}
             onDataCollected={(data) => updateFormData('collected_data', data)}
             onNext={handleNext}
+            onPrevious={handlePrevious}
             canProceed={canProceed()}
+            canGoBack={canGoBack()}
           />
         );
 
       case 4:
         return (
-          <LogoFinalizationStep
+          <LogoFinalizationStepV2
             selectedCompany={formState.company}
             brandingData={formState.branding}
             onBrandingUpdate={(data) => updateFormData('branding', data)}
             onComplete={handleComplete}
+            onPrevious={handlePrevious}
             canProceed={canProceed()}
+            canGoBack={canGoBack}
           />
         );
 
@@ -255,7 +263,7 @@ export default function OnboardingModal({
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-gray-50/95 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4"
         onClick={handleClose}
       >
         {/* Modal Container */}
@@ -265,16 +273,17 @@ export default function OnboardingModal({
           animate="visible"
           exit="exit"
           onClick={(e) => e.stopPropagation()}
-          className={`relative w-full overflow-hidden onboarding-modal onboarding-orientation-transition
+          className={`relative w-full flex flex-col onboarding-modal onboarding-orientation-transition
             ${isLandscape 
-              ? 'h-full border-0 rounded-none' // Mode paysage : plein écran
+              ? 'h-full max-h-screen border-0 rounded-none' // Mode paysage : plein écran
               : isSmallScreen
-                ? 'h-full border-0 rounded-none' // Très petit écran : plein écran
-                : 'h-full sm:h-auto sm:max-w-5xl sm:max-h-[90vh] sm:rounded-2xl' // Normal - plus large (5xl au lieu de 2xl)
+                ? 'h-full max-h-screen border-0 rounded-none' // Très petit écran : plein écran
+                : 'h-screen sm:h-[90vh] md:h-[85vh] lg:h-auto sm:max-w-5xl sm:max-h-[85vh] sm:rounded-2xl' // Meilleur support tablette
             }
             bg-white
             border-0
-            shadow-xl
+            shadow-2xl
+            overflow-hidden
           `}
         >
           {/* Header avec effet Glass */}
@@ -317,6 +326,19 @@ export default function OnboardingModal({
                 </motion.button>
               )}
 
+              {/* Bouton suivant avec effet Glass */}
+              {canProceed() && currentStep < 4 && (
+                <motion.button
+                  onClick={handleNext}
+                  className="w-10 h-10 rounded-xl bg-[#FAA016] hover:bg-[#FAA016]/90 border border-[#FAA016] flex items-center justify-center text-white transition-all duration-200 shadow-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  title="Étape suivante (Alt + →)"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </motion.button>
+              )}
+
               {/* Bouton fermer avec effet Glass */}
               <motion.button
                 onClick={handleClose}
@@ -331,12 +353,12 @@ export default function OnboardingModal({
           </motion.div>
 
           {/* Contenu principal */}
-          <div className={`flex flex-col lg:flex-row
+          <div className={`flex flex-col lg:flex-row flex-1 overflow-hidden
             ${isLandscape 
-              ? 'min-h-[calc(100vh-100px)]' // Mode paysage : header plus compact
+              ? 'h-[calc(100vh-100px)]' // Mode paysage : header plus compact
               : isSmallScreen
-                ? 'min-h-[calc(100vh-120px)]' // Petit écran : optimisé
-                : 'min-h-[calc(100vh-140px)] sm:min-h-[600px]' // Normal
+                ? 'h-[calc(100vh-120px)]' // Petit écran : optimisé
+                : 'h-full sm:h-[calc(100vh-140px)] md:h-[600px]' // Normal avec meilleur support tablette
             }
           `}>
             {/* Sidebar gauche avec indicateur d'étapes - Desktop uniquement */}
@@ -351,7 +373,7 @@ export default function OnboardingModal({
             </motion.div>
 
             {/* Contenu principal avec animation de slide */}
-            <div className="flex-1 relative overflow-hidden">
+            <div className="flex-1 relative overflow-hidden min-h-0">
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={String(currentStep)}
@@ -361,101 +383,44 @@ export default function OnboardingModal({
                   animate="center"
                   exit="exit"
                   transition={isMobile ? mobileStepTransition : stepTransition}
-                  className="absolute inset-0 p-4 sm:p-8 lg:p-12 overflow-y-auto overscroll-contain onboarding-content onboarding-scroll onboarding-scrollbar-hide"
+                  className="h-full overflow-y-auto overscroll-contain onboarding-content onboarding-scroll onboarding-scrollbar-hide"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                   onTouchStart={handleTouchStart}
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
                 >
-                  {/* Indicateur mobile */}
-                  <div className={`lg:hidden
-                    ${isLandscape ? 'mb-3' : isSmallScreen ? 'mb-4' : 'mb-6'}
-                  `}>
-                    <StepIndicator
-                      steps={stepsConfig}
-                      currentStep={currentStep}
-                      isMobile={true}
-                      isCompact={isLandscape || isSmallScreen}
-                    />
+                  <div className="p-4 sm:p-6 md:p-8 lg:p-12 pb-24">
+                    {/* Indicateur mobile */}
+                    <div className={`lg:hidden
+                      ${isLandscape ? 'mb-3' : isSmallScreen ? 'mb-4' : 'mb-6'}
+                    `}>
+                      <StepIndicator
+                        steps={stepsConfig}
+                        currentStep={currentStep}
+                        isMobile={true}
+                        isCompact={isLandscape || isSmallScreen}
+                      />
+                    </div>
+
+                    {/* Contenu de l'étape */}
+                    <motion.div
+                      variants={modalChildVariants}
+                    >
+                      {renderStep()}
+                    </motion.div>
                   </div>
 
-                  {/* Contenu de l'étape */}
-                  <motion.div
-                    variants={modalChildVariants}
-                    className="h-full"
-                  >
-                    {renderStep()}
-                  </motion.div>
-
-                  {/* Indicateurs de navigation tactile - Mobile uniquement */}
-                  {!isLandscape && ( // Masquer en mode paysage pour économiser l'espace
-                    <div className={`lg:hidden absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-3
-                      ${isSmallScreen ? 'bottom-2' : 'bottom-4'}
-                    `}>
-                      {canGoBack && (
-                        <motion.div 
-                          className="flex items-center space-x-1"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <div className={`rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm
-                            ${isSmallScreen ? 'w-8 h-8' : 'w-10 h-10'}
-                          `}>
-                            <ChevronLeft className={`text-gray-600 ${isSmallScreen ? 'w-4 h-4' : 'w-5 h-5'}`} />
-                          </div>
-                        </motion.div>
-                      )}
-                      {canProceed() && (
-                        <motion.div 
-                          className="flex items-center space-x-1"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <div className={`rounded-full bg-[#FAA016] flex items-center justify-center shadow-sm
-                            ${isSmallScreen ? 'w-8 h-8' : 'w-10 h-10'}
-                          `}>
-                            <ChevronRight className={`text-white ${isSmallScreen ? 'w-4 h-4' : 'w-5 h-5'}`} />
-                          </div>
-                        </motion.div>
-                      )}
-                    </div>
-                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
           </div>
 
-          {/* Footer avec raccourcis clavier */}
+          {/* Footer avec indicateur de sécurité */}
           <motion.div
             variants={modalChildVariants}
-            className="hidden lg:flex items-center justify-between p-4 border-t border-gray-100 bg-white text-xs text-gray-500"
+            className="hidden lg:flex items-center justify-end p-4 border-t border-gray-100 bg-white"
           >
-            <div className="flex items-center space-x-4">
-              <span>Raccourcis :</span>
-              <div className="flex items-center space-x-1">
-                <kbd className="px-2 py-1 bg-white rounded-lg border border-gray-200 text-gray-700 shadow-sm">Esc</kbd>
-                <span>Fermer</span>
-              </div>
-              {canGoBack && (
-                <div className="flex items-center space-x-1">
-                  <kbd className="px-2 py-1 bg-white rounded-lg border border-gray-200 text-gray-700 shadow-sm">Alt</kbd>
-                  <span>+</span>
-                  <kbd className="px-2 py-1 bg-white rounded-lg border border-gray-200 text-gray-700 shadow-sm">←</kbd>
-                  <span className="text-gray-700">Précédent</span>
-                </div>
-              )}
-              {canProceed() && (
-                <div className="flex items-center space-x-1">
-                  <kbd className="px-2 py-1 bg-white rounded-lg border border-gray-200 text-gray-700 shadow-sm">Alt</kbd>
-                  <span>+</span>
-                  <kbd className="px-2 py-1 bg-white rounded-lg border border-gray-200 text-gray-700 shadow-sm">→</kbd>
-                  <span className="text-gray-700">Suivant</span>
-                </div>
-              )}
-            </div>
-            
-            <div className="flex items-center space-x-2 text-gray-500">
+            <div className="flex items-center space-x-2 text-xs text-gray-500">
               <div className="w-2 h-2 rounded-full bg-green-500" />
               <span>Données sécurisées • Conforme RGPD</span>
             </div>

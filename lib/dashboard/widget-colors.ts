@@ -11,12 +11,12 @@ export interface WidgetColorScheme {
 }
 
 export const widgetColors: Record<string, WidgetColorScheme> = {
-  // Notifications - Violet (comme les cartes entrepreneur)
+  // Notifications - Violet avec teinte prune
   notifications: {
     colorFrom: '#8B5CF6',
-    colorTo: '#9333EA',
-    accentColor: '#7C3AED',
-    name: 'Violet'
+    colorTo: '#7C3AED',
+    accentColor: '#8B5CF6',
+    name: 'Violet Prune'
   },
   
   // Todo - Rouge (comme charges)
@@ -43,28 +43,28 @@ export const widgetColors: Record<string, WidgetColorScheme> = {
     name: 'Vert'
   },
   
-  // Banque - Indigo profond
+  // Banque - Bleu marine profond
   bank: {
-    colorFrom: '#6366F1',
-    colorTo: '#4F46E5',
-    accentColor: '#6366F1',
-    name: 'Indigo'
+    colorFrom: '#3B82F6',
+    colorTo: '#2563EB',
+    accentColor: '#3B82F6',
+    name: 'Bleu Marine'
   },
   
-  // Achats - Orange vif
+  // Achats - Orange (couleur secondaire OKÉ)
   purchases: {
-    colorFrom: '#F97316',
-    colorTo: '#EA580C',
-    accentColor: '#F97316',
-    name: 'Orange'
+    colorFrom: '#FAA016',
+    colorTo: '#F97316',
+    accentColor: '#FAA016',
+    name: 'Orange OKÉ'
   },
   
   // Ventes - Vert émeraude
   sales: {
     colorFrom: '#10B981',
     colorTo: '#059669',
-    accentColor: '#059669',
-    name: 'Émeraude'
+    accentColor: '#10B981',
+    name: 'Vert Émeraude'
   },
   
   // Créances clients - Ambre doré
@@ -145,6 +145,30 @@ export const widgetColors: Record<string, WidgetColorScheme> = {
     colorTo: '#EC4899',
     accentColor: '#DB2777',
     name: 'Magenta'
+  },
+  
+  // URSSAF - Bleu institutionnel
+  urssaf: {
+    colorFrom: '#4F46E5',
+    colorTo: '#2563EB',
+    accentColor: '#3B82F6',
+    name: 'Bleu URSSAF'
+  },
+  
+  // Fiscal - Gris ardoise
+  fiscal: {
+    colorFrom: '#64748B',
+    colorTo: '#475569',
+    accentColor: '#334155',
+    name: 'Gris Fiscal'
+  },
+  
+  // PV Rémunération - Cyan professionnel
+  pvRemuneration: {
+    colorFrom: '#06B6D4',
+    colorTo: '#0891B2',
+    accentColor: '#0E7490',
+    name: 'Cyan Professionnel'
   }
 };
 

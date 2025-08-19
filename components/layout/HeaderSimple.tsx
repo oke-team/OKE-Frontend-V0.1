@@ -11,16 +11,15 @@ import { TooltipSimple } from '@/components/ui/TooltipSimple';
 import { SearchGlobal } from '@/components/ui/SearchGlobal';
 import { useSelection } from '@/contexts/SelectionContext';
 import { ContextualActionsMenu } from '@/components/ui/ContextualActionsMenu';
+import AvatarDropdown from '@/components/ui/AvatarDropdown';
 import {
   MessageSquare,
   Sparkles,
   Wand2,
-  Settings,
-  LogOut,
-  User,
   Search,
-  X,
-  Rocket
+  Rocket,
+  GraduationCap,
+  User
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -46,11 +45,9 @@ export default function HeaderSimple({
   const { expertMode, toggleExpertMode } = useExpertMode();
   const { selectedCount } = useSelection();
   const pathname = usePathname();
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
   const actionsMenuRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -58,17 +55,6 @@ export default function HeaderSimple({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-  
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setUserMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
   
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
@@ -126,13 +112,16 @@ export default function HeaderSimple({
         <div className="flex items-center gap-2 sm:gap-3 flex-1">
           {/* Utiliser le même sélecteur pour toutes les tailles d'écran */}
           <div className="flex items-center gap-3 sm:ml-4 md:ml-6 lg:ml-8">
-            {/* Sélecteur d'entreprise */}
-            <div className="w-full sm:w-auto sm:min-w-[200px] md:w-56">
+            {/* Sélecteur d'entreprise - largeur réduite sur mobile */}
+            <div className={cn(
+              "transition-all",
+              isMobile ? "w-[140px] max-w-[140px]" : "sm:w-auto sm:min-w-[200px] md:w-56"
+            )}>
               <CompanySelectorLiquid
                 companies={mockCompanies}
                 currentCompany={currentCompany}
                 onCompanyChange={onCompanyChange || (() => {})}
-                size="sm"
+                size={isMobile ? "sm" : "sm"}
                 fullWidth={false}
               />
             </div>
@@ -174,24 +163,28 @@ export default function HeaderSimple({
             <>
               <div className="hidden sm:block h-6 w-px bg-gray-200/50" />
               
-              {/* Mode Expert - caché sur mobile */}
+              {/* Mode Expert/Entrepreneur avec icônes différentes */}
               <TooltipSimple
                 content={expertMode 
-                  ? "Mode Expert: Interface épurée sans aide contextuelle" 
-                  : "Mode Entrepreneur: Aide et explications activées"
+                  ? "Mode Expert: Fonctionnalités avancées" 
+                  : "Mode Entrepreneur: Gestion sans formation comptable"
                 }
                 position="bottom"
               >
                 <button
                   onClick={toggleExpertMode}
                   className={cn(
-                    "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg transition-all border",
+                    "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-lg transition-all",
                     expertMode 
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30 border-[#FAA016]' 
-                      : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 hover:from-purple-200 hover:to-pink-200 border-[#FAA016]/50'
+                      ? 'bg-[#4C34CE] text-white shadow-lg border border-[#4C34CE]' 
+                      : 'bg-gradient-to-r from-purple-100 to-pink-100 text-[#4C34CE] hover:from-purple-200 hover:to-pink-200 border border-[#FAA016]/50'
                   )}
                 >
-                  <Sparkles size={16} className="lg:w-[18px] lg:h-[18px]" />
+                  {expertMode ? (
+                    <GraduationCap size={16} className="lg:w-[18px] lg:h-[18px]" />
+                  ) : (
+                    <User size={16} className="lg:w-[18px] lg:h-[18px]" />
+                  )}
                 </button>
               </TooltipSimple>
             </>
@@ -276,67 +269,20 @@ export default function HeaderSimple({
             </button>
           </TooltipSimple>
           
-          {/* Avatar Utilisateur */}
-          <div ref={userMenuRef} className="relative">
-            <button
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className={cn(
-                "flex items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white font-semibold shadow-lg shadow-fuchsia-500/30 hover:shadow-xl hover:shadow-fuchsia-500/40 transition-all",
-                isMobile 
-                  ? "w-10 h-10 text-sm" 
-                  : "w-8 h-8 sm:w-8 sm:h-8 lg:w-9 lg:h-9 text-xs lg:text-sm"
-              )}
-            >
-              JD
-            </button>
-            
-            {/* Menu Utilisateur */}
-            <AnimatePresence>
-              {userMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200/50 overflow-hidden"
-                >
-                  {/* Header du menu avec croix de fermeture */}
-                  <div className="px-4 py-3 border-b border-gray-200/50 bg-gray-50 flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-gray-900">Jean Dupont</p>
-                      <p className="text-sm text-gray-500">jean@techcorp.fr</p>
-                    </div>
-                    <button
-                      onClick={() => setUserMenuOpen(false)}
-                      className="p-1 hover:bg-gray-200/50 rounded-lg transition-colors"
-                    >
-                      <X className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </div>
-                  
-                  {/* Options du menu */}
-                  <div className="p-2">
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                      <User size={16} className="text-gray-400" />
-                      <span className="text-sm text-gray-700">Mon profil</span>
-                    </button>
-                    
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                      <Settings size={16} className="text-gray-400" />
-                      <span className="text-sm text-gray-700">Paramètres</span>
-                    </button>
-                    
-                    <div className="my-1 h-px bg-gray-200/50" />
-                    
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors text-left">
-                      <LogOut size={16} className="text-red-400" />
-                      <span className="text-sm text-red-600">Déconnexion</span>
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {/* Avatar Utilisateur avec nouveau composant */}
+          <AvatarDropdown
+            user={{
+              name: 'Jean Dupont',
+              email: 'jean@techcorp.fr',
+              initials: 'JD',
+              role: 'Administrateur',
+              company: 'TechCorp SAS'
+            }}
+            onSignOut={() => {
+              console.log('Déconnexion');
+              // Implémenter la logique de déconnexion
+            }}
+          />
         </div>
       </div>
       

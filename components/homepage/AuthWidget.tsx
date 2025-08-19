@@ -1,12 +1,17 @@
 'use client';
 
-import React, { useState, useCallback, useMemo, memo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, memo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import GlassContainer from '@/components/ui/GlassContainer';
-import OnboardingTrigger from '@/components/onboarding/OnboardingTrigger';
-import { useOnboardingModal } from '@/components/onboarding/hooks/useOnboardingModal';
+import dynamic from 'next/dynamic';
+
+// Import dynamique du modal d'onboarding
+const OnboardingModal = dynamic(
+  () => import('@/components/onboarding/OnboardingModal'),
+  { ssr: false }
+);
 
 interface AuthWidgetProps {
   className?: string;
@@ -34,15 +39,9 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
     rememberMe: false
   });
   const [loading, setLoading] = useState(false);
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const router = useRouter();
-  const { openModal, hasActiveSession } = useOnboardingModal();
-  
-  // Debug logging
-  useEffect(() => {
-    console.log('AuthWidget - openModal function:', openModal);
-    console.log('AuthWidget - hasActiveSession function:', hasActiveSession);
-  }, [openModal, hasActiveSession]);
 
   const handleInputChange = useCallback((field: keyof FormData) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -56,13 +55,31 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
     setLoading(true);
     
     try {
-      // MODE DÉVELOPPEMENT : Redirection directe sans validation
-      await new Promise(resolve => setTimeout(resolve, 500)); // Temps réduit
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      console.log(`${authMode} submission (dev mode):`, formData);
-      
-      // Redirection immédiate vers le dashboard pour le développement
-      router.push('/dashboard');
+      if (authMode === 'signup') {
+        // Pour l'inscription, sauvegarder les données et ouvrir le tunnel à l'étape 2
+        if (typeof window !== 'undefined') {
+          // Sauvegarder les données personnelles dans le localStorage
+          const onboardingData = {
+            personalInfo: {
+              prenom: formData.firstName || '',
+              nom: formData.lastName || '',
+              email: formData.email,
+              password: formData.password,
+              telephone: formData.phone || ''
+            },
+            currentStep: 1 // Commencer à l'étape 2 (index 1 = pays)
+          };
+          localStorage.setItem('onboardingData', JSON.stringify(onboardingData));
+        }
+        
+        // Ouvrir le tunnel d'onboarding
+        setShowOnboardingModal(true);
+      } else {
+        // Pour la connexion, aller directement au dashboard
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error('Auth error:', error);
     } finally {
@@ -303,6 +320,19 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
         )}
         </GlassContainer>
       </div>
+      
+      {/* Modal d'onboarding */}
+      {showOnboardingModal && (
+        <OnboardingModal
+          isOpen={showOnboardingModal}
+          onClose={() => setShowOnboardingModal(false)}
+          onSuccess={() => {
+            console.log('Onboarding terminé avec succès!');
+            setShowOnboardingModal(false);
+            router.push('/dashboard');
+          }}
+        />
+      )}
     </div>
   );
 });

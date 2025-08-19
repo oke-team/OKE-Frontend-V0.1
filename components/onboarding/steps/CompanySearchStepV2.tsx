@@ -6,14 +6,17 @@ import {
   Building2, 
   Search, 
   Plus, 
-  ChevronRight, 
+  ChevronRight,
+  ChevronLeft, 
   TrendingUp,
   Users,
   MapPin,
   Calendar,
   Sparkles,
   Building,
-  Info
+  Info,
+  Filter,
+  X
 } from 'lucide-react';
 import {
   PremiumCard,
@@ -31,7 +34,10 @@ interface Company {
   address: string;
   city: string;
   postalCode: string;
+  department: string;
   activity: string;
+  nafCode: string;
+  nafLabel: string;
   employees: string;
   revenue?: string;
   creationDate: string;
@@ -43,10 +49,12 @@ interface CompanySearchStepProps {
   selectedCompany: Company | null;
   onCompanySelect: (company: Company) => void;
   onNext: () => void;
+  onPrevious?: () => void;
   canProceed: boolean;
+  canGoBack?: boolean;
 }
 
-// Données mockées d'entreprises
+// Données mockées d'entreprises enrichies
 const mockCompanies: Company[] = [
   {
     id: '1',
@@ -56,7 +64,10 @@ const mockCompanies: Company[] = [
     address: '10 rue de la République',
     city: 'Paris',
     postalCode: '75001',
+    department: '75',
     activity: 'Conseil en technologies',
+    nafCode: '6202A',
+    nafLabel: 'Conseil en systèmes et logiciels informatiques',
     employees: '10-50',
     revenue: '2.5M€',
     creationDate: '2020',
@@ -71,7 +82,10 @@ const mockCompanies: Company[] = [
     address: '25 boulevard Victor Hugo',
     city: 'Lyon',
     postalCode: '69001',
+    department: '69',
     activity: 'Agence digitale',
+    nafCode: '7311Z',
+    nafLabel: 'Activités des agences de publicité',
     employees: '5-10',
     revenue: '800k€',
     creationDate: '2019',
@@ -86,11 +100,176 @@ const mockCompanies: Company[] = [
     address: '5 avenue des Champs',
     city: 'Marseille',
     postalCode: '13001',
+    department: '13',
     activity: 'Commerce en ligne',
+    nafCode: '4791B',
+    nafLabel: 'Vente à distance sur catalogue spécialisé',
     employees: '20-100',
     revenue: '5M€',
     creationDate: '2018',
     legalForm: 'SAS',
+    isActive: true
+  },
+  {
+    id: '4',
+    name: 'BOULANGERIE ARTISANALE DUPONT',
+    siren: '234567890',
+    siret: '23456789000012',
+    address: '42 rue du Pain',
+    city: 'Bordeaux',
+    postalCode: '33000',
+    department: '33',
+    activity: 'Boulangerie-pâtisserie',
+    nafCode: '1071C',
+    nafLabel: 'Boulangerie et boulangerie-pâtisserie',
+    employees: '1-5',
+    revenue: '450k€',
+    creationDate: '2015',
+    legalForm: 'SARL',
+    isActive: true
+  },
+  {
+    id: '5',
+    name: 'CABINET MEDICAL DU CENTRE',
+    siren: '345678901',
+    siret: '34567890100023',
+    address: '15 place de la Santé',
+    city: 'Toulouse',
+    postalCode: '31000',
+    department: '31',
+    activity: 'Cabinet médical',
+    nafCode: '8621Z',
+    nafLabel: 'Activité des médecins généralistes',
+    employees: '5-10',
+    revenue: '1.2M€',
+    creationDate: '2010',
+    legalForm: 'SCM',
+    isActive: true
+  },
+  {
+    id: '6',
+    name: 'GARAGE AUTO PERFORMANCE',
+    siren: '567890123',
+    siret: '56789012300034',
+    address: '89 route Nationale',
+    city: 'Lille',
+    postalCode: '59000',
+    department: '59',
+    activity: 'Garage automobile',
+    nafCode: '4520A',
+    nafLabel: 'Entretien et réparation de véhicules automobiles légers',
+    employees: '5-10',
+    revenue: '750k€',
+    creationDate: '2012',
+    legalForm: 'EURL',
+    isActive: true
+  },
+  {
+    id: '7',
+    name: 'RESTAURANT LE GOURMET',
+    siren: '678901234',
+    siret: '67890123400045',
+    address: '7 place du Marché',
+    city: 'Nice',
+    postalCode: '06000',
+    department: '06',
+    activity: 'Restaurant traditionnel',
+    nafCode: '5610A',
+    nafLabel: 'Restauration traditionnelle',
+    employees: '10-20',
+    revenue: '1.5M€',
+    creationDate: '2008',
+    legalForm: 'SAS',
+    isActive: true
+  },
+  {
+    id: '8',
+    name: 'PLOMBERIE MARTIN ET FILS',
+    siren: '789012345',
+    siret: '78901234500056',
+    address: '23 rue des Artisans',
+    city: 'Nantes',
+    postalCode: '44000',
+    department: '44',
+    activity: 'Plomberie',
+    nafCode: '4322A',
+    nafLabel: 'Travaux d\'installation d\'eau et de gaz',
+    employees: '1-5',
+    revenue: '320k€',
+    creationDate: '2005',
+    legalForm: 'SARL',
+    isActive: true
+  },
+  {
+    id: '9',
+    name: 'CABINET COMPTABLE EXPERT',
+    siren: '890123456',
+    siret: '89012345600067',
+    address: '56 avenue des Finances',
+    city: 'Strasbourg',
+    postalCode: '67000',
+    department: '67',
+    activity: 'Expertise comptable',
+    nafCode: '6920Z',
+    nafLabel: 'Activités comptables',
+    employees: '10-20',
+    revenue: '2.1M€',
+    creationDate: '2003',
+    legalForm: 'SELARL',
+    isActive: true
+  },
+  {
+    id: '10',
+    name: 'IMMOBILIERE DE LA COTE',
+    siren: '901234567',
+    siret: '90123456700078',
+    address: '12 boulevard de la Mer',
+    city: 'Montpellier',
+    postalCode: '34000',
+    department: '34',
+    activity: 'Agence immobilière',
+    nafCode: '6831Z',
+    nafLabel: 'Agences immobilières',
+    employees: '5-10',
+    revenue: '890k€',
+    creationDate: '2014',
+    legalForm: 'SAS',
+    isActive: true
+  },
+  {
+    id: '11',
+    name: 'TRANSPORT EXPRESS LOGISTIQUE',
+    siren: '012345678',
+    siret: '01234567800089',
+    address: '45 zone industrielle',
+    city: 'Rennes',
+    postalCode: '35000',
+    department: '35',
+    activity: 'Transport routier',
+    nafCode: '4941A',
+    nafLabel: 'Transports routiers de fret interurbains',
+    employees: '20-50',
+    revenue: '3.8M€',
+    creationDate: '2011',
+    legalForm: 'SASU',
+    isActive: true
+  },
+  {
+    id: '12',
+    name: 'COIFFURE STYLE ET BEAUTE',
+    siren: '112233445',
+    siret: '11223344500090',
+    address: '18 rue de la Mode',
+    city: 'Paris',
+    postalCode: '75011',
+    department: '75',
+    activity: 'Salon de coiffure',
+    nafCode: '9602A',
+    nafLabel: 'Coiffure',
+    employees: '1-5',
+    revenue: '180k€',
+    creationDate: '2016',
+    legalForm: 'EIRL',
     isActive: true
   }
 ];
@@ -99,7 +278,9 @@ export default function CompanySearchStepV2({
   selectedCompany,
   onCompanySelect,
   onNext,
-  canProceed
+  onPrevious,
+  canProceed,
+  canGoBack = false
 }: CompanySearchStepProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState<'name' | 'siren'>('name');
@@ -107,20 +288,46 @@ export default function CompanySearchStepV2({
   const [searchResults, setSearchResults] = useState<Company[]>([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState<string>('');
+  const [activityFilter, setActivityFilter] = useState<string>('');
+  const [showFilters, setShowFilters] = useState(false);
 
-  // Simulation de recherche
+  // Simulation de recherche avec filtres
   useEffect(() => {
-    if (searchQuery.length >= 3) {
+    if (searchQuery.length >= 3 || selectedDepartment || activityFilter) {
       setIsSearching(true);
       const timer = setTimeout(() => {
-        const results = mockCompanies.filter(company => {
-          if (searchType === 'name') {
-            return company.name.toLowerCase().includes(searchQuery.toLowerCase());
-          } else {
-            return company.siren.includes(searchQuery) || 
-                   (company.siret && company.siret.includes(searchQuery));
-          }
-        });
+        let results = [...mockCompanies];
+        
+        // Filtre par recherche
+        if (searchQuery.length >= 3) {
+          results = results.filter(company => {
+            if (searchType === 'name') {
+              return company.name.toLowerCase().includes(searchQuery.toLowerCase());
+            } else {
+              return company.siren.includes(searchQuery) || 
+                     (company.siret && company.siret.includes(searchQuery));
+            }
+          });
+        }
+        
+        // Filtre par département
+        if (selectedDepartment) {
+          results = results.filter(company => 
+            company.department === selectedDepartment
+          );
+        }
+        
+        // Filtre par activité (NAF ou nom d'activité)
+        if (activityFilter) {
+          const filter = activityFilter.toLowerCase();
+          results = results.filter(company => 
+            company.nafCode.toLowerCase().includes(filter) ||
+            company.nafLabel.toLowerCase().includes(filter) ||
+            company.activity.toLowerCase().includes(filter)
+          );
+        }
+        
         setSearchResults(results);
         setIsSearching(false);
       }, 500);
@@ -128,7 +335,7 @@ export default function CompanySearchStepV2({
     } else {
       setSearchResults([]);
     }
-  }, [searchQuery, searchType]);
+  }, [searchQuery, searchType, selectedDepartment, activityFilter]);
 
   const handleCompanySelect = (company: Company) => {
     onCompanySelect(company);
@@ -137,7 +344,7 @@ export default function CompanySearchStepV2({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedCompany && canProceed) {
+    if (selectedCompany) {
       setLoading(true);
       // Simuler un appel API
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -156,7 +363,10 @@ export default function CompanySearchStepV2({
       address: 'À compléter',
       city: 'À compléter',
       postalCode: '00000',
+      department: '00',
       activity: 'À définir',
+      nafCode: '0000Z',
+      nafLabel: 'Activité à définir',
       employees: '1-5',
       creationDate: new Date().getFullYear().toString(),
       legalForm: 'SASU',
@@ -172,30 +382,122 @@ export default function CompanySearchStepV2({
       icon={<Building2 className="w-7 h-7" />}
     >
       <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
-        {/* Type de recherche */}
-        <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
-          <button
-            type="button"
-            onClick={() => setSearchType('name')}
-            className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 ${
-              searchType === 'name'
-                ? 'bg-white text-[#4C34CE] shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Par nom
-          </button>
-          <button
-            type="button"
-            onClick={() => setSearchType('siren')}
-            className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 ${
-              searchType === 'siren'
-                ? 'bg-white text-[#4C34CE] shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Par SIREN/SIRET
-          </button>
+        {/* Type de recherche et filtres */}
+        <div className="space-y-3">
+          <div className="flex gap-2">
+            <div className="flex-1 flex gap-2 p-1 bg-gray-100 rounded-lg">
+              <button
+                type="button"
+                onClick={() => setSearchType('name')}
+                className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 ${
+                  searchType === 'name'
+                    ? 'bg-white text-[#4C34CE] shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Par nom
+              </button>
+              <button
+                type="button"
+                onClick={() => setSearchType('siren')}
+                className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 ${
+                  searchType === 'siren'
+                    ? 'bg-white text-[#4C34CE] shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Par SIREN/SIRET
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowFilters(!showFilters)}
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 ${
+                showFilters || selectedDepartment || activityFilter
+                  ? 'bg-[#4C34CE] text-white'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <Filter className="w-4 h-4" />
+              Filtres
+              {(selectedDepartment || activityFilter) && (
+                <span className="ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs">
+                  {[selectedDepartment, activityFilter].filter(Boolean).length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Panneau de filtres */}
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <PremiumCard variant="default" padding="md" className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Filtre par département */}
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-2 block">
+                        Département
+                      </label>
+                      <select
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C34CE] focus:border-transparent"
+                      >
+                        <option value="">Tous les départements</option>
+                        <option value="06">06 - Alpes-Maritimes</option>
+                        <option value="13">13 - Bouches-du-Rhône</option>
+                        <option value="31">31 - Haute-Garonne</option>
+                        <option value="33">33 - Gironde</option>
+                        <option value="34">34 - Hérault</option>
+                        <option value="35">35 - Ille-et-Vilaine</option>
+                        <option value="44">44 - Loire-Atlantique</option>
+                        <option value="59">59 - Nord</option>
+                        <option value="67">67 - Bas-Rhin</option>
+                        <option value="69">69 - Rhône</option>
+                        <option value="75">75 - Paris</option>
+                      </select>
+                    </div>
+
+                    {/* Filtre par activité */}
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-2 block">
+                        Activité (NAF/APE ou nom)
+                      </label>
+                      <PremiumInput
+                        type="text"
+                        placeholder="Ex: 6202A ou informatique"
+                        value={activityFilter}
+                        onChange={(e) => setActivityFilter(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bouton pour réinitialiser les filtres */}
+                  {(selectedDepartment || activityFilter) && (
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedDepartment('');
+                          setActivityFilter('');
+                        }}
+                        className="text-sm text-[#4C34CE] hover:text-[#3A28B8] font-medium flex items-center gap-1"
+                      >
+                        <X className="w-4 h-4" />
+                        Réinitialiser les filtres
+                      </button>
+                    </div>
+                  )}
+                </PremiumCard>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Barre de recherche */}
@@ -250,17 +552,12 @@ export default function CompanySearchStepV2({
                       onClick={() => handleCompanySelect(company)}
                     >
                       <div className="flex items-start justify-between">
-                        <div className="flex-1 space-y-3">
-                          {/* En-tête */}
+                        <div className="flex-1 space-y-2">
+                          {/* Nom de l'entreprise */}
                           <div className="flex items-start justify-between">
-                            <div>
-                              <h4 className="text-lg font-semibold text-gray-900">
-                                {company.name}
-                              </h4>
-                              <p className="text-sm text-gray-500">
-                                {company.legalForm} • SIREN: {company.siren}
-                              </p>
-                            </div>
+                            <h4 className="text-lg font-semibold text-gray-900">
+                              {company.name}
+                            </h4>
                             {company.isActive && (
                               <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
                                 Active
@@ -268,32 +565,24 @@ export default function CompanySearchStepV2({
                             )}
                           </div>
 
-                          {/* Informations */}
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
-                              <MapPin className="w-4 h-4 text-gray-400" />
-                              <span>{company.city} ({company.postalCode})</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
-                              <Users className="w-4 h-4 text-gray-400" />
-                              <span>{company.employees} employés</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
-                              <Building className="w-4 h-4 text-gray-400" />
-                              <span>{company.activity}</span>
-                            </div>
-                            {company.revenue && (
-                              <div className="flex items-center gap-2 text-sm text-gray-600">
-                                <TrendingUp className="w-4 h-4 text-gray-400" />
-                                <span>CA: {company.revenue}</span>
-                              </div>
-                            )}
-                          </div>
+                          {/* Forme juridique */}
+                          <p className="text-sm font-medium text-gray-600">
+                            {company.legalForm}
+                          </p>
 
                           {/* Adresse */}
-                          <div className="pt-2 border-t border-gray-100">
+                          <div className="flex items-start gap-2">
+                            <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                             <p className="text-sm text-gray-600">
                               {company.address}, {company.postalCode} {company.city}
+                            </p>
+                          </div>
+
+                          {/* Activité principale */}
+                          <div className="flex items-start gap-2">
+                            <Building className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                            <p className="text-sm text-gray-600">
+                              {company.activity}
                             </p>
                           </div>
                         </div>
@@ -371,10 +660,10 @@ export default function CompanySearchStepV2({
             className="p-4 bg-green-50 border border-green-200 rounded-xl"
           >
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-green-600 font-medium mb-1">Entreprise sélectionnée</p>
+              <div className="space-y-1">
+                <p className="text-sm text-green-600 font-medium">Entreprise sélectionnée</p>
                 <p className="text-lg font-semibold text-gray-900">{selectedCompany.name}</p>
-                <p className="text-sm text-gray-600">SIREN: {selectedCompany.siren}</p>
+                <p className="text-sm text-gray-600">{selectedCompany.legalForm} • {selectedCompany.activity}</p>
               </div>
               <Sparkles className="w-6 h-6 text-green-600" />
             </div>
@@ -390,20 +679,36 @@ export default function CompanySearchStepV2({
           </p>
         </InfoCard>
 
-        {/* Bouton de soumission */}
-        <LiquidButton
-          type="submit"
-          variant="primary"
-          size="lg"
-          loading={loading}
-          disabled={!selectedCompany || !canProceed || loading}
-          className="w-full"
-        >
-          <span className="flex items-center justify-center gap-2">
-            Continuer
-            <ChevronRight className="w-5 h-5" />
-          </span>
-        </LiquidButton>
+        {/* Boutons de navigation */}
+        <div className="flex gap-3">
+          {canGoBack && onPrevious && (
+            <LiquidButton
+              type="button"
+              variant="secondary"
+              size="lg"
+              onClick={onPrevious}
+              className="flex-1"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <ChevronLeft className="w-5 h-5" />
+                Retour
+              </span>
+            </LiquidButton>
+          )}
+          <LiquidButton
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={loading}
+            disabled={!selectedCompany || loading}
+            className="flex-1"
+          >
+            <span className="flex items-center justify-center gap-2">
+              Continuer
+              <ChevronRight className="w-5 h-5" />
+            </span>
+          </LiquidButton>
+        </div>
 
         {/* Option de création manuelle */}
         {!showCreateForm && (

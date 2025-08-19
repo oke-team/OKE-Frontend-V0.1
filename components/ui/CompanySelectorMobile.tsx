@@ -174,26 +174,8 @@ export const CompanySelectorMobile: React.FC<CompanySelectorMobileProps> = ({
         </div>
       </div>
 
-      {/* Partie droite */}
-      <div className="flex items-center gap-2 flex-shrink-0">
-        {/* Badge plan - caché en mode compact */}
-        {!compact && (
-          <span
-            style={{
-              padding: '3px 8px',
-              fontSize: '10px',
-              fontWeight: 700,
-              textTransform: 'uppercase' as const,
-              borderRadius: '8px',
-              background: getPlanColor(currentCompany.plan),
-              color: getPlanTextColor(currentCompany.plan),
-              boxShadow: currentCompany.plan !== 'starter' ? '0 1px 3px rgba(0, 0, 0, 0.15)' : 'none'
-            }}
-          >
-            {currentCompany.plan}
-          </span>
-        )}
-
+      {/* Partie droite - Seulement le chevron */}
+      <div className="flex items-center flex-shrink-0">
         {/* Chevron */}
         <svg
           width={size === 'xs' ? 14 : 16}

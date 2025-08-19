@@ -167,18 +167,6 @@ export default function StepIndicator({
                   >
                     {step.title}
                   </motion.h4>
-                  <motion.p 
-                    className={`text-sm mt-1 transition-all duration-300
-                      ${isActive 
-                        ? 'text-gray-600' 
-                        : 'text-gray-400'
-                      }`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    {step.subtitle}
-                  </motion.p>
                   
                   {/* Indicateur de statut textuel */}
                   {isActive && (
@@ -212,7 +200,7 @@ export default function StepIndicator({
       {/* Version mobile - Indicateurs horizontaux optimisés */}
       <div className="lg:hidden">
         {/* Mini indicateurs en ligne avec design moderne */}
-        <div className="flex items-center justify-center space-x-2 mb-4">
+        <div className="flex items-center justify-center gap-3 mb-4">
           {steps.map((step, index) => {
             const isActive = index === currentStep;
             const isCompleted = step.isCompleted;
@@ -222,14 +210,14 @@ export default function StepIndicator({
               <React.Fragment key={step.id}>
                 <motion.div
                   className={`relative flex items-center justify-center flex-shrink-0 transition-all duration-300
-                    ${isActive ? 'w-12 h-12' : 'w-10 h-10'}
+                    ${isActive ? 'w-14 h-14' : 'w-12 h-12'}
                     ${isCompleted 
-                      ? 'bg-gradient-to-br from-[#FAA016] to-[#FAA016]/80 rounded-full shadow-md' 
+                      ? 'bg-[#FAA016] rounded-full shadow-md' 
                       : isActive 
-                        ? 'bg-white rounded-full border-2 border-[#4C34CE] shadow-lg' 
+                        ? 'bg-[#4C34CE] rounded-full shadow-lg ring-4 ring-[#4C34CE]/20' 
                         : isPending
-                          ? 'bg-gray-100 rounded-full border border-gray-300'
-                          : 'bg-white rounded-full border border-gray-300'
+                          ? 'bg-gray-200 rounded-full'
+                          : 'bg-gray-300 rounded-full'
                     }`}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -243,7 +231,7 @@ export default function StepIndicator({
                         damping: 25 
                       }}
                     >
-                      <Check className="w-5 h-5 text-white drop-shadow-lg" />
+                      <Check className="w-6 h-6 text-white" strokeWidth={3} />
                     </motion.div>
                   ) : isActive ? (
                     <motion.div
@@ -256,12 +244,12 @@ export default function StepIndicator({
                         ease: "linear"
                       }}
                     >
-                      <Sparkles className="w-5 h-5 text-white drop-shadow-lg" />
+                      <Sparkles className="w-6 h-6 text-white" />
                     </motion.div>
                   ) : isPending ? (
-                    <Lock className="w-4 h-4 text-white/40" />
+                    <Lock className="w-5 h-5 text-gray-400" />
                   ) : (
-                    <span className={`text-sm font-bold text-white/60`}>
+                    <span className="text-sm font-bold text-gray-500">
                       {index + 1}
                     </span>
                   )}
@@ -269,10 +257,10 @@ export default function StepIndicator({
                   {/* Effet de pulsation pour l'étape active sur mobile */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 rounded-full bg-[#4C34CE]/10"
+                      className="absolute inset-0 rounded-full bg-[#4C34CE]"
                       animate={{ 
-                        scale: [1, 1.2, 1], 
-                        opacity: [0.4, 0, 0.4] 
+                        scale: [1, 1.3, 1], 
+                        opacity: [0.3, 0, 0.3] 
                       }}
                       transition={{ 
                         duration: 2, 
@@ -285,15 +273,15 @@ export default function StepIndicator({
 
                 {/* Trait de connexion avec gradient */}
                 {index < steps.length - 1 && (
-                  <div className={`relative flex-1 h-0.5 transition-all duration-500
-                    ${isCompleted || (index < currentStep) 
-                      ? 'bg-gradient-to-r from-[#FAA016] to-[#4C34CE]' 
+                  <div className={`relative w-8 h-1 transition-all duration-500
+                    ${isCompleted 
+                      ? 'bg-[#FAA016]' 
                       : 'bg-gray-300'
                     }`} 
                   >
-                    {(isCompleted || (index < currentStep)) && (
+                    {isCompleted && (
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                         animate={{
                           x: ['-200%', '200%'],
                         }}
@@ -350,21 +338,6 @@ export default function StepIndicator({
         )}
       </div>
 
-      {/* Titre et sous-titre de l'étape courante - Desktop uniquement */}
-      <motion.div 
-        className="mt-10 hidden lg:block"
-        key={String(currentStep)}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
-          {steps[currentStep]?.title}
-        </h2>
-        <p className="text-gray-600 text-lg">
-          {steps[currentStep]?.subtitle}
-        </p>
-      </motion.div>
     </div>
   );
 }

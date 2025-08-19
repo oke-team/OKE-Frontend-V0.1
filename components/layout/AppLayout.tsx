@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import BottomNav from '@/components/navigation/BottomNav';
 import HeaderSimple from './HeaderSimple';
 import MagicActionsButton from '@/components/ui/MagicActionsButton';
-import Chatbot from '@/components/ui/Chatbot';
+import AssistantChat from '@/components/ui/AssistantChat';
 import AddMenu from '@/components/ui/AddMenu';
 import ModulesGrid from '@/components/ui/ModulesGrid';
 
@@ -96,8 +96,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
         onItemSelect={handleNavigation}
       />
       
-      {/* Chatbot */}
-      <Chatbot 
+      {/* Assistant Chat OKÉ */}
+      <AssistantChat 
         isOpen={chatOpen} 
         onClose={() => setChatOpen(false)} 
       />

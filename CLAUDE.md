@@ -209,6 +209,21 @@ function MyComponent() {
 - **Interface épurée** : Favoriser l'espace blanc et la clarté
 - **Minimalisme fonctionnel** : Si ça peut être retiré sans nuire, le retirer
 
+### Couleurs Officielles OKÉ
+- **Couleur principale (logo)** : `#4C34CE` (Violet profond)
+- **Couleur secondaire (logo)** : `#FAA016` (Orange doré)
+- **Couleur homepage 1** : `#512952` (Prune)
+- **Couleur homepage 2** : `#6da4c3` (Bleu ciel)
+- **Couleur homepage 3** : `#182752` (Bleu marine)
+- **Couleur homepage 4** : `#2b3642` (Gris ardoise)
+
+### ⚠️ RÈGLE ABSOLUE DES COULEURS
+- **JAMAIS de gradients mélangés** : Ne JAMAIS faire de dégradé entre #4C34CE (violet) et #FAA016 (orange)
+- **Couleurs pures uniquement** : Utiliser soit le violet, soit l'orange, jamais les deux ensemble dans un gradient
+- **Jouer sur les contrastes** : Alterner les couleurs pour créer du rythme visuel
+- **Fond clair prioritaire** : Toujours privilégier les fonds blancs ou gris très clairs
+- **Couleurs d'accent** : Violet OU orange pour les boutons et actions, pas les deux ensemble
+
 ### Inspirations
 - **Liquid Glass** : Effets Apple Vision Pro (transparence, blur, profondeur)
 - **ClickUp** : UX productive, navigation claire, interactions fluides
@@ -226,6 +241,15 @@ function MyComponent() {
 - Toujours utiliser Framer Motion
 - Transitions : 200-300ms
 - Easing : cubic-bezier(0.4, 0, 0.2, 1)
+
+/* Couleurs du thème (UTILISER SÉPARÉMENT) */
+- Violet principal : #4C34CE
+- Orange accent : #FAA016
+- Prune homepage : #512952
+- Bleu ciel homepage : #6da4c3
+- Bleu marine homepage : #182752
+- Gris ardoise homepage : #2b3642
+- INTERDICTION : gradient from-[#4C34CE] to-[#FAA016]
 ```
 
 ## ⚠️ Points d'Attention Critiques

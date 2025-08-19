@@ -12,19 +12,97 @@ import {
   ShoppingCart,
   TrendingUp,
   UserCheck,
-  CreditCard
+  CreditCard,
+  FileText,
+  Shield,
+  Briefcase
 } from 'lucide-react';
 
 import { WidgetItem, UnifiedWidgetProps } from '@/components/dashboard/UnifiedWidgetCard';
 import { getWidgetColors } from './widget-colors';
 
-// Données mockées pour les notifications
+// Données mockées pour les notifications avec actions
 const notificationsItems: WidgetItem[] = [
-  { id: 'notif-1', label: 'Facture échue #INV-2025-089', value: 'Urgent', trend: 'down' },
-  { id: 'notif-2', label: 'Nouveau message de Sophie Martin', value: 'Hier', trend: 'stable' },
-  { id: 'notif-3', label: 'TVA à déclarer avant le 20/02', value: '3 jours', trend: 'down' },
-  { id: 'notif-4', label: 'Paiement reçu de TechCorp', value: '2 450 €', trend: 'up' },
-  { id: 'notif-5', label: 'Mise à jour système disponible', value: 'v2.1.0', trend: 'stable' }
+  { 
+    id: 'notif-widget',
+    label: '🎯 Personnalisez votre dashboard ! De nouveaux widgets sont disponibles pour simplifier vos démarches administratives',
+    value: 'Personnaliser',
+    trend: 'stable',
+    action: '#',
+    actionLabel: 'Découvrir',
+    date: 'À l\'instant',
+    isProcessed: false
+  },
+  { 
+    id: 'notif-1', 
+    label: 'Bienvenue dans OKÉ ! Connectez votre premier compte bancaire pour synchroniser vos transactions', 
+    value: 'Connecter ma banque',
+    trend: 'stable',
+    action: '/bank/connect',
+    actionLabel: 'Connecter',
+    date: 'Il y a 2 heures',
+    isProcessed: false
+  },
+  { 
+    id: 'notif-2', 
+    label: 'Vérifiez les informations juridiques de votre entreprise', 
+    value: 'Vérifier',
+    trend: 'stable',
+    action: '/settings/company',
+    actionLabel: 'Vérifier',
+    date: 'Il y a 3 heures',
+    isProcessed: false
+  },
+  { 
+    id: 'notif-3', 
+    label: 'Mettez à jour vos informations fiscales pour une gestion optimale', 
+    value: 'Configurer',
+    trend: 'stable',
+    action: '/settings/tax',
+    actionLabel: 'Configurer',
+    date: 'Hier à 14h30',
+    isProcessed: false
+  },
+  { 
+    id: 'notif-4', 
+    label: `Envoyez vos justificatifs par email à ${process.env.NEXT_PUBLIC_SIREN || '123456789'}@oke.pro`, 
+    value: 'Tester',
+    trend: 'stable',
+    action: 'mailto:123456789@oke.pro',
+    actionLabel: 'Envoyer un test',
+    date: 'Hier à 10h00',
+    isProcessed: true
+  },
+  { 
+    id: 'notif-5', 
+    label: 'Nous avons importé vos statuts et comptes annuels depuis Pappers', 
+    value: 'Consulter',
+    trend: 'stable',
+    action: '/documents',
+    actionLabel: 'Voir les documents',
+    date: '15 février',
+    isProcessed: true
+  },
+  { 
+    id: 'notif-6', 
+    label: 'Découvrez notre assistant IA pour répondre à toutes vos questions', 
+    value: 'Essayer',
+    trend: 'stable',
+    action: '/chat',
+    actionLabel: 'Ouvrir le chat',
+    date: '14 février',
+    isProcessed: false
+  },
+  { 
+    id: 'notif-7', 
+    label: 'Notre équipe support est disponible 24/7 dans le chat', 
+    value: 'Contacter',
+    trend: 'stable',
+    action: '/chat?support=true',
+    actionLabel: 'Contacter le support',
+    date: '14 février',
+    isProcessed: true
+  }
 ];
 
 // Données mockées pour la todo list
@@ -139,22 +217,22 @@ const bankItems: WidgetItem[] = [
   }
 ];
 
-// Données mockées pour les achats (dernières factures)
+// Données mockées pour les achats (dernières factures avec dates)
 const purchasesItems: WidgetItem[] = [
-  { id: 'purchases-1', label: 'FA-2025-156 Office Pro', value: '1 250 €', trend: 'stable' },
-  { id: 'purchases-2', label: 'FA-2025-155 Telecom SA', value: '180 €', trend: 'stable' },
-  { id: 'purchases-3', label: 'FA-2025-154 EDF', value: '420 €', trend: 'up', change: '+12%' },
-  { id: 'purchases-4', label: 'FA-2025-153 Fournitures', value: '892 €', trend: 'stable' },
-  { id: 'purchases-5', label: 'FA-2025-152 Maintenance', value: '650 €', trend: 'stable' }
+  { id: 'purchases-1', label: '18/02 - Office Pro', value: '1 250 €', trend: 'stable' },
+  { id: 'purchases-2', label: '17/02 - Telecom SA', value: '180 €', trend: 'stable' },
+  { id: 'purchases-3', label: '16/02 - EDF', value: '420 €', trend: 'up', change: '+12%' },
+  { id: 'purchases-4', label: '15/02 - Fournitures bureau', value: '892 €', trend: 'stable' },
+  { id: 'purchases-5', label: '14/02 - Maintenance info', value: '650 €', trend: 'stable' }
 ];
 
-// Données mockées pour les ventes (dernières factures)
+// Données mockées pour les ventes (dernières factures avec dates)
 const salesItems: WidgetItem[] = [
-  { id: 'sales-1', label: 'FV-2025-089 TechCorp', value: '12 450 €', trend: 'up' },
-  { id: 'sales-2', label: 'FV-2025-088 ABC Solutions', value: '8 900 €', trend: 'stable' },
-  { id: 'sales-3', label: 'FV-2025-087 StartupX', value: '3 200 €', trend: 'stable' },
-  { id: 'sales-4', label: 'FV-2025-086 InnovCo', value: '5 670 €', trend: 'stable' },
-  { id: 'sales-5', label: 'FV-2025-085 Digital Pro', value: '4 030 €', trend: 'stable' }
+  { id: 'sales-1', label: '19/02 - TechCorp', value: '12 450 €', trend: 'up' },
+  { id: 'sales-2', label: '18/02 - ABC Solutions', value: '8 900 €', trend: 'stable' },
+  { id: 'sales-3', label: '17/02 - StartupX', value: '3 200 €', trend: 'stable' },
+  { id: 'sales-4', label: '16/02 - InnovCo', value: '5 670 €', trend: 'stable' },
+  { id: 'sales-5', label: '15/02 - Digital Pro', value: '4 030 €', trend: 'stable' }
 ];
 
 // Données mockées pour les créances clients
@@ -175,13 +253,73 @@ const payablesItems: WidgetItem[] = [
   { id: 'payables-5', label: 'Fournitures - En cours', value: '892 €', trend: 'stable' }
 ];
 
+// Données mockées pour les attestations URSSAF - Format spécial
+const urssafItems: WidgetItem[] = [
+  { 
+    id: 'urssaf-action', 
+    label: 'Demandez une attestation de vigilance URSSAF pour vos appels d\'offres et marchés publics', 
+    value: 'Demander',
+    action: '/documents/urssaf/request',
+    actionLabel: 'Demander l\'attestation',
+    isSpecialFormat: true
+  },
+  { 
+    id: 'urssaf-last', 
+    label: 'Dernière attestation reçue le 01/02/2025', 
+    value: 'Voir',
+    action: '/documents/urssaf/last',
+    actionLabel: 'Consulter',
+    isSecondary: true
+  }
+];
+
+// Données mockées pour les attestations fiscales - Format spécial
+const fiscalItems: WidgetItem[] = [
+  { 
+    id: 'fiscal-action', 
+    label: 'Demandez une attestation de régularité fiscale pour justifier votre situation auprès de l\'administration', 
+    value: 'Demander',
+    action: '/documents/fiscal/request',
+    actionLabel: 'Demander l\'attestation',
+    isSpecialFormat: true
+  },
+  { 
+    id: 'fiscal-last', 
+    label: 'Dernière attestation générée le 15/01/2025', 
+    value: 'Voir',
+    action: '/documents/fiscal/last',
+    actionLabel: 'Consulter',
+    isSecondary: true
+  }
+];
+
+// Données mockées pour les PV de non rémunération - Format spécial
+const pvRemunerationItems: WidgetItem[] = [
+  { 
+    id: 'pv-action', 
+    label: 'Générez un PV de non rémunération du dirigeant pour renouveler vos Allocations de Retour à l\'Emploi ou pour justifier de votre non imposition ou optimiser votre situation', 
+    value: 'Générer',
+    action: '/documents/pv/generate',
+    actionLabel: 'Générer le PV',
+    isSpecialFormat: true
+  },
+  { 
+    id: 'pv-last', 
+    label: 'Dernier PV établi pour Q4 2024', 
+    value: 'Voir',
+    action: '/documents/pv/last',
+    actionLabel: 'Consulter',
+    isSecondary: true
+  }
+];
+
 /**
  * Configuration complète des widgets avec leurs données
  */
 export const widgetConfigs: Record<string, Omit<UnifiedWidgetProps, 'id'>> = {
   notifications: {
-    title: 'Notifications',
-    subtitle: 'Alertes et rappels',
+    title: 'Centre de notifications',
+    subtitle: 'Actions recommandées pour bien démarrer',
     amount: undefined,
     icon: Bell,
     items: notificationsItems,
@@ -267,6 +405,36 @@ export const widgetConfigs: Record<string, Omit<UnifiedWidgetProps, 'id'>> = {
     items: payablesItems,
     moduleHref: '/accounting/payables',
     ...getWidgetColors('payables')
+  },
+  
+  urssaf: {
+    title: 'Attestations URSSAF',
+    subtitle: 'Documents sociaux',
+    amount: undefined,
+    icon: Shield,
+    items: urssafItems,
+    moduleHref: '/documents/urssaf',
+    ...getWidgetColors('urssaf')
+  },
+  
+  fiscal: {
+    title: 'Attestations fiscales',
+    subtitle: 'Régularité fiscale',
+    amount: undefined,
+    icon: FileText,
+    items: fiscalItems,
+    moduleHref: '/documents/fiscal',
+    ...getWidgetColors('fiscal')
+  },
+  
+  pvRemuneration: {
+    title: 'PV non rémunération',
+    subtitle: 'Documents dirigeants',
+    amount: undefined,
+    icon: Briefcase,
+    items: pvRemunerationItems,
+    moduleHref: '/documents/pv',
+    ...getWidgetColors('pvRemuneration')
   }
 };
 
@@ -274,15 +442,30 @@ export const widgetConfigs: Record<string, Omit<UnifiedWidgetProps, 'id'>> = {
  * Configuration par défaut des widgets affichés sur le dashboard
  */
 export const defaultWidgetOrder = [
-  'notifications',
+  'notifications', // Zone 1 - toujours visible
+];
+
+/**
+ * Widgets de la zone 2 par défaut
+ */
+export const defaultZone2Widgets = [
+  'bank',
+  'purchases', 
+  'sales'
+];
+
+/**
+ * Widgets disponibles mais non affichés par défaut
+ */
+export const availableWidgets = [
   'todo',
   'agenda',
   'messages',
-  'bank',
-  'purchases',
-  'sales',
   'receivables',
-  'payables'
+  'payables',
+  'urssaf',
+  'fiscal',
+  'pvRemuneration'
 ];
 
 /**

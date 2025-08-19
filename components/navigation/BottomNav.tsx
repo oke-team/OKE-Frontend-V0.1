@@ -82,10 +82,9 @@ const NavItemComponent: React.FC<{
           "active:scale-95"
         )}
         style={{
-          background: 'linear-gradient(135deg, #4C34CE 0%, #6D4FE8 50%, #8B6FF5 100%)',
-          boxShadow: '0 10px 25px -5px rgba(76, 52, 206, 0.6)',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          filter: 'brightness(1.1) saturate(1.3)'
+          background: '#4C34CE',
+          boxShadow: '0 8px 20px -5px rgba(76, 52, 206, 0.4)',
+          border: '1px solid rgba(76, 52, 206, 0.2)'
         }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}

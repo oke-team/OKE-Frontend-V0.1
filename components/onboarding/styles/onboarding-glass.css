@@ -242,6 +242,34 @@
   }
 }
 
+/* Support amélioré pour tablette */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .onboarding-modal {
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  .onboarding-content {
+    height: 100%;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+}
+
+/* Fix pour le scroll sur iOS */
+@supports (-webkit-touch-callout: none) {
+  .onboarding-modal {
+    position: fixed;
+  }
+  
+  .onboarding-content {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll !important;
+    height: 100%;
+  }
+}
+
 /* Support pour le mode sombre du système */
 @media (prefers-color-scheme: dark) {
   .onboarding-modal {

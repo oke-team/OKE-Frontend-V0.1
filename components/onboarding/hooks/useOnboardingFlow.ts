@@ -69,7 +69,30 @@ export function useOnboardingFlow() {
   useEffect(() => {
     const existingSession = getOnboardingSession();
     
-    if (existingSession) {
+    // Vérifier si on a des données pré-remplies depuis l'AuthWidget
+    const savedData = typeof window !== 'undefined' ? localStorage.getItem('onboardingData') : null;
+    
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      
+      // Créer une nouvelle session avec les données pré-remplies
+      const newSession = createOnboardingSession();
+      
+      // Mettre à jour avec les données personnelles
+      if (parsedData.personalInfo) {
+        updatePersonalInfo(parsedData.personalInfo);
+      }
+      
+      // Commencer directement à l'étape 2 (Pays) - index 1
+      updateCurrentStep(1);
+      setCurrentStep(1);
+      
+      // Nettoyer le localStorage
+      localStorage.removeItem('onboardingData');
+      
+      const updatedSession = getOnboardingSession();
+      setSession(updatedSession);
+    } else if (existingSession) {
       setSession(existingSession);
       setCurrentStep(existingSession.current_step);
     } else {
@@ -166,7 +189,7 @@ export function useOnboardingFlow() {
         return Boolean(session.form_data.country.code);
 
       case 2: // Entreprise
-        return Boolean(session.form_data.company?.selected);
+        return Boolean(session.form_data.company);
 
       case 3: // Collecte de données
         return Boolean(session.form_data.collected_data?.completed);

@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Search, MapPin, ChevronRight, Check } from 'lucide-react';
+import { Globe, Search, MapPin, ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import {
   PremiumCard,
   LiquidButton,
@@ -22,20 +22,27 @@ interface CountrySelectionStepProps {
   selectedCountry: Country | null;
   onCountrySelect: (country: Country) => void;
   onNext: () => void;
+  onPrevious?: () => void;
   canProceed: boolean;
+  canGoBack?: boolean;
 }
 
 // Liste des pays avec leur drapeau emoji
 const countries: Country[] = [
   { code: 'FR', name: 'France', flag: '🇫🇷', popular: true },
-  { code: 'US', name: 'États-Unis', flag: '🇺🇸', popular: true },
   { code: 'GB', name: 'Royaume-Uni', flag: '🇬🇧', popular: true },
-  { code: 'DE', name: 'Allemagne', flag: '🇩🇪', popular: true },
-  { code: 'ES', name: 'Espagne', flag: '🇪🇸', popular: true },
-  { code: 'IT', name: 'Italie', flag: '🇮🇹', popular: true },
   { code: 'BE', name: 'Belgique', flag: '🇧🇪', popular: true },
   { code: 'CH', name: 'Suisse', flag: '🇨🇭', popular: true },
-  { code: 'NL', name: 'Pays-Bas', flag: '🇳🇱' },
+  { code: 'LU', name: 'Luxembourg', flag: '🇱🇺', popular: true },
+  { code: 'ES', name: 'Espagne', flag: '🇪🇸', popular: true },
+  { code: 'DE', name: 'Allemagne', flag: '🇩🇪', popular: true },
+  { code: 'NL', name: 'Pays-Bas', flag: '🇳🇱', popular: true },
+  { code: 'MU', name: 'Maurice', flag: '🇲🇺', popular: true },
+  { code: 'GN', name: 'Guinée', flag: '🇬🇳', popular: true },
+  { code: 'BJ', name: 'Bénin', flag: '🇧🇯', popular: true },
+  { code: 'MG', name: 'Madagascar', flag: '🇲🇬', popular: true },
+  { code: 'US', name: 'États-Unis', flag: '🇺🇸' },
+  { code: 'IT', name: 'Italie', flag: '🇮🇹' },
   { code: 'PT', name: 'Portugal', flag: '🇵🇹' },
   { code: 'CA', name: 'Canada', flag: '🇨🇦' },
   { code: 'AU', name: 'Australie', flag: '🇦🇺' },
@@ -58,7 +65,9 @@ export default function CountrySelectionStepV2({
   selectedCountry,
   onCountrySelect,
   onNext,
-  canProceed
+  onPrevious,
+  canProceed,
+  canGoBack = false
 }: CountrySelectionStepProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
@@ -102,7 +111,7 @@ export default function CountrySelectionStepV2({
       subtitle="Dans quel pays votre entreprise est-elle établie ?"
       icon={<Globe className="w-7 h-7" />}
     >
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto pb-6">
         {/* Barre de recherche */}
         <PremiumInput
           type="text"
@@ -112,14 +121,66 @@ export default function CountrySelectionStepV2({
           icon={<Search className="w-4 h-4" />}
         />
 
-        {/* Pays populaires (affichés seulement sans recherche) */}
-        {!searchQuery && (
+        {/* Pays populaires OU résultats de recherche */}
+        {searchQuery ? (
+          // Résultats de recherche
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium text-gray-700">
+              Résultats de recherche
+            </h3>
+            <PremiumCard variant="default" padding="sm" className="max-h-64 overflow-y-auto">
+              <div className="space-y-1">
+                {filteredCountries.length > 0 ? (
+                  filteredCountries.map(country => (
+                    <motion.button
+                      key={country.code}
+                      type="button"
+                      onClick={() => handleCountrySelect(country)}
+                      className={`
+                        w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200
+                        ${selectedCountry?.code === country.code
+                          ? 'bg-[#4C34CE]/10 text-[#4C34CE]'
+                          : 'hover:bg-gray-50 text-gray-900'
+                        }
+                      `}
+                      whileHover={{ x: 4 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{country.flag}</span>
+                        <span className="font-medium">{country.name}</span>
+                        <span className="text-sm text-gray-500">({country.code})</span>
+                      </div>
+                      {selectedCountry?.code === country.code ? (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-6 h-6 bg-[#4C34CE] rounded-full flex items-center justify-center"
+                        >
+                          <Check className="w-4 h-4 text-white" />
+                        </motion.div>
+                      ) : (
+                        <ChevronRight className="w-5 h-5 text-gray-400" />
+                      )}
+                    </motion.button>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <Globe className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                    <p>Aucun pays trouvé pour "{searchQuery}"</p>
+                  </div>
+                )}
+              </div>
+            </PremiumCard>
+          </div>
+        ) : (
+          // Pays populaires uniquement
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-gray-700 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-[#4C34CE]" />
               Pays populaires
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
               {popularCountries.map(country => (
                 <motion.button
                   key={country.code}
@@ -128,7 +189,7 @@ export default function CountrySelectionStepV2({
                   onHoverStart={() => setHoveredCountry(country.code)}
                   onHoverEnd={() => setHoveredCountry(null)}
                   className={`
-                    relative p-4 rounded-xl border-2 transition-all duration-200
+                    relative p-3 sm:p-4 rounded-xl border-2 transition-all duration-200
                     ${selectedCountry?.code === country.code
                       ? 'bg-[#4C34CE]/5 border-[#4C34CE] shadow-md'
                       : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm'
@@ -142,14 +203,14 @@ export default function CountrySelectionStepV2({
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute top-2 right-2 w-6 h-6 bg-[#4C34CE] rounded-full flex items-center justify-center"
+                      className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 bg-[#4C34CE] rounded-full flex items-center justify-center"
                     >
-                      <Check className="w-4 h-4 text-white" />
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                     </motion.div>
                   )}
                   
-                  <div className="text-3xl mb-2">{country.flag}</div>
-                  <div className="text-sm font-medium text-gray-900">
+                  <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">{country.flag}</div>
+                  <div className="text-xs sm:text-sm font-medium text-gray-900 break-words">
                     {country.name}
                   </div>
                   
@@ -169,57 +230,6 @@ export default function CountrySelectionStepV2({
             </div>
           </div>
         )}
-
-        {/* Liste complète des pays */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700">
-            {searchQuery ? 'Résultats de recherche' : 'Tous les pays'}
-          </h3>
-          <PremiumCard variant="default" padding="sm" className="max-h-64 overflow-y-auto">
-            <div className="space-y-1">
-              {filteredCountries.length > 0 ? (
-                filteredCountries.map(country => (
-                  <motion.button
-                    key={country.code}
-                    type="button"
-                    onClick={() => handleCountrySelect(country)}
-                    className={`
-                      w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200
-                      ${selectedCountry?.code === country.code
-                        ? 'bg-[#4C34CE]/10 text-[#4C34CE]'
-                        : 'hover:bg-gray-50 text-gray-900'
-                      }
-                    `}
-                    whileHover={{ x: 4 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{country.flag}</span>
-                      <span className="font-medium">{country.name}</span>
-                      <span className="text-sm text-gray-500">({country.code})</span>
-                    </div>
-                    {selectedCountry?.code === country.code ? (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-6 h-6 bg-[#4C34CE] rounded-full flex items-center justify-center"
-                      >
-                        <Check className="w-4 h-4 text-white" />
-                      </motion.div>
-                    ) : (
-                      <ChevronRight className="w-5 h-5 text-gray-400" />
-                    )}
-                  </motion.button>
-                ))
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <Globe className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p>Aucun pays trouvé pour "{searchQuery}"</p>
-                </div>
-              )}
-            </div>
-          </PremiumCard>
-        </div>
 
         {/* Pays sélectionné */}
         {selectedCountry && (
@@ -247,20 +257,36 @@ export default function CountrySelectionStepV2({
           </p>
         </InfoCard>
 
-        {/* Bouton de soumission */}
-        <LiquidButton
-          type="submit"
-          variant="primary"
-          size="lg"
-          loading={loading}
-          disabled={!selectedCountry || !canProceed || loading}
-          className="w-full"
-        >
-          <span className="flex items-center justify-center gap-2">
-            Continuer
-            <ChevronRight className="w-5 h-5" />
-          </span>
-        </LiquidButton>
+        {/* Boutons de navigation */}
+        <div className="flex gap-3">
+          {canGoBack && onPrevious && (
+            <LiquidButton
+              type="button"
+              variant="secondary"
+              size="lg"
+              onClick={onPrevious}
+              className="flex-1"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <ChevronLeft className="w-5 h-5" />
+                Retour
+              </span>
+            </LiquidButton>
+          )}
+          <LiquidButton
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={loading}
+            disabled={!selectedCountry || !canProceed || loading}
+            className="flex-1"
+          >
+            <span className="flex items-center justify-center gap-2">
+              Continuer
+              <ChevronRight className="w-5 h-5" />
+            </span>
+          </LiquidButton>
+        </div>
 
         {/* Note pour la France */}
         {selectedCountry?.code === 'FR' && (

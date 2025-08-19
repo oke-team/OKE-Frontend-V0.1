@@ -191,7 +191,7 @@ export default function HomePage() {
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight mb-4 lg:mb-6"
                 >
                   <span className="text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-                    La gestion d&apos;entreprise
+                    Une Super App pour des
                   </span>
                   <br />
                   <motion.span 
@@ -208,7 +208,7 @@ export default function HomePage() {
                       backgroundSize: '200% 200%'
                     }}
                   >
-                    réinventée par l&apos;IA
+                    Supers Entrepreneurs
                   </motion.span>
                 </motion.h1>
                 

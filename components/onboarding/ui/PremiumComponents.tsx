@@ -210,7 +210,7 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         </div>
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#4C34CE] to-[#FAA016] rounded-full"
+            className="h-full bg-[#4C34CE] rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -282,18 +282,18 @@ export const StepContainer: React.FC<StepContainerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className={cn('space-y-8', className)}
+      className={cn('space-y-6 sm:space-y-8', className)}
     >
       {/* Header */}
       <div className="text-center">
         {icon && (
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#4C34CE] to-[#FAA016] mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#4C34CE] mb-3 sm:mb-4 shadow-lg">
             <div className="text-white">{icon}</div>
           </div>
         )}
-        <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">{title}</h2>
         {subtitle && (
-          <p className="text-gray-600 mt-2 text-lg">{subtitle}</p>
+          <p className="text-gray-600 mt-2 text-base sm:text-lg px-4 sm:px-0">{subtitle}</p>
         )}
       </div>
 

@@ -53,9 +53,9 @@ const HeroSection: React.FC = memo(() => {
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight"
           variants={titleVariants}
         >
-          <span className="block mb-1 sm:mb-2">La gestion d'entreprise</span>
+          <span className="block mb-1 sm:mb-2">Une Super App pour des</span>
           <span className="block bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-x">
-            réinventée par l'IA
+            Supers Entrepreneurs
           </span>
         </motion.h1>
         
