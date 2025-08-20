@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, FileText, Users, Package, CreditCard, TrendingUp, Clock, Sparkles } from 'lucide-react';
+import { Search, X, FileText, Users, Package, CreditCard, TrendingUp, Clock, Sparkles, Filter, Calendar, Euro, Tag, CheckCircle, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { TypePaiement, StatutRapprochement, Banque } from '@/lib/mock-data/bank-transactions';
 
 interface SearchGlobalProps {
   isOpen: boolean;
