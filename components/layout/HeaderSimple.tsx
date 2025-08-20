@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 import { useExpertMode } from '@/contexts/ExpertModeContext';
 import { CompanySelectorLiquid, Company } from '@/components/ui/CompanySelectorLiquid';
 import { PeriodSelectorLiquid } from '@/components/ui/PeriodSelectorLiquid';
@@ -42,6 +43,7 @@ export default function HeaderSimple({
   onChatOpen,
   onMagicActions
 }: HeaderSimpleProps) {
+  const { user, logout } = useAuth();
   const { expertMode, toggleExpertMode } = useExpertMode();
   const { selectedCount } = useSelection();
   const pathname = usePathname();
@@ -272,15 +274,16 @@ export default function HeaderSimple({
           {/* Avatar Utilisateur avec nouveau composant */}
           <AvatarDropdown
             user={{
-              name: 'Jean Dupont',
-              email: 'jean@techcorp.fr',
-              initials: 'JD',
+              name: user?.full_name || user?.email?.split('@')[0] || 'Utilisateur',
+              email: user?.email || '',
+              initials: user?.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || 
+                       user?.email?.substring(0, 2).toUpperCase() || 'U',
               role: 'Administrateur',
-              company: 'TechCorp SAS'
+              company: currentCompany.name
             }}
-            onSignOut={() => {
-              console.log('Déconnexion');
-              // Implémenter la logique de déconnexion
+            onSignOut={async () => {
+              console.log('Déconnexion en cours...');
+              await logout();
             }}
           />
         </div>
