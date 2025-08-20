@@ -27,6 +27,10 @@ export interface NavItem {
   isPrimary?: boolean;
   /** Si l'item est le bouton "Autres" pour afficher tous les modules */
   isMore?: boolean;
+  /** Si l'item est un composant de navigation contextuelle */
+  isNavigation?: boolean;
+  /** Si l'item est un placeholder non-cliquable */
+  isPlaceholder?: boolean;
   /** Catégorie pour le filtrage responsive */
   category?: NavCategory;
   /** Si l'item est désactivé */
@@ -57,6 +61,11 @@ export interface BottomNavProps {
   position?: 'bottom' | 'top' | 'left' | 'right';
   /** Animation désactivée */
   disableAnimation?: boolean;
+  /** Props de pagination pour navigation contextuelle */
+  currentPage?: number;
+  totalPages?: number;
+  totalItems?: number;
+  onPageChange?: (page: number) => void;
 }
 
 /**

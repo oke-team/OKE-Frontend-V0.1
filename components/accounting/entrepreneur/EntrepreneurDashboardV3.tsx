@@ -16,7 +16,7 @@ import {
 // Import des icônes Lucide
 import { 
   Wallet, Users, Package, Users2, Shield, Receipt, FileText, Package2, CreditCard,
-  BarChart3, ShoppingCart, Briefcase, Building, Percent, AlertTriangle, Plus,
+  BarChart3, ShoppingCart, Briefcase, Building, Building2, Percent, AlertTriangle, Plus,
   Calculator, Trophy, TrendingUp, TrendingDown, ChevronRight, ArrowUp, ArrowDown,
   Coins, HandCoins, Landmark, FileCheck, FileWarning, MoreHorizontal
 } from 'lucide-react';
@@ -72,13 +72,17 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
     );
   }
 
-  // Séparer les cartes bilan en actif et passif
+  // Séparer les cartes bilan en actif, dettes et capitaux propres
   const activeBilanCards = bilanCards.filter(card => 
     ['immobilisations', 'treasury', 'clients', 'stocks', 'other_receivables'].includes(card.id)
   );
   
-  const passiveBilanCards = bilanCards.filter(card => 
-    ['capital', 'group_associates', 'debts', 'suppliers', 'payroll', 'social', 'vat', 'tax', 'other_debts'].includes(card.id)
+  const dettesBilanCards = bilanCards.filter(card => 
+    ['group_associates', 'debts', 'suppliers', 'payroll', 'social', 'vat', 'tax', 'other_debts'].includes(card.id)
+  );
+  
+  const capitauxPropresCard = bilanCards.filter(card => 
+    ['capital'].includes(card.id)
   );
 
   // Séparer les cartes résultat en produits et charges
@@ -180,36 +184,12 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
           </div>
         </div>
 
-        {/* Comparaison N-1 */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {trend === 'up' ? (
-                <TrendingUp className="w-3 h-3 text-green-500" />
-              ) : trend === 'down' ? (
-                <TrendingDown className="w-3 h-3 text-red-500" />
-              ) : (
-                <div className="w-3 h-3" />
-              )}
-              <span className="text-xs text-neutral-500">N-1:</span>
-              <span className={cn(
-                "text-xs font-medium",
-                trend === 'up' && "text-green-600",
-                trend === 'down' && "text-red-600",
-                trend === 'stable' && "text-neutral-600"
-              )}>
-                {new Intl.NumberFormat('fr-FR', {
-                  style: 'currency',
-                  currency: 'EUR',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(amountN1)}
-              </span>
-            </div>
-          </div>
-          <span className="text-xs text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity">
-            Détails →
-          </span>
+        {/* Footer avec chevron uniquement */}
+        <div className="flex items-center justify-end">
+          <ChevronRight className={cn(
+            isSmall ? "w-4 h-4" : "w-5 h-5",
+            "text-neutral-400 group-hover:text-neutral-600 transition-colors"
+          )} />
         </div>
       </motion.div>
     );
@@ -319,12 +299,12 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
           className={cn(
             "flex-1 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 text-sm relative overflow-hidden",
             activeTab === 'bilan'
-              ? "bg-white text-purple-700 shadow-sm"
+              ? "bg-white text-[#4C34CE] shadow-sm"
               : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
           )}
         >
           {activeTab === 'bilan' && (
-            <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-400 to-purple-600" />
+            <div className="absolute inset-x-0 bottom-0 h-0.5 bg-[#4C34CE]" />
           )}
           Bilan (Situation)
         </button>
@@ -333,12 +313,12 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
           className={cn(
             "flex-1 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 text-sm relative overflow-hidden",
             activeTab === 'resultat'
-              ? "bg-white text-blue-700 shadow-sm"
+              ? "bg-white text-[#4C34CE] shadow-sm"
               : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
           )}
         >
           {activeTab === 'resultat' && (
-            <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600" />
+            <div className="absolute inset-x-0 bottom-0 h-0.5 bg-[#4C34CE]" />
           )}
           Résultat (Période)
         </button>
@@ -359,7 +339,7 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-2">
                 <HandCoins className="w-5 h-5 text-green-600" />
-                <h2 className="text-lg font-semibold text-neutral-800">Actif</h2>
+                <h2 className="text-lg font-semibold text-neutral-800">Actifs</h2>
                 <span className="text-sm text-neutral-500">(Ce que l'entreprise possède)</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
@@ -367,25 +347,46 @@ export const EntrepreneurDashboardV3 = React.memo<EntrepreneurDashboardV3Props>(
               </div>
             </div>
 
-            {/* Séparateur visuel */}
+            {/* Séparateur visuel - signe moins */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-2 border-neutral-200"></div>
+                <div className="w-full border-t-2 border-[#FAA016]"></div>
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-white px-4 text-sm text-neutral-500">•••</span>
+                <span className="bg-white px-4 text-2xl font-bold text-[#FAA016]">−</span>
               </div>
             </div>
 
-            {/* Section PASSIF (D'où vient l'argent) */}
+            {/* Section DETTES */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-2">
                 <Coins className="w-5 h-5 text-orange-600" />
-                <h2 className="text-lg font-semibold text-neutral-800">Passif</h2>
-                <span className="text-sm text-neutral-500">(D'où vient l'argent)</span>
+                <h2 className="text-lg font-semibold text-neutral-800">Dettes</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                {passiveBilanCards.map((card, index) => renderCard(card, index))}
+                {dettesBilanCards.map((card, index) => renderCard(card, index))}
+              </div>
+            </div>
+            
+            {/* Séparateur visuel - signe égal */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t-2 border-[#FAA016]"></div>
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text-2xl font-bold text-[#FAA016]">=</span>
+              </div>
+            </div>
+            
+            {/* Section CAPITAUX PROPRES */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 px-2">
+                <Building2 className="w-5 h-5 text-blue-600" />
+                <h2 className="text-lg font-semibold text-neutral-800">Capitaux propres</h2>
+                <span className="text-sm text-neutral-500">(Patrimoine de l'entreprise net de ses dettes)</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                {capitauxPropresCard.map((card, index) => renderCard(card, index))}
               </div>
             </div>
           </motion.div>

@@ -237,7 +237,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/20 z-40"
+              className="fixed inset-0 bg-black/20 z-[55]"
               style={{ backdropFilter: 'blur(4px)' }}
             />
             
@@ -248,7 +248,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
               exit={{ y: '100%' }}
               transition={liquidGlass.transitions.spring}
               className={cn(
-                'fixed bottom-0 left-0 right-0 z-50',
+                'fixed bottom-0 left-0 right-0 z-[60]',
                 'max-h-[70vh] overflow-y-auto',
                 className
               )}
@@ -276,7 +276,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
           exit={{ opacity: 0, y: -8, scale: 0.95 }}
           transition={{ duration: 0.15 }}
           className={cn(
-            'absolute z-30 w-full min-w-[200px]',
+            'absolute z-[60] w-full min-w-[200px]',
             'rounded-xl overflow-hidden',
             className
           )}

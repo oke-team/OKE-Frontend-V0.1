@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, DollarSign, Eye, EyeOff, Check, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { TrendingUp, TrendingDown, DollarSign, Eye, EyeOff, Check } from 'lucide-react';
+import { cn, formatCurrency } from '@/lib/utils';
+import { useSafeNumber } from '@/lib/hooks/useIsomorphicFormatting';
 import { fadeIn } from '@/lib/animations/variants';
 import { bankLogos, Banque } from '@/lib/mock-data/bank-transactions';
 
@@ -30,14 +31,9 @@ interface BankBalanceWidgetsProps {
   summary: BalanceSummary;
   showBalances: boolean;
   onToggleVisibility: () => void;
-  selectedAccounts: string[];
+  selectedAccounts?: string[];
   onAccountToggle: (accountId: string) => void;
   className?: string;
-  // Props de pagination
-  currentPage?: number;
-  totalPages?: number;
-  totalItems?: number;
-  onPageChange?: (page: number) => void;
 }
 
 // Widget individuel pour un compte
@@ -55,6 +51,7 @@ function AccountBalanceCard({
   onToggle: (accountId: string) => void;
 }) {
   const isPositive = account.balance >= 0;
+  const safeBalance = useSafeNumber(account.balance, (val) => formatCurrency(val, account.currency, false));
   
   return (
     <motion.div
@@ -94,15 +91,8 @@ function AccountBalanceCard({
           <div className={cn(
             "text-sm font-semibold leading-tight",
             isPositive ? 'text-gray-900' : 'text-red-600'
-          )}>
-            {showBalance ? (
-              `${account.balance.toLocaleString('fr-FR', { 
-                minimumFractionDigits: 0, 
-                maximumFractionDigits: 0 
-              })} ${account.currency}`
-            ) : (
-              '••• •••'
-            )}
+          )} suppressHydrationWarning>
+            {showBalance ? safeBalance : '••• •••'}
           </div>
         </div>
       </div>
@@ -121,6 +111,7 @@ function SummaryCard({
   onToggleVisibility: () => void;
 }) {
   const isPositive = summary.totalBalance >= 0;
+  const safeTotalBalance = useSafeNumber(summary.totalBalance, (val) => formatCurrency(val, 'EUR', false));
   
   return (
     <motion.div
@@ -139,15 +130,8 @@ function SummaryCard({
             <div className={cn(
               "text-sm font-semibold leading-tight",
               isPositive ? 'text-gray-900' : 'text-red-600'
-            )}>
-              {showBalance ? (
-                `${summary.totalBalance.toLocaleString('fr-FR', { 
-                  minimumFractionDigits: 0, 
-                  maximumFractionDigits: 0 
-                })} €`
-              ) : (
-                '••• •••'
-              )}
+            )} suppressHydrationWarning>
+              {showBalance ? safeTotalBalance : '••• •••'}
             </div>
           </div>
           <button
@@ -163,58 +147,6 @@ function SummaryCard({
   );
 }
 
-// Widget de pagination compact
-function PaginationWidget({ 
-  currentPage, 
-  totalPages, 
-  totalItems, 
-  onPageChange 
-}: { 
-  currentPage: number; 
-  totalPages: number; 
-  totalItems: number;
-  onPageChange: (page: number) => void;
-}) {
-  const itemsPerPage = 50;
-  const startItem = ((currentPage - 1) * itemsPerPage) + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg border border-gray-200 px-3 py-2 min-w-[160px] hover:shadow-sm transition-all"
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <p className="text-xs text-gray-500">Transactions</p>
-          <p className="text-sm font-semibold text-gray-900">
-            {startItem}-{endItem} / {totalItems}
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-            className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <span className="text-xs text-gray-600 px-1">
-            {currentPage}/{totalPages}
-          </span>
-          <button
-            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            disabled={currentPage === totalPages}
-            className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function BankBalanceWidgets({
   accounts,
@@ -223,11 +155,7 @@ export default function BankBalanceWidgets({
   onToggleVisibility,
   selectedAccounts,
   onAccountToggle,
-  className,
-  currentPage,
-  totalPages,
-  totalItems,
-  onPageChange
+  className
 }: BankBalanceWidgetsProps) {
   return (
     <motion.div
@@ -253,20 +181,10 @@ export default function BankBalanceWidgets({
           account={account}
           showBalance={showBalances}
           index={index + 1}
-          isSelected={selectedAccounts.includes(account.id)}
+          isSelected={selectedAccounts?.includes(account.id) || false}
           onToggle={onAccountToggle}
         />
       ))}
-      
-      {/* Widget de pagination si les données sont disponibles */}
-      {currentPage && totalPages && totalItems && onPageChange && (
-        <PaginationWidget
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalItems={totalItems}
-          onPageChange={onPageChange}
-        />
-      )}
     </motion.div>
   );
 }

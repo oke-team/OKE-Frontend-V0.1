@@ -10,6 +10,7 @@ import {
   Database,
   FileCheck,
   Building,
+  Building2,
   Calculator,
   Download,
   FileCode,
@@ -30,6 +31,7 @@ export interface AddMenuItem {
   hint?: string;
   acceptedFormats?: string[];
   isCommon?: boolean; // Pour identifier les options communes
+  isHighlighted?: boolean; // Pour mettre en évidence certaines options
 }
 
 export interface ModuleAddConfig {
@@ -139,6 +141,16 @@ const bankConfig: ModuleAddConfig = {
   dragDropHint: 'Relevés PDF, CSV, CFONB, listes de paiements...',
   items: [
     ...commonItems,
+    {
+      id: 'new-bank-account',
+      label: 'Nouveau compte bancaire',
+      icon: Building2,
+      color: 'from-blue-500 to-cyan-600',
+      description: 'Connexion sécurisée Bridge',
+      hint: 'Synchronisation automatique des transactions',
+      acceptedFormats: ['bridge-sync'],
+      isHighlighted: true
+    },
     {
       id: 'bank-statement-pdf',
       label: 'Relevé bancaire PDF',

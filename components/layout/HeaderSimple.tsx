@@ -62,7 +62,7 @@ export default function HeaderSimple({
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b-2 border-[#FAA016] z-50">
+    <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-[#FAA016] z-50">
       <div className="flex items-center justify-between h-full px-3 sm:px-4 md:px-6">
         
         {/* Partie gauche : Logo + Badge Version */}

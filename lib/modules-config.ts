@@ -76,7 +76,7 @@ export const modules: Module[] = [
     mobileVisible: true
   },
 
-  // Business modules
+  // Business modules (réorganisés selon la demande)
   {
     id: 'documents',
     label: 'Documents',
@@ -87,11 +87,11 @@ export const modules: Module[] = [
     mobileVisible: false
   },
   {
-    id: 'stocks',
-    label: 'Stocks',
-    icon: Package,
-    href: '/stocks',
-    description: 'Gestion des stocks façon Odoo',
+    id: 'tax',
+    label: 'Fiscalité',
+    icon: Receipt,
+    href: '/tax',
+    description: 'TVA, liasse fiscale, ASP One France',
     category: 'business',
     mobileVisible: false
   },
@@ -101,15 +101,6 @@ export const modules: Module[] = [
     icon: Calculator,
     href: '/accounting',
     description: 'Balance, grand livre, auxiliaires, révision, immobilisations',
-    category: 'business',
-    mobileVisible: false
-  },
-  {
-    id: 'tax',
-    label: 'Fiscalité',
-    icon: Receipt,
-    href: '/tax',
-    description: 'TVA, liasse fiscale, ASP One France',
     category: 'business',
     mobileVisible: false
   },
@@ -131,6 +122,15 @@ export const modules: Module[] = [
     category: 'business',
     mobileVisible: false
   },
+  {
+    id: 'stocks',
+    label: 'Stocks',
+    icon: Package,
+    href: '/stocks',
+    description: 'Gestion des stocks façon Odoo',
+    category: 'business',
+    mobileVisible: false
+  },
 
   // Tools modules
   {
@@ -140,15 +140,6 @@ export const modules: Module[] = [
     href: '/communication',
     description: 'Intercom/Superhuman-like avec SnappyMail',
     category: 'tools',
-    mobileVisible: false
-  },
-  {
-    id: 'mail',
-    label: 'Mail Backend',
-    icon: Mail,
-    href: '/mail',
-    description: 'Infrastructure mail Mailu',
-    category: 'system',
     mobileVisible: false
   },
   {
@@ -168,15 +159,26 @@ export const modules: Module[] = [
     description: 'ActivePieces, Airtable-like automation',
     category: 'tools',
     mobileVisible: false
+  },
+
+  // System modules
+  {
+    id: 'mail',
+    label: 'Mail Backend',
+    icon: Mail,
+    href: '/mail',
+    description: 'Infrastructure mail Mailu',
+    category: 'system',
+    mobileVisible: false
   }
 ];
 
 /**
- * Configuration de la navigation mobile (5 icônes avec + au centre absolu)
+ * Configuration de la navigation mobile (5 icônes équilibrées : Dashboard, Banque, +, Menu, Navbar)
  */
 export const mobileNavItems = [
   modules.find(m => m.id === 'dashboard')!,
-  modules.find(m => m.id === 'accounting')!,
+  modules.find(m => m.id === 'bank')!,
   {
     id: 'add-mobile',
     label: 'Ajouter',
@@ -188,26 +190,35 @@ export const mobileNavItems = [
     isPrimary: true,
     isCenter: true  // Nouveau flag pour centrage absolu
   },
-  modules.find(m => m.id === 'bank')!,
   {
     id: 'more-mobile',
-    label: 'Autres',
+    label: 'Menu',
     icon: MoreHorizontal,
     href: '#',
     description: 'Tous les modules',
     category: 'core' as const,
     mobileVisible: true,
     isMore: true
+  },
+  {
+    id: 'navbar-navigation',
+    label: 'Navbar',
+    icon: FileText,
+    href: '#',
+    description: 'Navigation contextuelle et pagination intégrée',
+    category: 'system' as const,
+    mobileVisible: false,
+    isNavigation: true
   }
 ];
 
 /**
- * Configuration de la navigation tablette (7 items avec + au centre)
+ * Configuration de la navigation tablette (7 items équilibrés : Dashboard, Banque, Achats, +, Ventes, Menu, Navigation)
  */
 export const tabletNavItems = [
   modules.find(m => m.id === 'dashboard')!,
-  modules.find(m => m.id === 'accounting')!,
   modules.find(m => m.id === 'bank')!,
+  modules.find(m => m.id === 'purchases')!,
   {
     id: 'add-tablet',
     label: 'Ajouter',
@@ -218,22 +229,31 @@ export const tabletNavItems = [
     mobileVisible: true,
     isPrimary: true
   },
-  modules.find(m => m.id === 'purchases')!,
   modules.find(m => m.id === 'sales')!,
   {
     id: 'more-tablet',
-    label: 'Plus',
+    label: 'Menu',
     icon: MoreHorizontal,
     href: '#',
-    description: 'Autres modules',
+    description: 'Tous les modules',
     category: 'core' as const,
     mobileVisible: true,
     isMore: true
+  },
+  {
+    id: 'navbar-navigation',
+    label: 'Navigation',
+    icon: FileText,
+    href: '#',
+    description: 'Navigation contextuelle et pagination intégrée',
+    category: 'system' as const,
+    mobileVisible: false,
+    isNavigation: true
   }
 ];
 
 /**
- * Configuration de la navigation desktop (13 modules avec + au centre)
+ * Configuration de la navigation desktop (15 modules avec + au centre - 7 à gauche, 7 à droite)
  */
 export const desktopNavItems = [
   modules.find(m => m.id === 'dashboard')!,
@@ -241,7 +261,8 @@ export const desktopNavItems = [
   modules.find(m => m.id === 'bank')!,
   modules.find(m => m.id === 'purchases')!,
   modules.find(m => m.id === 'sales')!,
-  modules.find(m => m.id === 'documents')!,
+  modules.find(m => m.id === 'communication')!,
+  modules.find(m => m.id === 'automations')!,
   {
     id: 'add-desktop',
     label: 'Ajouter',
@@ -252,12 +273,22 @@ export const desktopNavItems = [
     mobileVisible: true,
     isPrimary: true
   },
+  modules.find(m => m.id === 'documents')!,
   modules.find(m => m.id === 'stocks')!,
   modules.find(m => m.id === 'tax')!,
   modules.find(m => m.id === 'reporting')!,
   modules.find(m => m.id === 'payroll')!,
   modules.find(m => m.id === 'organization')!,
-  modules.find(m => m.id === 'automations')!
+  {
+    id: 'navbar-navigation',
+    label: 'Navigation',
+    icon: FileText,
+    href: '#',
+    description: 'Navigation contextuelle et pagination intégrée',
+    category: 'system' as const,
+    mobileVisible: false,
+    isNavigation: true
+  }
 ];
 
 /**

@@ -55,6 +55,27 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
   const handleItemClick = (item: AddMenuItem, action?: 'camera' | 'file') => {
     setSelectedItem(item.id);
     
+    // Gestion spéciale pour "Nouveau compte bancaire"
+    if (item.id === 'new-bank-account') {
+      const actionText = action === 'file' ? 'Connexion manuelle' : 'Synchronisation automatique';
+      const message = `🏦 CONNEXION BANCAIRE - Bridge API\n\n` +
+        `${actionText}\n` +
+        `🔒 Connexion sécurisée à votre banque\n` +
+        `📊 Synchronisation automatique des transactions\n` +
+        `⚡ Temps réel via Bridge by Bankin'\n\n` +
+        `• Plus de 300 banques françaises supportées\n` +
+        `• Conformité DSP2 et Open Banking\n` +
+        `• Chiffrement bancaire bout-en-bout\n\n` +
+        `➡️ Redirection vers l'interface Bridge...`;
+      
+      alert(message);
+      setTimeout(() => {
+        setSelectedItem(null);
+        onClose();
+      }, 500);
+      return;
+    }
+    
     // Message contextuel selon le module et l'action
     let message = `${currentModule.toUpperCase()} - ${item.label}\n\n`;
     
@@ -178,23 +199,34 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                         "rounded-xl overflow-hidden",
                         "bg-white dark:bg-gray-800",
                         "border border-gray-200 dark:border-gray-700",
-                        selectedItem === item.id && "ring-2 ring-secondary"
+                        selectedItem === item.id && "ring-2 ring-secondary",
+                        item.isHighlighted && "ring-2 ring-blue-500 shadow-lg shadow-blue-500/25 border-blue-300"
                       )}
                     >
                       {/* Header avec info de l'item */}
                       <div className="p-3 pb-2 border-b border-gray-100 dark:border-gray-700">
                         <div className="flex items-center gap-3">
                           <div className={cn(
-                            "p-2.5 rounded-lg flex-shrink-0",
+                            "p-2.5 rounded-lg flex-shrink-0 relative",
                             `bg-gradient-to-br ${item.color}`,
                             "shadow-sm"
                           )}>
                             <Icon size={20} className="text-white" />
+                            {item.isHighlighted && (
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
+                            )}
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                              {item.label}
-                            </p>
+                            <div className="flex items-center gap-2">
+                              <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                {item.label}
+                              </p>
+                              {item.isHighlighted && (
+                                <span className="px-1.5 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm animate-pulse">
+                                  TOP
+                                </span>
+                              )}
+                            </div>
                             <p className="text-xs text-gray-500 mt-0.5">
                               {item.description}
                             </p>
@@ -255,29 +287,52 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                 // Desktop/Tablette - avec boutons import et drag & drop
                 return (
                   <React.Fragment key={item.id}>
-                    <div
+                    <motion.div
                     className={cn(
                       "rounded-xl",
                       "bg-white dark:bg-gray-800",
                       "border border-gray-200 dark:border-gray-700",
                       selectedItem === item.id && "ring-2 ring-secondary",
-                      "hover:shadow-lg transition-shadow duration-200",
-                      "flex flex-col sm:flex-row"
+                      "hover:shadow-lg transition-all duration-200",
+                      "flex flex-col sm:flex-row",
+                      item.isHighlighted && "ring-2 ring-blue-500 shadow-lg shadow-blue-500/25 border-blue-300 bg-gradient-to-r from-blue-50/50 to-cyan-50/50"
                     )}
+                    animate={item.isHighlighted ? {
+                      boxShadow: [
+                        "0 4px 20px rgba(59, 130, 246, 0.15)",
+                        "0 4px 30px rgba(59, 130, 246, 0.25)",
+                        "0 4px 20px rgba(59, 130, 246, 0.15)"
+                      ]
+                    } : {}}
+                    transition={{
+                      duration: 2,
+                      repeat: item.isHighlighted ? Infinity : 0,
+                      repeatType: "reverse"
+                    }}
                   >
                     {/* Info de l'item */}
                     <div className="flex-1 p-4 flex items-center gap-3">
                       <div className={cn(
-                        "p-2.5 rounded-lg flex-shrink-0",
+                        "p-2.5 rounded-lg flex-shrink-0 relative",
                         `bg-gradient-to-br ${item.color}`,
                         "shadow-sm"
                       )}>
                         <Icon size={20} className="text-white" />
+                        {item.isHighlighted && (
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
+                        )}
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                          {item.label}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                            {item.label}
+                          </p>
+                          {item.isHighlighted && (
+                            <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm animate-pulse">
+                              AUTOMATISÉ
+                            </span>
+                          )}
+                        </div>
                         <p className="text-xs text-gray-600 mt-0.5">
                           {item.description}
                         </p>
@@ -330,6 +385,24 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                           onDrop={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
+                            
+                            // Gestion spéciale pour nouveau compte bancaire
+                            if (item.id === 'new-bank-account') {
+                              const message = `🏦 CONNEXION BANCAIRE - Bridge API\n\n` +
+                                `Synchronisation par glisser-déposer\n` +
+                                `🔒 Connexion sécurisée à votre banque\n` +
+                                `📊 Synchronisation automatique des transactions\n` +
+                                `⚡ Temps réel via Bridge by Bankin'\n\n` +
+                                `➡️ Redirection vers l'interface Bridge...`;
+                              
+                              alert(message);
+                              setTimeout(() => {
+                                setSelectedItem(null);
+                                onClose();
+                              }, 500);
+                              return;
+                            }
+                            
                             const files = Array.from(e.dataTransfer.files);
                             if (files.length > 0) {
                               const fileNames = files.map(f => f.name).join(', ');
@@ -371,7 +444,7 @@ export default function AddMenu({ isOpen, onClose, anchorRef }: AddMenuProps) {
                         Créer
                       </motion.button>
                     )}
-                  </div>
+                  </motion.div>
                   {isLastCommon && (
                     <div className="flex items-center gap-3 my-2 px-4">
                       <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />

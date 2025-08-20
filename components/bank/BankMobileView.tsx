@@ -8,16 +8,15 @@ import {
   Clock,
   XCircle,
   Check,
-  Link2,
-  Eye,
   X
 } from 'lucide-react';
 import { BankTransactionExtended, bankAccounts, calculateBalanceSummary } from '@/lib/mock-data/bank-transactions';
 import BankFilters from './BankFilters';
 import BankBalanceWidgets, { BankAccount, BalanceSummary } from './BankBalanceWidgets';
 import TransactionDetailsSheet from './TransactionDetailsSheet';
+import BankTransactionModal from './BankTransactionModal';
 import { fadeInUp, bottomSheet } from '@/lib/animations/variants';
-import { cn } from '@/lib/utils';
+import { cn, formatTransactionAmount } from '@/lib/utils';
 
 interface BankMobileViewProps {
   transactions: BankTransactionExtended[];
@@ -91,6 +90,7 @@ export default function BankMobileView({
 }: BankMobileViewProps) {
   const [selectedTransaction, setSelectedTransaction] = useState<BankTransactionExtended | null>(null);
   const [showDetailsSheet, setShowDetailsSheet] = useState(false);
+  const [modalTransaction, setModalTransaction] = useState<BankTransactionExtended | null>(null);
 
   const handleTransactionClick = (transaction: BankTransactionExtended) => {
     setSelectedTransaction(transaction);
@@ -125,18 +125,6 @@ export default function BankMobileView({
 
   return (
     <div className="space-y-4">
-      {/* Widgets de solde mobile - limités */}
-      <div className="px-1">
-        <BankBalanceWidgets
-          accounts={mobileAccounts}
-          summary={balanceSummary}
-          showBalances={showBalances}
-          onToggleVisibility={onToggleVisibility}
-          selectedAccounts={selectedAccounts}
-          onAccountToggle={onAccountToggle}
-          className="gap-2"
-        />
-      </div>
 
       {/* Actions de sélection uniquement si des items sont sélectionnés */}
       {selectedTransactions.size > 0 && (
@@ -182,7 +170,7 @@ export default function BankMobileView({
         )}
       </AnimatePresence>
 
-      {/* Liste des transactions */}
+      {/* Liste des transactions - Cards compactes style Monzo */}
       <div className="space-y-2">
         <AnimatePresence>
           {transactions.map((transaction, index) => (
@@ -193,84 +181,69 @@ export default function BankMobileView({
               animate="animate"
               exit="exit"
               transition={{ delay: index * 0.02 }}
-              className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+              className="bg-white rounded-xl shadow-sm border border-gray-50 overflow-hidden hover:shadow-md transition-all duration-200"
               onClick={() => handleTransactionClick(transaction)}
+              onDoubleClick={() => setModalTransaction(transaction)}
             >
               <div className="p-3">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs text-gray-500">
-                        {new Date(transaction.date).toLocaleDateString('fr-FR')}
-                      </span>
-                      <span className="text-xs px-1.5 py-0.5 bg-gray-100 rounded">
-                        {paymentTypeLabels[transaction.typePaiement]}
-                      </span>
-                      {transaction.justificatif && (
-                        <Paperclip className="w-3 h-3 text-[#4C34CE]" />
-                      )}
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 min-w-0 flex items-center gap-3">
+                    {/* Status indicator en début */}
+                    <div className={cn(
+                      "w-2 h-2 rounded-full flex-shrink-0",
+                      transaction.statut === 'rapproche' ? 'bg-green-500' : 
+                      transaction.statut === 'en_attente' ? 'bg-orange-500' : 'bg-red-500'
+                    )}></div>
+                    
+                    <div className="flex-1 min-w-0">
+                      {/* Ligne 1: Contrepartie/Objet */}
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-sm font-semibold text-gray-900 truncate">
+                          {transaction.objet || transaction.contrepartie}
+                        </h3>
+                      </div>
+                      
+                      {/* Ligne 2: Libellé compacte */}
+                      <p className="text-xs text-gray-600 line-clamp-1 mb-1">
+                        {transaction.libelleComplet}
+                      </p>
+                      
+                      {/* Ligne 3: Métadonnées avec banque */}
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <span className="flex items-center gap-1">
+                          <span className="text-xs">{transaction.banqueIcone}</span>
+                          {paymentTypeLabels[transaction.typePaiement]}
+                        </span>
+                        {transaction.justificatif && (
+                          <span className="flex items-center gap-1 text-[#4C34CE]">
+                            <Paperclip className="w-3 h-3" />
+                          </span>
+                        )}
+                        {transaction.lettrage && (
+                          <span className="px-1.5 py-0.5 bg-green-100 text-green-700 rounded text-xs font-medium">
+                            {transaction.lettrage}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <p className="text-sm font-medium text-gray-900 line-clamp-1">
-                      {transaction.contrepartie}
-                    </p>
-                    <p className="text-xs text-gray-500 line-clamp-1">
-                      {transaction.libelleComplet}
-                    </p>
                   </div>
-                  <div className="text-right ml-3">
+                  
+                  {/* Date et Montant alignés à droite */}
+                  <div className="text-right ml-3 flex-shrink-0">
+                    <div className="text-xs text-gray-500 mb-1">
+                      {new Date(transaction.date).toLocaleDateString('fr-FR', { 
+                        day: '2-digit', 
+                        month: 'short',
+                        year: '2-digit'
+                      })}
+                    </div>
                     <p className={cn(
-                      "font-semibold",
+                      "text-sm font-bold",
                       transaction.montant < 0 ? "text-red-600" : "text-green-600"
                     )}>
-                      {transaction.montant < 0 ? '-' : '+'}{Math.abs(transaction.montant).toFixed(2)} €
+                      {formatTransactionAmount(transaction.montant, 'EUR', false)}
                     </p>
-                    <div className={cn(
-                      "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs mt-1",
-                      statusConfig[transaction.statut].bgColor,
-                      statusConfig[transaction.statut].color
-                    )}>
-                      {statusConfig[transaction.statut].icon}
-                      <span className="hidden xs:inline">{statusConfig[transaction.statut].label}</span>
-                    </div>
                   </div>
-                </div>
-
-                {/* Actions rapides */}
-                <div className="flex items-center gap-1 mt-2 pt-2 border-t border-gray-100">
-                  {transaction.statut !== 'rapproche' && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSwipeAction(transaction, 'reconcile');
-                      }}
-                      className="flex-1 py-1 px-2 text-xs text-green-600 hover:bg-green-50 rounded transition-colors"
-                    >
-                      <Check className="w-3 h-3 inline mr-1" />
-                      Rapprocher
-                    </button>
-                  )}
-                  {transaction.justificatif && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSwipeAction(transaction, 'view');
-                      }}
-                      className="flex-1 py-1 px-2 text-xs text-[#4C34CE] hover:bg-[#4C34CE]/10 rounded transition-colors"
-                    >
-                      <Eye className="w-3 h-3 inline mr-1" />
-                      Justif.
-                    </button>
-                  )}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleSwipeAction(transaction, 'link');
-                    }}
-                    className="flex-1 py-1 px-2 text-xs text-gray-600 hover:bg-gray-50 rounded transition-colors"
-                  >
-                    <Link2 className="w-3 h-3 inline mr-1" />
-                    Compta
-                  </button>
                 </div>
               </div>
             </motion.div>
@@ -291,6 +264,19 @@ export default function BankMobileView({
           />
         )}
       </AnimatePresence>
+
+      {/* Modal de rapprochement */}
+      <BankTransactionModal
+        isOpen={modalTransaction !== null}
+        onClose={() => setModalTransaction(null)}
+        transaction={modalTransaction}
+        onUpdate={(updatedTransaction) => {
+          // On ne peut pas directement modifier les transactions ici
+          // car c'est géré par le composant parent
+          console.log('Transaction mise à jour:', updatedTransaction);
+          setModalTransaction(null);
+        }}
+      />
     </div>
   );
 }

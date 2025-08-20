@@ -136,10 +136,10 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
         }}
         transition={{ duration: 0.3 }}
         className={cn(
-          "relative bg-white/90 backdrop-blur-xl rounded-xl p-6 group border border-white/50 shadow-lg flex flex-col",
+          "relative bg-white/90 backdrop-blur-xl rounded-xl p-4 md:p-6 group border border-white/50 shadow-lg flex flex-col",
           shouldHaveLink && "cursor-pointer hover:shadow-xl",
-          // Hauteur fixe pour tous les widgets sauf notifications
-          !fullWidth && "h-[280px]"
+          // Hauteur fixe pour desktop seulement, auto sur mobile
+          !fullWidth && "min-h-[240px] md:h-[280px]"
         )}
         style={{
           boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.05)'
@@ -199,7 +199,7 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
         {/* Liste des items - disposition différente selon fullWidth */}
         {fullWidth && id === 'notifications' ? (
           // Mode notifications : liste verticale avec actions
-          <div className="divide-y divide-gray-100 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="divide-y divide-gray-100 max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             {items
               .filter(item => item.label)
               .filter(item => showAllNotifications || !processedItems.includes(item.id))
@@ -209,12 +209,12 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
                   <div 
                     key={`${id}-item-${index}`} 
                     className={cn(
-                      "flex items-start justify-between gap-4 py-3 px-4 -mx-4 transition-all",
+                      "flex items-start justify-between gap-4 py-3 transition-all",
                       !isProcessed && "bg-blue-50/50",
                       "hover:bg-gray-50/50"
                     )}
                   >
-                    <div className="flex-1 space-y-1">
+                    <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-start gap-3">
                         {/* Case à cocher ronde */}
                         <button
@@ -231,9 +231,9 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
                           )}
                         </button>
                         
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
                           <div className={cn(
-                            "text-sm leading-relaxed",
+                            "text-sm leading-relaxed break-words",
                             !isProcessed ? "text-neutral-800 font-medium" : "text-neutral-600"
                           )}>
                             {item.label}
@@ -247,12 +247,12 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
                       </div>
                     </div>
                 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       {item.action && (
                         <Link 
                           href={item.action}
                           className={cn(
-                            "flex-shrink-0 inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg transition-all whitespace-nowrap",
+                            "inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all whitespace-nowrap",
                             !isProcessed 
                               ? "text-white bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700"
                               : "text-gray-600 bg-gray-100 hover:bg-gray-200"
@@ -284,20 +284,23 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
           </div>
         ) : isSpecialWidget ? (
           // Mode spécial pour attestations et PV
-          <div className="flex-1 flex flex-col justify-between">
-            <div className="space-y-3">
+          <div className="flex-1 flex flex-col justify-between overflow-hidden">
+            <div className="space-y-2">
               {items.filter(item => item.isSpecialFormat).map((item) => (
-                <div key={item.id} className="space-y-3">
-                  <p className="text-sm text-neutral-700 leading-relaxed">
+                <div key={item.id} className="space-y-2">
+                  <p className={cn(
+                    "text-sm text-neutral-700 leading-snug",
+                    "line-clamp-3 md:line-clamp-none"
+                  )}>
                     {item.label}
                   </p>
                   {item.action && (
                     <Link 
                       href={item.action}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg hover:from-violet-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+                      className="inline-flex items-center gap-2 px-3 py-2 text-xs md:text-sm font-medium text-white bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg hover:from-violet-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg w-full md:w-auto justify-center md:justify-start"
                     >
                       {item.actionLabel || item.value}
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
                     </Link>
                   )}
                 </div>
@@ -305,15 +308,15 @@ const UnifiedWidgetCard: React.FC<UnifiedWidgetProps> = ({
             
             </div>
             {/* Lien vers la dernière attestation */}
-            <div>
+            <div className="mt-auto">
               {items.filter(item => item.isSecondary).map((item) => (
-                <div key={item.id} className="pt-3 border-t border-gray-100">
+                <div key={item.id} className="pt-2 border-t border-gray-100">
                   <Link 
                     href={item.action || '#'}
                     className="flex items-center justify-between text-xs text-gray-600 hover:text-purple-600 transition-colors"
                   >
-                    <span>{item.label}</span>
-                    <span className="text-purple-600 font-medium">{item.actionLabel}</span>
+                    <span className="truncate">{item.label}</span>
+                    <span className="text-purple-600 font-medium flex-shrink-0 ml-2">{item.actionLabel}</span>
                   </Link>
                 </div>
               ))}

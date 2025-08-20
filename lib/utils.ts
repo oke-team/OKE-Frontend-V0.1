@@ -238,3 +238,149 @@ export function focusRing(color: "primary" | "secondary" | "accent" = "primary")
     "dark:focus:ring-offset-neutral-900"
   );
 }
+
+/**
+ * Formate un nombre selon les conventions françaises
+ * Version stable pour éviter les problèmes d'hydratation SSR
+ * 
+ * @param value - Nombre à formater
+ * @param options - Options de formatage
+ * @returns Nombre formaté avec espaces pour les milliers et virgule pour les décimales
+ * 
+ * @example
+ * formatNumber(1234.56) // "1 234,56"
+ * formatNumber(1234.56, { currency: 'EUR' }) // "1 234,56 €"
+ * formatNumber(1234, { decimals: 0 }) // "1 234"
+ */
+export function formatNumber(
+  value: number,
+  options: {
+    decimals?: number;
+    currency?: string;
+    showSign?: boolean;
+    locale?: string;
+  } = {}
+) {
+  const {
+    decimals = 2,
+    currency,
+    showSign = false
+  } = options;
+
+  // Formatage manuel pour éviter les problèmes d'hydratation avec Intl
+  const absValue = Math.abs(value);
+  const fixed = absValue.toFixed(decimals);
+  const [integerPart, decimalPart] = fixed.split('.');
+  
+  // Ajouter des espaces pour les milliers (formatage français)
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  
+  // Construire le nombre complet
+  let formattedValue = formattedInteger;
+  if (decimals > 0 && decimalPart) {
+    formattedValue += ',' + decimalPart; // Virgule française au lieu du point
+  }
+  
+  // Ajouter le signe si nécessaire
+  if (showSign || value < 0) {
+    formattedValue = (value < 0 ? '-' : '+') + formattedValue;
+  }
+  
+  // Ajouter la devise si spécifiée - toujours € pour la cohérence
+  if (currency) {
+    formattedValue += ` €`;
+  }
+  
+  return formattedValue;
+}
+
+/**
+ * Formate un montant monétaire selon les conventions françaises
+ * 
+ * @param amount - Montant à formater
+ * @param currency - Devise (par défaut EUR)
+ * @param showDecimals - Afficher les décimales (par défaut true)
+ * @returns Montant formaté
+ * 
+ * @example
+ * formatCurrency(1234.56) // "1 234,56 €"
+ * formatCurrency(1234, 'EUR', false) // "1 234 €"
+ * formatCurrency(-1234.56) // "-1 234,56 €"
+ */
+export function formatCurrency(
+  amount: number,
+  currency: string = 'EUR',
+  showDecimals: boolean = true
+) {
+  return formatNumber(amount, {
+    decimals: showDecimals ? 2 : 0,
+    currency
+  });
+}
+
+/**
+ * Formate un montant avec signe pour les transactions
+ * 
+ * @param amount - Montant de la transaction
+ * @param currency - Devise (par défaut EUR)
+ * @param showDecimals - Afficher les décimales (par défaut false pour les entiers)
+ * @returns Montant formaté avec signe + ou -
+ * 
+ * @example
+ * formatTransactionAmount(1234.56) // "+1 234,57 €"
+ * formatTransactionAmount(-1234.56) // "-1 234,57 €"
+ * formatTransactionAmount(1234, 'EUR', false) // "+1 234 €"
+ */
+export function formatTransactionAmount(
+  amount: number,
+  currency: string = 'EUR',
+  showDecimals: boolean = false
+) {
+  return formatNumber(amount, {
+    decimals: showDecimals ? 2 : 0,
+    currency,
+    showSign: true
+  });
+}
+
+/**
+ * Formate une date selon les conventions françaises
+ * 
+ * @param date - Date à formater (string ou Date)
+ * @param format - Format de sortie ('short', 'medium', 'long')
+ * @returns Date formatée
+ * 
+ * @example
+ * formatDate('2024-12-20') // "20/12/2024"
+ * formatDate(new Date(), 'medium') // "20 déc. 2024"
+ * formatDate('2024-12-20', 'long') // "20 décembre 2024"
+ */
+export function formatDate(
+  date: string | Date,
+  format: 'short' | 'medium' | 'long' = 'short'
+): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  
+  if (isNaN(dateObj.getTime())) {
+    return 'Date invalide';
+  }
+
+  switch (format) {
+    case 'short':
+      return dateObj.toLocaleDateString('fr-FR');
+    case 'medium':
+      return dateObj.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+    case 'long':
+      return dateObj.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      });
+    default:
+      return dateObj.toLocaleDateString('fr-FR');
+  }
+}

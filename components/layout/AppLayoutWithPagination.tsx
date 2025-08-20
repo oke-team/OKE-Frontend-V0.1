@@ -2,17 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import UnifiedNavigation from '@/components/navigation/UnifiedNavigation';
+import UnifiedBottomNav from '@/components/navigation/UnifiedBottomNav';
 import HeaderSimple from './HeaderSimple';
 import MagicActionsButton from '@/components/ui/MagicActionsButton';
 import AssistantChat from '@/components/ui/AssistantChat';
 import AddMenu from '@/components/ui/AddMenu';
 import ModulesGrid from '@/components/ui/ModulesGrid';
 
-interface AppLayoutProps {
+interface AppLayoutWithPaginationProps {
   children: React.ReactNode;
   className?: string;
-  // Props de pagination pour navigation contextuelle
+  // Props de pagination
+  showPagination?: boolean;
   currentPage?: number;
   totalPages?: number;
   totalItems?: number;
@@ -20,20 +21,17 @@ interface AppLayoutProps {
 }
 
 /**
- * Layout principal de l'application avec BottomNav intégrée
- * 
- * Ce composant wrap le contenu de l'application et ajoute la navigation inférieure
- * avec gestion automatique du padding pour éviter que le contenu soit masqué.
+ * Layout avec navbar intégrée supportant la pagination
  */
-const AppLayout: React.FC<AppLayoutProps> = ({ 
+const AppLayoutWithPagination: React.FC<AppLayoutWithPaginationProps> = ({ 
   children, 
   className,
-  currentPage,
-  totalPages,
-  totalItems,
+  showPagination = false,
+  currentPage = 1,
+  totalPages = 1,
+  totalItems = 0,
   onPageChange
 }) => {
-  // Debug: log des props reçues dans AppLayout (retiré pour production)
   const router = useRouter();
   const pathname = usePathname();
   const [activeNavItem, setActiveNavItem] = useState('dashboard');
@@ -53,82 +51,85 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   }, [pathname]);
 
   const handleNavigation = (itemId: string) => {
-    if (itemId.startsWith('add-')) {
-      // Ouvrir le menu d'ajout
+    if (itemId === 'add') {
       setAddMenuOpen(true);
       return;
     }
-    if (itemId.startsWith('more-')) {
-      // Ouvrir la grille de modules
-      setModulesGridOpen(true);
-      return;
+    
+    // Navigation vers les modules
+    const moduleRoutes: Record<string, string> = {
+      dashboard: '/',
+      banking: '/bank',
+      communication: '/communication',
+      accounting: '/accounting',
+      documents: '/documents',
+      stocks: '/stocks',
+      tax: '/tax',
+      reporting: '/reporting',
+      hr: '/hr',
+      organization: '/organization',
+      automation: '/automation',
+      purchases: '/purchases',
+      sales: '/sales'
+    };
+
+    const route = moduleRoutes[itemId];
+    if (route) {
+      router.push(route);
     }
-    // Toujours mettre à jour l'état actif, même si c'est le même
-    setActiveNavItem(itemId);
-    if (itemId !== activeNavItem) {
-      router.push(`/${itemId}`);
-    }
-  };
-
-  const handleChatOpen = () => {
-    setChatOpen(true);
-    console.log('Ouverture du chatbot IA');
-  };
-
-  const handleMagicActions = () => {
-    console.log('Actions magiques contextuelles');
-  };
-
-  const handleSearch = (query: string) => {
-    console.log('Search query:', query);
-    // Implémentation de la recherche globale
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900">
-      {/* Header fixe en haut - Simple et minimaliste */}
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
       <HeaderSimple
         currentCompany={currentCompany}
         onCompanyChange={setCurrentCompany}
-        onChatOpen={handleChatOpen}
-        onMagicActions={handleMagicActions}
+        onChatToggle={() => setChatOpen(!chatOpen)}
       />
-
-      {/* Contenu principal avec padding pour header et navigation */}
-      <main className={`pt-16 pb-28 min-h-screen ${className || ''}`}>
+      
+      {/* Contenu principal avec padding pour header et navbar */}
+      <main className={`flex-1 pt-16 ${className || ''}`}>
         {children}
       </main>
-
-      {/* Navigation unifiée avec pagination intégrée */}
-      <UnifiedNavigation
+      
+      {/* Navigation avec pagination intégrée */}
+      <UnifiedBottomNav
         activeItem={activeNavItem}
         onItemSelect={handleNavigation}
+        showPagination={showPagination}
         currentPage={currentPage}
         totalPages={totalPages}
         totalItems={totalItems}
         onPageChange={onPageChange}
       />
       
-      {/* Assistant Chat OKÉ */}
+      {/* Magic Actions Button */}
+      <div className="fixed bottom-24 right-4 z-40">
+        <MagicActionsButton currentModule={activeNavItem} />
+      </div>
+      
+      {/* Chat Assistant */}
       <AssistantChat 
         isOpen={chatOpen} 
         onClose={() => setChatOpen(false)} 
       />
       
       {/* Menu d'ajout */}
-      <AddMenu
+      <AddMenu 
         isOpen={addMenuOpen}
         onClose={() => setAddMenuOpen(false)}
+        currentModule={activeNavItem}
       />
       
-      {/* Grille de modules */}
-      <ModulesGrid
+      {/* Grille des modules */}
+      <ModulesGrid 
         isOpen={modulesGridOpen}
         onClose={() => setModulesGridOpen(false)}
-        currentModule={activeNavItem}
+        onModuleSelect={handleNavigation}
       />
     </div>
   );
 };
 
-export default AppLayout;
+export default AppLayoutWithPagination;

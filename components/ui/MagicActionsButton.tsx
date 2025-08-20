@@ -13,7 +13,10 @@ import {
   TrendingUp,
   ShoppingCart,
   Calculator,
-  Sparkles
+  Sparkles,
+  Filter,
+  RefreshCw,
+  Download
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -71,13 +74,39 @@ export default function MagicActionsButton({
         }
       ],
       bank: [
-        ...baseActions,
         {
-          id: 'new-transaction',
-          label: 'Nouveau virement',
-          icon: TrendingUp,
-          onClick: () => console.log('New transaction')
-        }
+          id: 'filters',
+          label: 'Filtres avancés',
+          icon: Filter,
+          shortcut: 'Cmd+F',
+          onClick: () => {
+            // Appeler la fonction exposée par BankTransactionTable
+            if ((window as any).toggleBankFilters) {
+              (window as any).toggleBankFilters();
+            }
+            setIsOpen(false);
+          }
+        },
+        {
+          id: 'refresh',
+          label: 'Actualiser',
+          icon: RefreshCw,
+          shortcut: 'Cmd+R',
+          onClick: () => {
+            window.location.reload();
+            setIsOpen(false);
+          }
+        },
+        {
+          id: 'export',
+          label: 'Exporter',
+          icon: Download,
+          onClick: () => {
+            console.log('Export transactions');
+            setIsOpen(false);
+          }
+        },
+        ...baseActions
       ],
       purchases: [
         {

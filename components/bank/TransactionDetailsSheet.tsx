@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { BankTransactionExtended } from '@/lib/mock-data/bank-transactions';
 import { bottomSheet } from '@/lib/animations/variants';
-import { cn } from '@/lib/utils';
+import { cn, formatTransactionAmount, formatCurrency } from '@/lib/utils';
 
 interface TransactionDetailsSheetProps {
   transaction: BankTransactionExtended;
@@ -126,11 +126,11 @@ export default function TransactionDetailsSheet({
                   "text-2xl font-bold",
                   transaction.montant < 0 ? "text-red-600" : "text-green-600"
                 )}>
-                  {transaction.montant < 0 ? '-' : '+'}{Math.abs(transaction.montant).toFixed(2)} €
+                  {formatTransactionAmount(transaction.montant, 'EUR', true)}
                 </p>
                 {transaction.montantEUR && transaction.devise !== 'EUR' && (
                   <p className="text-sm text-gray-500 mt-1">
-                    {transaction.montantEUR.toFixed(2)} EUR • {transaction.devise}
+                    {formatCurrency(transaction.montantEUR, 'EUR')} • {transaction.devise}
                   </p>
                 )}
               </div>
