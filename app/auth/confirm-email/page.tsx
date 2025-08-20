@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle, ArrowLeft, RefreshCw, Info } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function ConfirmEmailPage() {
+function ConfirmEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState<string>('');
@@ -280,5 +280,17 @@ export default function ConfirmEmailPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function ConfirmEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="text-gray-600">Chargement...</div>
+      </div>
+    }>
+      <ConfirmEmailContent />
+    </Suspense>
   );
 }
