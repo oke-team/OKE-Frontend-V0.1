@@ -92,7 +92,25 @@ const statusConfig = {
   }
 };
 
-export default function BankTransactionTable() {
+interface BankTransactionTableProps {
+  externalSelectedAccounts?: string[];
+  onExternalAccountToggle?: (accountId: string) => void;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
+  totalPages?: number;
+  totalItems?: number;
+  onPaginationUpdate?: (totalPages: number, totalItems: number) => void;
+}
+
+export default function BankTransactionTable({
+  externalSelectedAccounts,
+  onExternalAccountToggle,
+  currentPage: externalCurrentPage,
+  onPageChange,
+  totalPages: externalTotalPages,
+  totalItems: externalTotalItems,
+  onPaginationUpdate
+}: BankTransactionTableProps = {}) {
   const { open: openDocument, ViewerComponent } = useDocumentViewer();
   const [transactions, setTransactions] = useState<BankTransactionExtended[]>(bankTransactions);
   const [filteredTransactions, setFilteredTransactions] = useState<BankTransactionExtended[]>(bankTransactions);
@@ -101,19 +119,26 @@ export default function BankTransactionTable() {
   const [sortField, setSortField] = useState<keyof BankTransactionExtended>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [isMobile, setIsMobile] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [internalCurrentPage, setInternalCurrentPage] = useState(1);
+  const currentPage = externalCurrentPage ?? internalCurrentPage;
+  const setCurrentPage = onPageChange ?? setInternalCurrentPage;
   const itemsPerPage = 50;
   
   // Récupération du terme de recherche depuis le contexte global ou localStorage
   const [searchTerm, setSearchTerm] = useState('');
   
-  // État pour l'affichage des soldes
-  const [showBalances, setShowBalances] = useState(true);
   
-  // État pour la sélection des comptes
-  const [selectedAccounts, setSelectedAccounts] = useState<string[]>(
+  // État pour la sélection des comptes (utilise les props externes si disponibles)
+  const [internalSelectedAccounts, setInternalSelectedAccounts] = useState<string[]>(
     bankAccounts.map(acc => acc.id) // Tous sélectionnés par défaut
   );
+  
+  const selectedAccounts = externalSelectedAccounts || internalSelectedAccounts;
+  const setSelectedAccounts = onExternalAccountToggle ? 
+    (accounts: string[] | ((prev: string[]) => string[])) => {
+      // Pour les props externes, on ne peut pas utiliser directement setSelectedAccounts
+      // Cette fonction sera appelée via handleAccountToggle
+    } : setInternalSelectedAccounts;
 
   // Filtres
   const [filters, setFilters] = useState({
@@ -144,8 +169,21 @@ export default function BankTransactionTable() {
     });
     filtered = sortTransactions(filtered, sortField, sortOrder);
     setFilteredTransactions(filtered);
-    setCurrentPage(1);
+    if (onPageChange) {
+      onPageChange(1);
+    } else {
+      setInternalCurrentPage(1);
+    }
   }, [transactions, searchTerm, filters, sortField, sortOrder]);
+  
+  // Mise à jour des informations de pagination pour les widgets
+  useEffect(() => {
+    if (onPaginationUpdate) {
+      const newTotalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+      const newTotalItems = filteredTransactions.length;
+      onPaginationUpdate(newTotalPages, newTotalItems);
+    }
+  }, [filteredTransactions.length, itemsPerPage, onPaginationUpdate]);
 
   // Pagination
   const paginatedTransactions = useMemo(() => {
@@ -153,7 +191,9 @@ export default function BankTransactionTable() {
     return filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredTransactions, currentPage]);
 
-  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const internalTotalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const totalPages = externalTotalPages ?? internalTotalPages;
+  const totalItems = externalTotalItems ?? filteredTransactions.length;
 
   // Gestion du tri
   const handleSort = (field: keyof BankTransactionExtended) => {
@@ -211,16 +251,19 @@ export default function BankTransactionTable() {
     };
   }, [showFilters]);
 
-  // Gestion de la sélection des comptes
-  const handleAccountToggle = (accountId: string) => {
-    setSelectedAccounts(prev => 
-      prev.includes(accountId) 
-        ? prev.filter(id => id !== accountId)
-        : [...prev, accountId]
-    );
-  };
+  // Gestion de la sélection des comptes avec useCallback
+  const handleAccountToggle = useCallback((accountId: string) => {
+    if (onExternalAccountToggle) {
+      onExternalAccountToggle(accountId);
+    } else {
+      setInternalSelectedAccounts(prev => 
+        prev.includes(accountId) 
+          ? prev.filter(id => id !== accountId)
+          : [...prev, accountId]
+      );
+    }
+  }, [onExternalAccountToggle]);
 
-  const balanceSummary = calculateBalanceSummary(selectedAccounts);
 
   // Vue mobile
   if (isMobile) {
@@ -238,10 +281,6 @@ export default function BankTransactionTable() {
           filters={filters}
           onFiltersChange={setFilters}
           stats={{ total: 0, debits: 0, credits: 0, nonRapproche: 0 }}
-          showBalances={showBalances}
-          onToggleVisibility={() => setShowBalances(!showBalances)}
-          selectedAccounts={selectedAccounts}
-          onAccountToggle={handleAccountToggle}
         />
         <ViewerComponent mode="auto" glassMorphism={true} />
       </>
@@ -250,23 +289,12 @@ export default function BankTransactionTable() {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Widgets de solde - Sticky au top */}
-      <div className="sticky top-0 z-30 bg-white px-4 lg:px-6 py-3 flex-shrink-0">
-        <BankBalanceWidgets
-          accounts={bankAccounts}
-          summary={balanceSummary}
-          showBalances={showBalances}
-          onToggleVisibility={() => setShowBalances(!showBalances)}
-          selectedAccounts={selectedAccounts}
-          onAccountToggle={handleAccountToggle}
-        />
-      </div>
 
       {/* Filtres directement en haut si activés */}
       <AnimatePresence>
         {showFilters && (
           <motion.div
-            className="sticky top-[84px] z-20 px-4 lg:px-6 py-4 bg-white flex-shrink-0"
+            className="sticky top-0 z-20 px-4 lg:px-6 py-4 bg-white flex-shrink-0"
             variants={fadeIn}
             initial="initial"
             animate="animate"
@@ -287,7 +315,7 @@ export default function BankTransactionTable() {
       {selectedTransactions.size > 0 && (
         <div className={cn(
           "sticky z-10 px-4 py-2 border-b border-gray-200 bg-gray-50 flex items-center gap-3 flex-shrink-0",
-          showFilters ? "top-[160px]" : "top-[84px]"
+          showFilters ? "top-[80px]" : "top-0"
         )}>
           <span className="text-sm text-gray-600 font-medium">
             {selectedTransactions.size} sélectionné(s)
@@ -320,12 +348,12 @@ export default function BankTransactionTable() {
         {/* Header de table - sticky avec couleurs du thème OKÉ */}
         <div className={cn(
           "sticky z-10 flex-shrink-0",
-          "bg-gradient-to-r from-white via-[#4C34CE]/5 to-white",
+          "bg-[#4C34CE]/5",
           "border-b-2 border-[#FAA016]",
           "backdrop-blur-sm",
           selectedTransactions.size > 0 
-            ? (showFilters ? "top-[200px]" : "top-[120px]")
-            : (showFilters ? "top-[160px]" : "top-[84px]")
+            ? (showFilters ? "top-[120px]" : "top-[40px]")
+            : (showFilters ? "top-[80px]" : "top-0")
         )}>
           <table className="w-full table-fixed">
             <thead>
@@ -488,35 +516,17 @@ export default function BankTransactionTable() {
                     </td>
                   </motion.tr>
                 ))}
+                
+                {/* Deux lignes vides systématiques en bas pour garantir la visibilité */}
+                <tr key="empty-row-1" className="h-12">
+                  <td colSpan={10} className="px-4 py-3 border-t border-transparent"></td>
+                </tr>
+                <tr key="empty-row-2" className="h-12">
+                  <td colSpan={10} className="px-4 py-3 border-t border-transparent"></td>
+                </tr>
               </AnimatePresence>
             </tbody>
           </table>
-        </div>
-        
-        {/* Pagination - fixe au bas */}
-        <div className="bg-white px-4 py-3 border-t border-gray-200 flex items-center justify-between flex-shrink-0">
-          <div className="text-sm text-gray-700">
-            Affichage de {((currentPage - 1) * itemsPerPage) + 1} à {Math.min(currentPage * itemsPerPage, filteredTransactions.length)} sur {filteredTransactions.length} transactions
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Précédent
-            </button>
-            <span className="px-3 py-1 text-sm">
-              Page {currentPage} sur {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Suivant
-            </button>
-          </div>
         </div>
       </div>
 
