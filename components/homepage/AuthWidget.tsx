@@ -4,14 +4,9 @@ import React, { useState, useCallback, useMemo, memo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 import GlassContainer from '@/components/ui/GlassContainer';
-import dynamic from 'next/dynamic';
-
-// Import dynamique du modal d'onboarding
-const OnboardingModal = dynamic(
-  () => import('@/components/onboarding/OnboardingModal'),
-  { ssr: false }
-);
 
 interface AuthWidgetProps {
   className?: string;
@@ -39,9 +34,10 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
     rememberMe: false
   });
   const [loading, setLoading] = useState(false);
-  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const router = useRouter();
+  const { login, signup } = useAuth();
 
   const handleInputChange = useCallback((field: keyof FormData) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -53,39 +49,52 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
   const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
+    setError(null);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
       if (authMode === 'signup') {
-        // Pour l'inscription, sauvegarder les données et ouvrir le tunnel à l'étape 2
-        if (typeof window !== 'undefined') {
-          // Sauvegarder les données personnelles dans le localStorage
-          const onboardingData = {
-            personalInfo: {
-              prenom: formData.firstName || '',
-              nom: formData.lastName || '',
-              email: formData.email,
-              password: formData.password,
-              telephone: formData.phone || ''
-            },
-            currentStep: 1 // Commencer à l'étape 2 (index 1 = pays)
-          };
-          localStorage.setItem('onboardingData', JSON.stringify(onboardingData));
-        }
+        // Inscription via l'API
+        const result = await signup({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName || '',
+          lastName: formData.lastName || '',
+          phone: formData.phone
+        });
         
-        // Ouvrir le tunnel d'onboarding
-        setShowOnboardingModal(true);
+        if (result.success) {
+          // Inscription réussie, sauvegarder l'email et rediriger vers la page de confirmation
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('pending_confirmation_email', formData.email);
+          }
+          
+          // Rediriger vers la page de confirmation d'email
+          router.push(`/auth/confirm-email?email=${encodeURIComponent(formData.email)}`);
+        } else {
+          setError(result.message || 'Erreur lors de l\'inscription');
+        }
       } else {
-        // Pour la connexion, aller directement au dashboard
-        router.push('/dashboard');
+        // Connexion via l'API
+        const result = await login(
+          formData.email, 
+          formData.password, 
+          formData.rememberMe
+        );
+        
+        if (result.success) {
+          // Pour la connexion, aller directement au dashboard
+          router.push('/dashboard');
+        } else {
+          setError(result.message || 'Email ou mot de passe incorrect');
+        }
       }
     } catch (error) {
       console.error('Auth error:', error);
+      setError('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
-  }, [authMode, formData, router]);
+  }, [authMode, formData, router, login, signup]);
 
   const fadeInUp = useMemo(() => ({
     initial: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
@@ -109,6 +118,17 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
           glow={true}
           className="p-4 sm:p-5 md:p-6 lg:p-6 xl:p-8 min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] xl:min-h-[600px] relative overflow-hidden"
         >
+        {/* Error Message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-200 text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+
         {/* Auth Toggle */}
         <div className="flex bg-white/5 backdrop-blur-sm rounded-xl p-1 mb-6 sm:mb-8 border border-white/10">
           <button
@@ -256,9 +276,9 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
                 />
                 Se souvenir de moi
               </label>
-              <a href="#" className="text-[#FAA016] hover:text-[#E8941A] transition-colors">
+              <Link href="/auth/forgot-password" className="text-[#FAA016] hover:text-[#E8941A] transition-colors">
                 Mot de passe oublié ?
-              </a>
+              </Link>
             </div>
 
             <motion.button
@@ -320,19 +340,6 @@ const AuthWidget: React.FC<AuthWidgetProps> = memo(({ className = '' }) => {
         )}
         </GlassContainer>
       </div>
-      
-      {/* Modal d'onboarding */}
-      {showOnboardingModal && (
-        <OnboardingModal
-          isOpen={showOnboardingModal}
-          onClose={() => setShowOnboardingModal(false)}
-          onSuccess={() => {
-            console.log('Onboarding terminé avec succès!');
-            setShowOnboardingModal(false);
-            router.push('/dashboard');
-          }}
-        />
-      )}
     </div>
   );
 });

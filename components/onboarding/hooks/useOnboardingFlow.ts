@@ -41,18 +41,12 @@ const STEPS_CONFIG: Omit<OnboardingStepConfig, 'isCompleted'>[] = [
   },
   {
     id: 2,
-    title: 'Recherche d\'entreprise',
-    subtitle: 'Trouvez votre entreprise',
-    canSkip: false
-  },
-  {
-    id: 3,
     title: 'Collecte des données',
     subtitle: 'Récupération des informations',
     canSkip: false
   },
   {
-    id: 4,
+    id: 3,
     title: 'Logo et finalisation',
     subtitle: 'Personnalisez votre profil',
     canSkip: true
@@ -188,13 +182,10 @@ export function useOnboardingFlow() {
       case 1: // Pays
         return Boolean(session.form_data.country.code);
 
-      case 2: // Entreprise
-        return Boolean(session.form_data.company);
-
-      case 3: // Collecte de données
+      case 2: // Collecte de données
         return Boolean(session.form_data.collected_data?.completed);
 
-      case 4: // Logo et finalisation
+      case 3: // Logo et finalisation
         return true; // Cette étape est optionnelle
 
       default:

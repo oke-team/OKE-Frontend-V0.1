@@ -25,6 +25,7 @@ import {
   StepContainer,
   InfoCard
 } from '../ui/PremiumComponents';
+import { entrepriseService } from '@/lib/services/api/entreprise.service';
 
 interface Company {
   id: string;
@@ -292,49 +293,82 @@ export default function CompanySearchStepV2({
   const [activityFilter, setActivityFilter] = useState<string>('');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Simulation de recherche avec filtres
+  // Recherche d'entreprises via l'API
   useEffect(() => {
-    if (searchQuery.length >= 3 || selectedDepartment || activityFilter) {
-      setIsSearching(true);
-      const timer = setTimeout(() => {
-        let results = [...mockCompanies];
+    const searchCompanies = async () => {
+      if (searchQuery.length >= 3 || selectedDepartment || activityFilter) {
+        setIsSearching(true);
         
-        // Filtre par recherche
-        if (searchQuery.length >= 3) {
-          results = results.filter(company => {
-            if (searchType === 'name') {
-              return company.name.toLowerCase().includes(searchQuery.toLowerCase());
-            } else {
-              return company.siren.includes(searchQuery) || 
-                     (company.siret && company.siret.includes(searchQuery));
-            }
+        try {
+          // Appel à l'API via le service
+          const response = await entrepriseService.search({
+            q: searchQuery.length >= 3 ? searchQuery : undefined,
+            code_postal: undefined, // Pas de filtre par code postal pour l'instant
+            departement: selectedDepartment || undefined,
+            limit: 20
           });
-        }
-        
-        // Filtre par département
-        if (selectedDepartment) {
-          results = results.filter(company => 
-            company.department === selectedDepartment
+          
+          // Transformation des résultats pour correspondre au format attendu par le composant
+          const formattedResults = response.entreprises.map(entreprise => 
+            entrepriseService.formatForDisplay(entreprise)
           );
+          
+          // Filtre supplémentaire par activité si nécessaire (côté client)
+          let finalResults = formattedResults;
+          if (activityFilter) {
+            const filter = activityFilter.toLowerCase();
+            finalResults = formattedResults.filter(company => 
+              company.nafCode.toLowerCase().includes(filter) ||
+              company.nafLabel.toLowerCase().includes(filter) ||
+              company.activity.toLowerCase().includes(filter)
+            );
+          }
+          
+          setSearchResults(finalResults);
+        } catch (error) {
+          console.error('Erreur lors de la recherche d\'entreprises:', error);
+          // En cas d'erreur, on peut utiliser les données mockées comme fallback
+          let results = [...mockCompanies];
+          
+          // Application des filtres sur les données mockées
+          if (searchQuery.length >= 3) {
+            results = results.filter(company => {
+              if (searchType === 'name') {
+                return company.name.toLowerCase().includes(searchQuery.toLowerCase());
+              } else {
+                return company.siren.includes(searchQuery) || 
+                       (company.siret && company.siret.includes(searchQuery));
+              }
+            });
+          }
+          
+          if (selectedDepartment) {
+            results = results.filter(company => 
+              company.department === selectedDepartment
+            );
+          }
+          
+          if (activityFilter) {
+            const filter = activityFilter.toLowerCase();
+            results = results.filter(company => 
+              company.nafCode.toLowerCase().includes(filter) ||
+              company.nafLabel.toLowerCase().includes(filter) ||
+              company.activity.toLowerCase().includes(filter)
+            );
+          }
+          
+          setSearchResults(results);
+        } finally {
+          setIsSearching(false);
         }
-        
-        // Filtre par activité (NAF ou nom d'activité)
-        if (activityFilter) {
-          const filter = activityFilter.toLowerCase();
-          results = results.filter(company => 
-            company.nafCode.toLowerCase().includes(filter) ||
-            company.nafLabel.toLowerCase().includes(filter) ||
-            company.activity.toLowerCase().includes(filter)
-          );
-        }
-        
-        setSearchResults(results);
-        setIsSearching(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    } else {
-      setSearchResults([]);
-    }
+      } else {
+        setSearchResults([]);
+      }
+    };
+    
+    // Debounce de 500ms pour éviter trop d'appels API
+    const timer = setTimeout(searchCompanies, 500);
+    return () => clearTimeout(timer);
   }, [searchQuery, searchType, selectedDepartment, activityFilter]);
 
   const handleCompanySelect = (company: Company) => {

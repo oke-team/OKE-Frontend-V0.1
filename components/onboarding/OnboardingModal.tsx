@@ -28,7 +28,6 @@ import StepIndicator from './ui/StepIndicator';
 // Étapes
 import PersonalInfoStepV2 from './steps/PersonalInfoStepV2';
 import CountrySelectionStepV2 from './steps/CountrySelectionStepV2';
-import CompanySearchStepV2 from './steps/CompanySearchStepV2';
 import DataCollectionStepV2 from './steps/DataCollectionStepV2';
 import LogoFinalizationStepV2 from './steps/LogoFinalizationStepV2';
 
@@ -213,20 +212,8 @@ export default function OnboardingModal({
 
       case 2:
         return (
-          <CompanySearchStepV2
-            selectedCompany={formState.company}
-            onCompanySelect={(company) => updateFormData('company', company)}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            canProceed={canProceed()}
-            canGoBack={canGoBack()}
-          />
-        );
-
-      case 3:
-        return (
           <DataCollectionStepV2
-            selectedCompany={formState.company}
+            selectedCompany={null}
             collectedData={formState.collectedData}
             onDataCollected={(data) => updateFormData('collected_data', data)}
             onNext={handleNext}
@@ -236,10 +223,10 @@ export default function OnboardingModal({
           />
         );
 
-      case 4:
+      case 3:
         return (
           <LogoFinalizationStepV2
-            selectedCompany={formState.company}
+            selectedCompany={null}
             brandingData={formState.branding}
             onBrandingUpdate={(data) => updateFormData('branding', data)}
             onComplete={handleComplete}
