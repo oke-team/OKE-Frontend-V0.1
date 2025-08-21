@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><FICHE DateHeureCreation="2021-02-19T23:37:46" IdentifiantFiche="210500133598" Version="139">
+    <Entreprise NIC="00010" RaisonSociale="CL EVOLUTION" SIREN="892296005"/>
+    <ProducteurFiche CodeProducteur="AZ0001" RaisonSocialeProducteur="Allianz Vie"/>
+    <ContactTechniqueFiche Mail="sedsnaz@allianz.fr" Nom="Service DSN" Tel="0000000000"/>
+    <ContactGestionnaireFiche Mail="infodsn@allianz.fr" Nom="Service DSN" Tel="0978978018"/>
+    <Message>Pour les cas de dispense  il convient de ne pas renseigner le bloc S21.G00.70.</Message>
+    <GROUPE LibelleGrp="Groupe 1" NumeroGrp="1">
+      <ParametresContrats Changement="03" DateDebutValidite="01012021" Periodicite="Trimestriel">
+        <Organisme CodeOC="AZ0001"/>
+        <Contrat LibelleContrat="Prévoyance" ReferenceContrat="PI30592PE000"/>
+        <Population CodePopulation="01" LibellePopulation="ARTICLES 4 ET 4 BIS"/>
+        <ElementsDeCalculAttendus>
+          <TAPrev>
+            <Taux>04.3100</Taux>
+          </TAPrev>
+          <TBPrev>
+            <Taux>04.3100</Taux>
+          </TBPrev>
+        </ElementsDeCalculAttendus>
+      </ParametresContrats>
+      <ParametresContrats Changement="03" DateDebutValidite="01012021" Periodicite="Trimestriel">
+        <Organisme CodeOC="AZ0001"/>
+        <Contrat LibelleContrat="Santé" ReferenceContrat="PI67862CA000"/>
+        <Option CodeOption="PI" LibelleOption="PSS isolé"/>
+        <Population CodePopulation="01" LibellePopulation="ARTICLES 4 ET 4 BIS"/>
+        <ElementsDeCalculAttendus>
+          <BaseMontantSpecifique ValeurCodeNature="17">
+            <Taux>04.9000</Taux>
+          </BaseMontantSpecifique>
+        </ElementsDeCalculAttendus>
+      </ParametresContrats>
+      <ParametresContrats Changement="03" DateDebutValidite="01012021" Periodicite="Trimestriel">
+        <Organisme CodeOC="AZ0001"/>
+        <Contrat LibelleContrat="Santé" ReferenceContrat="PI67862CA000"/>
+        <Option CodeOption="PNI" LibelleOption="PSS non isolé"/>
+        <Population CodePopulation="01" LibellePopulation="ARTICLES 4 ET 4 BIS"/>
+        <ElementsDeCalculAttendus>
+          <BaseMontantSpecifique ValeurCodeNature="17">
+            <Taux>10.2700</Taux>
+          </BaseMontantSpecifique>
+        </ElementsDeCalculAttendus>
+      </ParametresContrats>
+    </GROUPE>
+  </FICHE>

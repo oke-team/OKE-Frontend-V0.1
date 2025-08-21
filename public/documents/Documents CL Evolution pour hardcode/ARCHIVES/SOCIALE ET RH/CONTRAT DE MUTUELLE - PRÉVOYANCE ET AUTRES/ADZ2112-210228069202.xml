@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><FICHE DateHeureCreation="2021-01-22T22:01:48" IdentifiantFiche="210228069202" Version="138">
+    <Entreprise NIC="00010" RaisonSociale="CL EVOLUTION" SIREN="892296005"/>
+    <ProducteurFiche CodePorteurDeRisque="AZRET1" CodeProducteur="DZ2112" RaisonSocialeProducteur="Operateur technique DSN"/>
+    <ContactTechniqueFiche Mail="dsn-retraite-ps@allianz.fr" Nom="Allianz Retraite" Tel="0490878000"/>
+    <ContactGestionnaireFiche Mail="dsn-retraite-ps@allianz.fr" Nom="Allianz Retraite" Tel="0490878000"/>
+    <Message>Veuillez trouver ci-joint les informations à reporter dans votre logiciel de paie</Message>
+    <GROUPE LibelleGrp="Allianz PER Entreprise" NumeroGrp="1">
+      <ParametresContrats Changement="03" DateDebutValidite="01012021" Periodicite="Trimestriel">
+        <Organisme CodeDELEG="DZ2112" CodeOC="AZRET1"/>
+        <Contrat LibelleContrat="Allianz PER Entreprise" ReferenceContrat="AR0000267109"/>
+        <ElementsDeCalculAttendus>
+          <TAPrev>
+            <Taux>2</Taux>
+          </TAPrev>
+          <TBPrev>
+            <Taux>5</Taux>
+          </TBPrev>
+        </ElementsDeCalculAttendus>
+      </ParametresContrats>
+    </GROUPE>
+  </FICHE>
