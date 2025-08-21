@@ -7,7 +7,6 @@ import { Calculator, CreditCard, FileText, Scale, TrendingUp } from 'lucide-reac
 import DocumentsView from '@/components/documents/DocumentsView';
 import DocumentsWidgets from '@/components/documents/DocumentsWidgets';
 import DocumentsBreadcrumb from '@/components/documents/DocumentsBreadcrumb';
-import PdfPreviewTest from '@/components/documents/PdfPreviewTest';
 import { fadeInUp, staggerContainer } from '@/lib/animations/variants';
 
 export default function DocumentsPage() {
@@ -79,43 +78,73 @@ export default function DocumentsPage() {
       onPageChange={handlePageChange}
     >
       {isMobile ? (
-        // Layout mobile optimisé
+        // Layout mobile avec widgets fixes
         <div className="min-h-screen bg-gray-50">
+          {/* Widgets fixes en haut */}
           <motion.div 
-            className="px-4 py-6"
+            variants={fadeInUp}
+            className="fixed top-16 left-0 right-0 z-20 bg-gray-50 px-4 py-3 border-b border-gray-100"
+          >
+            <div className="space-y-2">
+              <DocumentsWidgets 
+                selectedFolder={currentPath[currentPath.length - 1]}
+                totalDocuments={774}
+              />
+              <DocumentsBreadcrumb
+                currentPath={currentPath}
+                folders={folders}
+                viewMode={viewMode}
+                onNavigateToRoot={handleNavigateToRoot}
+                onNavigateToPath={handleNavigateToPath}
+                onCreateFolder={handleCreateFolder}
+                onSetViewMode={handleSetViewMode}
+                selectedDocument={selectedDocument}
+              />
+            </div>
+          </motion.div>
+
+          {/* Liste des documents avec marge pour les widgets */}
+          <motion.div 
+            className="pt-32 pb-20"
             initial="initial"
             animate="animate"
             variants={staggerContainer}
           >
-            <DocumentsView 
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-              onPaginationUpdate={handlePaginationUpdate}
-            />
+            <motion.div 
+              variants={fadeInUp}
+              className="px-4"
+            >
+              <DocumentsView 
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                onPaginationUpdate={handlePaginationUpdate}
+                viewMode={viewMode}
+                currentPath={currentPath}
+                onNavigateToFolder={(folderId) => setCurrentPath([...currentPath, folderId])}
+                onSelectDocument={setSelectedDocument}
+              />
+            </motion.div>
           </motion.div>
         </div>
       ) : (
-        // Layout desktop 
-        <div className="min-h-screen px-4 lg:px-6">
+        // Layout desktop avec position absolue
+        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-hidden">
           <motion.div 
-            className="space-y-4"
+            className="h-full flex flex-col"
             initial="initial"
             animate="animate"
             variants={staggerContainer}
           >
-            {/* Zone Widgets Documents */}
+            {/* Widgets - position absolue en haut */}
             <motion.div 
               variants={fadeInUp}
-              className="py-2"
+              className="absolute top-0 left-0 right-0 z-10 px-4 lg:px-6 pt-1 pb-0"
             >
-              <div className="space-y-2">
-                {/* Widgets de statistiques */}
+              <div className="space-y-0.5">
                 <DocumentsWidgets 
                   selectedFolder={currentPath[currentPath.length - 1]}
                   totalDocuments={774}
                 />
-                
-                {/* Breadcrumb dynamique */}
                 <DocumentsBreadcrumb
                   currentPath={currentPath}
                   folders={folders}
@@ -129,12 +158,13 @@ export default function DocumentsPage() {
               </div>
             </motion.div>
 
-            {/* Contenu principal */}
+            {/* Vue documents - positionnée entre widgets et bas de page */}
             <motion.div 
               variants={fadeInUp}
-              className="min-h-[600px]"
+              className="absolute top-24 left-0 right-0 px-4 lg:px-6"
+              style={{ bottom: '12px' }}
             >
-              <div className="bg-white rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-[#FAA016] overflow-hidden">
+              <div className="h-full bg-white rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-[#FAA016] overflow-hidden">
                 <DocumentsView 
                   currentPage={currentPage}
                   onPageChange={handlePageChange}
@@ -149,9 +179,6 @@ export default function DocumentsPage() {
           </motion.div>
         </div>
       )}
-      
-      {/* Composant de test temporaire */}
-      <PdfPreviewTest />
     </AppLayout>
   );
 }
