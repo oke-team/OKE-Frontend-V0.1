@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AppLayout from '@/components/layout/AppLayout';
 import { motion } from 'framer-motion';
-import { Calculator, CreditCard, FileText, Scale, TrendingUp } from 'lucide-react';
+import { Calculator, Building2, Receipt, FileText, TrendingUp } from 'lucide-react';
 import DocumentsView from '@/components/documents/DocumentsView';
 import DocumentsWidgets from '@/components/documents/DocumentsWidgets';
 import DocumentsBreadcrumb from '@/components/documents/DocumentsBreadcrumb';
@@ -26,9 +26,9 @@ export default function DocumentsPage() {
   // Mock folders structure
   const folders = [
     { id: 'comptabilite', name: 'Comptabilité', icon: Calculator, color: 'text-green-600', children: [] },
-    { id: 'banque', name: 'Banque', icon: CreditCard, color: 'text-purple-600', children: [] },
-    { id: 'fiscalite', name: 'Fiscalité', icon: FileText, color: 'text-orange-600', children: [] },
-    { id: 'juridique', name: 'Juridique', icon: Scale, color: 'text-blue-600', children: [] },
+    { id: 'banque', name: 'Banque', icon: Building2, color: 'text-purple-600', children: [] },
+    { id: 'fiscalite', name: 'Fiscalité', icon: Receipt, color: 'text-orange-600', children: [] },
+    { id: 'juridique', name: 'Juridique', icon: FileText, color: 'text-blue-600', children: [] },
     { id: 'ventes', name: 'Ventes', icon: TrendingUp, color: 'text-emerald-600', children: [] }
   ];
   

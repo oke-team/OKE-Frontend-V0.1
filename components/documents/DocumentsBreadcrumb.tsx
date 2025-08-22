@@ -5,10 +5,7 @@ import { motion } from 'framer-motion';
 import { 
   Home, 
   ChevronRight, 
-  Plus, 
   FolderPlus,
-  Upload,
-  Search,
   Grid3X3,
   List
 } from 'lucide-react';
@@ -111,25 +108,6 @@ const DocumentsBreadcrumb: React.FC<DocumentsBreadcrumbProps> = ({
               <FolderPlus className="w-4 h-4" />
             </motion.button>
             
-            {/* Upload rapide */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-1 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded transition-all"
-              title="Upload rapide"
-            >
-              <Upload className="w-4 h-4" />
-            </motion.button>
-            
-            {/* Recherche dans le dossier */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-all"
-              title="Rechercher dans ce dossier"
-            >
-              <Search className="w-4 h-4" />
-            </motion.button>
           </div>
         </div>
 

@@ -93,7 +93,7 @@ export default function DocumentsView({
   currentPath = [],
   onNavigateToFolder,
   onSelectDocument
-}: DocumentsViewProps = {}) {
+}: DocumentsViewProps) {
   const { open: openDocument, ViewerComponent } = useDocumentViewer();
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
   
