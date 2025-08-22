@@ -6,19 +6,23 @@ import { FileText, Eye, AlertCircle, File, Image as ImageIcon } from 'lucide-rea
 import { DocumentAttachment } from '@/types/document-viewer';
 import { usePdfConfig } from '@/lib/hooks/usePdfConfig';
 
-// Import dynamique des composants react-pdf
-const Document = dynamic(
-  () => import('react-pdf').then(mod => mod.Document),
-  { 
-    ssr: false,
-    loading: () => <div className="animate-pulse bg-gray-100 rounded-lg h-full w-full" />
-  }
-);
+// Import dynamique des composants react-pdf (désactivé en développement)
+const Document = process.env.NEXT_PUBLIC_DISABLE_PDF === 'true' 
+  ? null 
+  : dynamic(
+      () => import('react-pdf').then(mod => mod.Document),
+      { 
+        ssr: false,
+        loading: () => <div className="animate-pulse bg-gray-100 rounded-lg h-full w-full" />
+      }
+    );
 
-const Page = dynamic(
-  () => import('react-pdf').then(mod => mod.Page),
-  { ssr: false }
-);
+const Page = process.env.NEXT_PUBLIC_DISABLE_PDF === 'true' 
+  ? null 
+  : dynamic(
+      () => import('react-pdf').then(mod => mod.Page),
+      { ssr: false }
+    );
 
 interface DocumentPreviewProps {
   document: DocumentAttachment;

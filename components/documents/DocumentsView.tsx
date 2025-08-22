@@ -49,39 +49,11 @@ interface Folder {
 // Dossiers prédéfinis avec les mêmes icônes que le modal
 const defaultFolders: Folder[] = [
   {
-    id: 'comptabilite',
-    name: 'Comptabilité',
-    icon: Calendar,
-    color: 'text-purple-600',
-    children: []
-  },
-  {
-    id: 'banque',
-    name: 'Banque',
-    icon: Building2,
-    color: 'text-blue-600',
-    children: []
-  },
-  {
-    id: 'fiscalite',
-    name: 'Fiscalité',
-    icon: Calculator,
-    color: 'text-purple-600',
-    children: []
-  },
-  {
-    id: 'juridique',
-    name: 'Juridique',
-    icon: Shield,
-    color: 'text-blue-600',
-    children: []
-  },
-  {
-    id: 'ventes',
-    name: 'Ventes',
-    icon: ShoppingCart,
-    color: 'text-green-600',
-    children: []
+    id: 'divers',
+    name: 'Divers',
+    icon: FolderOpen,
+    color: 'text-amber-600',
+    children: [] // Permet d'ajouter des sous-dossiers
   }
 ];
 
@@ -112,8 +84,14 @@ export default function DocumentsView({
     // Filtrage par dossier courant
     if (currentPath.length > 0) {
       const currentCategory = currentPath[currentPath.length - 1];
-      filtered = realDocumentUtils.getDocumentsByCategory(currentCategory);
+      if (currentCategory === 'divers') {
+        // Pour divers, on peut avoir des documents spécifiques ou vides pour commencer
+        filtered = []; // Aucun document par défaut dans divers
+      } else {
+        filtered = realDocumentUtils.getDocumentsByCategory(currentCategory);
+      }
     }
+    // Si pas de chemin (racine), afficher tous les documents par défaut
 
     // Calcul de la pagination
     const totalItems = filtered.length;
@@ -197,54 +175,18 @@ export default function DocumentsView({
     <div className="h-full flex flex-col">
       {/* Contenu principal - header déplacé vers la page */}
       <div className="flex-1 overflow-auto p-4">
-        {currentPath.length === 0 ? (
-          // Affichage des dossiers à la racine
-          <motion.div
-            variants={fadeInUp}
-            className={
-              viewMode === 'grid'
-                ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
-                : 'space-y-2'
-            }
-          >
-            <AnimatePresence>
-              {folders.map((folder, index) => (
-                <motion.div
-                  key={folder.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: index * 0.02 }}
-                  className="group bg-white rounded-xl border border-[#4C34CE]/10 p-4 transition-all cursor-pointer hover:border-[#4C34CE]/20 hover:shadow-[0_8px_32px_rgba(76,52,206,0.1)] hover:-translate-y-0.5"
-                  onClick={() => handleFolderClick(folder.id)}
-                >
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-100 transition-colors">
-                      <folder.icon className={`w-6 h-6 ${folder.color}`} />
-                    </div>
-                    <h3 className="font-medium text-gray-900 text-sm mb-1">
-                      {folder.name}
-                    </h3>
-                    <p className="text-xs text-gray-500">
-                      {realDocumentsStats.byCategory[folder.id as keyof typeof realDocumentsStats.byCategory] || 0} document{(realDocumentsStats.byCategory[folder.id as keyof typeof realDocumentsStats.byCategory] || 0) !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        ) : paginatedDocuments.length === 0 ? (
-          // Aucun document dans le dossier
+        {currentPath.length > 0 && currentPath[currentPath.length - 1] === 'divers' && paginatedDocuments.length === 0 ? (
+          // Dossier Divers vide
           <motion.div
             variants={fadeInUp}
             className="flex flex-col items-center justify-center h-full text-gray-500"
           >
             <FolderOpen className="w-16 h-16 mb-4 text-gray-300" />
-            <p className="text-lg font-medium">Dossier vide</p>
-            <p className="text-sm">Utilisez le menu + pour ajouter des documents dans ce dossier</p>
+            <p className="text-lg font-medium">Dossier Divers vide</p>
+            <p className="text-sm">Utilisez le menu + pour ajouter des documents et créer des sous-dossiers</p>
           </motion.div>
         ) : (
-          // Affichage des documents dans le dossier
+          // Affichage des documents (tous par défaut ou dans dossier spécifique)
           <motion.div
             variants={fadeInUp}
             className={

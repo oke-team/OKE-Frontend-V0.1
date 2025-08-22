@@ -9,7 +9,9 @@ import {
   ShoppingCart,
   Users,
   Package,
-  Building2
+  Building2,
+  Grid3X3,
+  FolderOpen
 } from 'lucide-react';
 import { realDocumentsStats } from '@/lib/mock-data/real-documents-data';
 
@@ -27,6 +29,11 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
   
   // Configuration des dossiers avec les mêmes icônes et couleurs vibrantes que le modal
   const folderConfigs = {
+    tous: { 
+      icon: Grid3X3, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-gray-700 to-gray-800'
+    },
     comptabilite: { 
       icon: Calendar, 
       color: 'text-white', 
@@ -61,6 +68,11 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
       icon: ShoppingCart, 
       color: 'text-white', 
       bgColor: 'bg-gradient-to-br from-orange-500 to-orange-600'
+    },
+    divers: { 
+      icon: FolderOpen, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-amber-500 to-amber-600'
     }
   };
 
@@ -81,7 +93,11 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
       <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-2">
         {Object.entries(folderConfigs).map(([folderId, config], index) => {
           const IconComponent = config.icon;
-          const count = realDocumentsStats.byCategory[folderId as keyof typeof realDocumentsStats.byCategory] || 0;
+          const count = folderId === 'tous' 
+            ? totalDocuments 
+            : folderId === 'divers' 
+              ? 0 
+              : realDocumentsStats.byCategory[folderId as keyof typeof realDocumentsStats.byCategory] || 0;
           
           return (
             <motion.div
@@ -114,12 +130,13 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-gray-900 text-xs capitalize truncate group-hover:text-[#4C34CE] transition-colors">
-                    {folderId === 'paie' ? 'Paie/RH' : 
+                    {folderId === 'tous' ? 'Tous' :
+                     folderId === 'paie' ? 'Paie/RH' : 
                      folderId === 'comptabilite' ? 'Compta' :
                      folderId === 'fiscalite' ? 'Fiscalité' :
                      folderId === 'juridique' ? 'Juridique' :
                      folderId === 'achats' ? 'Achats' :
-                     folderId === 'stocks' ? 'Stocks' :
+                     folderId === 'divers' ? 'Divers' :
                      folderId.replace('_', ' ')}
                   </p>
                   <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors">

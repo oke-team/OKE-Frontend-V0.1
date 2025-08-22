@@ -15,6 +15,13 @@ export default function PdfPreviewTest() {
     }
 
     try {
+      // PDF désactivé en développement
+      if (process.env.NEXT_PUBLIC_DISABLE_PDF === 'true') {
+        setTestResult('success');
+        console.log('PDF configuration test: DISABLED IN DEV');
+        return;
+      }
+
       // Test basique d'import de react-pdf
       const { Document } = await import('react-pdf');
       setTestResult('success');

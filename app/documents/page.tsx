@@ -23,13 +23,9 @@ export default function DocumentsPage() {
   const [selectedDocument, setSelectedDocument] = useState<string>();
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   
-  // Mock folders structure
+  // Mock folders structure - seuls les dossiers avec sous-structure
   const folders = [
-    { id: 'comptabilite', name: 'Comptabilité', icon: Calculator, color: 'text-green-600', children: [] },
-    { id: 'banque', name: 'Banque', icon: Building2, color: 'text-purple-600', children: [] },
-    { id: 'fiscalite', name: 'Fiscalité', icon: Receipt, color: 'text-orange-600', children: [] },
-    { id: 'juridique', name: 'Juridique', icon: FileText, color: 'text-blue-600', children: [] },
-    { id: 'ventes', name: 'Ventes', icon: TrendingUp, color: 'text-emerald-600', children: [] }
+    { id: 'divers', name: 'Divers', icon: FileText, color: 'text-amber-600', children: [] }
   ];
   
   useEffect(() => {

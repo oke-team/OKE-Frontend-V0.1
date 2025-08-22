@@ -161,19 +161,41 @@ export const DocumentViewerAdvanced: React.FC<DocumentViewerAdvancedProps> = ({
   }, [effectiveMode, allowModeSwitch]);
   
   // Rendu du viewer PDF
-  const renderViewer = () => (
-    <DocumentViewerPDF
-      ref={viewerRef}
-      src={preloadedSrc || src}
-      title={title}
-      enableAnnotations={enableAnnotations}
-      enableDownload={enableDownload}
-      enablePrint={enablePrint}
-      enableShare={enableShare}
-      onClose={() => onOpenChange(false)}
-      className="h-full"
-    />
-  );
+  const renderViewer = () => {
+    // Vérifier si les PDFs sont désactivés en développement
+    if (process.env.NEXT_PUBLIC_DISABLE_PDF === 'true') {
+      return (
+        <div className="h-full flex items-center justify-center bg-gray-50">
+          <div className="text-center p-8">
+            <FileText className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">DocumentViewer OKÉ</h3>
+            <p className="text-sm text-gray-500 mb-4">PDF temporairement désactivé en développement</p>
+            <p className="text-xs text-gray-400">Fichier: {title || 'Document'}</p>
+            <button 
+              onClick={() => onOpenChange(false)}
+              className="mt-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <DocumentViewerPDF
+        ref={viewerRef}
+        src={preloadedSrc || src}
+        title={title}
+        enableAnnotations={enableAnnotations}
+        enableDownload={enableDownload}
+        enablePrint={enablePrint}
+        enableShare={enableShare}
+        onClose={() => onOpenChange(false)}
+        className="h-full"
+      />
+    );
+  };
   
   
   // Effet de transition Liquid Glass
