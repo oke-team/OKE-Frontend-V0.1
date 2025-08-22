@@ -27,6 +27,7 @@ interface CompanySelectorLiquidProps {
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   className?: string;
+  onAddCompany?: () => void;
 }
 
 export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
@@ -35,7 +36,8 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
   onCompanyChange,
   size = 'md',
   fullWidth = false,
-  className
+  className,
+  onAddCompany
 }) => {
   const [isMobile, setIsMobile] = useState(false);
   
@@ -115,12 +117,14 @@ export const CompanySelectorLiquid: React.FC<CompanySelectorLiquidProps> = ({
         
         <DropdownSeparator />
         
-        <DropdownItem
-          onClick={() => console.log('Add company')}
-          icon={<Plus size={16} className="text-primary" />}
-        >
-          Ajouter une entreprise
-        </DropdownItem>
+        {onAddCompany && (
+          <DropdownItem
+            onClick={onAddCompany}
+            icon={<Plus size={16} className="text-primary" />}
+          >
+            Ajouter une entreprise
+          </DropdownItem>
+        )}
       </DropdownMenu>
     </Dropdown>
   );

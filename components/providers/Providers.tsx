@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { StoreProvider } from '@/lib/store/StoreProvider';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ExpertModeProvider } from '@/contexts/ExpertModeContext';
 import { PeriodProvider } from '@/contexts/PeriodContext';
@@ -15,18 +16,20 @@ interface ProvidersProps {
 
 export default function Providers({ children }: ProvidersProps) {
   return (
-    <AuthProvider>
-      <ExpertModeProvider>
-        <PeriodProvider>
-          <SelectionProvider>
-            <OnboardingProvider>
-              {children}
-              <Onboarding />
-              <TransitionNotification />
-            </OnboardingProvider>
-          </SelectionProvider>
-        </PeriodProvider>
-      </ExpertModeProvider>
-    </AuthProvider>
+    <StoreProvider>
+      <AuthProvider>
+        <ExpertModeProvider>
+          <PeriodProvider>
+            <SelectionProvider>
+              <OnboardingProvider>
+                {children}
+                <Onboarding />
+                <TransitionNotification />
+              </OnboardingProvider>
+            </SelectionProvider>
+          </PeriodProvider>
+        </ExpertModeProvider>
+      </AuthProvider>
+    </StoreProvider>
   );
 }

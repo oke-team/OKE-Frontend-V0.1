@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/lib/services/api/auth.service';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { fetchUserEntreprises, clearEntreprises } from '@/lib/store/slices/entreprisesSlice';
 
 interface User {
   id: string;
@@ -48,6 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   // Vérifier l'authentification au chargement
   useEffect(() => {
@@ -64,21 +67,39 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const storedUser = authService.getUser();
         if (storedUser) {
           setUser(storedUser);
+          // Récupérer les entreprises même avec l'utilisateur stocké
+          dispatch(fetchUserEntreprises());
         }
         
-        // Puis vérifier avec le backend
-        const currentUser = await authService.getCurrentUser();
-        if (currentUser) {
-          setUser(currentUser);
-        } else {
-          // Token invalide, nettoyer
-          await authService.logout();
-          setUser(null);
+        // Puis vérifier avec le backend (mais ne pas effacer si ça échoue)
+        try {
+          const currentUser = await authService.getCurrentUser();
+          if (currentUser) {
+            setUser(currentUser);
+            // Sauvegarder l'utilisateur mis à jour
+            const hasRememberMe = localStorage.getItem('oke_access_token') !== null;
+            authService.setUser(currentUser, hasRememberMe);
+          }
+        } catch (error) {
+          // Si l'appel API échoue mais qu'on a un utilisateur stocké, on le garde
+          console.log('Could not fetch current user from API, using stored user');
+          if (!storedUser) {
+            // Seulement si on n'a pas d'utilisateur stocké
+            await authService.logout();
+            setUser(null);
+            dispatch(clearEntreprises());
+          }
         }
+      } else {
+        // Pas de token, pas d'utilisateur
+        setUser(null);
       }
     } catch (error) {
       console.error('Auth check error:', error);
-      setUser(null);
+      // Ne pas effacer l'utilisateur en cas d'erreur générale
+      if (!authService.isAuthenticated()) {
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -96,6 +117,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       if (response.success && response.data) {
         setUser(response.data.user);
+        
+        // Récupérer les entreprises de l'utilisateur après connexion
+        dispatch(fetchUserEntreprises());
+        
         return { success: true };
       }
       
@@ -147,13 +172,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setLoading(true);
       await authService.logout();
       setUser(null);
-      router.push('/');
+      // Nettoyer les entreprises du store Redux
+      dispatch(clearEntreprises());
+      // Utiliser setTimeout pour permettre au composant de se démonter proprement
+      setTimeout(() => {
+        router.push('/');
+      }, 0);
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
       setLoading(false);
     }
-  }, [router]);
+  }, [router, dispatch]);
 
   const refreshUser = useCallback(async () => {
     try {

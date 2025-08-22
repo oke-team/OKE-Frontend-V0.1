@@ -13,6 +13,14 @@ import { SearchGlobal } from '@/components/ui/SearchGlobal';
 import { useSelection } from '@/contexts/SelectionContext';
 import { ContextualActionsMenu } from '@/components/ui/ContextualActionsMenu';
 import AvatarDropdown from '@/components/ui/AvatarDropdown';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import { 
+  selectAllEntreprises, 
+  selectSelectedEntreprise, 
+  selectEntreprisesLoading,
+  selectEntreprise 
+} from '@/lib/store/slices/entreprisesSlice';
+import { UserEntreprise } from '@/lib/services/api/user-entreprises.service';
 import {
   MessageSquare,
   Sparkles,
@@ -20,7 +28,8 @@ import {
   Search,
   Rocket,
   GraduationCap,
-  User
+  User,
+  Plus
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -29,6 +38,7 @@ interface HeaderSimpleProps {
   onCompanyChange?: (company: Company) => void;
   onChatOpen?: () => void;
   onMagicActions?: () => void;
+  onAddCompany?: () => void;
 }
 
 const mockCompanies: Company[] = [
@@ -38,18 +48,30 @@ const mockCompanies: Company[] = [
 ];
 
 export default function HeaderSimple({
-  currentCompany = mockCompanies[0],
+  currentCompany,
   onCompanyChange,
   onChatOpen,
-  onMagicActions
+  onMagicActions,
+  onAddCompany
 }: HeaderSimpleProps) {
   const { user, logout } = useAuth();
+  const pathname = usePathname();
+  
+  // Hooks conditionnels basés sur l'état de l'utilisateur
+  // Note: Ces hooks sont toujours appelés dans le même ordre, mais leurs effets peuvent être ignorés
   const { expertMode, toggleExpertMode } = useExpertMode();
   const { selectedCount } = useSelection();
-  const pathname = usePathname();
+  const dispatch = useAppDispatch();
+  
+  // Récupérer les données depuis Redux
+  const entreprises = useAppSelector(selectAllEntreprises);
+  const selectedEntreprise = useAppSelector(selectSelectedEntreprise);
+  const loadingCompanies = useAppSelector(selectEntreprisesLoading);
+  
   const [searchOpen, setSearchOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const actionsMenuRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -58,15 +80,51 @@ export default function HeaderSimple({
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Convertir les entreprises Redux en format Company pour le composant
+  const userCompanies: Company[] = entreprises.map((entreprise: UserEntreprise) => ({
+    id: entreprise.id || entreprise.siret || entreprise.siren || '',
+    name: entreprise.nom || entreprise.enseigne || 'Entreprise sans nom',
+    plan: 'pro' as const,
+    country: entreprise.pays || 'FR',
+    currency: entreprise.pays === 'US' ? 'USD' : 'EUR',
+    siret: entreprise.siret,
+    siren: entreprise.siren,
+    address: entreprise.adresse,
+    postalCode: entreprise.code_postal,
+    city: entreprise.ville,
+    legalForm: entreprise.forme_juridique,
+    logoUrl: entreprise.logo_url,
+    isPrimary: entreprise.is_primary
+  }));
+
+  const handleCompanyChange = (company: Company) => {
+    // Trouver l'entreprise correspondante dans Redux
+    const entreprise = entreprises.find(e => e.id === company.id);
+    if (entreprise) {
+      dispatch(selectEntreprise(entreprise));
+    }
+    onCompanyChange?.(company);
+  };
   
   const isAccountingModule = pathname?.includes('/accounting') || pathname?.includes('/compta');
   
+  // Ne jamais faire de return conditionnel après les hooks!
+  // On va plutôt conditionner le rendu du contenu
+  
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b-2 border-[#FAA016] z-50">
-      <div className="flex items-center justify-between h-full px-3 sm:px-4 md:px-6">
-        
-        {/* Partie gauche : Logo + Badge Version */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+      {isLoggingOut ? (
+        // Afficher un loader pendant la déconnexion
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#4C34CE]"></div>
+        </div>
+      ) : (
+        // Afficher le contenu normal du header
+        <div className="flex items-center justify-between h-full px-3 sm:px-4 md:px-6">
+          
+          {/* Partie gauche : Logo + Badge Version */}
+          <div className="flex items-center gap-3 flex-shrink-0">
           <Image
             src="/logo_oke_original.png"
             alt="Oké"
@@ -119,13 +177,34 @@ export default function HeaderSimple({
               "transition-all",
               isMobile ? "w-[140px] max-w-[140px]" : "sm:w-auto sm:min-w-[200px] md:w-56"
             )}>
-              <CompanySelectorLiquid
-                companies={mockCompanies}
-                currentCompany={currentCompany}
-                onCompanyChange={onCompanyChange || (() => {})}
-                size={isMobile ? "sm" : "sm"}
-                fullWidth={false}
-              />
+              {loadingCompanies ? (
+                <div className="flex items-center justify-center h-8 px-3 bg-gray-50 rounded-lg animate-pulse">
+                  <span className="text-xs text-gray-400">Chargement...</span>
+                </div>
+              ) : userCompanies.length === 0 ? (
+                <button
+                  onClick={onAddCompany}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-gradient-to-r from-[#4C34CE]/10 to-[#FAA016]/10 rounded-lg hover:from-[#4C34CE]/20 hover:to-[#FAA016]/20 transition-all border border-[#4C34CE]/20"
+                >
+                  <Plus size={14} />
+                  <span>Ajouter une entreprise</span>
+                </button>
+              ) : selectedEntreprise ? (
+                <CompanySelectorLiquid
+                  companies={userCompanies}
+                  currentCompany={{
+                    id: selectedEntreprise.id || '',
+                    name: selectedEntreprise.nom || selectedEntreprise.enseigne || 'Entreprise',
+                    plan: 'pro' as const,
+                    country: selectedEntreprise.pays || 'FR',
+                    currency: selectedEntreprise.pays === 'US' ? 'USD' : 'EUR'
+                  }}
+                  onCompanyChange={handleCompanyChange}
+                  size={isMobile ? "sm" : "sm"}
+                  fullWidth={false}
+                  onAddCompany={onAddCompany}
+                />
+              ) : null}
             </div>
             
             {/* Sélecteur de période - uniquement sur desktop et dans le module accounting */}
@@ -276,21 +355,36 @@ export default function HeaderSimple({
             user={{
               name: user?.full_name || user?.email?.split('@')[0] || 'Utilisateur',
               email: user?.email || '',
-              initials: user?.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || 
-                       user?.email?.substring(0, 2).toUpperCase() || 'U',
+              initials: (() => {
+                if (user?.full_name) {
+                  return user.full_name.split(' ')
+                    .filter(part => part.length > 0)
+                    .map(n => n[0])
+                    .join('')
+                    .substring(0, 2)
+                    .toUpperCase();
+                } else if (user?.email) {
+                  return user.email.substring(0, 2).toUpperCase();
+                }
+                return 'U';
+              })(),
               role: 'Administrateur',
-              company: currentCompany.name
+              company: selectedEntreprise?.nom || selectedEntreprise?.enseigne || 'Aucune entreprise'
             }}
-            onSignOut={async () => {
+            onSignOut={() => {
+              if (isLoggingOut) return; // Éviter les appels multiples
               console.log('Déconnexion en cours...');
-              await logout();
+              setIsLoggingOut(true);
+              // Ne pas attendre la fin du logout pour éviter les problèmes de hooks
+              logout();
             }}
           />
         </div>
       </div>
+      )}
       
-      {/* Search Global Overlay */}
-      <SearchGlobal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      {/* Search Global Overlay - toujours rendre ce composant */}
+      {!isLoggingOut && <SearchGlobal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />}
     </header>
   );
 }

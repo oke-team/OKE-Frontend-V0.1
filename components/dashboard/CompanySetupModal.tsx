@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { addEntreprise } from '@/lib/store/slices/entreprisesSlice';
 
 // Import des animations depuis OnboardingModal
 import { 
@@ -90,6 +92,7 @@ export default function CompanySetupModal({
 }: CompanySetupModalProps) {
   const router = useRouter();
   const { user, updateUser } = useAuth();
+  const dispatch = useAppDispatch();
   
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
@@ -241,7 +244,18 @@ export default function CompanySetupModal({
     setError(null);
 
     try {
-      // Sauvegarder les données de l'entreprise
+      // Ajouter l'entreprise via Redux si elle est sélectionnée
+      if (formData.company) {
+        // Le backend attend juste le SIREN et is_primary
+        const entreprisePayload = {
+          siren: formData.company.siren,
+          is_primary: true
+        };
+        
+        await dispatch(addEntreprise(entreprisePayload)).unwrap();
+      }
+      
+      // Sauvegarder les données de l'entreprise localement aussi
       if (typeof window !== 'undefined') {
         const companyData = {
           country: formData.country,

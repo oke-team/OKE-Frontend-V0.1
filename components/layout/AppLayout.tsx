@@ -8,6 +8,7 @@ import MagicActionsButton from '@/components/ui/MagicActionsButton';
 import AssistantChat from '@/components/ui/AssistantChat';
 import AddMenu from '@/components/ui/AddMenu';
 import ModulesGrid from '@/components/ui/ModulesGrid';
+import CompanySetupModal from '@/components/dashboard/CompanySetupModal';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
   const [chatOpen, setChatOpen] = useState(false);
   const [addMenuOpen, setAddMenuOpen] = useState(false);
   const [modulesGridOpen, setModulesGridOpen] = useState(false);
+  const [showCompanySetupModal, setShowCompanySetupModal] = useState(false);
 
   // Synchroniser l'item actif avec l'URL
   useEffect(() => {
@@ -71,6 +73,20 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
     // Implémentation de la recherche globale
   };
 
+  const handleAddCompany = () => {
+    setShowCompanySetupModal(true);
+  };
+
+  const handleCompanySetupComplete = () => {
+    setShowCompanySetupModal(false);
+    // Rafraîchir les données
+    window.location.reload();
+  };
+
+  const handleCompanySetupClose = () => {
+    setShowCompanySetupModal(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900">
       {/* Header fixe en haut - Simple et minimaliste */}
@@ -79,6 +95,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
         onCompanyChange={setCurrentCompany}
         onChatOpen={handleChatOpen}
         onMagicActions={handleMagicActions}
+        onAddCompany={handleAddCompany}
       />
 
       {/* Contenu principal avec padding pour header et navigation */}
@@ -113,6 +130,13 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, className }) => {
         isOpen={modulesGridOpen}
         onClose={() => setModulesGridOpen(false)}
         currentModule={activeNavItem}
+      />
+      
+      {/* Modal de configuration d'entreprise */}
+      <CompanySetupModal
+        isOpen={showCompanySetupModal}
+        onClose={handleCompanySetupClose}
+        onComplete={handleCompanySetupComplete}
       />
     </div>
   );

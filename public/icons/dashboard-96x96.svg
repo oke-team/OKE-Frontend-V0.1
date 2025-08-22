@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <rect width="96" height="96" fill="#4C34CE" rx="10" />
+  <circle cx="48" cy="48" r="35" fill="rgba(255, 255, 255, 0.2)" />
+  <text x="48" y="58" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="48" font-weight="bold" fill="white" text-anchor="middle">D</text>
+</svg>

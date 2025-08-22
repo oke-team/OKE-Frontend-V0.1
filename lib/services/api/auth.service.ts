@@ -240,7 +240,7 @@ class AuthService {
         return null;
       }
 
-      const response = await fetch(`${this.baseUrl}/users/me`, {
+      const response = await fetch(`${this.baseUrl}/auth/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -259,9 +259,14 @@ class AuthService {
 
       const data = await response.json();
       
-      if (data.data) {
-        this.setUser(data.data);
-        return data.data;
+      // Gérer les deux formats de réponse possibles
+      const userData = data.data || data;
+      
+      if (userData && userData.email) {
+        // Déterminer si on utilise localStorage ou sessionStorage
+        const hasRememberMe = localStorage.getItem(this.tokenKey) !== null;
+        this.setUser(userData, hasRememberMe);
+        return userData;
       }
 
       return null;
@@ -396,12 +401,19 @@ class AuthService {
     if (tokens.refresh_token) {
       storage.setItem(this.refreshTokenKey, tokens.refresh_token);
     }
+    
+    // Définir également les cookies pour le middleware
+    const maxAge = rememberMe ? 60 * 60 * 24 * 30 : 0; // 30 jours ou session
+    document.cookie = `oke_access_token=${tokens.access_token}; path=/; ${maxAge ? `max-age=${maxAge}` : ''}; SameSite=Lax`;
+    if (tokens.refresh_token) {
+      document.cookie = `oke_refresh_token=${tokens.refresh_token}; path=/; ${maxAge ? `max-age=${maxAge}` : ''}; SameSite=Lax`;
+    }
   }
 
   /**
    * Stocker l'utilisateur
    */
-  private setUser(user: User, rememberMe = false): void {
+  setUser(user: User, rememberMe = false): void {
     if (typeof window === 'undefined') return;
     
     const storage = rememberMe ? localStorage : sessionStorage;
@@ -420,6 +432,11 @@ class AuthService {
       storage.removeItem(this.refreshTokenKey);
       storage.removeItem(this.userKey);
     });
+    
+    // Supprimer également les cookies
+    document.cookie = 'oke_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax';
+    document.cookie = 'oke_refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax';
+    document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax';
   }
 
   /**
