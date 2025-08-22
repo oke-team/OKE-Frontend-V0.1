@@ -3,18 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FileText, 
-  FolderOpen, 
-  HardDrive, 
-  Clock, 
-  Calculator,
-  CreditCard,
-  Scale,
-  TrendingUp,
-  Star,
-  Download,
+  Shield, 
+  Calculator, 
+  Calendar, 
+  ShoppingCart,
   Users,
-  ShoppingCart
+  Package,
+  Building2
 } from 'lucide-react';
 import { realDocumentsStats } from '@/lib/mock-data/real-documents-data';
 
@@ -30,49 +25,42 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
   className = ''
 }) => {
   
-  // Configuration des dossiers avec leurs couleurs et icônes
+  // Configuration des dossiers avec les mêmes icônes et couleurs vibrantes que le modal
   const folderConfigs = {
     comptabilite: { 
-      icon: Calculator, 
-      color: 'text-green-600', 
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200'
+      icon: Calendar, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600'
     },
     banque: { 
-      icon: CreditCard, 
-      color: 'text-purple-600', 
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200'
+      icon: Building2, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600'
     },
     fiscalite: { 
-      icon: FileText, 
-      color: 'text-orange-600', 
-      bgColor: 'bg-orange-50',
-      borderColor: 'border-orange-200'
+      icon: Calculator, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600'
     },
     juridique: { 
-      icon: Scale, 
-      color: 'text-blue-600', 
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200'
+      icon: Shield, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600'
     },
     ventes: { 
-      icon: TrendingUp, 
-      color: 'text-emerald-600', 
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-200'
+      icon: ShoppingCart, 
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-green-500 to-green-600'
     },
     paie: { 
       icon: Users, 
-      color: 'text-indigo-600', 
-      bgColor: 'bg-indigo-50',
-      borderColor: 'border-indigo-200'
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-pink-500 to-pink-600'
     },
     achats: { 
       icon: ShoppingCart, 
-      color: 'text-rose-600', 
-      bgColor: 'bg-rose-50',
-      borderColor: 'border-rose-200'
+      color: 'text-white', 
+      bgColor: 'bg-gradient-to-br from-orange-500 to-orange-600'
     }
   };
 
@@ -101,7 +89,7 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="bg-white rounded-lg border-2 border-[#4C34CE]/20 p-2 min-w-0 hover:shadow-md hover:border-[#4C34CE] hover:-translate-y-0.5 transition-all cursor-pointer group relative overflow-hidden"
+              className="bg-white rounded-lg border border-[#4C34CE] p-2 min-w-0 hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer group relative overflow-hidden"
             >
               {/* Effet glass morphism subtil avec la couleur du folder */}
               <div 
@@ -121,12 +109,18 @@ const DocumentsWidgets: React.FC<DocumentsWidgetsProps> = ({
               />
               
               <div className="relative z-10 flex items-center gap-2">
-                <div className={`w-6 h-6 ${config.bgColor} rounded-lg flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
-                  <IconComponent className={`w-3 h-3 ${config.color} group-hover:scale-110 transition-transform`} />
+                <div className={`w-8 h-8 ${config.bgColor} rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg`}>
+                  <IconComponent className={`w-4 h-4 ${config.color} group-hover:scale-110 transition-transform`} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-900 text-xs capitalize truncate group-hover:text-[#4C34CE] transition-colors">
-                    {folderId === 'paie' ? 'Paie/RH' : folderId.replace('_', ' ')}
+                  <p className="font-semibold text-gray-900 text-xs capitalize truncate group-hover:text-[#4C34CE] transition-colors">
+                    {folderId === 'paie' ? 'Paie/RH' : 
+                     folderId === 'comptabilite' ? 'Compta' :
+                     folderId === 'fiscalite' ? 'Fiscalité' :
+                     folderId === 'juridique' ? 'Juridique' :
+                     folderId === 'achats' ? 'Achats' :
+                     folderId === 'stocks' ? 'Stocks' :
+                     folderId.replace('_', ' ')}
                   </p>
                   <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors">
                     {count || '0'}

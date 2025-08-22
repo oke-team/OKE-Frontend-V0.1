@@ -79,11 +79,11 @@ export default function DocumentsPage() {
     >
       {isMobile ? (
         // Layout mobile avec widgets fixes
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-white">
           {/* Widgets fixes en haut */}
           <motion.div 
             variants={fadeInUp}
-            className="fixed top-16 left-0 right-0 z-20 bg-gray-50 px-4 py-3 border-b border-gray-100"
+            className="fixed top-16 left-0 right-0 z-20 bg-white px-4 py-3 border-b border-gray-100"
           >
             <div className="space-y-2">
               <DocumentsWidgets 
@@ -128,9 +128,9 @@ export default function DocumentsPage() {
         </div>
       ) : (
         // Layout desktop avec position absolue
-        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-hidden">
+        <div className="fixed top-16 left-0 right-0 bottom-0 overflow-hidden bg-white">
           <motion.div 
-            className="h-full flex flex-col"
+            className="h-full flex flex-col bg-white"
             initial="initial"
             animate="animate"
             variants={staggerContainer}

@@ -13,10 +13,11 @@ import {
   ChevronRight,
   Home,
   Plus,
-  Scale,
-  Calculator,
-  CreditCard,
-  TrendingUp
+  Shield,
+  Calendar,
+  Building2,
+  ShoppingCart,
+  Calculator
 } from 'lucide-react';
 import DocumentCard from './DocumentCard';
 import { useDocumentViewer } from '@/components/ui/DocumentViewerAdvanced';
@@ -45,41 +46,41 @@ interface Folder {
   children?: Folder[];
 }
 
-// Dossiers prédéfinis basés sur les vrais documents
+// Dossiers prédéfinis avec les mêmes icônes que le modal
 const defaultFolders: Folder[] = [
   {
     id: 'comptabilite',
     name: 'Comptabilité',
-    icon: Calculator,
-    color: 'text-green-600',
+    icon: Calendar,
+    color: 'text-purple-600',
     children: []
   },
   {
     id: 'banque',
     name: 'Banque',
-    icon: CreditCard,
-    color: 'text-purple-600',
+    icon: Building2,
+    color: 'text-blue-600',
     children: []
   },
   {
     id: 'fiscalite',
     name: 'Fiscalité',
-    icon: FileText,
-    color: 'text-orange-600',
+    icon: Calculator,
+    color: 'text-purple-600',
     children: []
   },
   {
     id: 'juridique',
     name: 'Juridique',
-    icon: Scale,
+    icon: Shield,
     color: 'text-blue-600',
     children: []
   },
   {
     id: 'ventes',
     name: 'Ventes',
-    icon: TrendingUp,
-    color: 'text-emerald-600',
+    icon: ShoppingCart,
+    color: 'text-green-600',
     children: []
   }
 ];
