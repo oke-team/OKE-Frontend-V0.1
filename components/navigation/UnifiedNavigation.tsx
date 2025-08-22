@@ -6,6 +6,7 @@ import { Plus, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, RotateCcw
 import { cn } from '@/lib/utils';
 import { mobileNavItems, tabletNavItems, desktopNavItems } from '@/lib/modules-config';
 import { useOptimizedAnimations } from '@/lib/performance-utils';
+import { useDashboardDoubleClick } from '@/lib/hooks/useDashboardDoubleClick';
 
 interface NavItem {
   id: string;
@@ -63,6 +64,7 @@ function NavItemComponent({
 }) {
   const Icon = item.icon;
   const isMobile = screenSize === 'mobile';
+  const { handleDashboardClick, isDashboardCabinet } = useDashboardDoubleClick();
   
   // Bouton primaire (bouton +)
   if (item.isPrimary) {
@@ -91,10 +93,19 @@ function NavItemComponent({
     );
   }
 
+  // Gestion du clic - dashboard avec double-clic ou navigation normale
+  const handleClick = () => {
+    if (item.id === 'dashboard') {
+      handleDashboardClick();
+    } else {
+      onSelect(item.id);
+    }
+  };
+
   // Item de navigation standard
   return (
     <motion.button
-      onClick={() => onSelect(item.id)}
+      onClick={handleClick}
       className={cn(
         "flex flex-col items-center justify-center gap-0.5",
         isMobile ? "min-h-[54px] py-2 w-[72px]" : "min-h-[48px] px-2 py-1.5",
@@ -111,6 +122,7 @@ function NavItemComponent({
           y: isActive && isMobile ? -2 : 0
         }}
         transition={{ duration: 0.2 }}
+        className="relative"
       >
         <Icon 
           size={isMobile ? 20 : 18} 
@@ -119,6 +131,11 @@ function NavItemComponent({
             "transition-colors duration-200"
           )}
         />
+        {/* Indicateur cabinet pour le dashboard */}
+        {item.id === 'dashboard' && isDashboardCabinet && (
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#FAA016] rounded-full border border-white" 
+               title="Mode Cabinet" />
+        )}
       </motion.div>
       
       {item.label && !isCompact && (
@@ -129,7 +146,8 @@ function NavItemComponent({
             isActive ? "text-[#4C34CE] font-semibold" : "text-neutral-600 dark:text-neutral-500"
           )}
         >
-          {item.label.length > 9 && isMobile ? `${item.label.slice(0, 7)}...` : item.label}
+          {item.id === 'dashboard' && isDashboardCabinet ? 'Cabinet' : 
+           (item.label.length > 9 && isMobile ? `${item.label.slice(0, 7)}...` : item.label)}
         </motion.span>
       )}
     </motion.button>

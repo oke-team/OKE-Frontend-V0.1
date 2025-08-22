@@ -254,6 +254,18 @@ export default function DocumentPreview({
 
   // Aperçu PDF avec configuration robuste
   if (document.type === 'pdf') {
+    // En développement, on affiche directement le fallback
+    if (process.env.NEXT_PUBLIC_DISABLE_PDF === 'true') {
+      return (
+        <div ref={targetRef} className={className} style={{ width, height }}>
+          <FallbackPreview 
+            icon={FileText} 
+            message={width > 80 ? `PDF • ${document.pageCount || '?'} pages` : undefined}
+          />
+        </div>
+      );
+    }
+
     return (
       <div ref={targetRef} className={className} style={{ width, height }}>
         {!shouldShowPreview ? (

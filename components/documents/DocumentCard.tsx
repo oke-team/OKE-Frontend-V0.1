@@ -174,35 +174,31 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
         </div>
 
         {/* Info */}
-        <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 leading-tight">
+        <h3 className="font-medium text-gray-900 text-sm mb-2 line-clamp-2 leading-tight">
           {document.name}
         </h3>
-        
-        <p className="text-xs text-gray-500 mb-2">
-          {realDocumentUtils.formatFileSize(document.size)}
-        </p>
 
         {/* Status/Actions en bas */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             {fileType === 'pdf' && (
               <span className="inline-flex px-1.5 py-0.5 text-xs font-medium bg-red-100 text-red-700 rounded">
-                PDF
+                PDF • {realDocumentUtils.formatFileSize(document.size)}
               </span>
             )}
             {fileType === 'image' && (
               <span className="inline-flex px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded">
-                IMG
+                IMG • {realDocumentUtils.formatFileSize(document.size)}
               </span>
             )}
             {fileType === 'office' && (
               <span className="inline-flex px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
-                DOC
+                DOC • {realDocumentUtils.formatFileSize(document.size)}
               </span>
             )}
             {fileType === 'unsupported' && (
               <span className="inline-flex px-1.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 rounded">
-                FILE
+                FILE • {realDocumentUtils.formatFileSize(document.size)}
               </span>
             )}
           </div>

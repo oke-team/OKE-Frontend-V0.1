@@ -6,6 +6,7 @@ import { ExpertModeProvider } from '@/contexts/ExpertModeContext';
 import { PeriodProvider } from '@/contexts/PeriodContext';
 import { SelectionProvider } from '@/contexts/SelectionContext';
 import { OnboardingProvider } from '@/contexts/OnboardingContext';
+import { CabinetNavigationProvider } from '@/contexts/CabinetNavigationContext';
 import Onboarding from '@/components/ui/Onboarding';
 import TransitionNotification from '@/components/ui/TransitionNotification';
 
@@ -19,11 +20,13 @@ export default function Providers({ children }: ProvidersProps) {
       <ExpertModeProvider>
         <PeriodProvider>
           <SelectionProvider>
-            <OnboardingProvider>
-              {children}
-              <Onboarding />
-              <TransitionNotification />
-            </OnboardingProvider>
+            <CabinetNavigationProvider>
+              <OnboardingProvider>
+                {children}
+                <Onboarding />
+                <TransitionNotification />
+              </OnboardingProvider>
+            </CabinetNavigationProvider>
           </SelectionProvider>
         </PeriodProvider>
       </ExpertModeProvider>
