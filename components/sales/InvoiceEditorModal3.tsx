@@ -615,45 +615,45 @@ export default function InvoiceEditorModal3({
                                 background: 'rgba(255, 255, 255, 0.98)'
                               }}
                             >
-                            <div className="p-3 space-y-3">
-                              {/* Groupe Export */}
-                              <div className="space-y-2">
-                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Export</h4>
-                                <div className="flex gap-2">
-                                  <TooltipButton onClick={handleDownload} icon={Download} tooltip="Télécharger PDF" className="bg-gradient-to-r from-[#FAA016] to-[#FAA016]/90 text-white hover:shadow-md" />
-                                  <TooltipButton onClick={handlePrint} icon={Printer} tooltip="Imprimer" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                              <div className="p-3 space-y-3">
+                                {/* Groupe Export */}
+                                <div className="space-y-2">
+                                  <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Export</h4>
+                                  <div className="flex gap-2">
+                                    <TooltipButton onClick={handleDownload} icon={Download} tooltip="Télécharger PDF" className="bg-gradient-to-r from-[#FAA016] to-[#FAA016]/90 text-white hover:shadow-md" />
+                                    <TooltipButton onClick={handlePrint} icon={Printer} tooltip="Imprimer" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                                  </div>
+                                </div>
+                                
+                                {/* Groupe Communication */}
+                                <div className="space-y-2">
+                                  <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Communication</h4>
+                                  <div className="flex gap-2">
+                                    <TooltipButton onClick={handleEmail} icon={Mail} tooltip="Envoyer par email" className="bg-gradient-to-r from-[#4C34CE] to-[#4C34CE]/90 text-white hover:shadow-md" />
+                                    <TooltipButton onClick={handleShare} icon={Share2} tooltip="Partager" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                                  </div>
+                                </div>
+                                
+                                {/* Groupe Edition */}
+                                <div className="space-y-2">
+                                  <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Edition</h4>
+                                  <div className="flex gap-2">
+                                    <TooltipButton onClick={handlePreview} icon={Eye} tooltip="Aperçu" className="bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-md" />
+                                    <TooltipButton onClick={handleDuplicate} icon={Copy} tooltip="Dupliquer" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                                    <TooltipButton onClick={handleImportLines} icon={Upload} tooltip="Importer lignes" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                                  </div>
+                                </div>
+                                
+                                {/* Groupe Gestion */}
+                                <div className="space-y-2">
+                                  <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Gestion</h4>
+                                  <div className="flex gap-2">
+                                    <TooltipButton onClick={handleResend} icon={Bell} tooltip="Relancer" disabled={isProcessing} processing={isProcessing} className="bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-md" />
+                                    <TooltipButton onClick={handleManageSubscriptions} icon={Clock} tooltip="Récurrence" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
+                                  </div>
                                 </div>
                               </div>
-                              
-                              {/* Groupe Communication */}
-                              <div className="space-y-2">
-                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Communication</h4>
-                                <div className="flex gap-2">
-                                  <TooltipButton onClick={handleEmail} icon={Mail} tooltip="Envoyer par email" className="bg-gradient-to-r from-[#4C34CE] to-[#4C34CE]/90 text-white hover:shadow-md" />
-                                  <TooltipButton onClick={handleShare} icon={Share2} tooltip="Partager" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
-                                </div>
-                              </div>
-                              
-                              {/* Groupe Edition */}
-                              <div className="space-y-2">
-                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Edition</h4>
-                                <div className="flex gap-2">
-                                  <TooltipButton onClick={handlePreview} icon={Eye} tooltip="Aperçu" className="bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:shadow-md" />
-                                  <TooltipButton onClick={handleDuplicate} icon={Copy} tooltip="Dupliquer" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
-                                  <TooltipButton onClick={handleImportLines} icon={Upload} tooltip="Importer lignes" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
-                                </div>
-                              </div>
-                              
-                              {/* Groupe Gestion */}
-                              <div className="space-y-2">
-                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Gestion</h4>
-                                <div className="flex gap-2">
-                                  <TooltipButton onClick={handleResend} icon={Bell} tooltip="Relancer" disabled={isProcessing} processing={isProcessing} className="bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-md" />
-                                  <TooltipButton onClick={handleManageSubscriptions} icon={Clock} tooltip="Récurrence" className="bg-gray-100 text-gray-600 hover:bg-gray-200" />
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
+                            </motion.div>
                           </>
                         </AnimatePresence>,
                         document.body

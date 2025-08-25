@@ -378,92 +378,146 @@ export const designTokens = {
    * Tokens spécifiques pour le module fiscalité
    */
   tax: {
-    // États fiscaux avec couleurs cohérentes OKÉ
+    // Couleurs fiscales institutionnelles - Tranchantes et vibrantes
     status: {
       critical: {
-        base: "#ef4444",
-        light: "rgba(239, 68, 68, 0.1)",
-        medium: "rgba(239, 68, 68, 0.2)",
-        border: "rgba(239, 68, 68, 0.3)",
-        glow: "rgba(239, 68, 68, 0.15)",
+        base: "#dc2626", // Rouge fiscal français
+        light: "#fef2f2",
+        medium: "#fecaca",
+        border: "#f87171",
+        surface: "#fee2e2",
+        contrast: "#ffffff",
       },
       normal: {
-        base: "#6da4c3", // Bleu ciel homepage
-        light: "rgba(109, 164, 195, 0.1)",
-        medium: "rgba(109, 164, 195, 0.2)",
-        border: "rgba(109, 164, 195, 0.3)",
-        glow: "rgba(109, 164, 195, 0.15)",
+        base: "#1e40af", // Bleu administration
+        light: "#eff6ff",
+        medium: "#bfdbfe",
+        border: "#60a5fa",
+        surface: "#dbeafe",
+        contrast: "#ffffff",
       },
       validated: {
-        base: "#10b981",
-        light: "rgba(16, 185, 129, 0.1)",
-        medium: "rgba(16, 185, 129, 0.2)",
-        border: "rgba(16, 185, 129, 0.3)",
-        glow: "rgba(16, 185, 129, 0.15)",
+        base: "#059669", // Vert validation
+        light: "#f0fdf4",
+        medium: "#bbf7d0",
+        border: "#4ade80",
+        surface: "#dcfce7",
+        contrast: "#ffffff",
       },
       pending: {
-        base: "#FAA016", // Orange OKÉ
-        light: "rgba(250, 160, 22, 0.1)",
-        medium: "rgba(250, 160, 22, 0.2)",
-        border: "rgba(250, 160, 22, 0.3)",
-        glow: "rgba(250, 160, 22, 0.15)",
+        base: "#ea580c", // Orange attention
+        light: "#fff7ed",
+        medium: "#fed7aa",
+        border: "#fb923c",
+        surface: "#ffedd5",
+        contrast: "#ffffff",
       },
       overdue: {
-        base: "#7c2d12",
-        light: "rgba(124, 45, 18, 0.1)",
-        medium: "rgba(124, 45, 18, 0.2)",
-        border: "rgba(124, 45, 18, 0.3)",
-        glow: "rgba(124, 45, 18, 0.15)",
+        base: "#991b1b", // Rouge foncé retard
+        light: "#fef2f2",
+        medium: "#fca5a5",
+        border: "#f87171",
+        surface: "#fee2e2",
+        contrast: "#ffffff",
       }
     },
 
-    // Types de déclarations - palette distincte mais harmonieuse
+    // Types de déclarations avec couleurs institutionnelles
     declarationTypes: {
       TVA: {
-        base: "#4C34CE", // Violet OKÉ principal
-        light: "rgba(76, 52, 206, 0.1)",
-        accent: "#6d5cde",
-        tag: "rgba(76, 52, 206, 0.08)",
+        base: "#dc2626", // Rouge fiscal pour TVA
+        light: "#fef2f2",
+        accent: "#ef4444",
+        surface: "#fee2e2",
+        pattern: "bg-red-50 border-red-200",
       },
       TDFC: {
-        base: "#182752", // Bleu marine homepage
-        light: "rgba(24, 39, 82, 0.1)",
-        accent: "#2a3f68",
-        tag: "rgba(24, 39, 82, 0.08)",
+        base: "#7c3aed", // Violet pour TDFC
+        light: "#f5f3ff",
+        accent: "#8b5cf6",
+        surface: "#ede9fe",
+        pattern: "bg-violet-50 border-violet-200",
       },
       PAIEMENT: {
-        base: "#FAA016", // Orange OKÉ
-        light: "rgba(250, 160, 22, 0.1)",
-        accent: "#fbb849",
-        tag: "rgba(250, 160, 22, 0.08)",
+        base: "#ea580c", // Orange pour paiements
+        light: "#fff7ed",
+        accent: "#f97316",
+        surface: "#ffedd5",
+        pattern: "bg-orange-50 border-orange-200",
       },
       IR: {
-        base: "#512952", // Prune homepage
-        light: "rgba(81, 41, 82, 0.1)",
-        accent: "#6b3a6c",
-        tag: "rgba(81, 41, 82, 0.08)",
+        base: "#1e40af", // Bleu pour IR
+        light: "#eff6ff",
+        accent: "#3b82f6",
+        surface: "#dbeafe",
+        pattern: "bg-blue-50 border-blue-200",
       },
       PART: {
-        base: "#2b3642", // Gris ardoise homepage
-        light: "rgba(43, 54, 66, 0.1)",
-        accent: "#3d4a58",
-        tag: "rgba(43, 54, 66, 0.08)",
+        base: "#059669", // Vert pour participations
+        light: "#f0fdf4",
+        accent: "#10b981",
+        surface: "#dcfce7",
+        pattern: "bg-green-50 border-green-200",
+      }
+    },
+
+    // Design CERFA moderne
+    cerfa: {
+      // Fond de formulaire
+      background: "#ffffff",
+      alternateRow: "#f8fafc",
+      
+      // Bordures et séparateurs
+      border: "#e2e8f0",
+      divider: "#cbd5e1",
+      
+      // Champs et zones
+      field: {
+        background: "#ffffff",
+        border: "#d1d5db",
+        focus: "#1e40af",
+        error: "#dc2626",
+        disabled: "#f3f4f6",
+      },
+      
+      // Headers de sections
+      sectionHeader: {
+        background: "#f1f5f9",
+        border: "#cbd5e1",
+        text: "#374151",
+      },
+      
+      // Numérotation des cases
+      caseNumber: {
+        background: "#1e40af",
+        text: "#ffffff",
+        border: "#1e40af",
+      },
+      
+      // Grille comme les vrais CERFAs
+      grid: {
+        line: "#e5e7eb",
+        cell: "#ffffff",
+        highlight: "#f0f9ff",
       }
     },
 
     // Zones du dashboard fiscal
     zones: {
       safe: {
-        background: "rgba(16, 185, 129, 0.03)",
-        border: "rgba(16, 185, 129, 0.15)",
+        background: "#f0fdf4",
+        border: "#4ade80",
+        text: "#166534",
       },
       warning: {
-        background: "rgba(250, 160, 22, 0.03)",
-        border: "rgba(250, 160, 22, 0.15)",
+        background: "#fff7ed",
+        border: "#fb923c",
+        text: "#c2410c",
       },
       danger: {
-        background: "rgba(239, 68, 68, 0.03)",
-        border: "rgba(239, 68, 68, 0.15)",
+        background: "#fef2f2",
+        border: "#f87171",
+        text: "#dc2626",
       }
     },
 
@@ -553,50 +607,82 @@ export const designTokens = {
       }
     },
 
-    // Composants spécifiques
+    // Composants spécifiques style institutionnel
     components: {
+      // Formulaires CERFA
+      cerfaForm: {
+        borderRadius: "8px", // Bordures moins arrondies
+        borderWidth: "2px",
+        padding: "24px",
+        sectionSpacing: "32px",
+        fieldSpacing: "16px",
+        background: "#ffffff",
+        shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      },
+      
+      // Cards de déclarations institutionnelles
+      declarationCard: {
+        borderRadius: "8px", // Plus carré, moins design
+        borderWidth: "2px",
+        minHeight: "140px",
+        padding: "20px",
+        background: "#ffffff",
+        shadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        hoverShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
+      },
+      
+      // Timeline institutionnelle
       timeline: {
         node: {
-          size: "12px",
-          borderWidth: "2px",
-          activeBorder: "3px",
+          size: "16px", // Plus gros pour plus de visibilité
+          borderWidth: "3px",
+          activeBorder: "4px",
         },
         line: {
-          width: "2px",
+          width: "3px", // Plus épais
           style: "solid",
-          dashArray: "4 4",
         },
         item: {
-          minHeight: "80px",
-          borderRadius: "12px",
-          padding: "16px",
+          minHeight: "100px",
+          borderRadius: "8px",
+          padding: "20px",
+          background: "#ffffff",
         }
       },
-      declarationCard: {
-        borderRadius: "16px",
+      
+      // Headers de sections
+      sectionHeader: {
+        borderRadius: "4px",
+        padding: "12px 16px",
+        fontSize: "16px",
+        fontWeight: "600",
+        background: "#f1f5f9",
+        border: "1px solid #cbd5e1",
+      },
+      
+      // Champs de formulaire
+      formField: {
+        borderRadius: "4px",
         borderWidth: "1px",
-        minHeight: "120px",
-        maxWidth: "400px",
-        backdrop: "blur(20px)",
-        background: "rgba(255, 255, 255, 0.05)",
+        padding: "8px 12px",
+        fontSize: "14px",
+        background: "#ffffff",
+        focusRing: "2px solid #1e40af",
       },
-      headerWidget: {
-        borderRadius: "24px",
-        height: "48px",
-        maxWidth: "320px",
-        backdrop: "blur(16px)",
-        background: "rgba(255, 255, 255, 0.08)",
-      },
+      
+      // Assistant étapes
       assistant: {
         stepIndicator: {
-          size: "32px",
-          activeSize: "40px",
-          lineHeight: "2px",
+          size: "36px",
+          activeSize: "44px",
+          fontSize: "16px",
+          fontWeight: "700",
         },
         card: {
-          borderRadius: "20px",
+          borderRadius: "8px",
           padding: "24px",
-          gap: "16px",
+          gap: "20px",
+          background: "#ffffff",
         }
       }
     },

@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import TaxModeSelector from './TaxModeSelector';
 import TaxTabs from './TaxTabs';
-import TaxDashboard from './TaxDashboard';
+import TaxDashboardInstitutional from './TaxDashboardInstitutional';
 import TVAModule from './modules/TVAModule';
 import LiasseModule from './modules/LiasseModule';
 import OtherDeclarationsModule from './modules/OtherDeclarationsModule';
@@ -16,13 +15,15 @@ interface TaxModuleProps {
 }
 
 export default function TaxModule({ expertMode }: TaxModuleProps) {
-  const [taxMode, setTaxMode] = useState<TaxMode>('entrepreneur');
   const [activeGroup, setActiveGroup] = useState<DeclarationGroup | 'dashboard'>('dashboard');
+  
+  // Convertir expertMode boolean en TaxMode
+  const taxMode: TaxMode = expertMode ? 'expert' : 'entrepreneur';
 
   const renderContent = () => {
     switch (activeGroup) {
       case 'dashboard':
-        return <TaxDashboard taxMode={taxMode} onGroupSelect={setActiveGroup} />;
+        return <TaxDashboardInstitutional taxMode={taxMode} onGroupSelect={setActiveGroup} />;
       case 'tva':
         return <TVAModule taxMode={taxMode} />;
       case 'liasse':
@@ -32,34 +33,20 @@ export default function TaxModule({ expertMode }: TaxModuleProps) {
       case 'personal':
         return <PersonalModule taxMode={taxMode} />;
       default:
-        return <TaxDashboard taxMode={taxMode} onGroupSelect={setActiveGroup} />;
+        return <TaxDashboardInstitutional taxMode={taxMode} onGroupSelect={setActiveGroup} />;
     }
   };
 
-  return (
-    <div className="h-full flex flex-col">
-      {/* Header avec sélecteur de mode */}
-      <div className="flex-shrink-0 mb-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-neutral-900">
-              Module Fiscalité
-            </h1>
-            <p className="text-neutral-600 mt-1">
-              Gestion complète de vos obligations fiscales
-            </p>
-          </div>
-          
-          <TaxModeSelector 
-            mode={taxMode} 
-            onChange={setTaxMode}
-            expertModeAvailable={expertMode}
-          />
-        </div>
-      </div>
+  // Pour le dashboard, on affiche directement le contenu sans wrapper
+  if (activeGroup === 'dashboard') {
+    return renderContent();
+  }
 
+  // Pour les autres onglets, on garde la structure avec navigation
+  return (
+    <div className="h-full flex flex-col bg-gray-50">
       {/* Navigation par onglets */}
-      <div className="flex-shrink-0 mb-6">
+      <div className="flex-shrink-0 mb-6 bg-white border-b border-gray-200 p-6">
         <TaxTabs 
           activeGroup={activeGroup} 
           onGroupChange={setActiveGroup} 
