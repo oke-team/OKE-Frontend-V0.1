@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:include schemaLocation="./TypeBase.xsd"/>
+			
+	<!-- ### Définition des énumérations spécifiques à PART ### -->		
+	
+	<!-- Type Groupe Fonctionnel PART -->
+	<xs:simpleType name="TypeGroupeFonctionnelPart">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INFENT" />
+		</xs:restriction>
+	</xs:simpleType>
+		
+	<!-- Type Rédacteur PART -->
+	<xs:simpleType name="TypeRedacteurPart">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ENT_EDI_PART" />
+			<xs:enumeration value="CEC_EDI_PART" />
+			<xs:enumeration value="ATD_EDI_PART" />
+		</xs:restriction>
+	</xs:simpleType>		
+			
+	<!-- Type Destinataire PART -->
+	<xs:simpleType name="TypeDestinatairePart">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DGI_EDI_PART" /> <!-- DGFiP -->
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<!-- Type Déclaration PART -->
+	<xs:simpleType name="TypeDeclarationPart">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IFU" /> <!-- Imprimé fiscal unique -->
+			<xs:enumeration value="HON" /> <!-- Déclaration honoraire -->	
+		</xs:restriction>
+	</xs:simpleType>
+			
+	<!-- ### Définition des types complexes ### -->
+	
+	<!-- =======================================================
+		Element racine XmlEdi
+		======================================================== -->
+	<xs:element name="XmlEdi" type="XmlEdi" />
+	
+	<xs:complexType name="XmlEdi">
+		<xs:sequence>
+			<xs:element name="GroupeFonctionnel" type="GroupeFonctionnel" minOccurs="1" maxOccurs="1"  />
+		</xs:sequence>
+		<xs:attribute name="Test" type="DigitBoolean" use="required" />
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel
+		======================================================== -->
+	<xs:complexType name="GroupeFonctionnel">
+		<xs:sequence>
+			<xs:element name="Declaration" type="Declaration" minOccurs="1" maxOccurs="1000" />
+		</xs:sequence>
+		<xs:attribute name="Type" type="TypeGroupeFonctionnelPart" use="required" />
+	</xs:complexType>
+
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration
+		======================================================== -->
+	<xs:complexType name="Declaration">
+		<xs:sequence>
+			<xs:element name="Emetteur" type="Emetteur" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Redacteur" type="Redacteur" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Redevable" type="Redevable" minOccurs="1" maxOccurs="1" />
+			<xs:element name="PartenaireEdi" type="PartenaireEdi" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ListeDestinataires" type="ListeDestinataires" minOccurs="1" maxOccurs="1" />
+			<xs:element name="ListeFormulaires" type="ListeFormulaires" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="Type" type="TypeDeclarationPart" use="required" />
+		<xs:attribute name="Reference" type="ReferenceDeclaration" use="required" />	
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Emetteur
+		======================================================== -->
+	<xs:complexType name="Emetteur">
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element ref="Siret" />
+				<xs:element name="Identifiant" type="PseudoSiret" />
+			</xs:choice>
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Redacteur
+		======================================================== -->
+	<xs:complexType name="Redacteur">
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element ref="Siret" />
+				<xs:element name="Identifiant" type="PseudoSiret" />
+			</xs:choice>			
+			<xs:element name="Designation" type="TypeRedacteurPart" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Redevable
+		======================================================== -->
+	<xs:complexType name="Redevable">
+		<xs:sequence>
+			<xs:element name="Identifiant" type="PseudoSiret" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / PartenaireEdi
+		======================================================== -->
+	<xs:complexType name="PartenaireEdi">
+		<xs:sequence>
+			<xs:element name="Identifiant" type="Agrement" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />	
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ==================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeDestinataires
+		=================================================================== -->
+	<xs:complexType name="ListeDestinataires">
+		<xs:choice>				
+			<xs:element name="Destinataire" type="Destinataire" minOccurs="1" maxOccurs="3" />	
+		</xs:choice>
+	</xs:complexType>
+	
+	<!-- ========================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeDestinataires / Destinataire
+		========================================================================================= -->
+	<xs:complexType name="Destinataire">			
+		<xs:sequence>
+			<xs:element name="Designation" type="TypeDestinatairePart" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Identifiant" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ==================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeFormulaires
+		=================================================================== -->
+	<xs:complexType name="ListeFormulaires">
+		<xs:sequence>				
+			<xs:element name="Identif" type="Formulaire" minOccurs="1" maxOccurs="1" />	
+			<xs:element name="Formulaire" type="FormulaireDeclaratif" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ===========================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeFormulaires / Identif
+		============================================================================ -->
+		
+	<xs:complexType name="Formulaire">
+		<xs:sequence>
+			<xs:element name="Zone" type="Zone" minOccurs="1" maxOccurs="unbounded" />	
+		</xs:sequence>
+		<xs:attribute name="Millesime" type="DigitFix2" use="required" />
+	</xs:complexType>
+	
+	<!-- ===========================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeFormulaires / Formulaire
+		============================================================================ -->
+	<xs:complexType name="FormulaireDeclaratif" >
+		<xs:complexContent>
+			<xs:extension base="Formulaire">
+				<xs:attribute name="Nom" type="NumAndLetters" use="required" />
+				<xs:attribute name="Repetition" type="Digit4" />
+				<xs:attribute name="Etat" type="EtatClient" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<!-- ====================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeFormulaires / Formulaire / Zone
+		===================================================================================== -->
+	<!-- Définition d'une Zone -->
+	<xs:complexType name="Zone">
+		<xs:choice>
+			<!-- Zone Simple -->
+			<xs:sequence>
+				<xs:element name="Valeur" type="String512" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Unite" minOccurs="0" maxOccurs="1" /> <!-- Nécessaire pour certaine quantité QTY -->
+			</xs:sequence>
+			<!-- Zone Multiple de Coordonnées (NAD) -->
+			<xs:sequence>
+				<xs:element ref="Identifiant" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="Designation" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="AdresseNumero" minOccurs="0" maxOccurs="1" />	
+				<xs:choice>
+					<xs:element ref="AdresseType" minOccurs="0" maxOccurs="1" /> <!-- déprécié mais maintenu pour la rétrocompatibilité (remplacé par AdresseRepetabilite) -->
+					<xs:element ref="AdresseRepetabilite" minOccurs="0" maxOccurs="1" />
+				</xs:choice>	
+				<xs:element name="AdresseVoie" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseComplement" type="String32" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="AdresseCodeDivisionTerritoriale" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseDivisionTerritoriale" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseCodePostal" type="Digit5" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseVille" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="ContactDesignation" minOccurs="0" maxOccurs="1" />
+				<xs:element name="Telephone" type="String10" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="Email" type="String60" minOccurs="0" maxOccurs="1" />	
+			</xs:sequence>
+			<!-- Zone Multiple de Texte Libre (FTX) -->
+			<xs:sequence>
+				<xs:element name="TexteLibre1" type="String40" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+			<!-- Zone Multiple d'identification Financière (FII) -->
+			<xs:sequence>
+				<xs:element ref="Compte" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Etablissement" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Agence" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+			<!-- Zone Répétable -->
+			<xs:sequence>
+				<xs:element name="Occurrence" type="Occurrence" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="id" type="UpperString2" use="required" />
+	</xs:complexType>
+	
+	<!-- Définition d'une Occurrence -->
+	<xs:complexType name="Occurrence">
+		<xs:choice>
+			<!-- Occurrence Simple -->
+			<xs:sequence>
+				<xs:element name="Valeur" type="String512" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Unite" minOccurs="0" maxOccurs="1" /> <!-- Nécessaire pour certaine quantité QTY -->
+			</xs:sequence>
+			<!-- Occurrence Multiple de Coordonnées (NAD) -->
+			<xs:sequence>
+				<xs:element ref="Identifiant" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="Designation" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="AdresseNumero" minOccurs="0" maxOccurs="1" />	
+				<xs:choice>
+					<xs:element ref="AdresseType" minOccurs="0" maxOccurs="1" /> <!-- déprécié mais maintenu pour la rétrocompatibilité (remplacé par AdresseRepetabilite) -->
+					<xs:element ref="AdresseRepetabilite" minOccurs="0" maxOccurs="1" />
+				</xs:choice>	
+				<xs:element name="AdresseVoie" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseComplement" type="String32" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="AdresseCodeDivisionTerritoriale" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseDivisionTerritoriale" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseCodePostal" type="Digit5" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="AdresseVille" type="String26" minOccurs="0" maxOccurs="1" />	
+				<xs:element ref="ContactDesignation" minOccurs="0" maxOccurs="1" />
+				<xs:element name="Telephone" type="String10" minOccurs="0" maxOccurs="1" />	
+				<xs:element name="Email" type="String60" minOccurs="0" maxOccurs="1" />	
+			</xs:sequence>
+			<!-- Occurrence Multiple de Texte Libre (FTX) -->
+			<xs:sequence>
+				<xs:element name="TexteLibre1" type="String40" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+			<!-- Zone Multiple d'identification Financière (FII) -->
+			<xs:sequence>
+				<xs:element ref="Compte" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Etablissement" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="Agence" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="Numero" type="Digit4" use="required" />
+	</xs:complexType>
+	
+</xs:schema>

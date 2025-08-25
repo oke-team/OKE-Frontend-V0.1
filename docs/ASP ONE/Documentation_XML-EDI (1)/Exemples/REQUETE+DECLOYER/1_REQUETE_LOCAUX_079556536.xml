@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="LOC" Reference="INFENT000000004777-0-0">
+            <Redacteur>
+                <Siret>07955574400014</Siret>
+                <Designation>ENT_EDI_REQ</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079556536CFE1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079556536</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_REQ</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="14">
+                    <Zone id="AB">
+                        <Identifiant>079556536</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>079555744</Identifiant>
+                        <Designation>REDACTEUR TEST</Designation>
+						<AdresseNumero>7</AdresseNumero>
+						<AdresseVoie>PARC METROTECH</AdresseVoie>
+						<AdresseCodePostal>42650</AdresseCodePostal>
+						<AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>LOC</Valeur>
+                    </Zone>
+                </Identif>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

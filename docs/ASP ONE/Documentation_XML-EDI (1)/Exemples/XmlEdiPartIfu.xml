@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="IFU" Reference="INFENT000000000001">
+            <Redacteur>
+                <Siret>07955542100019</Siret>
+                <Designation>ENT_EDI_PART</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>123</AdresseNumero>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                    <AdresseCodePostal>92100</AdresseCodePostal>
+                    <AdresseVille>BOULOGNE BILLANCOURT</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>07955568600017</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>07955568600017</Identifiant>
+                <Designation>DECLARANT TEST</Designation>
+                <DesignationSuite1>COMPLEMENT DEC</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>456</AdresseNumero>
+                    <AdresseRepetabilite>B</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>ZI MOLINA</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PART</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="BB">
+                        <Valeur>20230801</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>20240731</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>20241120</Valeur>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>07955568600017</Identifiant>
+                        <Designation>DECLARANT TEST</Designation>
+                        <DesignationSuite1>COMPLEMENT DEC</DesignationSuite1>
+                        <AdresseNumero>456</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                        <AdresseComplement>ZI MOLINA</AdresseComplement>
+                        <AdresseCodeDivisionTerritoriale>42218</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>SAINT-ETIENNE</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <ContactDesignation>DUPOND Martin</ContactDesignation>
+                        <Telephone>1122334455</Telephone>
+                        <Email>dupond.martin@test.fr</Email>
+                    </Zone>
+                    <Zone id="DA">
+                        <Valeur>1</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2561" Repetition="1" Millesime="25">
+                    <Zone id="AD">
+                        <Valeur>B</Valeur>
+                    </Zone>
+					<Zone id="AB">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="AC">
+                        <Valeur>6</Valeur>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>0801</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>0731</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Designation>PERRIN</Designation>
+                        <DesignationSuite1>Jeanne</DesignationSuite1>
+                        <DesignationSuite2>DUTERTRE</DesignationSuite2>
+                        <AdresseCodeDivisionTerritoriale>21355</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>LONGVIC</AdresseDivisionTerritoriale>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>19490910</Valeur>
+                    </Zone>
+                    <Zone id="AG">
+                        <AdresseNumero>1234</AdresseNumero>
+                        <AdresseRepetabilite>C</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE LA COMBE</AdresseVoie>
+                        <AdresseCodeDivisionTerritoriale>42218</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>SAINT-ETIENNE</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>123456</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>122</Valeur>
+                    </Zone>
+                    <Zone id="BK">
+                        <Valeur>1220</Valeur>
+                    </Zone>
+                    <Zone id="CT">
+                        <Valeur>12555</Valeur>
+                    </Zone>
+                    <Zone id="CW">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>123</Valeur>
+                    </Zone>
+                    <Zone id="FK">
+                        <Valeur>12345</Valeur>
+                    </Zone>
+                    <Zone id="BU">
+                        <Valeur>122</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2561" Repetition="2" Millesime="25">
+                    <Zone id="AD">
+                        <Valeur>B</Valeur>
+                    </Zone>
+					<Zone id="AB">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="AC">
+                        <Valeur>6</Valeur>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>0801</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>1231</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Identifiant>07955549600045</Identifiant>
+                        <Designation>SOCIETE TEST</Designation>
+                    </Zone>
+                    <Zone id="AG">
+                        <AdresseVoie>Kirchenstrasse 132</AdresseVoie>
+                        <AdresseCodeDivisionTerritoriale>99109</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>BERLIN</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>12345</AdresseCodePostal>
+                        <AdresseVille>BERLIN</AdresseVille>
+                    </Zone>
+                    <Zone id="AK">
+                        <TexteLibre1>PLOMBIER</TexteLibre1>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>14555</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>4055</Valeur>
+                    </Zone>
+                    <Zone id="BN">
+                        <Valeur>4555</Valeur>
+                    </Zone>
+                    <Zone id="BP">
+                        <Valeur>123</Valeur>
+                    </Zone>
+                    <Zone id="CW">
+                        <Valeur>12222</Valeur>
+                    </Zone>
+                    <Zone id="FM">
+                        <Valeur>1555</Valeur>
+                    </Zone>
+					<Zone id="AT">
+                        <Valeur>1111</Valeur>
+                    </Zone>
+					<Zone id="BW">
+                        <Valeur>1222</Valeur>
+                    </Zone>
+					<Zone id="FU">
+                        <Valeur>1333</Valeur>
+                    </Zone>
+					<Zone id="GA">
+                        <Valeur>1444</Valeur>
+                    </Zone>
+					<Zone id="GB">
+                        <Valeur>1555</Valeur>
+                    </Zone>
+					<Zone id="GC">
+                        <Valeur>1666</Valeur>
+                    </Zone>
+					<Zone id="JB">
+                        <Valeur>1999</Valeur>
+                    </Zone>
+					<Zone id="DS">
+                        <Valeur>12345678901011</Valeur>
+                    </Zone>
+                    <Zone id="DT">
+                        <Valeur>20240425</Valeur>
+                    </Zone>
+                    <Zone id="DW">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

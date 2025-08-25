@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000001593-0-0" Type="IPP">
+            <Redacteur>
+                <Siret>07955554600013</Siret>
+                <Designation>ENT_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555579IS1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555579</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>IS1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555579</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                        <Telephone>33102030405</Telephone>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BI</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>IS</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>20211231</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>IS1</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="1" Nom="2258" Millesime="25">
+                    <Zone id="AH">
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>ZZ HOLDING</Designation>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>25000</Valeur>
+                    </Zone>
+                    <Zone id="AK">
+                        <Valeur>2000</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>27000</Valeur>
+                    </Zone>
+                    <Zone id="AX">
+                        <Valeur>6666</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Occurrence Numero="1">
+                            <Identifiant>111111111111</Identifiant>
+                            <Designation>ENTITE 1</Designation>
+                            <AdresseNumero>65</AdresseNumero>
+                            <AdresseVoie>RUE DE TEST</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>222222222222</Identifiant>
+                            <Designation>ENTITE 2</Designation>
+                            <AdresseVoie>AVENUE DE TEST</AdresseVoie>
+                            <AdresseComplement>ZA TEST</AdresseComplement>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AU">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AV">
+                        <Occurrence Numero="1">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BL">
+                        <Occurrence Numero="2">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AW">
+                        <Occurrence Numero="2">
+                            <TexteLibre1>TEST1</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="2" Nom="2258" Millesime="25">
+                    <Zone id="AH">
+                        <AdresseCodePays>US</AdresseCodePays>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>NON</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <MonnaieCible>USD</MonnaieCible>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>XX HOLDING</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>500555</Valeur>
+                    </Zone>
+                    <Zone id="AK">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>505555</Valeur>
+                    </Zone>
+                    <Zone id="AX">
+                        <Valeur>456</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>456</Valeur>
+                    </Zone>
+                    <Zone id="AQ">
+                        <Valeur>12348</Valeur>
+                    </Zone>
+                    <Zone id="AR">
+                        <Valeur>156</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Occurrence Numero="1">
+                            <Identifiant>33333333333333</Identifiant>
+                            <Designation>ENTITE 1</Designation>
+                            <DesignationSuite2>STE</DesignationSuite2>
+                            <AdresseNumero>999</AdresseNumero>
+                            <AdresseVoie>TEST STREET 1</AdresseVoie>
+                            <AdresseCodePostal>123456BLD</AdresseCodePostal>
+                            <AdresseVille>NEW YORK</AdresseVille>
+                            <AdresseCodePays>US</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>44444444444444</Identifiant>
+                            <Designation>ENTITE 2</Designation>
+                            <DesignationSuite2>SA</DesignationSuite2>
+                            <AdresseNumero>111</AdresseNumero>
+                            <AdresseVoie>TEST STREET 2</AdresseVoie>
+                            <AdresseComplement>BUILDING 1</AdresseComplement>
+                            <AdresseCodePostal>654321PDM</AdresseCodePostal>
+                            <AdresseVille>CHICAGO</AdresseVille>
+                            <AdresseCodePays>US</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AU">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>US</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>US</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AV">
+                        <Occurrence Numero="1">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BB">
+                        <Occurrence Numero="2">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

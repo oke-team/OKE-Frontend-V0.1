@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="TAP" Reference="INFENT000000009613-0-0">
+            <Redacteur>
+                <Siret>07955544700030</Siret>
+                <Designation>CEC_EDI_PAYE</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>76</AdresseNumero>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>complément test</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>REF0001</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555488</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseType>B</AdresseType>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>TGAP1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PAYE</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555488</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <DesignationSuite2>SA</DesignationSuite2>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>TGAP1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20250101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20251231</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Iban>FR7611111222223333333333391</Iban>
+                        <Bic>CEPBFRPPXXX</Bic>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>TGAP1-102025-2020TGAPAC</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>2649905</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2020TGAPAC" Repetition="0" Millesime="25">
+                    <Zone id="BA">
+                        <Valeur>15100</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>2500</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>12600</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>66</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>130</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>196</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <Valeur>2690507</Valeur>
+                    </Zone>
+                    <Zone id="DB">
+                        <Valeur>145000</Valeur>
+                    </Zone>
+                    <Zone id="DD">
+                        <Valeur>6666</Valeur>
+                    </Zone>
+                    <Zone id="DE">
+                        <Valeur>2538841</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Valeur>98118</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>150</Valeur>
+                    </Zone>
+                    <Zone id="ED">
+                        <Valeur>98268</Valeur>
+                    </Zone>
+                    <Zone id="FA">
+                        <Valeur>2649905</Valeur>
+                    </Zone>
+                    <Zone id="FC">
+                        <Valeur>2649905</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000001980-0-0" Type="IS">
+            <Redacteur>
+                <Siret>07955544700030</Siret>
+                <Designation>CEC_EDI_PAYE</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>76</AdresseNumero>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>complément test</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555488IS1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555488</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>207</AdresseNumero>
+                    <AdresseVoie>RUE ALPHANUMERIQUE</AdresseVoie>
+                    <AdresseCodePostal>44001</AdresseCodePostal>
+                    <AdresseVille>NANTES CHANTIERS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>IS1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PAYE</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555488</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>207</AdresseNumero>
+                        <AdresseVoie>RUE ALPHANUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>44001</AdresseCodePostal>
+                        <AdresseVille>NANTES CHANTIERS</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>IS1</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2573" Repetition="0" Millesime="25">
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>2LI</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>PAM</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Valeur>2023</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2024</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AG">
+                        <Occurrence Numero="1">
+                            <Valeur>1500</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2212</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KA">
+                        <Occurrence Numero="1">
+                            <Valeur>PME</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>PME</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KB">
+                        <Occurrence Numero="2">
+                            <Valeur>TS</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KC">
+                        <Occurrence Numero="2">
+                            <Valeur>20251215</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KD">
+                        <Occurrence Numero="2">
+                            <Valeur>2000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>3712</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Identifiant>079555470</Identifiant>
+                    </Zone>
+                    <Zone id="BB">
+                        <Occurrence Numero="1">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BC">
+                        <Occurrence Numero="1">
+                            <Valeur>20240112</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20240201</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BD">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555496</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079555504</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BE">
+                        <Occurrence Numero="1">
+                            <Valeur>11111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>22222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>33333</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Identifiant>079555512</Identifiant>
+                    </Zone>
+                    <Zone id="CB">
+                        <Occurrence Numero="1">
+                            <Valeur>2LI</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>3IV</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CC">
+                        <Occurrence Numero="1">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20241231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CD">
+                        <Occurrence Numero="1">
+                            <Valeur>20240115</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20250201</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CE">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555439</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079555454</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CF">
+                        <Occurrence Numero="1">
+                            <Valeur>1234</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>5678</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CG">
+                        <Valeur>6912</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

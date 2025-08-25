@@ -1,0 +1,1181 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.1.0"
+  title: "DIGITAL VAULT"
+host: "www.aspone.fr"
+basePath: "/api/rest"
+tags:
+- name: "CONTRACTS"
+- name: "DOCUMENTS"
+- name: "EVENTS"
+- name: "SHARES"
+- name: "SUBSCRIPTIONS"
+schemes:
+- "https"
+paths:
+  /v1/vault/contracts:
+    get:
+      tags:
+      - "CONTRACTS"
+      summary: "List contracts"
+      description: "List contracts compatible with the account"
+      operationId: "listContracts_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultContractList"
+  /v1/vault/contracts/{contractId}:
+    get:
+      tags:
+      - "CONTRACTS"
+      summary: "Get contract by ID"
+      description: "Get details of a contract by its ID"
+      operationId: "getDetail_4"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "contractId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultContract"
+  /v1/vault/documents/files:
+    post:
+      tags:
+      - "DOCUMENTS"
+      summary: "File deposit"
+      description: "Drop a file in digital vault"
+      operationId: "uploadFile_1"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "folderId"
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "nbMonthsRetention"
+        in: "formData"
+        required: true
+        type: "integer"
+        enum:
+        - 1
+        - 3
+        - 6
+        - 9
+        - 12
+        - 18
+        - 24
+        - 60
+        - 120
+      - name: "keywords"
+        in: "formData"
+        required: false
+        type: "string"
+      - name: "filename"
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "content"
+        in: "formData"
+        required: true
+        type: "file"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful deposit"
+          schema:
+            $ref: "#/definitions/RestVaultDocument"
+  /v1/vault/documents/files/{fileId}/contents:
+    get:
+      tags:
+      - "DOCUMENTS"
+      summary: "Download file content"
+      description: "Download file content (fileId = documentId of type FILE)"
+      operationId: "downloadFile_1"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "fileId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/vault/documents/folders:
+    post:
+      tags:
+      - "DOCUMENTS"
+      summary: "Create folder"
+      description: "Create a new folder"
+      operationId: "createFolder_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultFolder"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultDocument"
+  /v1/vault/documents/folders/{folderId}/documents:
+    get:
+      tags:
+      - "DOCUMENTS"
+      summary: "List folder documents"
+      description: "List documents contained in a folder (folderId = documentId of\
+        \ type FOLDER)"
+      operationId: "browseFolder_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "folderId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultDocumentList"
+  /v1/vault/documents/search:
+    post:
+      tags:
+      - "DOCUMENTS"
+      summary: "Search documents"
+      description: "Search of documents (files or folders) by criteria"
+      operationId: "search_4"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultDocumentSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultDocumentList"
+  /v1/vault/documents/{documentId}:
+    get:
+      tags:
+      - "DOCUMENTS"
+      summary: "Get document by ID"
+      description: "Get details of a document (file or folder) by its ID"
+      operationId: "getDetail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultDocument"
+    put:
+      tags:
+      - "DOCUMENTS"
+      summary: "Update document"
+      description: "Update a document (file or folder) entirely : fields not provided\
+        \ will be overwritten with null or default value"
+      operationId: "update_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultDocument"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/RestVaultDocument"
+    delete:
+      tags:
+      - "DOCUMENTS"
+      summary: "Delete document"
+      description: "Delete a document (file or folder)"
+      operationId: "delete_1"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "204":
+          description: "Successful delete"
+  /v1/vault/documents/{documentId}/events:
+    get:
+      tags:
+      - "DOCUMENTS"
+      summary: "List document events"
+      description: "List events associated to a document (file or folder)"
+      operationId: "listEvents_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultEventList"
+  /v1/vault/documents/{documentId}/shares:
+    get:
+      tags:
+      - "DOCUMENTS"
+      summary: "List document shares"
+      description: "List shares associated to a document (file or folder)"
+      operationId: "listShares_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultShareList"
+  /v1/vault/events/search:
+    post:
+      tags:
+      - "EVENTS"
+      summary: "Search events"
+      description: "Search of events by criteria"
+      operationId: "search"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultEventSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultEventList"
+  /v1/vault/shares:
+    post:
+      tags:
+      - "SHARES"
+      summary: "Create share"
+      description: "Share a document : DOWNLOAD = allow someone to download a file,\
+        \ UPLOAD = allow someone to upload a file in a folder"
+      operationId: "create_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultShare"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultShare"
+  /v1/vault/shares/search:
+    post:
+      tags:
+      - "SHARES"
+      summary: "Search shares"
+      description: "Search of shares by criteria"
+      operationId: "search_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultShareSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "CREATION_DATE"
+        - "EXPIRATION_DATE"
+        - "USE_DATE"
+        - "TYPE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultShareList"
+  /v1/vault/shares/{shareId}:
+    get:
+      tags:
+      - "SHARES"
+      summary: "Get share by ID"
+      description: "Get details of a share by its ID"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "shareId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultShare"
+  /v1/vault/subscriptions:
+    post:
+      tags:
+      - "SUBSCRIPTIONS"
+      summary: "Create subscription"
+      description: "Create a subscription to vault"
+      operationId: "create"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultSubscription"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/RestVaultSubscription"
+  /v1/vault/subscriptions/search:
+    post:
+      tags:
+      - "SUBSCRIPTIONS"
+      summary: "Search subscriptions"
+      description: "Search of subscriptions by criteria"
+      operationId: "search_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultSubscriptionSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "ACTIVATION_DATE"
+        - "ACCOUNT_LOGIN"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultSubscriptionList"
+  /v1/vault/subscriptions/{subscriptionId}:
+    get:
+      tags:
+      - "SUBSCRIPTIONS"
+      summary: "Get subscription by ID"
+      description: "Get details of a subscription by its ID"
+      operationId: "getDetail_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "subscriptionId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestVaultSubscription"
+    put:
+      tags:
+      - "SUBSCRIPTIONS"
+      summary: "Update subscription"
+      description: "Update a subscription to vault"
+      operationId: "update"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "subscriptionId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestVaultSubscription"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/RestVaultSubscription"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAccountClientBasic:
+    type: "object"
+    required:
+    - "role"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+  RestChecksum:
+    type: "object"
+    properties:
+      algo:
+        type: "string"
+      value:
+        type: "string"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"
+  RestVaultContract:
+    type: "object"
+    properties:
+      contractId:
+        type: "string"
+      accountType:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      accountProfile:
+        type: "string"
+        enum:
+        - "STANDARD"
+        - "WEB_DECLARATIONS"
+        - "BANQUE_DE_FRANCE"
+        - "ARCHIVE"
+        - "EPS_ECCV"
+        - "INITIAL"
+        - "ESSENTIAL"
+        - "PREMIUM"
+        - "WEB_FISCAL"
+      label:
+        type: "string"
+      quotaFiles:
+        type: "integer"
+        format: "int64"
+      quotaSize:
+        type: "string"
+      price:
+        type: "number"
+        format: "double"
+      quantityMax:
+        type: "integer"
+        format: "int32"
+      enabled:
+        type: "boolean"
+      delegation:
+        type: "boolean"
+      subaccountWithMailbox:
+        type: "boolean"
+      subaccountWithoutMailbox:
+        type: "boolean"
+      default:
+        type: "boolean"
+  RestVaultContractList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      contracts:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestVaultContract"
+  RestVaultDocument:
+    type: "object"
+    properties:
+      documentId:
+        type: "string"
+      parentId:
+        type: "string"
+      depositDate:
+        type: "string"
+        format: "date-time"
+      nbMonthsRetention:
+        type: "integer"
+        format: "int32"
+      expirationDate:
+        type: "string"
+        format: "date-time"
+      type:
+        type: "string"
+        enum:
+        - "FOLDER"
+        - "FILE"
+      name:
+        type: "string"
+      keywords:
+        type: "string"
+      depositor:
+        type: "string"
+      activeShares:
+        type: "integer"
+        format: "int32"
+      format:
+        type: "string"
+      size:
+        type: "string"
+      location:
+        type: "string"
+      checksum:
+        $ref: "#/definitions/RestChecksum"
+      owner:
+        $ref: "#/definitions/RestAccountClientBasic"
+  RestVaultDocumentList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      documents:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestVaultDocument"
+  RestVaultDocumentSearchForm:
+    type: "object"
+    properties:
+      depositStartDate:
+        type: "string"
+        format: "date-time"
+      depositEndDate:
+        type: "string"
+        format: "date-time"
+      nbDaysExpiration:
+        type: "integer"
+        format: "int32"
+      keywords:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "FOLDER"
+        - "FILE"
+      owner:
+        type: "string"
+  RestVaultEvent:
+    type: "object"
+    properties:
+      eventId:
+        type: "string"
+      date:
+        type: "string"
+        format: "date-time"
+      eventType:
+        type: "string"
+        enum:
+        - "CONSULT_DOCUMENT"
+        - "CREATE_DOCUMENT"
+        - "DELETE_DOCUMENT"
+        - "MODIFY_DOCUMENT"
+        - "END_OF_LIFE"
+        - "SHARE"
+        - "MODIFY_CONTRACT"
+      documentId:
+        type: "string"
+      documentType:
+        type: "string"
+        enum:
+        - "FOLDER"
+        - "FILE"
+      documentName:
+        type: "string"
+      owner:
+        type: "string"
+      issuer:
+        type: "string"
+      message:
+        type: "string"
+  RestVaultEventList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      events:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestVaultEvent"
+  RestVaultEventSearchForm:
+    type: "object"
+    required:
+    - "startDate"
+    properties:
+      startDate:
+        type: "string"
+        format: "date-time"
+      endDate:
+        type: "string"
+        format: "date-time"
+      eventType:
+        type: "string"
+        enum:
+        - "CONSULT_DOCUMENT"
+        - "CREATE_DOCUMENT"
+        - "DELETE_DOCUMENT"
+        - "MODIFY_DOCUMENT"
+        - "END_OF_LIFE"
+        - "SHARE"
+        - "MODIFY_CONTRACT"
+      documentType:
+        type: "string"
+        enum:
+        - "FOLDER"
+        - "FILE"
+      owner:
+        type: "string"
+  RestVaultFolder:
+    type: "object"
+    required:
+    - "name"
+    - "parentId"
+    properties:
+      parentId:
+        type: "string"
+      name:
+        type: "string"
+  RestVaultQuota:
+    type: "object"
+    properties:
+      usedSize:
+        type: "string"
+      usedFiles:
+        type: "integer"
+        format: "int64"
+      maxSize:
+        type: "string"
+      maxFiles:
+        type: "integer"
+        format: "int64"
+  RestVaultShare:
+    type: "object"
+    properties:
+      shareId:
+        type: "string"
+      documentId:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "UPLOAD"
+        - "DOWNLOAD"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      expirationDate:
+        type: "string"
+        format: "date-time"
+      recipient:
+        type: "string"
+      message:
+        type: "string"
+      lastUsedDate:
+        type: "string"
+        format: "date-time"
+      nbUses:
+        type: "integer"
+        format: "int32"
+      active:
+        type: "boolean"
+      url:
+        type: "string"
+      issuer:
+        $ref: "#/definitions/RestAccountClientBasic"
+  RestVaultShareList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      shares:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestVaultShare"
+  RestVaultShareSearchForm:
+    type: "object"
+    properties:
+      creationStartDate:
+        type: "string"
+        format: "date-time"
+      creationEndDate:
+        type: "string"
+        format: "date-time"
+      shareType:
+        type: "string"
+        enum:
+        - "UPLOAD"
+        - "DOWNLOAD"
+      active:
+        type: "boolean"
+      subaccounts:
+        type: "boolean"
+  RestVaultSubscription:
+    type: "object"
+    properties:
+      subscriptionId:
+        type: "string"
+      contractId:
+        type: "string"
+      contractQuantity:
+        type: "integer"
+        format: "int32"
+      enabled:
+        type: "boolean"
+      terms:
+        type: "boolean"
+      activationDate:
+        type: "string"
+        format: "date-time"
+      deactivationDate:
+        type: "string"
+        format: "date-time"
+      quota:
+        $ref: "#/definitions/RestVaultQuota"
+      account:
+        $ref: "#/definitions/RestAccountClientBasic"
+  RestVaultSubscriptionList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      subscriptions:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestVaultSubscription"
+  RestVaultSubscriptionSearchForm:
+    type: "object"
+    properties:
+      activationStartDate:
+        type: "string"
+        format: "date-time"
+      activationEndDate:
+        type: "string"
+        format: "date-time"
+      active:
+        type: "boolean"
+      test:
+        type: "boolean"
+      subaccounts:
+        type: "boolean"

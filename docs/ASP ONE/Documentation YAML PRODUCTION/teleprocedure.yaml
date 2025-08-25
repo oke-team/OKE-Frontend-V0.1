@@ -1,0 +1,2146 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.1.0"
+  title: "TELEPROCEDURE"
+host: "www.aspone.fr"
+basePath: "/api/rest"
+tags:
+- name: "DECLARATIONS"
+- name: "DEPOSITS"
+- name: "DSN"
+- name: "FILES"
+- name: "INTERCHANGES"
+- name: "REPORTS"
+schemes:
+- "https"
+paths:
+  /v1/files/{fileId}:
+    get:
+      tags:
+      - "FILES"
+      summary: "Get file details"
+      description: "Get details of a file by its ID"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "fileId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestFile"
+  /v1/files/{fileId}/contents:
+    get:
+      tags:
+      - "FILES"
+      summary: "File download"
+      description: "Download a file by its ID"
+      operationId: "download_1"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "fileId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "zip"
+        in: "query"
+        required: false
+        type: "boolean"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "File content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/teleprocedure/declarations/received/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Search received declarations (generic results)"
+      description: "Search of received declarations by criteria returning generic\
+        \ results (some teleprocedure specific data can be missing like spi for IR\
+        \ or payment(s) for TVA)"
+      operationId: "searchReceived_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDeclarationReceptionSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "SIRET_DECLARANT"
+        - "NAME_DECLARANT"
+        - "REFERENCE_RECIPIENT"
+        - "RECEPTION_DATE"
+      security:
+      - Bearer Authorization: []
+      deprecated: true
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeclarationList"
+  /v1/teleprocedure/declarations/sent/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Search sent declarations (generic results)"
+      description: "Search of sent declarations by criteria returning generic results\
+        \ (some teleprocedure specific data may be missing such as spi for IR or payment\
+        \ information for TVA)"
+      operationId: "searchSent_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDeclarationEmissionSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "SIRET_DECLARANT"
+        - "NAME_DECLARANT"
+        - "REFERENCE_SENDER"
+        - "DEPOSIT_DATE"
+      security:
+      - Bearer Authorization: []
+      deprecated: true
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeclarationList"
+  /v1/teleprocedure/declarations/{declarationId}:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Get declaration by ID"
+      description: "Get details of a declaration by its ID"
+      operationId: "getDetail_5"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "declarationId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeclaration"
+  /v1/teleprocedure/declarations/{declarationId}/certificate:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Download PDF certificate"
+      description: "Download PDF certificate available only for declarations accepted\
+        \ by Tax Administration"
+      operationId: "downloadCertificate_1"
+      produces:
+      - "application/pdf"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "declarationId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "zip"
+        in: "query"
+        required: false
+        type: "boolean"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            application/pdf: "PDF content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/teleprocedure/declarations/{declarationId}/files:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "List declaration files"
+      description: "List files associated to a declaration"
+      operationId: "listFiles_3"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "declarationId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "format"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "XML"
+        - "EDI"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestFileList"
+  /v1/teleprocedure/declarations/{declarationId}/reports:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "List declaration reports"
+      description: "List reports associated to a declaration"
+      operationId: "listReports_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "declarationId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "INFENT_CR"
+        - "INFENT_RCS"
+        - "CONTRL_CT"
+        - "INFENT_REP"
+        - "PIELIB_REP"
+        - "ATTESTATION_EMPLOYEUR"
+        - "COMPTE_RENDU_TRAITEMENT"
+        - "COMPTE_RENDU_EXPLOITATION"
+        - "ACCUSE_RECEPTION"
+        - "TAUX_PAS"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestReportListPaginated"
+  /v1/teleprocedure/deposits:
+    post:
+      tags:
+      - "DEPOSITS"
+      summary: "File deposit"
+      description: "File deposit : interchange EDI / XML or ZIP"
+      operationId: "deposit_1"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "text/plain"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "subject"
+        in: "formData"
+        required: false
+        type: "string"
+      - name: "teleprocedure"
+        in: "formData"
+        required: true
+        type: "string"
+        enum:
+        - "TVA"
+        - "TDFC"
+        - "PAIEMENT"
+        - "IR"
+        - "REQUETE"
+        - "PART"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+      - name: "tradOnly"
+        in: "formData"
+        required: true
+        type: "boolean"
+      - name: "filename"
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "content"
+        in: "formData"
+        required: true
+        type: "file"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "202":
+          description: "Accepted deposit that will be processed asynschronously. Server\
+            \ returns the depositId generated."
+          examples:
+            text/plain: "39bdc06d-477f-479a-a6b8-1266e9d36a2d"
+          schema:
+            type: "string"
+  /v1/teleprocedure/deposits/{depositId}:
+    get:
+      tags:
+      - "DEPOSITS"
+      summary: "Get deposit by ID"
+      description: "Get details of a deposit by its ID"
+      operationId: "getDetail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "depositId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeposit"
+  /v1/teleprocedure/deposits/{depositId}/files:
+    get:
+      tags:
+      - "DEPOSITS"
+      summary: "Get deposited file details"
+      description: "Get details of the deposited file"
+      operationId: "listFiles"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "depositId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestFileList"
+  /v1/teleprocedure/dsn/bpij/sheets/search:
+    post:
+      tags:
+      - "DSN"
+      summary: "Search received DSN BPIJ sheets"
+      description: "Search of received DSN BPIJ sheet by criteria"
+      operationId: "searchFicheBpij_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDsnBpijSheetSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "PUBLICATION_DATE"
+        - "SIRET_COMPANY"
+        - "SIRET_DECLARANT"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDsnBpijSheetList"
+  /v1/teleprocedure/dsn/bpij/sheets/{dsnBpijSheetId}:
+    get:
+      tags:
+      - "DSN"
+      summary: "Get DSN BPIJ sheet by ID"
+      description: "Get details of a DSN BPIJ sheet by its ID"
+      operationId: "getDetailFicheBpij_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "dsnBpijSheetId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "format"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "XML"
+        - "PDF"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDsnBpijSheet"
+  /v1/teleprocedure/dsn/param/sheets/search:
+    post:
+      tags:
+      - "DSN"
+      summary: "Search received DSN param sheets"
+      description: "Search of received DSN param sheets by criteria"
+      operationId: "searchFicheParam_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDsnParamSheetSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "PUBLICATION_DATE"
+        - "SIRET_COMPANY"
+        - "SIRET_DECLARANT"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDsnParamSheetList"
+  /v1/teleprocedure/dsn/param/sheets/{dsnParamSheetId}:
+    get:
+      tags:
+      - "DSN"
+      summary: "Get DSN param sheet by ID"
+      description: "Get details of a DSN param sheet by its ID"
+      operationId: "getDetailFicheParam_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "dsnParamSheetId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "format"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "XML"
+        - "PDF"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDsnParamSheet"
+  /v1/teleprocedure/interchanges/search:
+    post:
+      tags:
+      - "INTERCHANGES"
+      summary: "Search interchanges"
+      description: "Search of interchanges by criteria"
+      operationId: "search_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestInterchangeSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "DEPOSIT_DATE"
+        - "ADS_NUMBER"
+        - "DEPOSITOR"
+        - "TELEPROCEDURE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestInterchangeList"
+  /v1/teleprocedure/interchanges/{interchangeId}:
+    get:
+      tags:
+      - "INTERCHANGES"
+      summary: "Get interchange by ID"
+      description: "Get details of an interchange by its ID"
+      operationId: "getDetail_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "interchangeId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestInterchange"
+  /v1/teleprocedure/interchanges/{interchangeId}/files:
+    get:
+      tags:
+      - "INTERCHANGES"
+      summary: "List interchange files"
+      description: "List files associated to an interchange"
+      operationId: "listFiles_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "interchangeId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "format"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "XML"
+        - "EDI"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestFileList"
+  /v1/teleprocedure/interchanges/{interchangeId}/reports:
+    get:
+      tags:
+      - "INTERCHANGES"
+      summary: "List interchange reports"
+      description: "List reports associated to an interchange"
+      operationId: "listReports"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "interchangeId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "INFENT_CR"
+        - "INFENT_RCS"
+        - "CONTRL_CT"
+        - "INFENT_REP"
+        - "PIELIB_REP"
+        - "ATTESTATION_EMPLOYEUR"
+        - "COMPTE_RENDU_TRAITEMENT"
+        - "COMPTE_RENDU_EXPLOITATION"
+        - "ACCUSE_RECEPTION"
+        - "TAUX_PAS"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestReportListPaginated"
+  /v1/teleprocedure/reports/search:
+    post:
+      tags:
+      - "REPORTS"
+      summary: "Search report"
+      description: "Search of reports by criteria"
+      operationId: "search"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestReportSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestReportListPaginated"
+  /v1/teleprocedure/reports/{reportId}:
+    get:
+      tags:
+      - "REPORTS"
+      summary: "Get report by ID"
+      description: "Get details of a report by its ID"
+      operationId: "getDetail_3"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "reportId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestReport"
+  /v2/teleprocedure/declarations/received/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Search received declarations (teleprocedure specific results)"
+      description: "Search of received declarations by criteria returning teleprocedure\
+        \ specific results"
+      operationId: "searchReceivedSpecific_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDeclarationReceptionSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "SIRET_DECLARANT"
+        - "NAME_DECLARANT"
+        - "REFERENCE_RECIPIENT"
+        - "RECEPTION_DATE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeclarationList"
+  /v2/teleprocedure/declarations/sent/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Search sent declarations (teleprocedure specific results)"
+      description: "Search of sent declarations by criteria  returning teleprocedure\
+        \ specific results"
+      operationId: "searchSentSpecific_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestDeclarationEmissionSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "SIRET_DECLARANT"
+        - "NAME_DECLARANT"
+        - "REFERENCE_SENDER"
+        - "DEPOSIT_DATE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestDeclarationList"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAccountClientBasic:
+    type: "object"
+    required:
+    - "role"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+  RestChecksum:
+    type: "object"
+    properties:
+      algo:
+        type: "string"
+      value:
+        type: "string"
+  RestDeclarant:
+    type: "object"
+    properties:
+      index:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      nir:
+        type: "string"
+      spi:
+        type: "string"
+      rof:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      mobil:
+        type: "string"
+      referenceSender:
+        type: "string"
+      referenceRecipient:
+        type: "string"
+      taxCategory:
+        type: "string"
+        enum:
+        - "BI"
+        - "BC"
+        - "BA"
+        - "RF"
+        - "FL"
+      taxStatus:
+        type: "string"
+        enum:
+        - "BS"
+        - "RN"
+        - "BN"
+        - "DC"
+        - "RS"
+        - "GM"
+        - "GT"
+        - "NE"
+        - "SE"
+        - "MS"
+        - "MN"
+        - "TR"
+        - "RF72"
+        - "CV"
+        - "CF"
+      taxImposition:
+        type: "string"
+        enum:
+        - "IS"
+        - "IR"
+  RestDeclaration:
+    type: "object"
+    properties:
+      declarationId:
+        type: "string"
+      interchange:
+        $ref: "#/definitions/RestInterchange"
+      recipient:
+        $ref: "#/definitions/RestRecipient"
+      declarants:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestDeclarant"
+      type:
+        $ref: "#/definitions/RestDeclarationType"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      referenceClient:
+        type: "string"
+      referencePortal:
+        type: "string"
+      referenceCommon:
+        type: "string"
+      waitForCR:
+        type: "boolean"
+      states:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestState"
+  RestDeclarationEmissionSearchForm:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nic:
+        type: "string"
+        pattern: "[0-9]{5}"
+      teleprocedures:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "TDFC"
+          - "TVA"
+          - "PAIEMENT"
+          - "REQUETE"
+          - "PART"
+          - "IR"
+          - "DSI"
+          - "DRP"
+          - "OGA"
+          - "AED"
+          - "DADSU"
+          - "DPAE"
+          - "DSN"
+          - "DUCS"
+      recipientTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "OGA"
+          - "GPA"
+          - "BANK"
+          - "COMPANY"
+          - "INDIVIDUAL"
+          - "THIRD_PARTY_DECLARANT"
+          - "TAX_ADMINISTRATION"
+          - "NET_ENTREPRISES"
+          - "FRANCE_TRAVAIL"
+          - "AGIRC_ARRCO"
+          - "UCF_CIBTP"
+          - "URSSAF"
+          - "CNAV"
+          - "MSA"
+          - "PED"
+      declarationTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "IDT"
+          - "RBT"
+          - "RAU"
+          - "IAT"
+          - "IDF"
+          - "IDR"
+          - "ILF"
+          - "LIS"
+          - "IAA"
+          - "ICA"
+          - "ICG"
+          - "CAN"
+          - "LAC"
+          - "CRM"
+          - "BCG"
+          - "LOY"
+          - "IPT"
+          - "IPP"
+          - "IS"
+          - "TS"
+          - "RCM"
+          - "TAP"
+          - "TVI"
+          - "TIC"
+          - "TCA"
+          - "CVA"
+          - "LOC"
+          - "IR"
+          - "IFU"
+          - "HON"
+          - "DEC"
+          - "DPP"
+          - "DPV"
+          - "DQR"
+          - "FEC"
+          - "REP"
+          - "REV"
+          - "RQR"
+          - "DUCS_901"
+          - "DUCS_902"
+          - "DUCS_903"
+          - "DADSU_01"
+          - "DADSU_02"
+          - "DADSU_03"
+          - "DADSU_04"
+          - "DADSU_07"
+          - "DADSU_08"
+          - "DADSU_12"
+          - "AED_15"
+          - "DPAE"
+          - "DSN_01"
+          - "DSN_02"
+          - "DSN_04"
+          - "DSN_05"
+          - "DSN_06"
+          - "DSN_07"
+          - "DSN_08"
+          - "DSI"
+          - "DRP"
+      declarationStates:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "PENDING"
+          - "FAILED"
+          - "SUCCESS"
+      test:
+        type: "boolean"
+      nir:
+        type: "string"
+        pattern: "([0-9]{13}|[0-9]{15})"
+      spi:
+        type: "string"
+        pattern: "[0-9]{13}"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      adsNumber:
+        type: "string"
+      depositId:
+        type: "string"
+      interchangeId:
+        type: "string"
+      taxCategories:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "BI"
+          - "BC"
+          - "BA"
+          - "RF"
+          - "FL"
+      taxStatus:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "BS"
+          - "RN"
+          - "BN"
+          - "DC"
+          - "RS"
+          - "GM"
+          - "GT"
+          - "NE"
+          - "SE"
+          - "MS"
+          - "MN"
+          - "TR"
+          - "RF72"
+          - "CV"
+          - "CF"
+      depositStartDate:
+        type: "string"
+        format: "date-time"
+      depositEndDate:
+        type: "string"
+        format: "date-time"
+      referenceSender:
+        type: "string"
+  RestDeclarationList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      declarations:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestDeclaration"
+  RestDeclarationReceptionSearchForm:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nic:
+        type: "string"
+        pattern: "[0-9]{5}"
+      teleprocedures:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "TDFC"
+          - "TVA"
+          - "PAIEMENT"
+          - "REQUETE"
+          - "PART"
+          - "IR"
+          - "DSI"
+          - "DRP"
+          - "OGA"
+          - "AED"
+          - "DADSU"
+          - "DPAE"
+          - "DSN"
+          - "DUCS"
+      recipientTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "OGA"
+          - "GPA"
+          - "BANK"
+          - "COMPANY"
+          - "INDIVIDUAL"
+          - "THIRD_PARTY_DECLARANT"
+          - "TAX_ADMINISTRATION"
+          - "NET_ENTREPRISES"
+          - "FRANCE_TRAVAIL"
+          - "AGIRC_ARRCO"
+          - "UCF_CIBTP"
+          - "URSSAF"
+          - "CNAV"
+          - "MSA"
+          - "PED"
+      declarationTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "IDT"
+          - "RBT"
+          - "RAU"
+          - "IAT"
+          - "IDF"
+          - "IDR"
+          - "ILF"
+          - "LIS"
+          - "IAA"
+          - "ICA"
+          - "ICG"
+          - "CAN"
+          - "LAC"
+          - "CRM"
+          - "BCG"
+          - "LOY"
+          - "IPT"
+          - "IPP"
+          - "IS"
+          - "TS"
+          - "RCM"
+          - "TAP"
+          - "TVI"
+          - "TIC"
+          - "TCA"
+          - "CVA"
+          - "LOC"
+          - "IR"
+          - "IFU"
+          - "HON"
+          - "DEC"
+          - "DPP"
+          - "DPV"
+          - "DQR"
+          - "FEC"
+          - "REP"
+          - "REV"
+          - "RQR"
+          - "DUCS_901"
+          - "DUCS_902"
+          - "DUCS_903"
+          - "DADSU_01"
+          - "DADSU_02"
+          - "DADSU_03"
+          - "DADSU_04"
+          - "DADSU_07"
+          - "DADSU_08"
+          - "DADSU_12"
+          - "AED_15"
+          - "DPAE"
+          - "DSN_01"
+          - "DSN_02"
+          - "DSN_04"
+          - "DSN_05"
+          - "DSN_06"
+          - "DSN_07"
+          - "DSN_08"
+          - "DSI"
+          - "DRP"
+      declarationStates:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "PENDING"
+          - "FAILED"
+          - "SUCCESS"
+      test:
+        type: "boolean"
+      nir:
+        type: "string"
+        pattern: "([0-9]{13}|[0-9]{15})"
+      spi:
+        type: "string"
+        pattern: "[0-9]{13}"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      adsNumber:
+        type: "string"
+      depositId:
+        type: "string"
+      interchangeId:
+        type: "string"
+      taxCategories:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "BI"
+          - "BC"
+          - "BA"
+          - "RF"
+          - "FL"
+      taxStatus:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "BS"
+          - "RN"
+          - "BN"
+          - "DC"
+          - "RS"
+          - "GM"
+          - "GT"
+          - "NE"
+          - "SE"
+          - "MS"
+          - "MN"
+          - "TR"
+          - "RF72"
+          - "CV"
+          - "CF"
+      receptionStartDate:
+        type: "string"
+        format: "date-time"
+      receptionEndDate:
+        type: "string"
+        format: "date-time"
+      referenceRecipient:
+        type: "string"
+  RestDeclarationType:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        enum:
+        - "IDT"
+        - "RBT"
+        - "RAU"
+        - "IAT"
+        - "IDF"
+        - "IDR"
+        - "ILF"
+        - "LIS"
+        - "IAA"
+        - "ICA"
+        - "ICG"
+        - "CAN"
+        - "LAC"
+        - "CRM"
+        - "BCG"
+        - "LOY"
+        - "IPT"
+        - "IPP"
+        - "IS"
+        - "TS"
+        - "RCM"
+        - "TAP"
+        - "TVI"
+        - "TIC"
+        - "TCA"
+        - "CVA"
+        - "LOC"
+        - "IR"
+        - "IFU"
+        - "HON"
+        - "DEC"
+        - "DPP"
+        - "DPV"
+        - "DQR"
+        - "FEC"
+        - "REP"
+        - "REV"
+        - "RQR"
+        - "DUCS_901"
+        - "DUCS_902"
+        - "DUCS_903"
+        - "DADSU_01"
+        - "DADSU_02"
+        - "DADSU_03"
+        - "DADSU_04"
+        - "DADSU_07"
+        - "DADSU_08"
+        - "DADSU_12"
+        - "AED_15"
+        - "DPAE"
+        - "DSN_01"
+        - "DSN_02"
+        - "DSN_04"
+        - "DSN_05"
+        - "DSN_06"
+        - "DSN_07"
+        - "DSN_08"
+        - "DSI"
+        - "DRP"
+      label:
+        type: "string"
+  RestDeposit:
+    type: "object"
+    properties:
+      depositId:
+        type: "string"
+      depositDate:
+        type: "string"
+        format: "date-time"
+      subject:
+        type: "string"
+      type:
+        type: "string"
+      method:
+        type: "string"
+      tradOnly:
+        type: "boolean"
+      adsDate:
+        type: "string"
+        format: "date-time"
+      adsNumber:
+        type: "string"
+      depositor:
+        $ref: "#/definitions/RestAccountClientBasic"
+      interchangeIds:
+        type: "array"
+        items:
+          type: "string"
+  RestDsnBpijSheet:
+    type: "object"
+    properties:
+      dsnBpijSheetId:
+        type: "string"
+      publicationDate:
+        type: "string"
+        format: "date-time"
+      reference:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestDsnSheetCompany"
+      declarant:
+        $ref: "#/definitions/RestDsnSheetDeclarant"
+      cpam:
+        $ref: "#/definitions/RestDsnBpijSheetCpam"
+      employee:
+        $ref: "#/definitions/RestDsnBpijSheetEmployee"
+      account:
+        $ref: "#/definitions/RestAccountClientBasic"
+      fileList:
+        $ref: "#/definitions/RestFileList"
+  RestDsnBpijSheetCpam:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      label:
+        type: "string"
+      date:
+        type: "string"
+        format: "date-time"
+  RestDsnBpijSheetEmployee:
+    type: "object"
+    properties:
+      nir:
+        type: "string"
+      name:
+        type: "string"
+      firstname:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnBpijSheetList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      dsnBpijSheets:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestDsnBpijSheet"
+  RestDsnBpijSheetSearchForm:
+    type: "object"
+    properties:
+      publicationStartDate:
+        type: "string"
+        format: "date-time"
+      publicationEndDate:
+        type: "string"
+        format: "date-time"
+      sirenDeclarant:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicDeclarant:
+        type: "string"
+        pattern: "[0-9]{5}"
+      sirenCompany:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicCompany:
+        type: "string"
+        pattern: "[0-9]{5}"
+      nir:
+        type: "string"
+        pattern: "([0-9]{13}|[0-9]{15})"
+      name:
+        type: "string"
+      firstName:
+        type: "string"
+      subaccounts:
+        type: "boolean"
+  RestDsnParamSheet:
+    type: "object"
+    properties:
+      dsnParamSheetId:
+        type: "string"
+      publicationDate:
+        type: "string"
+        format: "date-time"
+      reference:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestDsnSheetCompany"
+      declarant:
+        $ref: "#/definitions/RestDsnSheetDeclarant"
+      producer:
+        $ref: "#/definitions/RestDsnSheetProducer"
+      account:
+        $ref: "#/definitions/RestAccountClientBasic"
+      fileList:
+        $ref: "#/definitions/RestFileList"
+  RestDsnParamSheetList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      dsnParamSheets:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestDsnParamSheet"
+  RestDsnParamSheetSearchForm:
+    type: "object"
+    properties:
+      publicationStartDate:
+        type: "string"
+        format: "date-time"
+      publicationEndDate:
+        type: "string"
+        format: "date-time"
+      sirenDeclarant:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicDeclarant:
+        type: "string"
+        pattern: "[0-9]{5}"
+      sirenCompany:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicCompany:
+        type: "string"
+        pattern: "[0-9]{5}"
+      subaccounts:
+        type: "boolean"
+  RestDsnSheetCompany:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      label:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnSheetDeclarant:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnSheetProducer:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      label:
+        type: "string"
+  RestFile:
+    type: "object"
+    properties:
+      fileId:
+        type: "string"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      filename:
+        type: "string"
+      checksum:
+        $ref: "#/definitions/RestChecksum"
+      format:
+        type: "string"
+      size:
+        type: "string"
+  RestFileList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      files:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestFile"
+  RestInterchange:
+    type: "object"
+    properties:
+      interchangeId:
+        type: "string"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      test:
+        type: "boolean"
+      version:
+        type: "string"
+      referenceClient:
+        type: "string"
+      software:
+        $ref: "#/definitions/RestSoftware"
+      deposit:
+        $ref: "#/definitions/RestDeposit"
+      declarationIds:
+        type: "array"
+        items:
+          type: "string"
+      states:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestState"
+  RestInterchangeList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      interchanges:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestInterchange"
+  RestInterchangeSearchForm:
+    type: "object"
+    properties:
+      depositStartDate:
+        type: "string"
+        format: "date-time"
+      depositEndDate:
+        type: "string"
+        format: "date-time"
+      teleprocedures:
+        type: "array"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "TDFC"
+          - "TVA"
+          - "PAIEMENT"
+          - "REQUETE"
+          - "PART"
+          - "IR"
+          - "DSI"
+          - "DRP"
+          - "OGA"
+          - "AED"
+          - "DADSU"
+          - "DPAE"
+          - "DSN"
+          - "DUCS"
+      adsNumber:
+        type: "string"
+      depositId:
+        type: "string"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"
+  RestRecipient:
+    type: "object"
+    properties:
+      recipientId:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+        - "TAX_ADMINISTRATION"
+        - "NET_ENTREPRISES"
+        - "FRANCE_TRAVAIL"
+        - "AGIRC_ARRCO"
+        - "UCF_CIBTP"
+        - "URSSAF"
+        - "CNAV"
+        - "MSA"
+        - "PED"
+      name:
+        type: "string"
+      referenceInterchange:
+        type: "string"
+      siret:
+        type: "string"
+      code:
+        type: "string"
+      login:
+        type: "string"
+      portal:
+        type: "string"
+  RestReport:
+    type: "object"
+    properties:
+      reportId:
+        type: "string"
+      receptionDate:
+        type: "string"
+        format: "date-time"
+      type:
+        type: "string"
+        enum:
+        - "INFENT_CR"
+        - "INFENT_RCS"
+        - "CONTRL_CT"
+        - "INFENT_REP"
+        - "PIELIB_REP"
+        - "ATTESTATION_EMPLOYEUR"
+        - "COMPTE_RENDU_TRAITEMENT"
+        - "COMPTE_RENDU_EXPLOITATION"
+        - "ACCUSE_RECEPTION"
+        - "TAUX_PAS"
+      label:
+        type: "string"
+      version:
+        type: "string"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      recipient:
+        $ref: "#/definitions/RestRecipient"
+      fileList:
+        $ref: "#/definitions/RestFileList"
+      url:
+        type: "string"
+      declarationId:
+        type: "string"
+      interchangeId:
+        type: "string"
+      regroupementId:
+        type: "string"
+  RestReportListPaginated:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      reports:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestReport"
+  RestReportSearchForm:
+    type: "object"
+    required:
+    - "receptionStartDate"
+    properties:
+      receptionStartDate:
+        type: "string"
+        format: "date-time"
+      receptionEndDate:
+        type: "string"
+        format: "date-time"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      subaccounts:
+        type: "boolean"
+      reportType:
+        type: "string"
+        enum:
+        - "INFENT_CR"
+        - "INFENT_RCS"
+        - "CONTRL_CT"
+        - "INFENT_REP"
+        - "PIELIB_REP"
+        - "ATTESTATION_EMPLOYEUR"
+        - "COMPTE_RENDU_TRAITEMENT"
+        - "COMPTE_RENDU_EXPLOITATION"
+        - "ACCUSE_RECEPTION"
+        - "TAUX_PAS"
+  RestSoftware:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      editor:
+        type: "string"
+      version:
+        type: "string"
+  RestState:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      label:
+        type: "string"
+      issuer:
+        type: "string"
+        enum:
+        - "DEPOSITOR"
+        - "RECIPIENT"
+        - "PORTAL"
+      type:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "ERROR"
+        - "WARNING"
+        - "INFORMATION"
+      final:
+        type: "boolean"
+      details:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestStateDetail"
+  RestStateDetail:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        format: "date-time"
+      label:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "ERROR"
+        - "WARNING"
+        - "INFORMATION"
+      detail:
+        type: "string"

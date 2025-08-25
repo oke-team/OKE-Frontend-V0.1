@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000000818-0-0" Type="ICA">
+            <Redacteur>
+                <Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079556106BA1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079556106</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>BA1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+                    <Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+					<Zone id="DA">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="CC">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+					<Zone id="BA">
+                        <Valeur>20230701</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>20240630</Valeur>
+                    </Zone>                    
+                </Identif>
+                <Formulaire Repetition="0" Nom="OGBA00" Millesime="25">				
+					<Zone id="AD">
+						<Designation>DUPOND Martin</Designation>
+						<DesignationSuite2>M</DesignationSuite2>
+                    </Zone>
+					<Zone id="AA">
+						<Designation>DUPOND Martin</Designation>
+						<DesignationSuite1>CABINET TEST</DesignationSuite1>
+						<DesignationSuite2>M</DesignationSuite2>
+                    </Zone>
+					<Zone id="AC">
+						<Identifiant>111111</Identifiant>
+						<Designation>CGA TEST</Designation>
+						<AdresseNumero>123</AdresseNumero>
+						<AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+						<AdresseCodePostal>42480</AdresseCodePostal>
+						<AdresseVille>LA FOUILLOUSE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+					<Zone id="AB">
+						<TexteLibre1>Élevage de vaches laitières</TexteLibre1>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>1</Valeur>
+                    </Zone>					
+                </Formulaire>
+                <Formulaire Repetition="0" Nom="OGBA07" Millesime="25">
+                    <Zone id="BB">
+						<Occurrence Numero="1">
+							<Valeur>197366</Valeur>
+							<Unite>LTR</Unite>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AE">
+						<Occurrence Numero="1">
+							<TexteLibre1>Lait</TexteLibre1>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AL">
+						<Occurrence Numero="1">
+							<Valeur>80611,55</Valeur>
+						</Occurrence>
+                    </Zone>	
+					<Zone id="AK">
+						<Occurrence Numero="1">
+							<Valeur>27</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<Valeur>10</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>4</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>20</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>2</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>1</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>63</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AZ">
+						<Occurrence Numero="1">
+							<Valeur>4050</Valeur>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<Valeur>8000</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>1200</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>10500</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>600</Valeur>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>600</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>45360</Valeur>
+						</Occurrence>
+                    </Zone>	
+					<Zone id="AV">
+						<Occurrence Numero="1">
+							<Valeur>1980</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>8891,89</Valeur>
+						</Occurrence>
+                    </Zone>	
+					<Zone id="AX">
+						<Occurrence Numero="1">
+							<TexteLibre1>Veaux</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<TexteLibre1>Génisse +2 ans</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<TexteLibre1>Génisse -1 an</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<TexteLibre1>Génisse 1 à 2 ans</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<TexteLibre1>Taurillons</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<TexteLibre1>Taureau</TexteLibre1>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<TexteLibre1>Vaches laitières</TexteLibre1>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AF">
+						<Occurrence Numero="1">
+							<Valeur>16</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>12</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+                    </Zone>	
+					<Zone id="AB">
+						<Occurrence Numero="1">
+							<Valeur>8</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<Valeur>11</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>14</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>21</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>1</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>1</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>60</Valeur>
+							<Unite>NMB</Unite>
+						</Occurrence>
+                    </Zone>	
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBA02" Millesime="25">
+                    <Zone id="DE">
+                        <Valeur>19842,48</Valeur>
+                    </Zone>
+					<Zone id="DH">
+                        <Valeur>3466,02</Valeur>
+                    </Zone>
+					<Zone id="DM">
+                        <Valeur>33600</Valeur>
+                    </Zone>
+					<Zone id="DG">
+                        <Valeur>61117,87</Valeur>
+                    </Zone>
+					<Zone id="DJ">
+                        <Valeur>18631,39</Valeur>
+                    </Zone>
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBA03" Millesime="25">
+                    <Zone id="EZ">
+                        <Valeur>20</Valeur>
+                    </Zone>
+					<Zone id="EY">
+                        <Valeur>10</Valeur>
+                    </Zone>
+					<Zone id="EW">
+                        <Valeur>7</Valeur>
+                    </Zone>
+					<Zone id="EX">
+                        <Valeur>5,5</Valeur>
+                    </Zone>
+					<Zone id="EV">
+                        <Valeur>19,6</Valeur>
+                    </Zone>
+					<Zone id="BK">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="BL">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="AJ">
+                        <Valeur>2492,35</Valeur>
+                    </Zone>
+					<Zone id="ZF">
+                        <Valeur>1,53</Valeur>
+                    </Zone>
+					<Zone id="ZC">
+                        <Valeur>335,14</Valeur>
+                    </Zone>
+					<Zone id="AM">
+                        <Valeur>1882</Valeur>
+                    </Zone>
+					<Zone id="VC">
+                        <Valeur>222076,62</Valeur>
+                    </Zone>
+					<Zone id="VF">
+                        <Valeur>247,35</Valeur>
+                    </Zone>
+					<Zone id="AX">
+                        <Valeur>83,92</Valeur>
+                    </Zone>
+					<Zone id="AW">
+                        <Valeur>83,92</Valeur>
+                    </Zone>
+					<Zone id="ZD">
+                        <Valeur>420</Valeur>
+                    </Zone>
+					<Zone id="FU">
+                        <Valeur>255</Valeur>
+                    </Zone>
+					<Zone id="FT">
+                        <Valeur>19557</Valeur>
+                    </Zone>
+					<Zone id="FS">
+                        <Valeur>202811</Valeur>
+                    </Zone>					
+					<Zone id="YF">
+                        <Valeur>-7,65</Valeur>
+                    </Zone>
+					<Zone id="YC">
+                        <Valeur>-546,38</Valeur>
+                    </Zone>
+					<Zone id="YE">
+                        <Valeur>-4738,76</Valeur>
+                    </Zone>
+					<Zone id="AH">
+                        <Valeur>296,99</Valeur>
+                    </Zone>
+					<Zone id="YD">
+                        <Valeur>4200,03</Valeur>
+                    </Zone>
+					<Zone id="AS">
+                        <Valeur>248</Valeur>
+                    </Zone>
+					<Zone id="VE">
+                        <Valeur>198072,24</Valeur>
+                    </Zone>
+					<Zone id="ZE">
+                        <Valeur>-86,39</Valeur>
+                    </Zone>
+					<Zone id="AK">
+                        <Valeur>4741,53</Valeur>
+                    </Zone>
+					<Zone id="FR">
+                        <Valeur>222623</Valeur>
+                    </Zone>
+					<Zone id="VD">
+                        <Valeur>23757,03</Valeur>
+                    </Zone>
+					<Zone id="WA">
+						<Occurrence Numero="1">
+							<CompteNumero>775200</CompteNumero>
+							<CompteLibelle>PRODUITS CESSIONS IMMOS</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="WC">
+						<Occurrence Numero="1">
+							<Valeur>23700</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="WF">
+						<Occurrence Numero="1">
+							<Valeur>23700</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="KD">
+						<Occurrence Numero="1">
+							<Valeur>8490</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="KE">
+						<Occurrence Numero="1">
+							<Valeur>72981,82</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="KA">
+						<Occurrence Numero="1">
+							<CompteNumero>44570</CompteNumero>
+							<CompteLibelle>SOLDE TVA DEPART</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="KB">
+						<Occurrence Numero="1">
+							<Valeur>9602,04</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="KC">
+						<Occurrence Numero="1">
+							<Valeur>94616,72</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="KP">
+						<Occurrence Numero="1">
+							<Valeur>3542,86</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="SE">
+						<Occurrence Numero="1">
+							<Valeur>-45315,45</Valeur>
+						</Occurrence>
+                    </Zone>					
+					<Zone id="SA">
+						<Occurrence Numero="1">
+							<CompteNumero>00000000</CompteNumero>
+							<CompteLibelle>SOLDE 30-06-2024</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="SD">
+						<Occurrence Numero="1">
+							<Valeur>-2969,9</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="SP">
+						<Occurrence Numero="1">
+							<Valeur>-3542,86</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="SB">
+						<Occurrence Numero="1">
+							<Valeur>-9602,04</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="SF">
+						<Occurrence Numero="1">
+							<Valeur>-23707,65</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="SC">
+						<Occurrence Numero="1">
+							<Valeur>-85137,9</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="DV">
+						<Occurrence Numero="1">
+							<Valeur>335,14</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="DU">
+						<Occurrence Numero="1">
+							<Valeur>20241231</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="HA">
+						<Occurrence Numero="1">
+							<CompteNumero>41910000</CompteNumero>
+							<CompteLibelle>AVANCES REÇUES SUR COMMANDES</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<CompteNumero>41960000</CompteNumero>
+							<CompteLibelle>DETTES POUR EMBALLAGES CONSIGNÉS</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<CompteNumero>41970000</CompteNumero>
+							<CompteLibelle>CLIENTS CRÉDITEURS</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="GA">
+						<Occurrence Numero="1">
+							<CompteNumero>41110000</CompteNumero>
+							<CompteLibelle>CLIENTS</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<CompteNumero>41170000</CompteNumero>
+							<CompteLibelle>CLIENTS - RETENUES DE GARANTIE</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<CompteNumero>41200000</CompteNumero>
+							<CompteLibelle>CLIENTS SPÉCIFIQUES</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<CompteNumero>41300000</CompteNumero>
+							<CompteLibelle>CLIENTS - EFFETS À RECEVOIR</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<CompteNumero>41600000</CompteNumero>
+							<CompteLibelle>CLIENTS DOUTEUX</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="GD">
+						<Occurrence Numero="1">
+							<Valeur>4707,54</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="GE">
+						<Occurrence Numero="1">
+							<Valeur>5091,84</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="GC">
+						<Occurrence Numero="1">
+							<Valeur>9799,38</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="PC">
+						<Occurrence Numero="1">
+							<Valeur>7180,66</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="PD">
+						<Occurrence Numero="1">
+							<Valeur>510</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="PA">
+						<Occurrence Numero="1">
+							<CompteNumero>41110000</CompteNumero>
+							<CompteLibelle>CLIENTS</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<CompteNumero>41170000</CompteNumero>
+							<CompteLibelle>CLIENTS - RETENUES DE GARANTIE</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<CompteNumero>41200000</CompteNumero>
+							<CompteLibelle>CLIENTS SPÉCIFIQUES</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<CompteNumero>41300000</CompteNumero>
+							<CompteLibelle>CLIENTS - EFFETS À RECEVOIR</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<CompteNumero>41600000</CompteNumero>
+							<CompteLibelle>CLIENTS DOUTEUX</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="PE">
+						<Occurrence Numero="1">
+							<Valeur>6670,66</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AE">
+						<Occurrence Numero="1">
+							<Valeur>-0.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<Valeur>0.0001</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>0.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>0</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AA">
+						<Occurrence Numero="1">
+							<CompteNumero>70200000</CompteNumero>
+							<CompteLibelle>VENTES DE PRODUITS INTERMEDIAI</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="2">
+							<CompteNumero>70210000</CompteNumero>
+							<CompteLibelle>LAIT</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<CompteNumero>70320000</CompteNumero>
+							<CompteLibelle>VENTES FROMAGERIE</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<CompteNumero>70410000</CompteNumero>
+							<CompteLibelle>VACHES</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<CompteNumero>70451000</CompteNumero>
+							<CompteLibelle>VEAUX</CompteLibelle>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<CompteNumero>70600000</CompteNumero>
+							<CompteLibelle>PRESTATIONS DE SERVICE</CompteLibelle>
+						</Occurrence>
+					</Zone>
+					<Zone id="AD">
+						<Occurrence Numero="1">
+							<Valeur>3168</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>8891,39</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>1980</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AC">
+						<Occurrence Numero="2">
+							<Valeur>80611,55</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>94540,64</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>8891,89</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>1980</Valeur>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>255</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AF">
+						<Occurrence Numero="6">
+							<Valeur>255</Valeur>
+						</Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

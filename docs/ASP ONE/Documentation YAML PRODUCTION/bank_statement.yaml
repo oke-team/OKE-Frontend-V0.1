@@ -1,0 +1,538 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.1.0"
+  title: "BANK STATEMENT"
+host: "www.aspone.fr"
+basePath: "/api/rest"
+tags:
+- name: "FILES"
+- name: "STATEMENTS"
+schemes:
+- "https"
+paths:
+  /v1/bank/statements/search:
+    post:
+      tags:
+      - "STATEMENTS"
+      summary: "Search received bank statements"
+      description: "Search of received bank statements by criteria"
+      operationId: "search_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestStatementSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "RECEPTION_DATE"
+        - "SIREN_COMPANY"
+        - "NAME_COMPANY"
+        - "IBAN"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestStatementList"
+  /v1/bank/statements/{statementId}:
+    get:
+      tags:
+      - "STATEMENTS"
+      summary: "Get bank statement by ID"
+      description: "Get details of a bank statement by its ID"
+      operationId: "getDetail_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "statementId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestStatement"
+  /v1/bank/statements/{statementId}/transactions/deleted:
+    get:
+      tags:
+      - "STATEMENTS"
+      summary: "Get deleted transactions"
+      description: "Get list of deleted transactions by bank statement ID"
+      operationId: "getTransactionsDeleted_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "statementId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "REFERENCE"
+        - "ORDER_DATE"
+        - "VALUE_DATE"
+        - "DELETION_DATE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestStatementTransactionList"
+  /v1/bank/statements/{statementId}/transactions/deleted/csv:
+    get:
+      tags:
+      - "STATEMENTS"
+      summary: "Download deleted transactions"
+      description: "Download CSV file containing deleted transactions by bank statement\
+        \ ID"
+      operationId: "downloadTransactionsDeleted_1"
+      produces:
+      - "text/csv"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "statementId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            text/csv: "Id;Date Comptable;Date Valeur;Date Suppression;Type;Libellé\
+              ;Montant formaté\n18760535;04/08/2024;31/08/2024;01/09/2024;\"Opération\
+              \ de CB à débit différé\";CB DEBIT DIFFERE MONOPRIX;-42,00\_€"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+        "204":
+          description: "No CSV file available"
+  /v1/files/{fileId}:
+    get:
+      tags:
+      - "FILES"
+      summary: "Get file details"
+      description: "Get details of a file by its ID"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "fileId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestFile"
+  /v1/files/{fileId}/contents:
+    get:
+      tags:
+      - "FILES"
+      summary: "File download"
+      description: "Download a file by its ID"
+      operationId: "download_1"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "fileId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "zip"
+        in: "query"
+        required: false
+        type: "boolean"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "File content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAccountClientBasic:
+    type: "object"
+    required:
+    - "role"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+  RestBankAccount:
+    type: "object"
+    properties:
+      bankAccountId:
+        type: "string"
+      label:
+        type: "string"
+      iban:
+        type: "string"
+      bic:
+        type: "string"
+      test:
+        type: "boolean"
+      bank:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "UNKNOWN"
+        - "CHECKING"
+        - "SAVINGS"
+        - "CARD"
+        - "DEPOSIT"
+        - "LOAN"
+        - "JOINT"
+        - "MARKET"
+        - "LIFE_INSURANCE"
+        - "PEE"
+        - "PERCO"
+        - "ARTICLE_83"
+        - "RSP"
+        - "PEA"
+        - "CAPITALISATION"
+        - "PERP"
+        - "MADELIN"
+        - "MORTGAGE"
+        - "CONSUMER_CREDIT"
+        - "REVOLVING_CREDIT"
+        - "PER"
+      currency:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestCompanyBasic"
+      account:
+        $ref: "#/definitions/RestAccountClientBasic"
+  RestChecksum:
+    type: "object"
+    properties:
+      algo:
+        type: "string"
+      value:
+        type: "string"
+  RestCompanyBasic:
+    type: "object"
+    properties:
+      companyId:
+        type: "string"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      label:
+        type: "string"
+  RestFile:
+    type: "object"
+    properties:
+      fileId:
+        type: "string"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      filename:
+        type: "string"
+      checksum:
+        $ref: "#/definitions/RestChecksum"
+      format:
+        type: "string"
+      size:
+        type: "string"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"
+  RestStatement:
+    type: "object"
+    properties:
+      statementId:
+        type: "string"
+      receptionDate:
+        type: "string"
+        format: "date-time"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      nbTransactions:
+        type: "integer"
+        format: "int32"
+      nbTransactionsDeleted:
+        type: "integer"
+        format: "int32"
+      nbAttempts:
+        type: "integer"
+        format: "int32"
+      bankAccount:
+        $ref: "#/definitions/RestBankAccount"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "PENDING"
+        - "ERROR"
+      errorMessage:
+        type: "string"
+      file:
+        $ref: "#/definitions/RestFile"
+  RestStatementList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      statements:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestStatement"
+  RestStatementSearchForm:
+    type: "object"
+    required:
+    - "receptionStartDate"
+    properties:
+      receptionStartDate:
+        type: "string"
+        format: "date-time"
+      receptionEndDate:
+        type: "string"
+        format: "date-time"
+      siretCompany:
+        type: "string"
+        pattern: "[0-9]{9}|[0-9]{14}"
+      nameCompany:
+        type: "string"
+      iban:
+        type: "string"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "PENDING"
+        - "ERROR"
+      subaccounts:
+        type: "boolean"
+      test:
+        type: "boolean"
+  RestStatementTransaction:
+    type: "object"
+    properties:
+      transactionId:
+        type: "string"
+      orderDate:
+        type: "string"
+        format: "date-time"
+      valueDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      type:
+        type: "string"
+        enum:
+        - "UNKNOWN"
+        - "TRANSFER"
+        - "ORDER"
+        - "CHECK"
+        - "DEPOSIT"
+        - "PAYBACK"
+        - "WITHDRAWAL"
+        - "CARD"
+        - "LOAN_PAYMENT"
+        - "BANK"
+        - "CARD_DEFERRED"
+        - "BANK_SUMMARY"
+        - "LOAN_REPAYMENT"
+      reference:
+        type: "integer"
+        format: "int32"
+      label:
+        type: "string"
+      amount:
+        type: "number"
+      currency:
+        type: "string"
+  RestStatementTransactionList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestStatementTransaction"

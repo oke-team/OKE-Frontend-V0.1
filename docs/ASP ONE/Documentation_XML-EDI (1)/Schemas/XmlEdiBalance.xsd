@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:include schemaLocation="./TypeBase.xsd"/>
+		
+	<!-- Type Rédacteur TDFC BALANCE -->
+	<xs:simpleType name="TypeRedacteurBalance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CEC_EDI_TDFC" />
+			<xs:enumeration value="ATD_EDI_TDFC" />
+			<xs:enumeration value="TPE_EDI_TDFC" />
+		</xs:restriction>
+	</xs:simpleType>		
+			
+	<!-- Type Destinataire TDFC BALANCE -->
+	<xs:simpleType name="TypeDestinataireBalance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OGA_EDI_TDFC" /> <!-- OGA identifié par SIRET (doit posséder un compte sur le portail) -->
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<!-- Type Déclaration TDFC BALANCE -->
+	<xs:simpleType name="TypeDeclarationBalance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BCG" /> <!-- Balance Générale -->		
+		</xs:restriction>
+	</xs:simpleType>
+			
+	<!-- Definition d'une référence de TDFC BALANCE -->
+	<xs:simpleType name="ReferenceBalance">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35" />
+			<xs:pattern value="BALANC.*" />
+		</xs:restriction>
+	</xs:simpleType>		
+			
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration
+		======================================================== -->
+	<xs:complexType name="Balance">
+		<xs:sequence>
+			<xs:element name="Emetteur" type="Emetteur" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Redacteur" type="RedacteurBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Redevable" type="RedevableBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="PartenaireEdi" type="PartenaireEdi" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ListeDestinataires" type="ListeDestinatairesBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Entete" type="Entete" minOccurs="1" maxOccurs="1" />
+			<xs:element name="ListeLignes" type="ListeLignes" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Synthese" type="Synthese" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="Type" type="TypeDeclarationBalance" use="required" />
+		<xs:attribute name="Reference" type="ReferenceBalance" use="required" />	
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Emetteur
+		======================================================== -->
+	<xs:complexType name="Emetteur">
+		<xs:sequence>
+			<xs:element name="Siret" type="PseudoSiret" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Redacteur
+		======================================================== -->
+	<xs:complexType name="RedacteurBalance">
+		<xs:sequence>
+			<xs:element name="Siret" type="PseudoSiret" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Designation" type="TypeRedacteurBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Redevable
+		======================================================== -->
+	<xs:complexType name="RedevableBalance">
+		<xs:sequence>
+			<xs:element name="Identifiant" type="PseudoSiren" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element name="ReferenceDossier" type="ReferenceBalance" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Rof" minOccurs="1" maxOccurs="1" />	
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- =======================================================
+		XmlEdi / GroupeFonctionnel / Declaration / PartenaireEdi
+		======================================================== -->
+	<xs:complexType name="PartenaireEdi">
+		<xs:sequence>
+			<xs:element name="Identifiant" type="Agrement" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Designation" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />	
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ==================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeDestinataires
+		=================================================================== -->
+	<xs:complexType name="ListeDestinatairesBalance">
+		<xs:choice>				
+			<xs:element name="Destinataire" type="DestinataireBalance" minOccurs="1" maxOccurs="1" />	
+		</xs:choice>
+	</xs:complexType>
+	
+	<!-- ========================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeDestinataires / Destinataire
+		========================================================================================= -->
+	<xs:complexType name="DestinataireBalance">			
+		<xs:sequence>
+			<xs:element name="Designation" type="TypeDestinataireBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="Identifiant" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="DesignationSuite1" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="DesignationSuite2" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="Adresse" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="ReferenceDossier" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ========================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Entete
+		========================================================================================= -->
+	<xs:complexType name="Entete">			
+		<xs:sequence>
+			<xs:element name="Periode" type="PeriodeBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Monnaies" type="MonnaiesConfiguration" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Statut" type="StatutBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Niveau" type="NiveauMessage" minOccurs="1" maxOccurs="1" />
+			<xs:element name="MontantQualifiant" type="MontantBalanceQualifiant" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="PeriodeBalance">			
+		<xs:sequence>
+			<xs:element name="Debut" type="ValeurDateBalance" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Fin" type="ValeurDateBalance" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MonnaiesConfiguration">			
+		<xs:sequence>
+			<xs:element name="MonnaieDossier" type="CodeMonnaieEUR" minOccurs="1" maxOccurs="1" />
+			<xs:element name="MonnaieBalance" type="CodeMonnaieEUR" minOccurs="1" maxOccurs="1" />
+			<xs:element name="MonnaieBalanceUsage" type="MonnaieBalanceUsage" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="MonnaieBalanceUsage">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="3" /> <!-- Devise d'expression de la balance : les valeurs sont recalculées au moment de la création du message -->
+			<xs:enumeration value="7" /> <!-- Monnaie de tenue du dossier : les valeurs sont mémorisées en équivalence dans le dossier comptable -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="StatutBalance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BRE" /> <!-- Balance après inventaire d'exercice -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="NiveauMessage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="N2" /> <!-- Niveau 2 -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MontantBalanceQualifiant">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="5" /> <!-- Montants en monnaie de tenue uniquement -->
+			<xs:enumeration value="7" /> <!-- Montants en monnaie d'expression uniquement -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- ==================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes
+		=================================================================== -->
+	<xs:complexType name="ListeLignes">
+		<xs:sequence>				
+			<xs:element name="Ligne" type="LigneBalance" minOccurs="1" maxOccurs="99999" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ===========================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes / Ligne
+		============================================================================ -->
+		
+	<xs:complexType name="LigneBalance">
+		<xs:sequence>
+			<xs:element name="Montant" type="MontantDetail" minOccurs="1" maxOccurs="16" />	
+			<xs:element name="Date" type="DateBalance" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Reference" type="ReferenceMouvement" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Compte" type="CompteBalance" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes / Ligne / Montant
+		===================================================================================== -->
+
+	<xs:complexType name="MontantBalance" abstract="true">
+			<xs:sequence>
+				<xs:element name="Valeur" type="ValeurMontantBalance" minOccurs="1" maxOccurs="1" />
+				<xs:element name="Statut" type="StatutMontantBalance" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>			
+	</xs:complexType>
+	
+	<xs:complexType name="MontantDetail">		
+		<xs:complexContent>
+			<xs:extension base="MontantBalance">
+				<xs:attribute name="id" type="IdMontantDetail" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="MontantSynthese">		
+		<xs:complexContent>
+			<xs:extension base="MontantBalance">
+				<xs:attribute name="id" type="IdMontantSynthese" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<!-- Enumération des identifiants de montant détail -->
+	<xs:simpleType name="IdMontantDetail">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="373" /> <!-- Total des mouvements créditeurs négatifs -->
+			<xs:enumeration value="374" /> <!-- Total des mouvements créditeurs positifs -->
+			<xs:enumeration value="375" /> <!-- Total des mouvements débiteurs positifs -->
+			<xs:enumeration value="380" /> <!-- Total des mouvements débiteurs négatifs -->
+			<xs:enumeration value="516" /> <!-- Solde débiteur fin de période -->
+			<xs:enumeration value="517" /> <!-- Solde créditeur fin de période -->
+			<xs:enumeration value="518" /> <!-- Solde débiteur début de période -->
+			<xs:enumeration value="519" /> <!-- Solde créditeur début de période -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Enumération des identifiants de montant synthese -->
+	<xs:simpleType name="IdMontantSynthese">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="373" /> <!-- Total des mouvements créditeurs négatifs -->
+			<xs:enumeration value="374" /> <!-- Total des mouvements créditeurs positifs -->
+			<xs:enumeration value="375" /> <!-- Total des mouvements débiteurs positifs -->
+			<xs:enumeration value="380" /> <!-- Total des mouvements débiteurs négatifs -->
+			<xs:enumeration value="520" /> <!-- Solde débiteur fin de période -->
+			<xs:enumeration value="521" /> <!-- Solde créditeur fin de période -->
+			<xs:enumeration value="522" /> <!-- Solde débiteur début de période -->
+			<xs:enumeration value="523" /> <!-- Solde créditeur début de période -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Enumération des statuts des montants -->
+	<xs:simpleType name="StatutMontantBalance">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="29" /> <!-- Débit -->
+			<xs:enumeration value="30" /> <!-- Crédit -->
+			<xs:enumeration value="62" /> <!-- Montant nul significatif -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Definition de la valeur d'un montant -->
+	<xs:simpleType name="ValeurMontantBalance">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35" />
+			<xs:pattern value="[0-9]+(,[0-9]{1,3})?" />
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<!-- ====================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes / Ligne / Date
+		===================================================================================== -->
+
+	<xs:complexType name="DateBalance">	
+		<xs:simpleContent>
+	    	<xs:extension base="ValeurDateBalance">
+	        	<xs:attribute name="id" type="IdDateBalance" use="required" />
+	    	</xs:extension>
+	     </xs:simpleContent>		
+	</xs:complexType>
+	
+	<!-- Enumération des identifiants de date -->
+	<xs:simpleType name="IdDateBalance">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="454" /> <!-- Date de valeur comptable (format 102 = AAAAMMJJ) -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Definition de la valeur de la date -->
+	<xs:simpleType name="ValeurDateBalance">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35" />
+			<xs:pattern value="[0-9]+" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- =======================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes / Ligne / Reference
+		======================================================================================== -->
+
+	<xs:complexType name="ReferenceMouvement">	
+		<xs:simpleContent>
+	    	<xs:extension base="String70">
+	        	<xs:attribute name="id" type="IdReferenceMouvement" use="required" />
+	    	</xs:extension>
+	     </xs:simpleContent>		
+	</xs:complexType>
+	
+	<!-- Enumération des identifiants de date -->
+	<xs:simpleType name="IdReferenceMouvement">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AWP" /> <!-- Référence du dernier mouvement comptable -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- ====================================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / ListeLignes / Ligne / Compte
+		===================================================================================== -->
+
+	<xs:complexType name="CompteBalance">
+			<xs:sequence>
+				<xs:element name="Numero" type="CompteGeneralNumero" minOccurs="1" maxOccurs="1" />
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="LibelleCourt" type="String17" minOccurs="1" maxOccurs="1" />
+						<xs:element name="LibelleLong" type="String35" minOccurs="0" maxOccurs="1" />
+						<xs:element name="LibelleLongSuite" type="String35" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Monnaie" type="CodeMonnaie" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="Centralisation" type="CentralisationCompteBalance" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+					<xs:sequence>
+						<xs:element name="LibelleLong" type="String35" minOccurs="0" maxOccurs="1" />
+						<xs:element name="LibelleLongSuite" type="String35" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Monnaie" type="CodeMonnaie" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="Centralisation" type="CentralisationCompteBalance" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:choice>
+			</xs:sequence>			
+		<xs:attribute name="id" type="IdCompteBalance" use="required" />
+	</xs:complexType>
+	
+	<!-- Enumération des identifiants de compte -->
+	<xs:simpleType name="IdCompteBalance">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="4" /> <!-- Compte Général -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Enumération des caractéristiques de centralisation du compte -->
+	<xs:simpleType name="CentralisationCompteBalance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CNC" /> <!-- Compte général non collectif -->
+			<xs:enumeration value="CCO" /> <!-- Compte général collectif -->
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	
+	<!-- ===========================================================================
+		XmlEdi / GroupeFonctionnel / Declaration / Synthese
+		============================================================================ -->
+		
+	<xs:complexType name="Synthese">
+		<xs:sequence>
+			<xs:element name="Montant" type="MontantSynthese" minOccurs="1" maxOccurs="8" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

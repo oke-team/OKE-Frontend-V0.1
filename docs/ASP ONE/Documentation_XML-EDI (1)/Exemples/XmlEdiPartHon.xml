@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="HON" Reference="INFENT000000000001">
+            <Redacteur>
+                <Siret>07955542100019</Siret>
+                <Designation>ENT_EDI_PART</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>123</AdresseNumero>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                    <AdresseCodePostal>92100</AdresseCodePostal>
+                    <AdresseVille>BOULOGNE BILLANCOURT</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>07707735200001</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>07707735200001</Identifiant>
+                <Designation>DECLARANT TEST</Designation>
+                <Adresse>
+					<AdresseNumero>456</AdresseNumero>
+                    <AdresseRepetabilite>B</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>ZI MOLINA</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PART</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="BB">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>07707735200001</Identifiant>
+                        <Designation>DECLARANT TEST</Designation>
+						<AdresseNumero>456</AdresseNumero>
+						<AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                        <AdresseComplement>ZI MOLINA</AdresseComplement>
+                        <AdresseCodeDivisionTerritoriale>42218</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>SAINT-ETIENNE</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <ContactDesignation>DUPOND MARTIN</ContactDesignation>
+                        <Telephone>0101010101</Telephone>
+                        <Email>test@aspone.fr</Email>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>07707735200001</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Identifiant>07707735200001</Identifiant>
+                        <AdresseNumero>5</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                        <AdresseCodeDivisionTerritoriale>06004</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>ANTIBES</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>06160</AdresseCodePostal>
+                        <AdresseVille>ANTIBES</AdresseVille>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>4711D</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="1" Nom="DAS2T" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>07707735200001</Identifiant>
+                        <Designation>B</Designation>
+                        <DesignationSuite1>SOCIETE TEST</DesignationSuite1>
+                        <AdresseNumero>2</AdresseNumero>
+                        <AdresseRepetabilite>T</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE TEST 2</AdresseVoie>
+                        <AdresseComplement>1</AdresseComplement>
+						<AdresseCodeDivisionTerritoriale>42218</AdresseCodeDivisionTerritoriale>
+						<AdresseDivisionTerritoriale>SAINT-ETIENNE</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AD">
+                        <Valeur>0610</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>5202</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <TexteLibre1>TESTEUR</TexteLibre1>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>07955543900029</Valeur>
+                    </Zone>
+                    <Zone id="UA">
+                        <Occurrence Numero="1">
+                            <Valeur>AR</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>JP</Valeur>
+                        </Occurrence>
+						<Occurrence Numero="3">
+                            <Valeur>DA</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="TA">
+                        <Occurrence Numero="1">
+                            <Valeur>300</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>500</Valeur>
+                        </Occurrence>
+						<Occurrence Numero="3">
+                            <Valeur>900</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="TC">
+                        <Valeur>250</Valeur>
+                    </Zone>
+                    <Zone id="TB">
+                        <Valeur>450</Valeur>
+                    </Zone>
+                    <Zone id="TD">
+                        <Valeur>850</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="1" Nom="DAS2TV" Millesime="25">
+                    <Zone id="AD">
+                        <Valeur>07707735200001</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Identifiant>07955542100019</Identifiant>
+                        <Designation>BENEFICIAIRE TEST 1</Designation>
+                    </Zone>
+                    <Zone id="AG">
+                    	<AdresseNumero>2</AdresseNumero>
+                        <AdresseRepetabilite>T</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT TEST</AdresseComplement>
+						<AdresseCodeDivisionTerritoriale>42218</AdresseCodeDivisionTerritoriale>
+						<AdresseDivisionTerritoriale>SAINT-ETIENNE</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AH">
+                        <TexteLibre1>TESTEUR</TexteLibre1>
+                    </Zone>
+                    <Zone id="CA">
+                        <Occurrence Numero="1">
+                            <Valeur>AR</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>JP</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Valeur>100</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>100</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>L</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>F</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>D</Valeur>
+                    </Zone>
+                </Formulaire>				
+				<Formulaire Repetition="2" Nom="DAS2TV" Millesime="25">
+                    <Zone id="AD">
+                        <Valeur>07707735200001</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Identifiant>07955548800034</Identifiant>
+                        <Designation>BENEFICIAIRE TEST 2</Designation>
+                    </Zone>
+                    <Zone id="AG">
+                        <AdresseVoie>Kirchenstrasse 132</AdresseVoie>
+                        <AdresseCodeDivisionTerritoriale>99109</AdresseCodeDivisionTerritoriale>
+                        <AdresseDivisionTerritoriale>BERLIN</AdresseDivisionTerritoriale>
+                        <AdresseCodePostal>12345</AdresseCodePostal>
+                        <AdresseVille>BERLIN</AdresseVille>
+                    </Zone>
+                    <Zone id="AH">
+                        <TexteLibre1>TESTEUR</TexteLibre1>
+                    </Zone>
+                    <Zone id="CA">
+                        <Occurrence Numero="1">
+                            <Valeur>AR</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>DA</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Valeur>200</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>900</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>150</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>250</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>350</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>450</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>A</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>P</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>R</Valeur>
+                    </Zone>
+                </Formulaire>				
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

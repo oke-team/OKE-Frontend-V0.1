@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="CVA" Reference="INFENT000000005545-0-0">
+            <Redacteur>
+                <Siret>07955548800034</Siret>
+                <Designation>CEC_EDI_PAYE</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>REF0001</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseRepetabilite>B</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>CVAE1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PAYE</Designation>
+                </Destinataire>
+				<Destinataire>
+                    <Designation>OGA_EDI_PAYE</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+                    <Adresse>
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseType>C</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REF_OGA_ADHERENT_1</ReferenceDossier>
+                </Destinataire>
+                <Destinataire>
+                    <Designation>CEC_EDI_PAYE</Designation>
+                    <Identifiant>07955559500010</Identifiant>
+                    <DesignationSuite1>EXPERT COMPATBLE TEST</DesignationSuite1>
+                    <Adresse>
+                        <AdresseNumero>456</AdresseNumero>
+                        <AdresseType>D</AdresseType>
+                        <AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REF_CEC_ADHERENT_1</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555421</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>CVAE1</Valeur>
+                    </Zone>
+                    <Zone id="KF">
+                        <Valeur>202505</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Iban>FR7611111222223333333333391</Iban>
+                        <Bic>CEPBFRPPXXX</Bic>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>CVAE1-052025-1329DEF</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>1481</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="1329DEF" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>20000000</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>0,27</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>800000</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>17000000</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>2160</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>2160</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Valeur>2160</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>820</Valeur>
+                    </Zone>
+                    <Zone id="GB">
+                        <Valeur>199</Valeur>
+                    </Zone>
+                    <Zone id="GC">
+                        <Valeur>58</Valeur>
+                    </Zone>
+                    <Zone id="GD">
+                        <Valeur>141</Valeur>
+                    </Zone>
+                    <Zone id="JA">
+                        <Valeur>878</Valeur>
+                    </Zone>
+                    <Zone id="JK">
+                        <Valeur>1481</Valeur>
+                    </Zone>
+                    <Zone id="EC">
+                        <Valeur>1340</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>1481</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

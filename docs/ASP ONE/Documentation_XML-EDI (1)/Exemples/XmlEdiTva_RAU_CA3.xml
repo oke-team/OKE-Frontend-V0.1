@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="RAU" Reference="INFENT000000000002">
+            <Redacteur>
+                <Siret>07955615500012</Siret>
+                <Designation>ENT_EDI_TVA</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079557195TVA1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079557195</Identifiant>
+                <Designation>REDEVABLE ASSUJETTI UNIQUE</Designation>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseType>B</AdresseType>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseComplement>ZI TEST</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>TVA1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TVA</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557195</Identifiant>
+                        <Designation>REDEVABLE ASSUJETTI UNIQUE</Designation>
+                        <DesignationSuite2>SRL</DesignationSuite2>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>ZI TEST</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20250101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20250131</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Iban>FR7611111222223333333333391</Iban>
+                        <Bic>BICTESTXXXX</Bic>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>TVA1-022025-3310CA3</Valeur>
+                    </Zone>
+                    <Zone id="KB">
+                        <Valeur>TVA1-022025-3310CA3</Valeur>
+                    </Zone>
+                    <Zone id="GB">
+                        <Iban>FR7622222333334444444444442</Iban>
+                        <Bic>BICTESTX</Bic>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>2000</Valeur>
+                    </Zone>
+                    <Zone id="HB">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="3310CA3" Repetition="0" Millesime="25">
+                    <Zone id="LS">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="KE">
+                        <Valeur>2900</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>14500</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>14500</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>2900</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>2900</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>2900</Valeur>
+                    </Zone>
+					<Zone id="ND">
+                        <Valeur>2900</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="1" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557203</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 1</Designation>
+                        <DesignationSuite2>SPA</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Identifiant>FR17079557203</Identifiant>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="2" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557211</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 2</Designation>
+                        <DesignationSuite2>SPF</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Identifiant>FR41079557211</Identifiant>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1100</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1100</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>220</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>220</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>220</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="3" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557229</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 3</Designation>
+                        <DesignationSuite2>SPG</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1200</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1200</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>240</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>240</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>240</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="4" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557237</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 4</Designation>
+                        <DesignationSuite2>SPH</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1300</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1300</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>260</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>260</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>260</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="5" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557245</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 5</Designation>
+                        <DesignationSuite2>SPI</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1400</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1400</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>280</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>280</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>280</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="6" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557252</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 6</Designation>
+                        <DesignationSuite2>SPL</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="7" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557260</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 7</Designation>
+                        <DesignationSuite2>SPM</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1600</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1600</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>320</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>320</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>320</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="8" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557278</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 8</Designation>
+                        <DesignationSuite2>SPO</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1700</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1700</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>340</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>340</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>340</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="9" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557286</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 9</Designation>
+                        <DesignationSuite2>SPP</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1800</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1800</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>360</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>360</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>360</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310MAU" Repetition="10" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557294</Identifiant>
+                        <Designation>REDEVABLE MEMBRE 10</Designation>
+                        <DesignationSuite2>SPY</DesignationSuite2>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>1900</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>1900</Valeur>
+                    </Zone>
+                    <Zone id="GP">
+                        <Valeur>380</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>380</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>380</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

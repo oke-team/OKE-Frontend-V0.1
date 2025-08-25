@@ -1,0 +1,130 @@
+{
+    "clientAccountId": null,
+    "parentAccountId": null,
+    "portal": "OKE",
+    "login": "oke_test2",
+    "label": "OKÉ CP TEST 2",
+    "type": "THIRD_PARTY_DECLARANT",
+    "role": "PRIMARY_ACCOUNT",
+    "test": true,
+    "registrationNumber": null,
+    "siren": "079555439",
+    "nic": "00029",
+    "mailbox": true,
+    "autonomous": null,
+    "pedNumber": null,
+    "ogaNumber": null,
+    "accountantNumber": null,
+    "fiscalNumber": null,
+    "socialAgentName": null,
+    "banks": null,
+    "subscriber": {
+        "name": "UNKNOWN",
+        "phone": "+447488845404",
+        "email": "brillant@bpo.accountants",
+        "title": "MR",
+        "firstName": "Brillant",
+        "fax": null
+    },
+    "address": {
+        "streetNumber": null,
+        "streetRepetition": null,
+        "streetName": "Sottise Road",
+        "supplement": null,
+        "postOfficeBox": null,
+        "zipCode": "30526",
+        "city": "Grand Baie",
+        "country": "MU"
+    },
+    "technicalContact": {
+        "name": "Brillant",
+        "phone": "+447488845404",
+        "email": "brillant@bpo.accountants"
+    },
+    "administrativeContact": {
+        "name": "Nathalie CHAPPUIT",
+        "phone": "+447488845404",
+        "email": "contact@oke-compta.fr"
+    },
+    "gdprContact": {
+        "name": "CHAPPUIT",
+        "phone": "+33630420271",
+        "email": "yann@noe.digital",
+        "firstName": "Yann",
+        "function": "Directeur"
+    },
+    "billing": null,
+    "subaccounts": {
+        "nbWithMailboxPlanned": null,
+        "nbWithMailboxEnabled": null,
+        "nbWithoutMailboxEnabled": null
+    },
+    "teleprocedures": [
+        {
+            "teleprocedure": "TVA",
+            "quantityPlanned": null,
+            "parameters": null,
+            "exclusions": null
+        },
+        {
+            "teleprocedure": "TDFC",
+            "quantityPlanned": null,
+            "parameters": null,
+            "exclusions": null
+        },
+        {
+            "teleprocedure": "WEB_TVA",
+            "quantityPlanned": null,
+            "parameters": null,
+            "exclusions": null
+        },
+        {
+            "teleprocedure": "WEB_TDFC",
+            "quantityPlanned": null,
+            "parameters": null,
+            "exclusions": null
+        }
+    ],
+    "options": {
+        "alert": {
+            "enabled": true,
+            "alertProfileId": null,
+            "sendToSubscriber": true,
+            "alertDepositKo": true,
+            "alertPayment": true,
+            "alertBankStatement": true,
+            "alertVault": true,
+            "subaccounts": true,
+            "test": true,
+            "emails": null
+        },
+        "archive": {
+            "enabled": true
+        },
+        "bankStatement": {
+            "enabled": false,
+            "quantityPlanned": null,
+            "mailbox": null,
+            "mailboxName": null
+        },
+        "vault": {
+            "enabled": false,
+            "contractId": null,
+            "quantityPlanned": null
+        }
+    },
+    "settings": {
+        "groupingTime": null,
+        "groupingSize": null,
+        "groupingMaxSentPerCycle": null,
+        "webdeclarationUploadXml": null
+    },
+    "password": "oKe!123456Ab",
+    "passwordLockoutEnabled": null,
+    "passwordExpirationEnabled": null,
+    "passwordExpirationForced": null,
+    "lastPasswordResetDate": null,
+    "lastPasswordExpirationAlertDate": null,
+    "lastConnectionFailureDate": null,
+    "nbConnectionFailures": null
+}

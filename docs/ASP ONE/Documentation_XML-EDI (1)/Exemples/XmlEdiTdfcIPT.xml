@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000001592-0-0" Type="IPT">
+            <Redacteur>
+                <Siret>07955554600013</Siret>
+                <Designation>ENT_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555579IS1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555579</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>IS1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555579</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                        <Telephone>33102030405</Telephone>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BI</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>IS</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>20211231</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>IS1</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="1" Nom="2257" Millesime="25">
+                    <Zone id="GC">
+                        <TexteLibre1>Détention &amp; animation des sociétés détenues</TexteLibre1>
+                    </Zone>
+                    <Zone id="GA">
+                        <AdresseNumero>100</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GE">
+                        <Designation>SOCIETE TEST</Designation>
+                        <AdresseNumero>100</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GK">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Designation>SOCIETE TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseNumero>100</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>20170322</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Designation>BRUN Thomas</Designation>
+                        <DesignationSuite1>Testeur</DesignationSuite1>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                    </Zone>
+                    <Zone id="AA">
+                        <TexteLibre1>Achat, vente en gros de tous produits et notamment de fournitures, d'équipements de bureaux, etc.</TexteLibre1>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Charges financières calculées en fonction du prix comparable sur marché libre.</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DK">
+                        <Valeur>940026</Valeur>
+                    </Zone>
+                    <Zone id="HD">
+                        <TexteLibre1>BE</TexteLibre1>
+                    </Zone>
+                    <Zone id="DM">
+                        <Valeur>COM</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="2" Nom="2257" Millesime="25">
+                    <Zone id="GC">
+                        <TexteLibre1>4649Z</TexteLibre1>
+                    </Zone>
+                    <Zone id="GA">
+                        <AdresseVoie>RUE DU 8 MAI 1945</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GE">
+                        <Designation>CABINET TEST 2</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseVoie>RUE DU 8 MAI 1945</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GK">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Designation>SOCIETE TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseNumero>100</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>20170322</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Designation>BRUN Thomas</Designation>
+                        <DesignationSuite1>Testeur</DesignationSuite1>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                    </Zone>
+                    <Zone id="AA">
+                        <TexteLibre1>Achat, vente en gros de tous produits et notamment de fournitures, d'équipements de bureaux, etc.</TexteLibre1>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Prestations de service (PS) inter-sociétés : les PS pour le compte des filiales du Groupe</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Lyreco sont rendues par Lyreco Management. Le montant de ces PS est facturé à Lyreco SAS</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>(holding du groupe). Lyreco SAS facture ensuite les différentes filiales du Groupe Lyreco.</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Pour la facturation de ces PS, la clé d'allocation retenue est celle du chiffre d'affaires</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>réalisé par les filiales, puis le coût réel de ces PS est ensuite alloué aux différentes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>filiales. Opérations de trésorerie : Lyreco SAS participe à une activité de centralisation</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>de trésorerie pour le compte des filiales du Groupe Lyreco. Elle accorde également des</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>prêts à court, moyen et long terme. (1)</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>167837</Valeur>
+                    </Zone>
+                    <Zone id="GL">
+                        <TexteLibre1>HK ES IT BE PL DK DE TH KR (2)</TexteLibre1>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>MAJ</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>32206774,00</Valeur>
+                    </Zone>
+                    <Zone id="GM">
+                        <TexteLibre1>NO HK ES IT BE LU NL PL SE (3)</TexteLibre1>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>AUT</Valeur>
+                    </Zone>
+                    <Zone id="BP">
+                        <Valeur>578683</Valeur>
+                    </Zone>
+                    <Zone id="GT">
+                        <TexteLibre1>NO IT BE PL DK IE TH AU MY (4)</TexteLibre1>
+                    </Zone>
+                    <Zone id="BR">
+                        <Valeur>MAJ</Valeur>
+                    </Zone>
+                    <Zone id="DK">
+                        <Valeur>202662,00</Valeur>
+                    </Zone>
+                    <Zone id="HD">
+                        <TexteLibre1>BE GB DE CH</TexteLibre1>
+                    </Zone>
+                    <Zone id="DR">
+                        <Valeur>MAJ</Valeur>
+                    </Zone>
+                    <Zone id="DT">
+                        <Valeur>21606247,00</Valeur>
+                    </Zone>
+                    <Zone id="HF">
+                        <TexteLibre1>TH AU SG FI SK</TexteLibre1>
+                    </Zone>
+                    <Zone id="DV">
+                        <Valeur>AUT</Valeur>
+                    </Zone>
+                    <Zone id="DW">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="FY">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Autre méthode : facturation au coût réel des prestations</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="3" Nom="2257" Millesime="25">
+                    <Zone id="GC">
+                        <TexteLibre1>7022Z</TexteLibre1>
+                    </Zone>
+                    <Zone id="GA">
+                        <AdresseVoie>RUE DU 8 MAI 1945</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GE">
+                        <Designation>CABINET TEST 2</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseVoie>RUE DU 8 MAI 1945</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GK">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Designation>SOCIETE TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseNumero>100</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>20170322</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Designation>BRUN Thomas</Designation>
+                        <DesignationSuite1>Développeur</DesignationSuite1>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                    </Zone>
+                    <Zone id="AA">
+                        <TexteLibre1>Achat, vente en gros de tous produits et notamment de fournitures, d'équipements de bureaux, etc</TexteLibre1>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Refacturation de frais de personnel</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Certains collaborateurs des filiales du Groupe Lyreco sont mis à disposition de la société</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Lyreco Management.</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Le coût de ces collaborateurs est entièrement refacturé par les filiales à la société</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>Lyreco Management (y compris les frais professionnels afférents à ces collaborateurs).</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BX">
+                        <Valeur>1184874</Valeur>
+                    </Zone>
+                    <Zone id="GV">
+                        <TexteLibre1>HK ES IT BE LU NL PL DK GB (1)</TexteLibre1>
+                    </Zone>
+                    <Zone id="BZ">
+                        <Valeur>AUT</Valeur>
+                    </Zone>
+                    <Zone id="DT">
+                        <Valeur>1184874</Valeur>
+                    </Zone>
+                    <Zone id="HF">
+                        <TexteLibre1>BE NL GB TH SG</TexteLibre1>
+                    </Zone>
+                    <Zone id="DV">
+                        <Valeur>AUT</Valeur>
+                    </Zone>
+                    <Zone id="FY">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Autre méthode : facturation au coût réel des prestations.</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="4" Nom="2257" Millesime="25">
+                    <Zone id="GC">
+                        <TexteLibre1>4649Z</TexteLibre1>
+                    </Zone>
+                    <Zone id="GA">
+                        <AdresseVoie>RUE A. DAUDET</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GE">
+                        <Designation>CABINET TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseVoie>RUE A. DAUDET</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Designation>SOCIETE TEST</Designation>
+                        <DesignationSuite2>SAS</DesignationSuite2>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>59000</AdresseCodePostal>
+                        <AdresseVille>LILLE</AdresseVille>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>20170322</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Designation>BRUN Thomas</Designation>
+                        <DesignationSuite1>Développeur</DesignationSuite1>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                    </Zone>
+                    <Zone id="AA">
+                        <TexteLibre1>Achat, vente en gros de tous produits et notamment de fournitures, d'équipements de bureaux, etc.</TexteLibre1>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>marque</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="13">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <TexteLibre1>néant</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Achats / ventes de marchandises.</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>La société LYRECO FRANCE réalise des prestations d'achats de marchandises auprès de certaines filiales du Groupe Lyreco</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>13740253</Valeur>
+                    </Zone>
+                    <Zone id="GL">
+                        <TexteLibre1>NO HK ES IT BE PL SE DK GB (1)</TexteLibre1>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>MAJ</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>16900577</Valeur>
+                    </Zone>
+                    <Zone id="GW">
+                        <TexteLibre1>HK IT BE DE</TexteLibre1>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>MAJ</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

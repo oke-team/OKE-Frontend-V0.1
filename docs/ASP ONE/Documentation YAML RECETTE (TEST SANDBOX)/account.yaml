@@ -1,0 +1,1616 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.2.0"
+  title: "ACCOUNT"
+host: "recette-aspone.tessitechno.fr"
+basePath: "/api/rest"
+tags:
+- name: "ADMINS"
+- name: "ALERTS"
+- name: "CLIENTS"
+schemes:
+- "https"
+paths:
+  /v1/account/admins/search:
+    post:
+      tags:
+      - "ADMINS"
+      summary: "Search admin accounts"
+      description: "Search of admin accounts by criteria"
+      operationId: "search_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountAdminSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAccountAdminList"
+  /v1/account/admins/{adminAccountId}:
+    get:
+      tags:
+      - "ADMINS"
+      summary: "Get admin account by ID"
+      description: "Get details of an admin account by its ID"
+      operationId: "getDetail_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "adminAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAccountAdmin"
+    put:
+      tags:
+      - "ADMINS"
+      summary: "Update admin account"
+      description: "Update an admin account entirely : fields not provided will be\
+        \ overwritten with null or default value (except for 'password' that must\
+        \ be provided only to change it)"
+      operationId: "update_2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "adminAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountAdmin"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/RestAccountAdmin"
+  /v1/account/clients:
+    post:
+      tags:
+      - "CLIENTS"
+      summary: "Create client account"
+      description: "Create a client account primary or secondary"
+      operationId: "create_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountClient"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/RestAccountClient"
+  /v1/account/clients/search:
+    post:
+      tags:
+      - "CLIENTS"
+      summary: "Search client accounts"
+      description: "Search of client accounts by criteria"
+      operationId: "search"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountClientSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAccountClientLightList"
+  /v1/account/clients/{clientAccountId}:
+    get:
+      tags:
+      - "CLIENTS"
+      summary: "Get client account by ID"
+      description: "Get details of a client account by its ID"
+      operationId: "getDetail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAccountClient"
+    put:
+      tags:
+      - "CLIENTS"
+      summary: "Update client account"
+      description: "Update a client account entirely : fields not provided will be\
+        \ overwritten with null or default value (except for 'password' that must\
+        \ be provided only to change it)"
+      operationId: "update"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountClient"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/RestAccountClient"
+  /v1/account/clients/{clientAccountId}/alerts/{teleprocedure}:
+    get:
+      tags:
+      - "ALERTS"
+      summary: "Get teleprocedure notifications configuration"
+      description: "Get the configuration of teleprocedure notifications for a client\
+        \ account"
+      operationId: "getTeleprocedureAlert_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "teleprocedure"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestTeleprocedureAlert"
+    post:
+      tags:
+      - "ALERTS"
+      summary: "Create / update teleprocedure notifications configuration"
+      description: "Create or update the configuration of teleprocedure notifications\
+        \ for a client account"
+      operationId: "saveTeleprocedureAlert_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "teleprocedure"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestTeleprocedureAlert"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful create or update"
+          schema:
+            $ref: "#/definitions/RestTeleprocedureAlert"
+    delete:
+      tags:
+      - "ALERTS"
+      summary: "Delete teleprocedure notifications configuration"
+      description: "Delete the configuration of teleprocedure notifications for a\
+        \ client account"
+      operationId: "deleteTeleprocedureAlert_1"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "teleprocedure"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "204":
+          description: "Successful delete"
+  /v1/account/clients/{clientAccountId}/state:
+    put:
+      tags:
+      - "CLIENTS"
+      summary: "Update client account state"
+      description: "Update a client account state"
+      operationId: "updateState_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAccountClientStateUpdateForm"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/RestAccountClient"
+  /v1/account/clients/{clientAccountId}/teleprocedures/{teleprocedure}:
+    post:
+      tags:
+      - "CLIENTS"
+      summary: "Subscribe to a teleprocedure"
+      description: "Subscribe a client account to a teleprocedure"
+      operationId: "addTeleprocedure_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "teleprocedure"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+        - "WEB_TDFC"
+        - "WEB_TVA"
+        - "WEB_PAIEMENT"
+        - "WEB_REQUETE"
+        - "WEB_PART"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestTeleprocedure"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful subscription"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+    delete:
+      tags:
+      - "CLIENTS"
+      summary: "Unsubscribe from a teleprocedure"
+      description: "Unsubscribe a client account from a teleprocedure"
+      operationId: "deleteTeleprocedure_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "clientAccountId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "teleprocedure"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+        - "WEB_TDFC"
+        - "WEB_TVA"
+        - "WEB_PAIEMENT"
+        - "WEB_REQUETE"
+        - "WEB_PART"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful unsubscription"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAccountAdmin:
+    type: "object"
+    required:
+    - "role"
+    properties:
+      adminAccountId:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+      role:
+        type: "string"
+        enum:
+        - "PORTAL_ADMIN"
+        - "SUPER_ADMIN"
+      mailbox:
+        type: "string"
+      emailContact:
+        type: "string"
+      archiveSubscription:
+        type: "boolean"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      password:
+        type: "string"
+      passwordExpirationEnabled:
+        type: "boolean"
+      passwordExpirationForced:
+        type: "boolean"
+      lastPasswordResetDate:
+        type: "string"
+        format: "date-time"
+      lastPasswordExpirationAlertDate:
+        type: "string"
+        format: "date-time"
+      lastConnectionSuccessDate:
+        type: "string"
+        format: "date-time"
+      lastConnectionFailureDate:
+        type: "string"
+        format: "date-time"
+      nbConnectionFailures:
+        type: "integer"
+        format: "int32"
+      portals:
+        type: "array"
+        items:
+          type: "string"
+  RestAccountAdminList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      admins:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestAccountAdmin"
+  RestAccountAdminSearchForm:
+    type: "object"
+    properties:
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      role:
+        type: "string"
+        enum:
+        - "PORTAL_ADMIN"
+        - "SUPER_ADMIN"
+  RestAccountBilling:
+    type: "object"
+    properties:
+      billingProfileId:
+        type: "string"
+      profile:
+        type: "string"
+        enum:
+        - "STANDARD"
+        - "WEB_DECLARATIONS"
+        - "BANQUE_DE_FRANCE"
+        - "ARCHIVE"
+        - "EPS_ECCV"
+        - "INITIAL"
+        - "ESSENTIAL"
+        - "PREMIUM"
+        - "WEB_FISCAL"
+      portal:
+        type: "string"
+      startDate:
+        type: "string"
+        format: "date-time"
+      quantityPlanned:
+        type: "integer"
+        format: "int32"
+      quantityMinimum:
+        type: "integer"
+        format: "int32"
+      quantityEdiReader:
+        type: "integer"
+        format: "int32"
+      vatNumber:
+        type: "string"
+        pattern: "[A-Z]{2}[A-Z0-9\\+\\*]{2,12}"
+      stepCodes:
+        type: "array"
+        items:
+          type: "string"
+      payment:
+        $ref: "#/definitions/RestAccountPayment"
+      mode:
+        type: "string"
+        enum:
+        - "BY_POST"
+        - "BY_EMAIL"
+        - "BY_CHORUS_PRO"
+      contact:
+        $ref: "#/definitions/RestBillingContact"
+      address:
+        $ref: "#/definitions/RestFullAddress"
+  RestAccountClient:
+    type: "object"
+    required:
+    - "address"
+    - "gdprContact"
+    - "role"
+    - "subscriber"
+    - "technicalContact"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      parentAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+      registrationNumber:
+        type: "integer"
+        format: "int32"
+      siren:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nic:
+        type: "string"
+        pattern: "[0-9]{5}"
+      state:
+        type: "string"
+        enum:
+        - "CREATION_PENDING"
+        - "CREATION_SUSPENDED"
+        - "WAIT_FOR_DOCUMENTS"
+        - "WAIT_FOR_CONTACT"
+        - "CONTACT_NOTIFIED"
+        - "VALIDATED"
+        - "REJECTED"
+        - "ENABLED"
+        - "DISABLED"
+      mailbox:
+        type: "boolean"
+      mailboxName:
+        type: "string"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      lastConnectionSuccessDate:
+        type: "string"
+        format: "date-time"
+      autonomous:
+        type: "boolean"
+      pedNumber:
+        type: "string"
+        pattern: "[0-9]{7}"
+      ogaNumber:
+        type: "string"
+        pattern: "[0-9]{4}[0-9A-Z][0-9]"
+      accountantNumber:
+        type: "string"
+        pattern: "(((0[1-9])|([1-9][0-9]))[0-9]{8}((0[1-9])|([1-9][0-9])))|(000000000000)|(999999999999)"
+      fiscalNumber:
+        type: "string"
+        pattern: "[0-9]{13}"
+      socialAgentName:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      banks:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestBankingInstitution"
+      subscriber:
+        $ref: "#/definitions/RestFullContact"
+      address:
+        $ref: "#/definitions/RestFullAddress"
+      technicalContact:
+        $ref: "#/definitions/RestSimpleContact"
+      administrativeContact:
+        $ref: "#/definitions/RestSimpleContact"
+      gdprContact:
+        $ref: "#/definitions/RestGdprContact"
+      billing:
+        $ref: "#/definitions/RestAccountBilling"
+      subaccounts:
+        $ref: "#/definitions/RestSubaccounts"
+      teleprocedures:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestTeleprocedure"
+      options:
+        $ref: "#/definitions/RestAccountOptions"
+      settings:
+        $ref: "#/definitions/RestAccountSettings"
+      password:
+        type: "string"
+      passwordLockoutEnabled:
+        type: "boolean"
+      passwordExpirationEnabled:
+        type: "boolean"
+      passwordExpirationForced:
+        type: "boolean"
+      lastPasswordResetDate:
+        type: "string"
+        format: "date-time"
+      lastPasswordExpirationAlertDate:
+        type: "string"
+        format: "date-time"
+      lastConnectionFailureDate:
+        type: "string"
+        format: "date-time"
+      nbConnectionFailures:
+        type: "integer"
+        format: "int32"
+  RestAccountClientLight:
+    type: "object"
+    required:
+    - "role"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+      registrationNumber:
+        type: "integer"
+        format: "int32"
+      siren:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nic:
+        type: "string"
+        pattern: "[0-9]{5}"
+      state:
+        type: "string"
+        enum:
+        - "CREATION_PENDING"
+        - "CREATION_SUSPENDED"
+        - "WAIT_FOR_DOCUMENTS"
+        - "WAIT_FOR_CONTACT"
+        - "CONTACT_NOTIFIED"
+        - "VALIDATED"
+        - "REJECTED"
+        - "ENABLED"
+        - "DISABLED"
+      mailbox:
+        type: "boolean"
+      mailboxName:
+        type: "string"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      lastConnectionSuccessDate:
+        type: "string"
+        format: "date-time"
+  RestAccountClientLightList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      accounts:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestAccountClientLight"
+  RestAccountClientSearchForm:
+    type: "object"
+    properties:
+      portal:
+        type: "string"
+      registrationNumber:
+        type: "integer"
+        format: "int32"
+      login:
+        type: "string"
+      label:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      state:
+        type: "string"
+        enum:
+        - "CREATION_PENDING"
+        - "CREATION_SUSPENDED"
+        - "WAIT_FOR_DOCUMENTS"
+        - "WAIT_FOR_CONTACT"
+        - "CONTACT_NOTIFIED"
+        - "VALIDATED"
+        - "REJECTED"
+        - "ENABLED"
+        - "DISABLED"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      test:
+        type: "boolean"
+      creationStartDate:
+        type: "string"
+        format: "date-time"
+      creationEndDate:
+        type: "string"
+        format: "date-time"
+      stepCode:
+        type: "string"
+  RestAccountClientStateUpdateForm:
+    type: "object"
+    required:
+    - "action"
+    properties:
+      action:
+        type: "string"
+        enum:
+        - "BACK_TO_STATE_IN_PROGRESS"
+        - "BACK_TO_STATE_WAITING"
+        - "BACK_TO_STATE_SUSPENDED"
+        - "BACK_TO_CONTACT_WAITING"
+        - "BACK_TO_CONTACT_NOTIFIED"
+        - "REJECT"
+        - "VALIDATE"
+        - "ENROLL"
+        - "DISABLE"
+        - "ENABLE"
+      comments:
+        type: "string"
+        minLength: 0
+        maxLength: 150
+  RestAccountOptionAlert:
+    type: "object"
+    required:
+    - "enabled"
+    properties:
+      enabled:
+        type: "boolean"
+      alertProfileId:
+        type: "string"
+      sendToSubscriber:
+        type: "boolean"
+      alertDepositKo:
+        type: "boolean"
+      alertPayment:
+        type: "boolean"
+      alertBankStatement:
+        type: "boolean"
+      alertVault:
+        type: "boolean"
+      subaccounts:
+        type: "boolean"
+      test:
+        type: "boolean"
+      emails:
+        type: "array"
+        items:
+          type: "string"
+        maxItems: 3
+        minItems: 0
+  RestAccountOptionArchive:
+    type: "object"
+    required:
+    - "enabled"
+    properties:
+      enabled:
+        type: "boolean"
+  RestAccountOptionStatement:
+    type: "object"
+    required:
+    - "enabled"
+    properties:
+      enabled:
+        type: "boolean"
+      quantityPlanned:
+        type: "integer"
+        format: "int32"
+      mailbox:
+        type: "string"
+        enum:
+        - "DEFAULT_MAILBOX"
+        - "DEDICATED_MAILBOX"
+      mailboxName:
+        type: "string"
+  RestAccountOptionVault:
+    type: "object"
+    required:
+    - "enabled"
+    properties:
+      enabled:
+        type: "boolean"
+      contractId:
+        type: "string"
+      quantityPlanned:
+        type: "integer"
+        format: "int32"
+  RestAccountOptions:
+    type: "object"
+    properties:
+      alert:
+        $ref: "#/definitions/RestAccountOptionAlert"
+      archive:
+        $ref: "#/definitions/RestAccountOptionArchive"
+      bankStatement:
+        $ref: "#/definitions/RestAccountOptionStatement"
+      vault:
+        $ref: "#/definitions/RestAccountOptionVault"
+  RestAccountPayment:
+    type: "object"
+    required:
+    - "type"
+    properties:
+      type:
+        type: "string"
+        enum:
+        - "CHECK"
+        - "ORDER"
+      iban:
+        type: "string"
+        pattern: "[A-Z0-9]{14,34}"
+      bic:
+        type: "string"
+        pattern: "[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?"
+  RestAccountSettings:
+    type: "object"
+    properties:
+      groupingTime:
+        type: "integer"
+        format: "int32"
+      groupingSize:
+        type: "integer"
+        format: "int32"
+      groupingMaxSentPerCycle:
+        type: "integer"
+        format: "int32"
+      webdeclarationUploadXml:
+        type: "boolean"
+  RestBankingInstitution:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        pattern: "[0-9]{5}"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 100
+  RestBillingContact:
+    type: "object"
+    required:
+    - "email"
+    properties:
+      title:
+        type: "string"
+        enum:
+        - "MR"
+        - "MS"
+      firstName:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      name:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      phone:
+        type: "string"
+        minLength: 8
+        maxLength: 15
+        pattern: "[\\+]?([0-9]{1,3}[\\.\\- ]?)+"
+      email:
+        type: "string"
+  RestFullAddress:
+    type: "object"
+    required:
+    - "country"
+    properties:
+      streetNumber:
+        type: "integer"
+        format: "int32"
+      streetRepetition:
+        type: "string"
+        pattern: "[A-Z0-9]"
+      streetName:
+        type: "string"
+        minLength: 0
+        maxLength: 30
+      supplement:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      postOfficeBox:
+        type: "string"
+        minLength: 0
+        maxLength: 10
+      zipCode:
+        type: "string"
+        minLength: 0
+        maxLength: 17
+      city:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      country:
+        type: "string"
+        enum:
+        - "FR"
+        - "AF"
+        - "ZA"
+        - "AX"
+        - "AL"
+        - "DZ"
+        - "DE"
+        - "AD"
+        - "AO"
+        - "AI"
+        - "AQ"
+        - "AG"
+        - "SA"
+        - "AR"
+        - "AM"
+        - "AW"
+        - "AU"
+        - "AT"
+        - "AZ"
+        - "BS"
+        - "BH"
+        - "BD"
+        - "BB"
+        - "BY"
+        - "BE"
+        - "BZ"
+        - "BJ"
+        - "BM"
+        - "BT"
+        - "BO"
+        - "BQ"
+        - "BA"
+        - "BW"
+        - "BR"
+        - "BN"
+        - "BG"
+        - "BF"
+        - "BI"
+        - "KY"
+        - "KH"
+        - "CM"
+        - "CA"
+        - "CV"
+        - "CF"
+        - "CL"
+        - "CN"
+        - "CX"
+        - "CY"
+        - "CC"
+        - "CO"
+        - "KM"
+        - "CG"
+        - "CD"
+        - "CK"
+        - "KR"
+        - "KP"
+        - "CR"
+        - "CI"
+        - "HR"
+        - "CU"
+        - "CW"
+        - "DK"
+        - "DJ"
+        - "DO"
+        - "DM"
+        - "EG"
+        - "SV"
+        - "AE"
+        - "EC"
+        - "ER"
+        - "ES"
+        - "EE"
+        - "US"
+        - "ET"
+        - "FK"
+        - "FO"
+        - "FJ"
+        - "FI"
+        - "GA"
+        - "GM"
+        - "GE"
+        - "GS"
+        - "GH"
+        - "GI"
+        - "GR"
+        - "GD"
+        - "GL"
+        - "GU"
+        - "GT"
+        - "GG"
+        - "GN"
+        - "GW"
+        - "GQ"
+        - "GY"
+        - "HT"
+        - "HM"
+        - "HN"
+        - "HK"
+        - "HU"
+        - "IM"
+        - "UM"
+        - "VG"
+        - "VI"
+        - "IN"
+        - "ID"
+        - "IR"
+        - "IQ"
+        - "IE"
+        - "IS"
+        - "IL"
+        - "IT"
+        - "JM"
+        - "JP"
+        - "JE"
+        - "JO"
+        - "KZ"
+        - "KE"
+        - "KG"
+        - "KI"
+        - "KW"
+        - "LA"
+        - "LS"
+        - "LV"
+        - "LB"
+        - "LR"
+        - "LY"
+        - "LI"
+        - "LT"
+        - "LU"
+        - "MO"
+        - "MK"
+        - "MG"
+        - "MY"
+        - "MW"
+        - "MV"
+        - "ML"
+        - "MT"
+        - "MP"
+        - "MA"
+        - "MH"
+        - "MU"
+        - "MR"
+        - "MX"
+        - "FM"
+        - "MD"
+        - "MC"
+        - "MN"
+        - "ME"
+        - "MS"
+        - "MZ"
+        - "MM"
+        - "NA"
+        - "NR"
+        - "NP"
+        - "NI"
+        - "NE"
+        - "NG"
+        - "NU"
+        - "NF"
+        - "NO"
+        - "NC"
+        - "NZ"
+        - "IO"
+        - "OM"
+        - "UG"
+        - "UZ"
+        - "PK"
+        - "PW"
+        - "PS"
+        - "PA"
+        - "PG"
+        - "PY"
+        - "NL"
+        - "PE"
+        - "PH"
+        - "PN"
+        - "PL"
+        - "PF"
+        - "PR"
+        - "PT"
+        - "QA"
+        - "RO"
+        - "GB"
+        - "RU"
+        - "RW"
+        - "EH"
+        - "BL"
+        - "SH"
+        - "LC"
+        - "KN"
+        - "SM"
+        - "MF"
+        - "SX"
+        - "PM"
+        - "VA"
+        - "VC"
+        - "SB"
+        - "WS"
+        - "AS"
+        - "ST"
+        - "SN"
+        - "RS"
+        - "SC"
+        - "SL"
+        - "SG"
+        - "SK"
+        - "SI"
+        - "SO"
+        - "SD"
+        - "SS"
+        - "LK"
+        - "SE"
+        - "CH"
+        - "SR"
+        - "SJ"
+        - "SZ"
+        - "SY"
+        - "TJ"
+        - "TW"
+        - "TZ"
+        - "TD"
+        - "CZ"
+        - "TF"
+        - "TH"
+        - "TL"
+        - "TG"
+        - "TK"
+        - "TO"
+        - "TT"
+        - "TN"
+        - "TM"
+        - "TC"
+        - "TR"
+        - "TV"
+        - "UA"
+        - "UY"
+        - "VU"
+        - "VE"
+        - "VN"
+        - "WF"
+        - "YE"
+        - "ZM"
+        - "ZW"
+        - "BV"
+  RestFullContact:
+    type: "object"
+    required:
+    - "title"
+    properties:
+      name:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      phone:
+        type: "string"
+        minLength: 8
+        maxLength: 15
+        pattern: "[\\+]?([0-9]{1,3}[\\.\\- ]?)+"
+      email:
+        type: "string"
+      title:
+        type: "string"
+        enum:
+        - "MR"
+        - "MS"
+      firstName:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      fax:
+        type: "string"
+        minLength: 8
+        maxLength: 15
+        pattern: "[\\+]?([0-9]{1,3}[\\.\\- ]?)+"
+  RestGdprContact:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      phone:
+        type: "string"
+        minLength: 8
+        maxLength: 15
+        pattern: "[\\+]?([0-9]{1,3}[\\.\\- ]?)+"
+      email:
+        type: "string"
+      firstName:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      function:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"
+  RestMessageService:
+    type: "object"
+    required:
+    - "state"
+    - "type"
+    properties:
+      type:
+        type: "string"
+        enum:
+        - "ACS"
+        - "ARS"
+        - "AIS"
+        - "RECEPTION"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "FAILURE"
+      correctiveDelay:
+        type: "integer"
+        format: "int32"
+  RestSimpleContact:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      phone:
+        type: "string"
+        minLength: 8
+        maxLength: 15
+        pattern: "[\\+]?([0-9]{1,3}[\\.\\- ]?)+"
+      email:
+        type: "string"
+  RestSubaccounts:
+    type: "object"
+    properties:
+      nbWithMailboxPlanned:
+        type: "integer"
+        format: "int32"
+      nbWithMailboxEnabled:
+        type: "integer"
+        format: "int32"
+      nbWithoutMailboxEnabled:
+        type: "integer"
+        format: "int32"
+  RestTeleprocedure:
+    type: "object"
+    required:
+    - "teleprocedure"
+    properties:
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+        - "WEB_TDFC"
+        - "WEB_TVA"
+        - "WEB_PAIEMENT"
+        - "WEB_REQUETE"
+        - "WEB_PART"
+      quantityPlanned:
+        type: "integer"
+        format: "int32"
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestTeleprocedureParameter"
+      exclusions:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "IDT"
+          - "RBT"
+          - "RAU"
+          - "IAT"
+          - "IDF"
+          - "IDR"
+          - "ILF"
+          - "LIS"
+          - "IAA"
+          - "ICA"
+          - "ICG"
+          - "CAN"
+          - "LAC"
+          - "CRM"
+          - "BCG"
+          - "LOY"
+          - "IPT"
+          - "IPP"
+          - "IS"
+          - "TS"
+          - "RCM"
+          - "TAP"
+          - "TVI"
+          - "TIC"
+          - "TCA"
+          - "CVA"
+          - "LOC"
+          - "IR"
+          - "IFU"
+          - "HON"
+          - "DEC"
+          - "DPP"
+          - "DPV"
+          - "DQR"
+          - "FEC"
+          - "REP"
+          - "REV"
+          - "RQR"
+          - "DUCS_901"
+          - "DUCS_902"
+          - "DUCS_903"
+          - "DADSU_01"
+          - "DADSU_02"
+          - "DADSU_03"
+          - "DADSU_04"
+          - "DADSU_07"
+          - "DADSU_08"
+          - "DADSU_12"
+          - "AED_15"
+          - "DPAE"
+          - "DSN_01"
+          - "DSN_02"
+          - "DSN_04"
+          - "DSN_05"
+          - "DSN_06"
+          - "DSN_07"
+          - "DSN_08"
+          - "DSI"
+          - "DRP"
+  RestTeleprocedureAlert:
+    type: "object"
+    required:
+    - "teleprocedure"
+    properties:
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      messages:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestMessageService"
+        maxItems: 5
+        minItems: 1
+  RestTeleprocedureParameter:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        enum:
+        - "SIRET"
+        - "FIRSTNAME"
+        - "SURNAME"
+        - "SEND_PARAM_SHEET"
+        - "SEND_BPIJ_SHEET"
+      value:
+        type: "string"

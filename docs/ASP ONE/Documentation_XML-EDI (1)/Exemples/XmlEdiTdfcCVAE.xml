@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000002045-0-0" Type="CVA">
+            <Redacteur>
+                <Siret>07955554600013</Siret>
+                <Designation>ENT_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555488CVAE1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555488</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>CVAE1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>CV</Valeur>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>079555488</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>CVAE1</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>FL</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>CONSEIL TEST</Designation>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="0" Nom="1330CVAE" Millesime="25">
+                    <Zone id="AB">
+                        <Valeur>256022</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>256022</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>20250227</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Designation>TEST</Designation>
+                        <DesignationSuite1>TESTEUR</DesignationSuite1>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Identifiant>00001</Identifiant>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>00002</Identifiant>
+                            <AdresseVille>ROCHE LA MOLIERE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Identifiant>00003</Identifiant>
+                            <AdresseVille>SAINT JUST SAINT RAMBERT</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Identifiant>00004</Identifiant>
+                            <AdresseVille>SAINT PRIEST EN JAREZ</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Identifiant>00005</Identifiant>
+                            <AdresseVille>MARSEILLE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Identifiant>00006</Identifiant>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Identifiant>00007</Identifiant>
+                            <AdresseVille>PARIS</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Identifiant>00008</Identifiant>
+                            <AdresseVille>NANTES</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Identifiant>00009</Identifiant>
+                            <AdresseVille>BORDEAUX</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Identifiant>00010</Identifiant>
+                            <AdresseVille>LILLE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Identifiant>00011</Identifiant>
+                            <AdresseVille>BREST</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CA">
+                        <Occurrence Numero="1">
+                            <Valeur>42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>13</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>69</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>75</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>44</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>33</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>59</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>29</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DA">
+                        <Occurrence Numero="1">
+                            <Valeur>218</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>219</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>220</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>221</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>223</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>224</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>225</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>226</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>227</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>228</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EA">
+                        <Occurrence Numero="1">
+                            <Valeur>100</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>2</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>3</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>4</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>5</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>6</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>7</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>8</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>9</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="1" Nom="ANNEXLIB01" Millesime="25">
+                    <Zone id="AA">
+                        <TexteLibre1>TITRE 1</TexteLibre1>
+                        <TexteLibre2>TITRE 2</TexteLibre2>
+                    </Zone>
+                    <Zone id="AC">
+                        <TexteLibre1>COLONNE 1</TexteLibre1>
+                    </Zone>
+                    <Zone id="AD">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>VALEUR 1.1</TexteLibre1>
+                            <TexteLibre2>VALEUR 1.2</TexteLibre2>
+                            <TexteLibre3>VALEUR 1.3</TexteLibre3>
+                            <TexteLibre4>VALEUR 1.4</TexteLibre4>
+                            <TexteLibre5>VALEUR 1.5</TexteLibre5>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>VALEUR 2.1</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="RAU" Reference="INFENT000000000001">
+            <Redacteur>
+                <Siret>07955615500012</Siret>
+                <Designation>ENT_EDI_TVA</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079557195TVA1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079557195</Identifiant>
+                <Designation>REDEVABLE ASSUJETTI UNIQUE</Designation>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseType>B</AdresseType>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseComplement>ZI TEST</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>TVA1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TVA</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079557195</Identifiant>
+                        <Designation>REDEVABLE ASSUJETTI UNIQUE</Designation>
+                        <DesignationSuite2>SRL</DesignationSuite2>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>ZI TEST</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20260101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20261231</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="3310PAU" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>2026</Valeur>
+                    </Zone>
+                    <Zone id="AD">
+                        <Occurrence Numero="1">
+                            <Identifiant>079557203</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 1</Designation>
+                            <DesignationSuite2>SPA</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079557211</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 2</Designation>
+                            <DesignationSuite2>SPF</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Identifiant>079557229</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 3</Designation>
+                            <DesignationSuite2>SPG</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Identifiant>079557237</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 4</Designation>
+                            <DesignationSuite2>SPH</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Identifiant>079557245</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 5</Designation>
+                            <DesignationSuite2>SPI</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Identifiant>079557252</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 6</Designation>
+                            <DesignationSuite2>SPL</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Identifiant>079557260</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 7</Designation>
+                            <DesignationSuite2>SPM</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Identifiant>079557278</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 8</Designation>
+                            <DesignationSuite2>SPO</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Identifiant>079557286</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 9</Designation>
+                            <DesignationSuite2>SPP</DesignationSuite2>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Identifiant>079557294</Identifiant>
+                            <Designation>REDEVABLE MEMBRE 10</Designation>
+                            <DesignationSuite2>SPY</DesignationSuite2>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AL">
+                        <Occurrence Numero="1">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>TVA1</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AE">
+                        <Occurrence Numero="1">
+                            <Identifiant>FR17079557203</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>FR41079557211</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <Valeur>7120A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>7112A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>7120A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>7120B</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>7211Z</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>7219Z</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>7220Z</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>7311Z</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>7312Z</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>7320Z</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

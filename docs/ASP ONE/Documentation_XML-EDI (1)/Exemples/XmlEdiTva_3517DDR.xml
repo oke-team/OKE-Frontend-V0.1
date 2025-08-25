@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000001432-0-0" Type="RBT">
+            <Redacteur>
+                <Siret>07955544700030</Siret>
+                <Designation>CEC_EDI_TVA</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>76</AdresseNumero>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>complément test</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079556130TVA1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079556130</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>TVA1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TVA</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079556130</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="0" Nom="3517DDR" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>5400</Valeur>
+                    </Zone>
+                    <Zone id="AD">
+                        <Valeur>4000</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>1400</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Designation>DUPOND Martin</Designation>
+                        <DesignationSuite1>TESTEUR</DesignationSuite1>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>4000</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="AK">
+                        <Iban>FR7611111222223333333333391</Iban>
+                        <Bic>AGRIFRPPXXX</Bic>
+                        <TitulaireDesignation>DUPOND Martin</TitulaireDesignation>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

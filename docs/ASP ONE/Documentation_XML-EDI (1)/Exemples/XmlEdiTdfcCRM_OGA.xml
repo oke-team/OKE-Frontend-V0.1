@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT_C2JCRM_0000021629" Type="CRM">
+			<Emetteur>
+                <Siret>07955554600013</Siret>
+                <Designation>REDACTEUR TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+				<ReferenceDossier>8077</ReferenceDossier>
+            </Emetteur>
+            <Redacteur>
+                <Siret>41122204500030</Siret>
+                <Designation>OGA_EDI_TDFC</Designation>
+                <DesignationSuite1>OGA TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>66</AdresseNumero>
+                    <AdresseVoie>rue de la talaudière</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>Saint-Etienne</AdresseVille>
+                </Adresse>
+				<ReferenceDossier>5555</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+				<ReferenceDossier>INFENT-00000000021629</ReferenceDossier>
+                <Rof>BNC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555421</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                        <Telephone>33102030405</Telephone>
+                    </Zone>
+					<Zone id="AB">
+                        <Valeur>8690D</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BC</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>DC</Valeur>
+                    </Zone>
+					<Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>                 
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+					<Zone id="KD">
+                        <Valeur>BNC1</Valeur>
+                    </Zone>   
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+					<Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                </Identif>
+                <Formulaire Repetition="0" Nom="CRMOGA" Millesime="25">
+					 <Zone id="AA">
+                        <Designation>Le directeur</Designation>
+                        <Telephone>01.02.03.04.05</Telephone>
+						<Email>test@test.fr</Email>
+                    </Zone>				
+                    <Zone id="AC">
+                        <Valeur>20250227</Valeur>
+                    </Zone>
+					<Zone id="AE">
+						<Identifiant>111111</Identifiant>
+                        <Designation>OGA TEST</Designation>
+                    </Zone>						
+                    <Zone id="AF">
+                        <Valeur>I</Valeur>
+                    </Zone>					
+                    <Zone id="AJ">
+                        <Valeur>8077</Valeur>
+                    </Zone>					
+                    <Zone id="AK">
+                        <Valeur>19890807</Valeur>
+                    </Zone>
+					<Zone id="BA">
+                        <Valeur>20240512</Valeur>
+                    </Zone>					
+					<Zone id="BB">
+                        <Valeur>51410</Valeur>
+                    </Zone>				
+					<Zone id="BC">
+                        <Valeur>20250227</Valeur>
+                    </Zone>					
+					<Zone id="BG">
+                        <Valeur>X</Valeur>
+                    </Zone>					
+					<Zone id="BS">
+                        <Valeur>X</Valeur>
+                    </Zone>					
+					<Zone id="BM">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

@@ -1,0 +1,21 @@
+Formulaire;Millésime;Zone;Type;Donnée;Répétable;Table/Format;Balise XML;Intitulé;Commentaire;Code NREF;Code Ligne
+R-IDENTIF;14;AA;NAD;0000.3164.01;NON;;AdresseVille;Adresse du demandeur, ville;;903876;
+R-IDENTIF;14;AA;NAD;0000.3207.01;NON;;AdresseCodePays;Adresse du demandeur, pays;;;
+R-IDENTIF;14;AA;NAD;0000.3251.01;NON;;AdresseCodePostal;Adresse du demandeur, code postal;;903877;
+R-IDENTIF;14;AA;NAD;C059.3042.01;NON;;AdresseNumero, AdresseRepetabilite, AdresseVoie;Adresse du demandeur, numéro, type et nom voie;;903879;
+R-IDENTIF;14;AA;NAD;C059.3042.02;NON;;AdresseComplement;Adresse du demandeur, complément d'adresse;;903878;
+R-IDENTIF;14;AA;NAD;C080.3036.01;NON;;Designation;Identification du demandeur, désignation ou nom prénom;;903881;
+R-IDENTIF;14;AA;NAD;C080.3036.02;NON;;DesignationSuite1;Identification du demandeur , qualité ou complément de désignation;;903882;
+R-IDENTIF;14;AA;NAD;C080.3036.03;NON;;DesignationSuite2;Identification du demandeur, titre du demandeur;;903880;
+R-IDENTIF;14;AA;NAD;C082.3039.01;NON;;Identifiant;Identifiant du demandeur numéro SIREN;;903875;
+R-IDENTIF;14;AB;NAD;0000.3164.01;NON;;AdresseVille;Adresse du déclarant, ville;;903884;
+R-IDENTIF;14;AB;NAD;0000.3207.01;NON;;AdresseCodePays;Adresse du déclarant, pays;;;
+R-IDENTIF;14;AB;NAD;0000.3251.01;NON;;AdresseCodePostal;Adresse du déclarant, code postal;;903885;
+R-IDENTIF;14;AB;NAD;C059.3042.01;NON;;AdresseNumero, AdresseRepetabilite, AdresseVoie;Adresse du déclarant, numéro, type et nom voie;;903887;
+R-IDENTIF;14;AB;NAD;C059.3042.02;NON;;AdresseComplement;Adresse du déclarant, complément d'adresse;;903886;
+R-IDENTIF;14;AB;NAD;C080.3036.01;NON;;Designation;Identification du déclarant , désignation ou nom prénom;;903889;
+R-IDENTIF;14;AB;NAD;C080.3036.02;NON;;DesignationSuite1;Identification du déclarant , qualité ou complément de désignation;;903890;
+R-IDENTIF;14;AB;NAD;C080.3036.03;NON;;DesignationSuite2;Identification du déclarant, titre du redevable;;903888;
+R-IDENTIF;14;AB;NAD;C082.3039.01;NON;;Identifiant;Identifiant du déclarant numéro SIREN;;903883;
+R-IDENTIF;14;BA;CCI;C889.7111.01;NON;REQ;Valeur;Code de la demande d'information;;903891;
+R-IDENTIF;14;BB;CCI;C889.7111.01;NON;TBX;Valeur;Mode unitaire;;903918;

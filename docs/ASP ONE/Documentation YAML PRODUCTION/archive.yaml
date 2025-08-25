@@ -1,0 +1,1865 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.1.0"
+  title: "ARCHIVE"
+host: "www.aspone.fr"
+basePath: "/api/rest"
+tags:
+- name: "BANK STATEMENTS"
+- name: "DECLARATIONS"
+- name: "DSN BPIJ SHEETS"
+- name: "DSN PARAM SHEETS"
+schemes:
+- "https"
+paths:
+  /v1/archive/bank/statements/search:
+    post:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "Search archived bank statements"
+      description: "Search of archived bank statements by criteria"
+      operationId: "search_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestArchiveStatementSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "RECEPTION_DATE"
+        - "SIREN_COMPANY"
+        - "NAME_COMPANY"
+        - "IBAN"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveStatementList"
+  /v1/archive/bank/statements/{archiveId}:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "Get archived bank statement by ID"
+      description: "Get details of an archived bank statement by its ID"
+      operationId: "getDetail_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveStatement"
+  /v1/archive/bank/statements/{archiveId}/contents:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "Download ZIP archive"
+      description: "Download ZIP containing all documents and events related to the\
+        \ archive"
+      operationId: "downloadArchive_2"
+      produces:
+      - "application/zip"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            application/zip: "ZIP content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/bank/statements/{archiveId}/documents:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "List archived bank statement documents"
+      description: "List documents associated to an archived bank statement"
+      operationId: "listDocuments_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocumentList"
+  /v1/archive/bank/statements/{archiveId}/documents/{documentId}:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "Get archived statement document details"
+      description: "Get archived document details associated to a statement"
+      operationId: "getDocument_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocument"
+  /v1/archive/bank/statements/{archiveId}/documents/{documentId}/contents:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "Download archived statement document content"
+      description: "Download archived document content associated to a statement"
+      operationId: "downloadDocument"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "Document content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/bank/statements/{archiveId}/events:
+    get:
+      tags:
+      - "BANK STATEMENTS"
+      summary: "List archived bank statement events"
+      description: "List events associated to an archived bank statement"
+      operationId: "listEvents_2"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Event type"
+        required: false
+        type: "string"
+        enum:
+        - "BUSINESS"
+        - "SYSTEM"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveEventList"
+  /v1/archive/declarations/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Archived declarations search"
+      description: "Search of archived declarations by criteria"
+      operationId: "search_4"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestArchiveDeclarationSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "DEPOSIT_DATE"
+        - "ADS_NUMBER"
+        - "DECLARANT_NAME"
+        - "REFERENCE_SENDER"
+        - "TELEPROCEDURE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDeclarationList"
+  /v1/archive/declarations/{archiveId}:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Get archived declaration by ID"
+      description: "Get details of an archived declaration by its ID"
+      operationId: "getDetail_4"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDeclaration"
+  /v1/archive/declarations/{archiveId}/contents:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Download ZIP archive"
+      description: "Download ZIP containing all documents and events related to the\
+        \ archive"
+      operationId: "downloadArchive_4"
+      produces:
+      - "application/zip"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Archive type = point of view for admin"
+        required: false
+        type: "string"
+        enum:
+        - "DEFAULT"
+        - "DEPOSITOR"
+        - "RECIPIENT"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            application/zip: "ZIP content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/declarations/{archiveId}/documents:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "List archived declaration documents"
+      description: "List documents associated to an archived declaration"
+      operationId: "listDocuments_4"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocumentList"
+  /v1/archive/declarations/{archiveId}/documents/{documentId}:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Get archived declaration document details"
+      description: "Get archived document details associated to a declaration"
+      operationId: "getDocument_4"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocument"
+  /v1/archive/declarations/{archiveId}/documents/{documentId}/contents:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Download archived declaration document content"
+      description: "Download archived document content associated to a declaration"
+      operationId: "downloadDocument_2"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "Document content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/declarations/{archiveId}/events:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "List archived declaration events"
+      description: "List events associated to an archived declaration"
+      operationId: "listEvents_4"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Event type"
+        required: false
+        type: "string"
+        enum:
+        - "BUSINESS"
+        - "SYSTEM"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveEventList"
+  /v1/archive/dsn/bpij/sheets/search:
+    post:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "Search archived DSN BPIJ sheets"
+      description: "Search of archived DSN BPIJ sheet by criteria"
+      operationId: "search"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestArchiveDsnBpijSheetSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "PUBLICATION_DATE"
+        - "SIRET_COMPANY"
+        - "SIRET_DECLARANT"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDsnBpijSheetList"
+  /v1/archive/dsn/bpij/sheets/{archiveId}:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "Get archived DSN BPIJ sheet by ID"
+      description: "Get details of an archived DSN BPIJ sheet by its ID"
+      operationId: "getDetail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDsnBpijSheet"
+  /v1/archive/dsn/bpij/sheets/{archiveId}/contents:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "Download ZIP archive"
+      description: "Download ZIP containing all documents and events related to the\
+        \ archive"
+      operationId: "downloadArchive"
+      produces:
+      - "application/zip"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            application/zip: "ZIP content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/dsn/bpij/sheets/{archiveId}/documents:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "List archived DSN BPIJ sheet documents"
+      description: "List documents associated to an archived DSN BPIJ sheet"
+      operationId: "listDocuments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocumentList"
+  /v1/archive/dsn/bpij/sheets/{archiveId}/documents/{documentId}:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "Get archived DSN BPIJ sheet document details"
+      description: "Get archived document details associated to a DSN BPIJ sheet"
+      operationId: "getDocument"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocument"
+  /v1/archive/dsn/bpij/sheets/{archiveId}/documents/{documentId}/contents:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "Download archived DSN BPIJ sheet content"
+      description: "Download archived content associated to a DSN BPIJ sheet"
+      operationId: "download_2"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "Document content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/dsn/bpij/sheets/{archiveId}/events:
+    get:
+      tags:
+      - "DSN BPIJ SHEETS"
+      summary: "List archived DSN BPIJ sheet events"
+      description: "List events associated to an archived DSN BPIJ sheet"
+      operationId: "listEvents"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Event type"
+        required: false
+        type: "string"
+        enum:
+        - "BUSINESS"
+        - "SYSTEM"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveEventList"
+  /v1/archive/dsn/param/sheets/search:
+    post:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "Search archived DSN param sheets"
+      description: "Search of archived DSN param sheets by criteria"
+      operationId: "search_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestArchiveDsnParamSheetSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "PUBLICATION_DATE"
+        - "SIRET_COMPANY"
+        - "SIRET_DECLARANT"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDsnParamSheetList"
+  /v1/archive/dsn/param/sheets/{archiveId}:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "Get archived DSN param sheet by ID"
+      description: "Get details of a an archived DSN param sheet by its ID"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDsnParamSheet"
+  /v1/archive/dsn/param/sheets/{archiveId}/contents:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "Download ZIP archive"
+      description: "Download ZIP containing all documents and events related to the\
+        \ archive"
+      operationId: "downloadArchive_1"
+      produces:
+      - "application/zip"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            application/zip: "ZIP content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/dsn/param/sheets/{archiveId}/documents:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "List archived DSN param sheet documents"
+      description: "List documents associated to an archived DSN param sheet"
+      operationId: "listDocuments_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocumentList"
+  /v1/archive/dsn/param/sheets/{archiveId}/documents/{documentId}:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "Get archived DSN param sheet document details"
+      description: "Get archived document details associated to a DSN param sheet"
+      operationId: "getDocument_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveDocument"
+  /v1/archive/dsn/param/sheets/{archiveId}/documents/{documentId}/contents:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "Download archived DSN param sheet content"
+      description: "Download archived content associated to a DSN param sheet"
+      operationId: "download"
+      produces:
+      - "*/*"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "documentId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful download"
+          examples:
+            '*/*': "Document content"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              format: "byte"
+  /v1/archive/dsn/param/sheets/{archiveId}/events:
+    get:
+      tags:
+      - "DSN PARAM SHEETS"
+      summary: "List archived DSN param sheet events"
+      description: "List events associated to an archived DSN param sheet"
+      operationId: "listEvents_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "archiveId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Event type"
+        required: false
+        type: "string"
+        enum:
+        - "BUSINESS"
+        - "SYSTEM"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestArchiveEventList"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestArchiveAccountClient:
+    type: "object"
+    properties:
+      portal:
+        type: "string"
+      login:
+        type: "string"
+  RestArchiveBankAccount:
+    type: "object"
+    properties:
+      label:
+        type: "string"
+      iban:
+        type: "string"
+      bic:
+        type: "string"
+      test:
+        type: "boolean"
+      bank:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestArchiveCompany"
+      account:
+        $ref: "#/definitions/RestArchiveAccountClient"
+  RestArchiveCompany:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      label:
+        type: "string"
+  RestArchiveDeclarant:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      rof:
+        type: "string"
+      spi:
+        type: "array"
+        items:
+          type: "string"
+      nir:
+        type: "array"
+        items:
+          type: "string"
+      referenceSender:
+        type: "string"
+  RestArchiveDeclaration:
+    type: "object"
+    properties:
+      archiveId:
+        type: "string"
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "ERROR"
+        - "WARNING"
+        - "PENDING"
+      declarationId:
+        type: "string"
+      referenceClient:
+        type: "string"
+      referencePortal:
+        type: "string"
+      declarationType:
+        $ref: "#/definitions/RestDeclarationType"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      dueDate:
+        type: "string"
+        format: "date-time"
+      declarant:
+        $ref: "#/definitions/RestArchiveDeclarant"
+      recipient:
+        $ref: "#/definitions/RestArchiveRecipient"
+      interchange:
+        $ref: "#/definitions/RestArchiveInterchange"
+      grouping:
+        $ref: "#/definitions/RestArchiveGrouping"
+  RestArchiveDeclarationBasic:
+    type: "object"
+    properties:
+      archiveId:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "ERROR"
+        - "WARNING"
+        - "PENDING"
+      test:
+        type: "boolean"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      declarationType:
+        $ref: "#/definitions/RestDeclarationType"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      dueDate:
+        type: "string"
+        format: "date-time"
+      declarant:
+        $ref: "#/definitions/RestArchiveDeclarant"
+      recipient:
+        $ref: "#/definitions/RestArchiveRecipient"
+      deposit:
+        $ref: "#/definitions/RestArchiveDepositBasic"
+  RestArchiveDeclarationList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      archives:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveDeclarationBasic"
+  RestArchiveDeclarationSearchForm:
+    type: "object"
+    properties:
+      depositStartDate:
+        type: "string"
+        format: "date-time"
+      depositEndDate:
+        type: "string"
+        format: "date-time"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      rof:
+        type: "string"
+      spi:
+        type: "string"
+        pattern: "[0-9]{13}"
+      nir:
+        type: "string"
+        pattern: "([0-9]{13}|[0-9]{15})"
+      adsNumber:
+        type: "string"
+      referenceSender:
+        type: "string"
+      test:
+        type: "boolean"
+      teleprocedures:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "TDFC"
+          - "TVA"
+          - "PAIEMENT"
+          - "REQUETE"
+          - "PART"
+          - "IR"
+          - "DSI"
+          - "DRP"
+          - "OGA"
+          - "AED"
+          - "DADSU"
+          - "DPAE"
+          - "DSN"
+          - "DUCS"
+      declarationTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "IDT"
+          - "RBT"
+          - "RAU"
+          - "IAT"
+          - "IDF"
+          - "IDR"
+          - "ILF"
+          - "LIS"
+          - "IAA"
+          - "ICA"
+          - "ICG"
+          - "CAN"
+          - "LAC"
+          - "CRM"
+          - "BCG"
+          - "LOY"
+          - "IPT"
+          - "IPP"
+          - "IS"
+          - "TS"
+          - "RCM"
+          - "TAP"
+          - "TVI"
+          - "TIC"
+          - "TCA"
+          - "CVA"
+          - "LOC"
+          - "IR"
+          - "IFU"
+          - "HON"
+          - "DEC"
+          - "DPP"
+          - "DPV"
+          - "DQR"
+          - "FEC"
+          - "REP"
+          - "REV"
+          - "RQR"
+          - "DUCS_901"
+          - "DUCS_902"
+          - "DUCS_903"
+          - "DADSU_01"
+          - "DADSU_02"
+          - "DADSU_03"
+          - "DADSU_04"
+          - "DADSU_07"
+          - "DADSU_08"
+          - "DADSU_12"
+          - "AED_15"
+          - "DPAE"
+          - "DSN_01"
+          - "DSN_02"
+          - "DSN_04"
+          - "DSN_05"
+          - "DSN_06"
+          - "DSN_07"
+          - "DSN_08"
+          - "DSI"
+          - "DRP"
+      recipientTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "OGA"
+          - "GPA"
+          - "BANK"
+          - "COMPANY"
+          - "INDIVIDUAL"
+          - "THIRD_PARTY_DECLARANT"
+          - "TAX_ADMINISTRATION"
+          - "NET_ENTREPRISES"
+          - "FRANCE_TRAVAIL"
+          - "AGIRC_ARRCO"
+          - "UCF_CIBTP"
+          - "URSSAF"
+          - "CNAV"
+          - "MSA"
+          - "PED"
+  RestArchiveDeposit:
+    type: "object"
+    properties:
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      depositDate:
+        type: "string"
+        format: "date-time"
+      depositId:
+        type: "string"
+      adsNumber:
+        type: "string"
+      subject:
+        type: "string"
+      type:
+        type: "string"
+      method:
+        type: "string"
+      depositor:
+        $ref: "#/definitions/RestArchiveAccountClient"
+  RestArchiveDepositBasic:
+    type: "object"
+    properties:
+      depositDate:
+        type: "string"
+        format: "date-time"
+      adsNumber:
+        type: "string"
+      type:
+        type: "string"
+      method:
+        type: "string"
+      depositor:
+        $ref: "#/definitions/RestArchiveAccountClient"
+  RestArchiveDocument:
+    type: "object"
+    properties:
+      documentId:
+        type: "string"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      type:
+        type: "string"
+        enum:
+        - "DEPOSIT"
+        - "INTERCHANGE"
+        - "DECLARATION"
+        - "GROUPING"
+        - "REPORT"
+        - "BANK_STATEMENT"
+        - "DSN_BPIJ_SHEET"
+        - "DSN_PARAM_SHEET"
+      label:
+        type: "string"
+      filename:
+        type: "string"
+      format:
+        type: "string"
+      size:
+        type: "string"
+      checksum:
+        $ref: "#/definitions/RestChecksum"
+  RestArchiveDocumentList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      documents:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveDocument"
+  RestArchiveDsnBpijSheet:
+    type: "object"
+    properties:
+      archiveId:
+        type: "string"
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      publicationDate:
+        type: "string"
+        format: "date-time"
+      reference:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestDsnSheetCompany"
+      declarant:
+        $ref: "#/definitions/RestDsnSheetDeclarant"
+      cpam:
+        $ref: "#/definitions/RestDsnBpijSheetCpam"
+      employee:
+        $ref: "#/definitions/RestDsnBpijSheetEmployee"
+      account:
+        $ref: "#/definitions/RestArchiveAccountClient"
+  RestArchiveDsnBpijSheetList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      dsnBpijSheets:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveDsnBpijSheet"
+  RestArchiveDsnBpijSheetSearchForm:
+    type: "object"
+    properties:
+      publicationStartDate:
+        type: "string"
+        format: "date-time"
+      publicationEndDate:
+        type: "string"
+        format: "date-time"
+      sirenDeclarant:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicDeclarant:
+        type: "string"
+        pattern: "[0-9]{5}"
+      sirenCompany:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicCompany:
+        type: "string"
+        pattern: "[0-9]{5}"
+      nir:
+        type: "string"
+        pattern: "([0-9]{13}|[0-9]{15})"
+      name:
+        type: "string"
+      firstName:
+        type: "string"
+  RestArchiveDsnParamSheet:
+    type: "object"
+    properties:
+      archiveId:
+        type: "string"
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      publicationDate:
+        type: "string"
+        format: "date-time"
+      reference:
+        type: "string"
+      company:
+        $ref: "#/definitions/RestDsnSheetCompany"
+      declarant:
+        $ref: "#/definitions/RestDsnSheetDeclarant"
+      producer:
+        $ref: "#/definitions/RestDsnSheetProducer"
+      account:
+        $ref: "#/definitions/RestArchiveAccountClient"
+  RestArchiveDsnParamSheetList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      dsnParamSheets:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveDsnParamSheet"
+  RestArchiveDsnParamSheetSearchForm:
+    type: "object"
+    properties:
+      publicationStartDate:
+        type: "string"
+        format: "date-time"
+      publicationEndDate:
+        type: "string"
+        format: "date-time"
+      sirenDeclarant:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicDeclarant:
+        type: "string"
+        pattern: "[0-9]{5}"
+      sirenCompany:
+        type: "string"
+        pattern: "[0-9]{9}"
+      nicCompany:
+        type: "string"
+        pattern: "[0-9]{5}"
+  RestArchiveEvent:
+    type: "object"
+    properties:
+      eventId:
+        type: "string"
+      date:
+        type: "string"
+        format: "date-time"
+      type:
+        type: "string"
+        enum:
+        - "BUSINESS"
+        - "SYSTEM"
+      state:
+        type: "string"
+        enum:
+        - "SUCCESS"
+        - "ERROR"
+        - "WARNING"
+        - "INFORMATION"
+      issuer:
+        type: "string"
+      label:
+        type: "string"
+      message:
+        type: "string"
+      documentId:
+        type: "string"
+  RestArchiveEventList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      events:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveEvent"
+  RestArchiveGrouping:
+    type: "object"
+    properties:
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      groupingId:
+        type: "string"
+      referencePortal:
+        type: "string"
+      referenceRecipient:
+        type: "string"
+      sendingDate:
+        type: "string"
+        format: "date-time"
+  RestArchiveInterchange:
+    type: "object"
+    properties:
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "TDFC"
+        - "TVA"
+        - "PAIEMENT"
+        - "REQUETE"
+        - "PART"
+        - "IR"
+        - "DSI"
+        - "DRP"
+        - "OGA"
+        - "AED"
+        - "DADSU"
+        - "DPAE"
+        - "DSN"
+        - "DUCS"
+      interchangeId:
+        type: "string"
+      referenceClient:
+        type: "string"
+      test:
+        type: "boolean"
+      deposit:
+        $ref: "#/definitions/RestArchiveDeposit"
+  RestArchiveRecipient:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+        - "TAX_ADMINISTRATION"
+        - "NET_ENTREPRISES"
+        - "FRANCE_TRAVAIL"
+        - "AGIRC_ARRCO"
+        - "UCF_CIBTP"
+        - "URSSAF"
+        - "CNAV"
+        - "MSA"
+        - "PED"
+      name:
+        type: "string"
+      code:
+        type: "string"
+  RestArchiveStatement:
+    type: "object"
+    properties:
+      archiveId:
+        type: "string"
+      uuid:
+        type: "string"
+      archiveDate:
+        type: "string"
+        format: "date-time"
+      deletionDate:
+        type: "string"
+        format: "date-time"
+      receptionDate:
+        type: "string"
+        format: "date-time"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      nbTransactions:
+        type: "integer"
+        format: "int32"
+      nbAttempts:
+        type: "integer"
+        format: "int32"
+      bankAccount:
+        $ref: "#/definitions/RestArchiveBankAccount"
+  RestArchiveStatementList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      statements:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestArchiveStatement"
+  RestArchiveStatementSearchForm:
+    type: "object"
+    required:
+    - "receptionStartDate"
+    properties:
+      receptionStartDate:
+        type: "string"
+        format: "date-time"
+      receptionEndDate:
+        type: "string"
+        format: "date-time"
+      siretCompany:
+        type: "string"
+        pattern: "[0-9]{9}|[0-9]{14}"
+      nameCompany:
+        type: "string"
+      iban:
+        type: "string"
+  RestChecksum:
+    type: "object"
+    properties:
+      algo:
+        type: "string"
+      value:
+        type: "string"
+  RestDeclarationType:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        enum:
+        - "IDT"
+        - "RBT"
+        - "RAU"
+        - "IAT"
+        - "IDF"
+        - "IDR"
+        - "ILF"
+        - "LIS"
+        - "IAA"
+        - "ICA"
+        - "ICG"
+        - "CAN"
+        - "LAC"
+        - "CRM"
+        - "BCG"
+        - "LOY"
+        - "IPT"
+        - "IPP"
+        - "IS"
+        - "TS"
+        - "RCM"
+        - "TAP"
+        - "TVI"
+        - "TIC"
+        - "TCA"
+        - "CVA"
+        - "LOC"
+        - "IR"
+        - "IFU"
+        - "HON"
+        - "DEC"
+        - "DPP"
+        - "DPV"
+        - "DQR"
+        - "FEC"
+        - "REP"
+        - "REV"
+        - "RQR"
+        - "DUCS_901"
+        - "DUCS_902"
+        - "DUCS_903"
+        - "DADSU_01"
+        - "DADSU_02"
+        - "DADSU_03"
+        - "DADSU_04"
+        - "DADSU_07"
+        - "DADSU_08"
+        - "DADSU_12"
+        - "AED_15"
+        - "DPAE"
+        - "DSN_01"
+        - "DSN_02"
+        - "DSN_04"
+        - "DSN_05"
+        - "DSN_06"
+        - "DSN_07"
+        - "DSN_08"
+        - "DSI"
+        - "DRP"
+      label:
+        type: "string"
+  RestDsnBpijSheetCpam:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      label:
+        type: "string"
+      date:
+        type: "string"
+        format: "date-time"
+  RestDsnBpijSheetEmployee:
+    type: "object"
+    properties:
+      nir:
+        type: "string"
+      name:
+        type: "string"
+      firstname:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnSheetCompany:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      label:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnSheetDeclarant:
+    type: "object"
+    properties:
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      amount:
+        type: "number"
+  RestDsnSheetProducer:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      label:
+        type: "string"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"

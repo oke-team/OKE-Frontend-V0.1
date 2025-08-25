@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="CRM" Reference="INFENT000000003963-0-0">
+            <Redacteur>
+                <Siret>07955593400011</Siret>
+                <Designation>ATD_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>REF0001</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+				<ReferenceDossier>INFENT000001</ReferenceDossier>
+                <Rof>BIC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+                <Destinataire>
+                    <Designation>CEC_EDI_TDFC</Designation>
+                    <Identifiant>07955559500010</Identifiant>
+                    <DesignationSuite1>CONSEIL TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="BB">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>IR</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>CONSEIL TEST</Designation>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>079555421</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <DesignationSuite2>SA</DesignationSuite2>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                        <Telephone>0149098739</Telephone>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>BIC1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>5530Z</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>20231231</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BI</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="3030" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555934</Identifiant>
+                        <Designation>PRESTATAIRE TEST</Designation>
+                        <DesignationSuite1>COMPLEMENT PRESTATAIRE</DesignationSuite1>
+                        <DesignationSuite2>ASS</DesignationSuite2>
+                        <AdresseNumero>76</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT TEST</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="AB">
+                        <Identifiant>079555421</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <DesignationSuite1>COMPLEMENT CLIENT</DesignationSuite1>
+                        <DesignationSuite2>SRL</DesignationSuite2>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="AM">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>20250227</Valeur>
+                    </Zone>
+                    <Zone id="AV">
+                        <Designation>DUPOND Martine</Designation>
+                        <DesignationSuite1>Gérant</DesignationSuite1>
+                        <DesignationSuite2>MME</DesignationSuite2>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AW">
+                        <Valeur>20240308</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>123456</Valeur>
+                    </Zone>
+                    <Zone id="AD">
+                        <Valeur>S</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Valeur>20230301</Valeur>
+                    </Zone>
+                    <Zone id="AG">
+                        <Identifiant>079555595</Identifiant>
+                        <Designation>CONSEIL TEST</Designation>
+                        <DesignationSuite1>COMPLEMENT CONSEIL</DesignationSuite1>
+                        <DesignationSuite2>ASS</DesignationSuite2>
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>42</Valeur>
+                    </Zone>
+                    <Zone id="ER">
+                        <Valeur>AUT</Valeur>
+                    </Zone>
+                    <Zone id="AJ">
+                        <TexteLibre1>AUTRE CONSEIL</TexteLibre1>
+                    </Zone>
+                    <Zone id="AK">
+                        <Valeur>20240305</Valeur>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>123456</Valeur>
+                    </Zone>
+                    <Zone id="AR">
+                        <Valeur>987566</Valeur>
+                    </Zone>
+                    <Zone id="AS">
+                        <Valeur>HT</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="AX">
+                        <Designation>PERRIN Jean</Designation>
+                        <DesignationSuite1>Examinateur</DesignationSuite1>
+                        <DesignationSuite2>M</DesignationSuite2>
+                        <Telephone>01.02.03.04.05</Telephone>
+                        <Email>examinateur@test.fr</Email>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>1234</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>123</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>456</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="BH">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="BK">
+                        <Valeur>NON</Valeur>
+                    </Zone>
+                    <Zone id="BL">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie conformité FEC 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie conformité FEC 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie conformité FEC 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BN">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="BP">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="BQ">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie qualité FEC 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie qualité FEC 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie qualité FEC 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BS">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="BT">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="BW">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="BX">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Logiciel 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Logiciel 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Logiciel 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BZ">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>NON</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Conservation documents 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Conservation documents 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Conservation documents 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>BIC</Valeur>
+                    </Zone>
+                    <Zone id="CF">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="CG">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Nature imposition 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Nature imposition 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Nature imposition 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CH">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="EQ">
+                        <Valeur>FIL</Valeur>
+                    </Zone>
+                    <Zone id="CJ">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="CK">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Régime imposition 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Régime imposition 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Régime imposition 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="CM">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="CN">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Régime TVA 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Régime TVA 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Régime TVA 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CQ">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="CR">
+                        <Valeur>56874</Valeur>
+                    </Zone>
+                    <Zone id="CS">
+                        <Valeur>50000</Valeur>
+                    </Zone>
+                    <Zone id="CT">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="CU">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description de la méthode retenue pour les amortissements</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description des critères retenus pour les amortissements</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CV">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Amortissements 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Amortissements 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Amortissements 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CY">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="CZ">
+                        <Valeur>14788</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <Valeur>10000</Valeur>
+                    </Zone>
+                    <Zone id="DB">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="DC">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description de la méthode retenue pour les provisions</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description des critères retenus pour les provisions</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DD">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Provisions 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Provisions 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Provisions 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DG">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="DH">
+                        <Valeur>23655</Valeur>
+                    </Zone>
+                    <Zone id="DJ">
+                        <Valeur>22000</Valeur>
+                    </Zone>
+                    <Zone id="DK">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="DL">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description de la méthode retenue pour les charges à payer</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description des critères retenus pour les charges à payer</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DM">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Charges 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Charges 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Charges 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CW">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="DE">
+                        <Valeur>1200</Valeur>
+                    </Zone>
+                    <Zone id="DN">
+                        <Valeur>1800</Valeur>
+                    </Zone>
+                    <Zone id="DQ">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="DR">
+                        <Valeur>5655</Valeur>
+                    </Zone>
+                    <Zone id="DS">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="DT">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="DU">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description de la méthode retenue pour les charges exceptionnelles</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description des critères retenus pour les charges exceptionnelles</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DV">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Charges Exceptionnelles 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Charges Exceptionnelles 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Charges Exceptionnelles 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DW">
+                        <Valeur>658</Valeur>
+                    </Zone>
+                    <Zone id="DY">
+                        <Valeur>NC</Valeur>
+                    </Zone>
+                    <Zone id="DZ">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description de la méthode retenue pour les règles d'exigibilité TVA</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description des critères retenus pour les règles d'exigibilité TVA</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="EC">
+                        <Valeur>545</Valeur>
+                    </Zone>
+                    <Zone id="ED">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="EF">
+                        <Valeur>656</Valeur>
+                    </Zone>
+                    <Zone id="ET">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Description Anomalie Exigibilité TVA 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Description Anomalie Exigibilité TVA 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Description Anomalie Exigibilité TVA 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="EH">
+                        <Valeur>5555</Valeur>
+                    </Zone>
+                    <Zone id="EJ">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="EK">
+                        <Valeur>66666</Valeur>
+                    </Zone>
+                    <Zone id="ES">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Précision document 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Précision document 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Précision document 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EL">
+                        <Occurrence Numero="1">
+                            <Valeur>DOC1</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>DOC2</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>DOC3</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EM">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Nature document 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Nature document 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Nature document 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EN">
+                        <Occurrence Numero="1">
+                            <Valeur>20240712</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20240925</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>20241105</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EP">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Renseignement complémentaire 1</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Renseignement complémentaire 2</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Renseignement complémentaire 3</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

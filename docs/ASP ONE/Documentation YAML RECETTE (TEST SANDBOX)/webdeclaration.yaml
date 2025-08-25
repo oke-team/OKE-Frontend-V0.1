@@ -1,0 +1,523 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.2.0"
+  title: "WEBDECLARATION"
+host: "recette-aspone.tessitechno.fr"
+basePath: "/api/rest"
+tags:
+- name: "DECLARATIONS"
+schemes:
+- "https"
+paths:
+  /v1/web/declarations:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Inject data in webdeclaration forms"
+      description: "File deposit to inject data in webdeclaration forms : XML or ZIP\
+        \ archive containing necessarily one XML file and possibly one other file\
+        \ (like CSV accounting balance for example)"
+      operationId: "deposit_1"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "teleprocedure"
+        in: "formData"
+        required: true
+        type: "string"
+        enum:
+        - "WEB_TVA"
+        - "WEB_TDFC"
+        - "WEB_PAIEMENT"
+        - "WEB_REQUETE"
+        - "WEB_PART"
+      - name: "filename"
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "content"
+        in: "formData"
+        required: true
+        type: "file"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful deposit"
+          schema:
+            $ref: "#/definitions/RestWebDeclaration"
+  /v1/web/declarations/search:
+    post:
+      tags:
+      - "DECLARATIONS"
+      summary: "Search webdeclarations"
+      description: "Search of webdeclarations by criteria"
+      operationId: "search_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestWebDeclarationSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "UPDATE_DATE"
+        - "SUBMITTED_DATE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestWebDeclarationList"
+  /v1/web/declarations/{webdeclarationId}:
+    get:
+      tags:
+      - "DECLARATIONS"
+      summary: "Get webdeclaration by ID"
+      description: "Get details of a webdeclaration by its ID"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "webdeclarationId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestWebDeclaration"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAccountClientBasic:
+    type: "object"
+    required:
+    - "role"
+    - "type"
+    properties:
+      clientAccountId:
+        type: "string"
+      portal:
+        type: "string"
+      login:
+        type: "string"
+      label:
+        type: "string"
+        minLength: 0
+        maxLength: 35
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+      role:
+        type: "string"
+        enum:
+        - "PRIMARY_ACCOUNT"
+        - "SECONDARY_ACCOUNT"
+      test:
+        type: "boolean"
+  RestCompanyBasic:
+    type: "object"
+    properties:
+      companyId:
+        type: "string"
+      siren:
+        type: "string"
+      nic:
+        type: "string"
+      label:
+        type: "string"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"
+  RestRecipient:
+    type: "object"
+    properties:
+      recipientId:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "OGA"
+        - "GPA"
+        - "BANK"
+        - "COMPANY"
+        - "INDIVIDUAL"
+        - "THIRD_PARTY_DECLARANT"
+        - "TAX_ADMINISTRATION"
+        - "NET_ENTREPRISES"
+        - "FRANCE_TRAVAIL"
+        - "AGIRC_ARRCO"
+        - "UCF_CIBTP"
+        - "URSSAF"
+        - "CNAV"
+        - "MSA"
+        - "PED"
+      name:
+        type: "string"
+      referenceInterchange:
+        type: "string"
+      siret:
+        type: "string"
+      code:
+        type: "string"
+      login:
+        type: "string"
+      portal:
+        type: "string"
+  RestWebDeclaration:
+    type: "object"
+    properties:
+      webdeclarationId:
+        type: "string"
+      teleprocedure:
+        type: "string"
+        enum:
+        - "WEB_TDFC"
+        - "WEB_TVA"
+        - "WEB_PAIEMENT"
+        - "WEB_REQUETE"
+        - "WEB_PART"
+      declarationType:
+        type: "string"
+        enum:
+        - "IDT"
+        - "RBT"
+        - "RAU"
+        - "IAT"
+        - "IDF"
+        - "IDR"
+        - "ILF"
+        - "LIS"
+        - "IAA"
+        - "ICA"
+        - "ICG"
+        - "CAN"
+        - "LAC"
+        - "CRM"
+        - "BCG"
+        - "LOY"
+        - "IPT"
+        - "IPP"
+        - "IS"
+        - "TS"
+        - "RCM"
+        - "TAP"
+        - "TVI"
+        - "TIC"
+        - "TCA"
+        - "CVA"
+        - "LOC"
+        - "IR"
+        - "IFU"
+        - "HON"
+        - "DEC"
+        - "DPP"
+        - "DPV"
+        - "DQR"
+        - "FEC"
+        - "REP"
+        - "REV"
+        - "RQR"
+        - "DUCS_901"
+        - "DUCS_902"
+        - "DUCS_903"
+        - "DADSU_01"
+        - "DADSU_02"
+        - "DADSU_03"
+        - "DADSU_04"
+        - "DADSU_07"
+        - "DADSU_08"
+        - "DADSU_12"
+        - "AED_15"
+        - "DPAE"
+        - "DSN_01"
+        - "DSN_02"
+        - "DSN_04"
+        - "DSN_05"
+        - "DSN_06"
+        - "DSN_07"
+        - "DSN_08"
+        - "DSI"
+        - "DRP"
+      periodStartDate:
+        type: "string"
+        format: "date-time"
+      periodEndDate:
+        type: "string"
+        format: "date-time"
+      dueDate:
+        type: "string"
+        format: "date-time"
+      test:
+        type: "boolean"
+      version:
+        type: "string"
+      mainForm:
+        type: "string"
+      amountDue:
+        type: "number"
+      amountPaid:
+        type: "number"
+      state:
+        type: "string"
+        enum:
+        - "PENDING"
+        - "SUBMITTED"
+        - "CANCELLED"
+      creationMode:
+        type: "string"
+        enum:
+        - "NEW"
+        - "REPLAY"
+        - "CONVERSION"
+        - "IMPORT"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      updateDate:
+        type: "string"
+        format: "date-time"
+      submittedDate:
+        type: "string"
+        format: "date-time"
+      company:
+        $ref: "#/definitions/RestCompanyBasic"
+      issuer:
+        $ref: "#/definitions/RestAccountClientBasic"
+      recipients:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestRecipient"
+      depositId:
+        type: "string"
+  RestWebDeclarationList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      webdeclarations:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestWebDeclaration"
+  RestWebDeclarationSearchForm:
+    type: "object"
+    properties:
+      updateStartDate:
+        type: "string"
+        format: "date-time"
+      updateEndDate:
+        type: "string"
+        format: "date-time"
+      submittedStartDate:
+        type: "string"
+        format: "date-time"
+      submittedEndDate:
+        type: "string"
+        format: "date-time"
+      companySiren:
+        type: "string"
+        pattern: "[0-9]{9}"
+      companyNic:
+        type: "string"
+        pattern: "[0-9]{5}"
+      companyLabel:
+        type: "string"
+      declarationTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "IDT"
+          - "RBT"
+          - "RAU"
+          - "IAT"
+          - "IDF"
+          - "IDR"
+          - "ILF"
+          - "LIS"
+          - "IAA"
+          - "ICA"
+          - "ICG"
+          - "CAN"
+          - "LAC"
+          - "CRM"
+          - "BCG"
+          - "LOY"
+          - "IPT"
+          - "IPP"
+          - "IS"
+          - "TS"
+          - "RCM"
+          - "TAP"
+          - "TVI"
+          - "TIC"
+          - "TCA"
+          - "CVA"
+          - "LOC"
+          - "IR"
+          - "IFU"
+          - "HON"
+          - "DEC"
+          - "DPP"
+          - "DPV"
+          - "DQR"
+          - "FEC"
+          - "REP"
+          - "REV"
+          - "RQR"
+          - "DUCS_901"
+          - "DUCS_902"
+          - "DUCS_903"
+          - "DADSU_01"
+          - "DADSU_02"
+          - "DADSU_03"
+          - "DADSU_04"
+          - "DADSU_07"
+          - "DADSU_08"
+          - "DADSU_12"
+          - "AED_15"
+          - "DPAE"
+          - "DSN_01"
+          - "DSN_02"
+          - "DSN_04"
+          - "DSN_05"
+          - "DSN_06"
+          - "DSN_07"
+          - "DSN_08"
+          - "DSI"
+          - "DRP"
+      states:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "PENDING"
+          - "SUBMITTED"
+          - "CANCELLED"
+      creationModes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "NEW"
+          - "REPLAY"
+          - "CONVERSION"
+          - "IMPORT"
+      importTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "XML_EDI"
+          - "CSV_BALANCE"
+          - "CSV_LOC"
+          - "CSV_DAS2"
+          - "TD_BILATERAL"
+      recipientTypes:
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "OGA"
+          - "GPA"
+          - "BANK"
+          - "COMPANY"
+          - "INDIVIDUAL"
+          - "THIRD_PARTY_DECLARANT"
+          - "TAX_ADMINISTRATION"
+          - "NET_ENTREPRISES"
+          - "FRANCE_TRAVAIL"
+          - "AGIRC_ARRCO"
+          - "UCF_CIBTP"
+          - "URSSAF"
+          - "CNAV"
+          - "MSA"
+          - "PED"
+      subaccounts:
+        type: "boolean"
+      test:
+        type: "boolean"

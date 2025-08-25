@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000000818-0-0" Type="ICG">
+            <Redacteur>
+				<Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079556270BIC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079556270</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>BIC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+					<Zone id="AB">
+                        <Valeur>EI</Valeur>
+                    </Zone>					
+					<Zone id="BA">
+                        <Valeur>20231001</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>20240930</Valeur>
+                    </Zone>       
+					<Zone id="CC">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+					<Zone id="DL">
+                        <Valeur>2</Valeur>
+                    </Zone>	
+					<Zone id="DA">
+                        <Valeur>3</Valeur>
+                    </Zone>					
+                </Identif>				
+                <Formulaire Repetition="0" Nom="OGBIC00" Millesime="25">				
+					<Zone id="AA">
+						<Identifiant>30606319900088</Identifiant>
+						<Designation>CGA TEST</Designation>
+						<DesignationSuite2>CAB</DesignationSuite2>
+						<AdresseNumero>123</AdresseNumero>
+						<AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+						<AdresseCodePostal>42480</AdresseCodePostal>
+						<AdresseVille>LA FOUILLOUSE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+					<Zone id="AB">
+						<TexteLibre1>Coiffeuse</TexteLibre1>
+                    </Zone>
+					<Zone id="AC">
+						<Identifiant>111111</Identifiant>
+						<Designation>CGA TEST</Designation>
+						<AdresseNumero>123</AdresseNumero>
+						<AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+						<AdresseCodePostal>42480</AdresseCodePostal>
+						<AdresseVille>LA FOUILLOUSE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+					<Zone id="AD">
+						<Designation>DUPOND Martin</Designation>
+						<DesignationSuite1>EXPERT COMPTABLE ART 83 TER</DesignationSuite1>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+					<Zone id="BA">
+						<Valeur>20241209</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>1</Valeur>
+                    </Zone>					
+                </Formulaire>
+                <Formulaire Repetition="0" Nom="OGBIC01" Millesime="25">
+					<Zone id="AT">
+						<Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="AW">
+						<Valeur>4</Valeur>
+                    </Zone>
+					<Zone id="BA">
+						<Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="CA">
+						<Designation>DUPONT</Designation>
+						<DesignationSuite1>Marie</DesignationSuite1>
+                    </Zone>
+					<Zone id="CC">
+						<Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="BC">
+						<Occurrence Numero="1">
+							<TexteLibre1>CONGES MATERNITE DU 28/12/2023 AU 09/02/2024</TexteLibre1>
+						</Occurrence>
+                    </Zone>					
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBIC02" Millesime="25">
+                    <Zone id="EE">
+                        <Valeur>87,00</Valeur>
+                    </Zone>
+					<Zone id="EP">
+                        <Valeur>587,00</Valeur>
+                    </Zone>
+					<Zone id="EV">
+						<Occurrence Numero="1">
+							<Valeur>29,00</Valeur>
+						</Occurrence>
+                    </Zone>					
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBIC03" Millesime="25">
+					<Zone id="AU">
+                        <Valeur>673,00</Valeur>
+                    </Zone>					
+                    <Zone id="BK">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="BL">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="EX">
+                        <Valeur>20,0000</Valeur>
+                    </Zone>
+					<Zone id="FR">
+                        <Valeur>25728,00</Valeur>
+                    </Zone>
+					<Zone id="FS">
+                        <Valeur>25728,00</Valeur>
+                    </Zone>
+					<Zone id="VC">
+                        <Valeur>25727,88</Valeur>
+                    </Zone>
+					<Zone id="VE">
+                        <Valeur>25727,88</Valeur>
+                    </Zone>
+					<Zone id="YC">
+                        <Valeur>-0,12</Valeur>
+                    </Zone>
+					<Zone id="YE">
+                        <Valeur>-0,12</Valeur>
+                    </Zone>
+					<Zone id="ZC">
+                        <Valeur>-0,02</Valeur>
+                    </Zone>
+					<Zone id="ZE">
+                        <Valeur>-0,02</Valeur>
+                    </Zone>
+					<Zone id="AC">
+						<Occurrence Numero="1">
+							<Valeur>25727,88</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AE">
+						<Occurrence Numero="1">
+							<Valeur>25727,88</Valeur>
+						</Occurrence>
+                    </Zone>
+                </Formulaire>
+				<Formulaire Repetition="0" Nom="OGBIC05" Millesime="25">
+					<Zone id="AA">
+                        <Valeur>2</Valeur>
+                    </Zone>
+				</Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

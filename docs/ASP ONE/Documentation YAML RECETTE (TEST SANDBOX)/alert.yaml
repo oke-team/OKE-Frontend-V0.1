@@ -1,0 +1,176 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.2.0"
+  title: "ALERT"
+host: "recette-aspone.tessitechno.fr"
+basePath: "/api/rest"
+tags:
+- name: "PROFILES"
+schemes:
+- "https"
+paths:
+  /v1/alert/profiles/search:
+    post:
+      tags:
+      - "PROFILES"
+      summary: "Search alert profiles (Admin only)"
+      description: "Search of alert / notification profiles by criteria (only available\
+        \ for admin)"
+      operationId: "search_1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RestAlertProfileSearchForm"
+      - name: "limit"
+        in: "query"
+        description: "Number of results to return"
+        required: false
+        type: "integer"
+        default: 50
+        maximum: 100
+        minimum: 1
+        format: "int32"
+      - name: "start"
+        in: "query"
+        description: "Offset = index of first element (starting with 0)"
+        required: false
+        type: "integer"
+        default: 0
+        minimum: 0
+        format: "int32"
+      - name: "sortDirection"
+        in: "query"
+        description: "Sort direction"
+        required: false
+        type: "string"
+        enum:
+        - "ASC"
+        - "DESC"
+      - name: "sortField"
+        in: "query"
+        description: "Sort field"
+        required: false
+        type: "string"
+        enum:
+        - "CODE"
+        - "LABEL"
+        - "CREATION_DATE"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAlertProfileList"
+  /v1/alert/profiles/{alertProfileId}:
+    get:
+      tags:
+      - "PROFILES"
+      summary: "Get alert profile by ID (Admin only)"
+      description: "Get details of an alert / notification profile by its ID (only\
+        \ available for admin)"
+      operationId: "getDetail_1"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "login"
+        in: "header"
+        description: "Account login for which you want to access the resource"
+        required: false
+        type: "string"
+      - name: "alertProfileId"
+        in: "path"
+        required: true
+        type: "string"
+      security:
+      - Bearer Authorization: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RestAlertProfile"
+securityDefinitions:
+  Bearer Authorization:
+    description: "Enter the token with the 'Bearer ' prefix\nExample : Bearer T04a35ae65784371c7f4cf137a6e3cd43540456365f61228eb30dce16aeb2aefe"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestAlertProfile:
+    type: "object"
+    properties:
+      alertProfileId:
+        type: "string"
+      alertTemplateId:
+        type: "string"
+      portal:
+        type: "string"
+      code:
+        type: "string"
+      label:
+        type: "string"
+      enabled:
+        type: "boolean"
+      nbUsers:
+        type: "integer"
+        format: "int32"
+      creationDate:
+        type: "string"
+        format: "date-time"
+      default:
+        type: "boolean"
+  RestAlertProfileList:
+    type: "object"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+      count:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+      start:
+        type: "integer"
+        format: "int32"
+      links:
+        $ref: "#/definitions/RestLinks"
+      profiles:
+        type: "array"
+        items:
+          $ref: "#/definitions/RestAlertProfile"
+  RestAlertProfileSearchForm:
+    type: "object"
+    properties:
+      portal:
+        type: "string"
+      code:
+        type: "string"
+      label:
+        type: "string"
+      enabled:
+        type: "boolean"
+      default:
+        type: "boolean"
+  RestLinks:
+    type: "object"
+    properties:
+      next:
+        type: "string"
+      prev:
+        type: "string"
+      self:
+        type: "string"

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<XmlEdi Test="1">
+	<GroupeFonctionnel Type="INFENT">
+		<Declaration Type="IR" Reference="INFENT000000000001">
+			<Emetteur>
+				<Siret>07955544700030</Siret>
+				<Designation>EMETTEUR TEST</Designation>
+				<Adresse>
+					<AdresseNumero>123</AdresseNumero>
+					<AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+					<AdresseComplement>Complément</AdresseComplement>
+					<AdresseCodePostal>42000</AdresseCodePostal>
+					<AdresseVille>SAINT-ETIENNE</AdresseVille>
+				</Adresse>
+			</Emetteur>
+			<Redacteur>
+				<Designation>DEC_EDI_IR</Designation>
+				<DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+				<Adresse>
+					<AdresseNumero>123</AdresseNumero>
+					<AdresseVoie>RUE DE TEST</AdresseVoie>
+					<AdresseComplement>Complément</AdresseComplement>
+					<AdresseCodePostal>95200</AdresseCodePostal>
+					<AdresseVille>BOULOGNE-BILLANCOURT</AdresseVille>
+				</Adresse>
+				<ReferenceDossier>REFDOSSIER0123</ReferenceDossier>
+			</Redacteur>
+			<Redevable>
+				<Identifiant>2299000751509</Identifiant>
+				<Designation>FICTIF CINQUANTE CINQ</Designation>
+				<IdentifiantRedevable2>2299000761008</IdentifiantRedevable2>
+			</Redevable>
+			<ListeDestinataires>
+				<Destinataire>
+					<Designation>DGI_EDI_IR</Designation>
+				</Destinataire>
+			</ListeDestinataires>
+			<ListeFormulaires>
+				<Identif0 Millesime="24" Repetition="0">
+					<Zone id="AA">
+						<Valeur>2024</Valeur>
+					</Zone>
+					<Zone id="BA">
+						<Identifiant>2299000751509</Identifiant>
+						<Email>declarant1@test.fr</Email>
+					</Zone>
+					<Zone id="BC">
+						<Valeur>19740801</Valeur>
+					</Zone>
+					<Zone id="CA">
+						<Identifiant>2299000761008</Identifiant>
+						<Email>declarant2@test.fr</Email>
+					</Zone>
+					<Zone id="CC">
+						<Valeur>19800401</Valeur>
+					</Zone>
+				</Identif0>
+				<Identif1 Millesime="24" Repetition="1">
+					<Zone id="AA">
+						<Valeur>D1</Valeur>
+					</Zone>
+				</Identif1>
+				<Identif1 Millesime="24" Repetition="2">
+					<Zone id="AA">
+						<Valeur>D2</Valeur>
+					</Zone>
+				</Identif1>
+				<Identif2 Millesime="24" Repetition="0">
+					<Zone id="DA">
+						<Valeur>N</Valeur>
+					</Zone>
+				</Identif2>
+				<Formulaire Nom="2042-0" Millesime="24" Repetition="0">
+					<Zone id="AA">
+						<Iban>FR1420041010050500013M02606</Iban>
+						<Bic>PSSTFRPPLIL</Bic>
+					</Zone>
+					<Zone id="AE">
+						<Valeur>X</Valeur>
+					</Zone>
+					<Zone id="AF">
+						<Valeur>8</Valeur>
+					</Zone>
+					<Zone id="AG">
+						<TexteLibre1>SDS</TexteLibre1>
+					</Zone>
+					<Zone id="AH">
+						<Valeur>X</Valeur>
+					</Zone>
+				</Formulaire>
+				<Formulaire Nom="2042-1" Millesime="24" Repetition="0">
+					<Zone id="AA">
+						<Valeur>10004</Valeur>
+					</Zone>
+					<Zone id="AB">
+						<Valeur>10005</Valeur>
+					</Zone>
+					<Zone id="GG">
+						<Valeur>10010</Valeur>
+					</Zone>
+					<Zone id="GH">
+						<Valeur>10011</Valeur>
+					</Zone>
+					<Zone id="GI">
+						<Valeur>10012</Valeur>
+					</Zone>
+					<Zone id="GJ">
+						<Valeur>10013</Valeur>
+					</Zone>
+					<Zone id="MA">
+						<Valeur>10015</Valeur>
+					</Zone>
+					<Zone id="MB">
+						<Valeur>10017</Valeur>
+					</Zone>
+					<Zone id="MC">
+						<Valeur>10016</Valeur>
+					</Zone>
+					<Zone id="MD">
+						<Valeur>10019</Valeur>
+					</Zone>
+					<Zone id="MG">
+						<Valeur>10016</Valeur>
+					</Zone>
+					<Zone id="NA">
+						<Valeur>9000</Valeur>
+					</Zone>
+					<Zone id="NB">
+						<Valeur>8999</Valeur>
+					</Zone>
+					<Zone id="NG">
+						<Valeur>10002</Valeur>
+					</Zone>
+					<Zone id="NH">
+						<Valeur>10003</Valeur>
+					</Zone>
+					<Zone id="PA">
+						<Valeur>9006</Valeur>
+					</Zone>
+					<Zone id="PB">
+						<Valeur>9007</Valeur>
+					</Zone>
+					<Zone id="PG">
+						<Valeur>10008</Valeur>
+					</Zone>
+					<Zone id="PH">
+						<Valeur>10009</Valeur>
+					</Zone>
+				</Formulaire>
+				<Formulaire Nom="2042-7" Millesime="24" Repetition="0">
+					<Zone id="JG">
+						<Valeur>56041</Valeur>
+					</Zone>
+					<Zone id="KR">
+						<Valeur>1000</Valeur>
+					</Zone>
+					<Zone id="KS">
+						<Valeur>1000</Valeur>
+					</Zone>
+					<Zone id="NC">
+						<Valeur>300</Valeur>
+					</Zone>
+					<Zone id="ND">
+						<Valeur>301</Valeur>
+					</Zone>
+				</Formulaire>
+				<Formulaire Nom="2047-1" Millesime="24" Repetition="1">
+					<Zone id="AA">
+						<Valeur>D1</Valeur>
+					</Zone>
+					<Zone id="AC">
+						<Occurrence Numero="1">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>B</Valeur>
+						</Occurrence>
+						<Occurrence Numero="9">
+							<Valeur>B</Valeur>
+						</Occurrence>
+						<Occurrence Numero="11">
+							<Valeur>C</Valeur>
+						</Occurrence>
+						<Occurrence Numero="13">
+							<Valeur>B</Valeur>
+						</Occurrence>
+						<Occurrence Numero="15">
+							<Valeur>F</Valeur>
+						</Occurrence>
+						<Occurrence Numero="16">
+							<Valeur>F</Valeur>
+						</Occurrence>
+						<Occurrence Numero="17">
+							<Valeur>F</Valeur>
+						</Occurrence>
+						<Occurrence Numero="18">
+							<Valeur>F</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AE">
+						<Occurrence Numero="1">
+							<Valeur>9000.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>10002.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>10004.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>9006.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="9">
+							<Valeur>10008.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="11">
+							<Valeur>10010.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="13">
+							<Valeur>10012.0</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AP">
+						<Occurrence Numero="1">
+							<Valeur>J</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>J</Valeur>
+						</Occurrence>
+						<Occurrence Numero="16">
+							<Valeur>J</Valeur>
+						</Occurrence>
+						<Occurrence Numero="18">
+							<Valeur>K</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AS">
+						<Occurrence Numero="1">
+							<AdresseCodeDivisionTerritoriale>99352</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<AdresseCodeDivisionTerritoriale>99201</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<AdresseCodeDivisionTerritoriale>99415</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<AdresseCodeDivisionTerritoriale>99441</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="9">
+							<AdresseCodeDivisionTerritoriale>99303</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="11">
+							<AdresseCodeDivisionTerritoriale>99110</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="13">
+							<AdresseCodeDivisionTerritoriale>99249</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="15">
+							<AdresseCodeDivisionTerritoriale>99253</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="16">
+							<AdresseCodeDivisionTerritoriale>99110</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="17">
+							<AdresseCodeDivisionTerritoriale>99434</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="18">
+							<AdresseCodeDivisionTerritoriale>99101</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+					</Zone>
+					<Zone id="AV">
+						<Occurrence Numero="1">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="3">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="5">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="9">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="13">
+							<Valeur>2</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="BC">
+						<Occurrence Numero="1">
+							<Valeur>9000.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="7">
+							<Valeur>9006.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="16">
+							<Valeur>10016.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="18">
+							<Valeur>9019.0</Valeur>
+						</Occurrence>
+					</Zone>
+				</Formulaire>
+				<Formulaire Nom="2047-1" Millesime="24" Repetition="2">
+					<Zone id="AA">
+						<Valeur>D2</Valeur>
+					</Zone>
+					<Zone id="AC">
+						<Occurrence Numero="2">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>A</Valeur>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<Valeur>B</Valeur>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<Valeur>B</Valeur>
+						</Occurrence>
+						<Occurrence Numero="12">
+							<Valeur>C</Valeur>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<Valeur>B</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AE">
+						<Occurrence Numero="2">
+							<Valeur>8999.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>10003.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>10005.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<Valeur>9007.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<Valeur>10009.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="12">
+							<Valeur>10011.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<Valeur>10013.0</Valeur>
+						</Occurrence>
+					</Zone>					
+					<Zone id="AP">
+						<Occurrence Numero="2">
+							<Valeur>J</Valeur>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<Valeur>J</Valeur>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<Valeur>K</Valeur>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<Valeur>J</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AS">
+						<Occurrence Numero="2">
+							<AdresseCodeDivisionTerritoriale>99130</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<AdresseCodeDivisionTerritoriale>99436</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<AdresseCodeDivisionTerritoriale>99249</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<AdresseCodeDivisionTerritoriale>99130</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<AdresseCodeDivisionTerritoriale>99246</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="12">
+							<AdresseCodeDivisionTerritoriale>99246</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<AdresseCodeDivisionTerritoriale>99327</AdresseCodeDivisionTerritoriale>
+						</Occurrence>
+					</Zone>
+					<Zone id="AV">
+						<Occurrence Numero="2">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="4">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="6">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<Valeur>2</Valeur>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<Valeur>2</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="BC">
+						<Occurrence Numero="2">
+							<Valeur>8999.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="8">
+							<Valeur>9007.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="10">
+							<Valeur>9009.0</Valeur>
+						</Occurrence>
+						<Occurrence Numero="14">
+							<Valeur>10013.0</Valeur>
+						</Occurrence>
+					</Zone>
+				</Formulaire>
+				<Formulaire Nom="2047-RECA" Millesime="24" Repetition="0">					
+					<Zone id="BO">
+						<Valeur>56041</Valeur>
+					</Zone>
+					<Zone id="BQ">
+						<Valeur>2000</Valeur>
+					</Zone>
+					<Zone id="CG">
+						<Valeur>10019</Valeur>
+					</Zone>
+					<Zone id="CH">
+						<Valeur>10009</Valeur>
+					</Zone>
+					<Zone id="CJ">
+						<Valeur>1000</Valeur>
+					</Zone>
+					<Zone id="CK">
+						<Valeur>1000</Valeur>
+					</Zone>
+				</Formulaire>
+			</ListeFormulaires>
+		</Declaration>
+	</GroupeFonctionnel>
+</XmlEdi>

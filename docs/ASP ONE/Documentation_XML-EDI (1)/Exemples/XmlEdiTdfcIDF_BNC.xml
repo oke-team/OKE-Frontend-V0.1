@@ -1,0 +1,1238 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="IDF" Reference="INFENT000000005843-0-0">
+            <Redacteur>
+                <Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555595BNC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555595</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>BNC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="BB">
+                        <Valeur>DC</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>REDACTEUR TEST</Designation>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>079555595</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+						<AdresseVoie>RUE DE TEST</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>BNC1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BC</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2035" Repetition="0" Millesime="25">
+                    <Zone id="EA">
+                        <TexteLibre1>MEDECIN LIBERAL</TexteLibre1>
+                    </Zone>
+                    <Zone id="ME">
+                        <Valeur>19780329</Valeur>
+                    </Zone>
+                    <Zone id="FG">
+                        <Valeur>1946539</Valeur>
+                    </Zone>
+                    <Zone id="FH">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="AD">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <TexteLibre1>GENAPI</TexteLibre1>
+                    </Zone>
+                    <Zone id="AQ">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Designation>PRESTATAIRE TEST</Designation>
+                        <DesignationSuite1>COMPLEMENT PRESTATAIRE TEST</DesignationSuite1>
+                        <DesignationSuite2>ASI</DesignationSuite2>
+                        <AdresseNumero>9999</AdresseNumero>
+                        <AdresseType>B</AdresseType>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT ADRESSE PRESTA</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="GA">
+                        <Designation>COMPTABLE TEST</Designation>
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseVoie>RUE DE BERLIN</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="KA">
+                        <Identifiant>111111</Identifiant>
+                        <Designation>CONSEIL SUPERIEUR</Designation>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="PD">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035SUITE" Repetition="0" Millesime="25">
+                    <Zone id="AN">
+                        <Valeur>34</Valeur>
+                    </Zone>
+                    <Zone id="AS">
+                        <Valeur>1342290,99</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Real not licence secu</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Indemnité suppression étude Dapont</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Loiseau plbier inst evier s/étampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Lavollée Daniel porte Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>Dalencon peinture volets s/Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>Regnault Alain cablage inf Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>Regnault Alain cablage inf Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>Cord leroy 3 palques laiton Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>Bouton ref plafonniers Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>Brard ent aménagemt compta Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>Regnault compl cablage Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>Malon jackie peinture ext Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="13">
+                            <TexteLibre1>Amiard combles isolation Etrechy</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <TexteLibre1>Brard entreprise archives Etampes</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BK">
+                        <Occurrence Numero="1">
+                            <Valeur>20050816</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20101007</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>19930125</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>19960717</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>19951215</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>19970327</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>19950403</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>19940102</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>19930205</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>19980712</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>19980821</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>19990922</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="13">
+                            <Valeur>19990505</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>20000119</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KC">
+                        <Occurrence Numero="1">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>D</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>D</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="13">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>L</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CX">
+                        <Occurrence Numero="1">
+                            <Valeur>100</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>25</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>25</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="13">
+                            <Valeur>5</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>5</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BU">
+                        <Occurrence Numero="2">
+                            <Valeur>390000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>38181,2</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CN">
+                        <Occurrence Numero="2">
+                            <Valeur>390000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>38181,2</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DR">
+                        <Occurrence Numero="13">
+                            <Valeur>43,94</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="14">
+                            <Valeur>1909,06</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DG">
+                        <Occurrence Numero="14">
+                            <Valeur>36176,69</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>428181,2</Valeur>
+                    </Zone>
+                    <Zone id="EF">
+                        <Valeur>428181,2</Valeur>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>36176,69</Valeur>
+                    </Zone>
+                    <Zone id="EJ">
+                        <Valeur>1953</Valeur>
+                    </Zone>
+                    <Zone id="EH">
+                        <Valeur>1953</Valeur>
+                    </Zone>
+                    <Zone id="KG">
+                        <Valeur>1953</Valeur>
+                    </Zone>
+                    <Zone id="FA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Real not licence secu</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Loiseau plbier inst evier s/étampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Lavollée Daniel porte Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Dalencon peinture volets s/Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>Regnault Alain cablage inf Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <TexteLibre1>Regnault Alain cablage inf Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <TexteLibre1>Cord leroy 3 palques laiton Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <TexteLibre1>Bouton ref plafonniers Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <TexteLibre1>Brard ent aménagemt compta Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <TexteLibre1>Regnault compl cablage Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <TexteLibre1>Malon jackie peinture ext Etampes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <TexteLibre1>Amiard combles isolation Etrechy</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KH">
+                        <Occurrence Numero="1">
+                            <Valeur>20060816</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>19930125</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>19950717</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>19961216</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>19960918</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>19970327</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>19970403</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>19970417</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>19970530</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>19971031</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>19980821</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>19990405</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KN">
+                        <Occurrence Numero="1">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>20191231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KJ">
+                        <Occurrence Numero="1">
+                            <Valeur>1421</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>771,54</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>1092,57</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>2396,5</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>7281,45</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>979,59</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>672,32</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>1047,45</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>17531,64</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>754,81</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>3316,38</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>3364,79</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KK">
+                        <Occurrence Numero="1">
+                            <Valeur>1421</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>771,54</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>1092,57</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>2396,5</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>7281,45</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="6">
+                            <Valeur>979,59</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="7">
+                            <Valeur>672,32</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="8">
+                            <Valeur>1047,45</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="9">
+                            <Valeur>17531,64</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="10">
+                            <Valeur>754,81</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="11">
+                            <Valeur>3316,38</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>3000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="KL">
+                        <Occurrence Numero="11">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>87</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="FW">
+                        <Occurrence Numero="11">
+                            <Valeur>150</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>225</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="HA">
+                        <Occurrence Numero="11">
+                            <Valeur>12</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>56</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="HL">
+                        <Occurrence Numero="11">
+                            <Valeur>25</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="12">
+                            <Valeur>75</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="JA">
+                        <Valeur>68</Valeur>
+                    </Zone>
+                    <Zone id="JB">
+                        <Valeur>100</Valeur>
+                    </Zone>
+                    <Zone id="LA">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555439</Identifiant>
+                            <Designation>KNAPPER</Designation>
+                            <DesignationSuite2>CAB</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DE TEST</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079555454</Identifiant>
+                            <Designation>TROTTI</Designation>
+                            <AdresseNumero>456</AdresseNumero>
+                            <AdresseVoie>ROUTE DES CERISES</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="LB">
+                        <Occurrence Numero="1">
+                            <Valeur>39,95</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20,03</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="LC">
+                        <Occurrence Numero="1">
+                            <Valeur>787412,25</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>386697,42</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AW">
+                        <Occurrence Numero="1">
+                            <Identifiant>3999999960292</Identifiant>
+                            <Designation>FORTER</Designation>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <DesignationSuite3>Jean</DesignationSuite3>
+                            <AdresseNumero>9</AdresseNumero>
+                            <AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>0154807988027</Identifiant>
+                            <Designation>PINOT</Designation>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <DesignationSuite3>Pierre</DesignationSuite3>
+                            <AdresseNumero>8</AdresseNumero>
+                            <AdresseVoie>ROUTE DES ABRICOTS</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AX">
+                        <Occurrence Numero="1">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>20,03</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>19,97</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Valeur>386697,42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>385732,12</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="LD">
+                        <Occurrence Numero="1">
+                            <Valeur>102236,7</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>102052,98</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="LE">
+                        <Occurrence Numero="1">
+                            <Valeur>284460,72</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>283679,14</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AU">
+                        <Occurrence Numero="2">
+                            <Valeur>19750119</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="1">
+                            <Valeur>19811025</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AV">
+                        <Occurrence Numero="2">
+                            <AdresseCodePostal>42</AdresseCodePostal>
+                            <AdresseVille>ROCHE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="1">
+                            <AdresseCodePostal>42</AdresseCodePostal>
+                            <AdresseVille>GENEST</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="MB">
+                        <Valeur>99,98</Valeur>
+                    </Zone>
+                    <Zone id="MC">
+                        <Valeur>1946539,21</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035A" Repetition="0" Millesime="25">
+                    <Zone id="FA">
+                        <TexteLibre1>MEDECIN LIBERAL</TexteLibre1>
+                    </Zone>
+                    <Zone id="FJ">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="FG">
+                        <Valeur>4</Valeur>
+                    </Zone>
+                    <Zone id="GC">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="GD">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="FF">
+                        <Valeur>1983</Valeur>
+                    </Zone>
+                    <Zone id="FD">
+                        <Valeur>34</Valeur>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Valeur>650044,19</Valeur>
+                    </Zone>
+                    <Zone id="AA">
+                        <Valeur>5410698,95</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>290636,42</Valeur>
+                    </Zone>
+                    <Zone id="AD">
+                        <Valeur>5120062,53</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>109444,84</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Valeur>5182,96</Valeur>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>5234690,33</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>1383870,99</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>745694,11</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>40435,53</Valeur>
+                    </Zone>
+                    <Zone id="BS">
+                        <Valeur>55868,78</Valeur>
+                    </Zone>
+                    <Zone id="BV">
+                        <Valeur>122274</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>220552,51</Valeur>
+                    </Zone>
+                    <Zone id="BG">
+                        <Valeur>111363,66</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>62051,72</Valeur>
+                    </Zone>
+                    <Zone id="ED">
+                        <Valeur>4674,97</Valeur>
+                    </Zone>
+                    <Zone id="EE">
+                        <Valeur>18068,10</Valeur>
+                    </Zone>
+                    <Zone id="EF">
+                        <Valeur>8405,60</Valeur>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>120170,46</Valeur>
+                    </Zone>
+                    <Zone id="BH">
+                        <Valeur>213370,85</Valeur>
+                    </Zone>
+                    <Zone id="GF">
+                        <Valeur>24867</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="EJ">
+                        <Valeur>21782,41</Valeur>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Valeur>46649,41</Valeur>
+                    </Zone>
+                    <Zone id="BT">
+                        <Valeur>323627,24</Valeur>
+                    </Zone>
+                    <Zone id="BK">
+                        <Valeur>366669,39</Valeur>
+                    </Zone>
+                    <Zone id="BU">
+                        <Valeur>43042,15</Valeur>
+                    </Zone>
+                    <Zone id="BL">
+                        <Valeur>4112,23</Valeur>
+                    </Zone>
+                    <Zone id="EK">
+                        <Valeur>210915,30</Valeur>
+                    </Zone>
+                    <Zone id="EM">
+                        <Valeur>131696,61</Valeur>
+                    </Zone>
+                    <Zone id="EN">
+                        <Valeur>73025,66</Valeur>
+                    </Zone>
+                    <Zone id="BM">
+                        <Valeur>419749,8</Valeur>
+                    </Zone>
+                    <Zone id="BN">
+                        <Valeur>7392,30</Valeur>
+                    </Zone>
+                    <Zone id="BP">
+                        <Valeur>31581,44</Valeur>
+                    </Zone>
+                    <Zone id="BR">
+                        <Valeur>3765472,77</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Produits exceptionnels</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Transfert de charges d exploitation</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Occurrence Numero="1">
+                            <Valeur>0,41</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>5182,55</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AK">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Charges exceptionnelles a</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Charges exceptionnelles - penalites</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Charges exceptionnelles - clients d</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Charges exceptionnelles arrondis sp</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>Dotations aux provisions sur client</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AL">
+                        <Occurrence Numero="1">
+                            <Valeur>14983,94</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>5691</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>436,66</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>106,31</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>10363,53</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035B" Repetition="0" Millesime="25">
+                    <Zone id="CA">
+                        <Valeur>1469217,56</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>510582,39</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>1979799,95</Valeur>
+                    </Zone>
+                    <Zone id="CH">
+                        <Valeur>33260,52</Valeur>
+                    </Zone>
+                    <Zone id="CN">
+                        <Valeur>33260,52</Valeur>
+                    </Zone>
+                    <Zone id="CP">
+                        <Valeur>1946539,43</Valeur>
+                    </Zone>
+                    <Zone id="CR">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CX">
+                        <Valeur>1089220,00</Valeur>
+                    </Zone>
+                    <Zone id="CY">
+                        <Valeur>129978</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>BMW MINI</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>BMW X</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>BMW serie 8</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>BMW MINI</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GG">
+                        <Occurrence Numero="1">
+                            <Valeur>T</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>T</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>T</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>T</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GB">
+                        <Occurrence Numero="1">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>27</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>21</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GH">
+                        <Occurrence Numero="1">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>X</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GD">
+                        <Occurrence Numero="1">
+                            <Valeur>8436</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>12467</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>26755</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>9585</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GE">
+                        <Occurrence Numero="1">
+                            <Valeur>4131</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>5489</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>10729</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>4518</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="HE">
+                        <Valeur>24867</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Amendes et pénalités</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>loi madelin non deductible</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>cotisations sociales obligatoires</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>csg déductible</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>cotisations sociales facultatives</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EB">
+                        <Occurrence Numero="1">
+                            <Valeur>5691</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>15948</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>323627,24</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>122274</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>43042</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035E" Repetition="0" Millesime="25">
+                    <Zone id="EF">
+                        <Valeur>5120062,53</Valeur>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>5182,96</Valeur>
+                    </Zone>
+                    <Zone id="EI">
+                        <Valeur>5125245,49</Valeur>
+                    </Zone>
+                    <Zone id="EL">
+                        <Valeur>213370,85</Valeur>
+                    </Zone>
+                    <Zone id="EN">
+                        <Valeur>46649,41</Valeur>
+                    </Zone>
+                    <Zone id="EO">
+                        <Valeur>419749,8</Valeur>
+                    </Zone>
+                    <Zone id="ER">
+                        <Valeur>679770,06</Valeur>
+                    </Zone>
+                    <Zone id="ES">
+                        <Valeur>4445475,43</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>34</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035F" Repetition="0" Millesime="25">
+                    <Zone id="GV">
+                        <Valeur>4</Valeur>
+                    </Zone>
+                    <Zone id="GW">
+                        <Valeur>1842</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555439</Identifiant>
+                            <Designation>KNAPPER</Designation>
+                            <DesignationSuite2>CAB</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DE TEST</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079555454</Identifiant>
+                            <Designation>TROTTI</Designation>
+                            <AdresseNumero>456</AdresseNumero>
+                            <AdresseVoie>ROUTE DES CERISES</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GD">
+                        <Occurrence Numero="1">
+                            <Valeur>736</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>369</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GR">
+                        <Occurrence Numero="1">
+                            <Valeur>39,95</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20,03</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Designation>FORTER Jean</Designation>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <AdresseNumero>9</AdresseNumero>
+                            <AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Designation>PINOT Pierre</Designation>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <AdresseNumero>8</AdresseNumero>
+                            <AdresseVoie>ROUTE DES ABRICOTS</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BD">
+                        <Occurrence Numero="1">
+                            <Valeur>369</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>368</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BR">
+                        <Occurrence Numero="1">
+                            <Valeur>20,03</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>19,97</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BE">
+                        <Occurrence Numero="1">
+                            <Valeur>19811025</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>19750119</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BG">
+                        <Occurrence Numero="1">
+                            <AdresseCodePostal>42</AdresseCodePostal>
+                            <AdresseVille>GENEST</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <AdresseCodePostal>42</AdresseCodePostal>
+                            <AdresseVille>ROCHE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2035G" Repetition="0" Millesime="25">
+                    <Zone id="GS">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2069RCI" Repetition="1" Millesime="25">
+                    <Zone id="AB">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA17PROREC" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Organisme sociaux pdts à recevoir</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Produits a recevoir</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>2125</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>28000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA18CHAPAY" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Conges payes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Charges sociales sur conges a payer</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Provision r+gul charges sociales as</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Etat charges a payer</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <TexteLibre1>Charges à payer</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>109563</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>50655,15</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>8692</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>5078</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="5">
+                            <Valeur>11461,40</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA20CHAAVA" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Charges constatées d'avance</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Valeur>8089,93</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

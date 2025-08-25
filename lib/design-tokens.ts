@@ -373,6 +373,304 @@ export const designTokens = {
       xl: "24px",
     },
   },
+
+  /**
+   * Tokens spécifiques pour le module fiscalité
+   */
+  tax: {
+    // États fiscaux avec couleurs cohérentes OKÉ
+    status: {
+      critical: {
+        base: "#ef4444",
+        light: "rgba(239, 68, 68, 0.1)",
+        medium: "rgba(239, 68, 68, 0.2)",
+        border: "rgba(239, 68, 68, 0.3)",
+        glow: "rgba(239, 68, 68, 0.15)",
+      },
+      normal: {
+        base: "#6da4c3", // Bleu ciel homepage
+        light: "rgba(109, 164, 195, 0.1)",
+        medium: "rgba(109, 164, 195, 0.2)",
+        border: "rgba(109, 164, 195, 0.3)",
+        glow: "rgba(109, 164, 195, 0.15)",
+      },
+      validated: {
+        base: "#10b981",
+        light: "rgba(16, 185, 129, 0.1)",
+        medium: "rgba(16, 185, 129, 0.2)",
+        border: "rgba(16, 185, 129, 0.3)",
+        glow: "rgba(16, 185, 129, 0.15)",
+      },
+      pending: {
+        base: "#FAA016", // Orange OKÉ
+        light: "rgba(250, 160, 22, 0.1)",
+        medium: "rgba(250, 160, 22, 0.2)",
+        border: "rgba(250, 160, 22, 0.3)",
+        glow: "rgba(250, 160, 22, 0.15)",
+      },
+      overdue: {
+        base: "#7c2d12",
+        light: "rgba(124, 45, 18, 0.1)",
+        medium: "rgba(124, 45, 18, 0.2)",
+        border: "rgba(124, 45, 18, 0.3)",
+        glow: "rgba(124, 45, 18, 0.15)",
+      }
+    },
+
+    // Types de déclarations - palette distincte mais harmonieuse
+    declarationTypes: {
+      TVA: {
+        base: "#4C34CE", // Violet OKÉ principal
+        light: "rgba(76, 52, 206, 0.1)",
+        accent: "#6d5cde",
+        tag: "rgba(76, 52, 206, 0.08)",
+      },
+      TDFC: {
+        base: "#182752", // Bleu marine homepage
+        light: "rgba(24, 39, 82, 0.1)",
+        accent: "#2a3f68",
+        tag: "rgba(24, 39, 82, 0.08)",
+      },
+      PAIEMENT: {
+        base: "#FAA016", // Orange OKÉ
+        light: "rgba(250, 160, 22, 0.1)",
+        accent: "#fbb849",
+        tag: "rgba(250, 160, 22, 0.08)",
+      },
+      IR: {
+        base: "#512952", // Prune homepage
+        light: "rgba(81, 41, 82, 0.1)",
+        accent: "#6b3a6c",
+        tag: "rgba(81, 41, 82, 0.08)",
+      },
+      PART: {
+        base: "#2b3642", // Gris ardoise homepage
+        light: "rgba(43, 54, 66, 0.1)",
+        accent: "#3d4a58",
+        tag: "rgba(43, 54, 66, 0.08)",
+      }
+    },
+
+    // Zones du dashboard fiscal
+    zones: {
+      safe: {
+        background: "rgba(16, 185, 129, 0.03)",
+        border: "rgba(16, 185, 129, 0.15)",
+      },
+      warning: {
+        background: "rgba(250, 160, 22, 0.03)",
+        border: "rgba(250, 160, 22, 0.15)",
+      },
+      danger: {
+        background: "rgba(239, 68, 68, 0.03)",
+        border: "rgba(239, 68, 68, 0.15)",
+      }
+    },
+
+    // Espacements spécifiques timeline et cards
+    spacing: {
+      timeline: {
+        nodeSize: "12px",
+        lineWidth: "2px",
+        itemGap: "24px",
+        contentOffset: "20px",
+        sectionGap: "48px",
+      },
+      cards: {
+        padding: {
+          compact: "12px",
+          normal: "16px",
+          large: "24px",
+        },
+        gap: {
+          grid: "16px",
+          list: "12px",
+          section: "32px",
+        }
+      },
+      widget: {
+        height: "48px",
+        padding: "12px 20px",
+        iconSize: "20px",
+      }
+    },
+
+    // Typographie montants et échéances
+    typography: {
+      amounts: {
+        large: {
+          fontSize: "28px",
+          fontWeight: 700,
+          lineHeight: "32px",
+          letterSpacing: "-0.02em",
+        },
+        medium: {
+          fontSize: "20px",
+          fontWeight: 600,
+          lineHeight: "24px",
+          letterSpacing: "-0.01em",
+        },
+        small: {
+          fontSize: "16px",
+          fontWeight: 500,
+          lineHeight: "20px",
+        }
+      },
+      deadlines: {
+        urgent: {
+          fontSize: "14px",
+          fontWeight: 600,
+          color: "#ef4444",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        },
+        normal: {
+          fontSize: "14px",
+          fontWeight: 500,
+          color: "#737373",
+        },
+        passed: {
+          fontSize: "14px",
+          fontWeight: 400,
+          color: "#a3a3a3",
+          textDecoration: "line-through",
+        }
+      },
+      labels: {
+        section: {
+          fontSize: "12px",
+          fontWeight: 600,
+          textTransform: "uppercase",
+          letterSpacing: "0.08em",
+          color: "#737373",
+        },
+        badge: {
+          fontSize: "11px",
+          fontWeight: 500,
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        }
+      }
+    },
+
+    // Composants spécifiques
+    components: {
+      timeline: {
+        node: {
+          size: "12px",
+          borderWidth: "2px",
+          activeBorder: "3px",
+        },
+        line: {
+          width: "2px",
+          style: "solid",
+          dashArray: "4 4",
+        },
+        item: {
+          minHeight: "80px",
+          borderRadius: "12px",
+          padding: "16px",
+        }
+      },
+      declarationCard: {
+        borderRadius: "16px",
+        borderWidth: "1px",
+        minHeight: "120px",
+        maxWidth: "400px",
+        backdrop: "blur(20px)",
+        background: "rgba(255, 255, 255, 0.05)",
+      },
+      headerWidget: {
+        borderRadius: "24px",
+        height: "48px",
+        maxWidth: "320px",
+        backdrop: "blur(16px)",
+        background: "rgba(255, 255, 255, 0.08)",
+      },
+      assistant: {
+        stepIndicator: {
+          size: "32px",
+          activeSize: "40px",
+          lineHeight: "2px",
+        },
+        card: {
+          borderRadius: "20px",
+          padding: "24px",
+          gap: "16px",
+        }
+      }
+    },
+
+    // Animations spécifiques fiscalité
+    animations: {
+      stateChange: {
+        duration: "300ms",
+        easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+      },
+      timeline: {
+        slideIn: {
+          duration: "400ms",
+          easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          stagger: "50ms",
+        },
+        pulse: {
+          duration: "2000ms",
+          easing: "ease-in-out",
+          iteration: "infinite",
+        }
+      },
+      cards: {
+        hover: {
+          duration: "200ms",
+          transform: "translateY(-2px)",
+          shadow: "0 8px 32px rgba(0, 0, 0, 0.08)",
+        },
+        click: {
+          duration: "150ms",
+          transform: "scale(0.98)",
+        },
+        appear: {
+          duration: "300ms",
+          from: { opacity: 0, y: 20 },
+          to: { opacity: 1, y: 0 },
+        }
+      },
+      widget: {
+        alert: {
+          duration: "500ms",
+          keyframes: [
+            { transform: "scale(1)" },
+            { transform: "scale(1.05)" },
+            { transform: "scale(1)" },
+          ],
+        },
+        badge: {
+          duration: "300ms",
+          from: { scale: 0, opacity: 0 },
+          to: { scale: 1, opacity: 1 },
+        }
+      },
+      steps: {
+        transition: {
+          duration: "400ms",
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+        },
+        progress: {
+          duration: "300ms",
+          easing: "linear",
+        }
+      }
+    },
+
+    // Z-index spécifiques
+    zIndex: {
+      timelineNode: 10,
+      timelineLine: 5,
+      cardHover: 15,
+      widgetBadge: 20,
+      assistantOverlay: 30,
+    }
+  },
 };
 
 /**

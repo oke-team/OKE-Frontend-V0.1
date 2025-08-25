@@ -1,0 +1,1189 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="IDT" Reference="INFENT000000007859-0-0">
+			<Redacteur>
+                <Siret>07955544700030</Siret>
+                <Designation>CEC_EDI_TVA</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>76</AdresseNumero>
+                    <AdresseType>B</AdresseType>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>complément test</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555934TVA1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555934</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+					<AdresseNumero>66</AdresseNumero>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>TVA1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TVA</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555934</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>TVA1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Iban>FR7610096180880001234567844</Iban>
+                        <Bic>CEPAFRPX123</Bic>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>TVA1-052025-3517SCA12</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>118682</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="3517SCA12" Repetition="0" Millesime="25">
+                    <Zone id="EA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>2000</Valeur>
+                    </Zone>
+                    <Zone id="EC">
+                        <Valeur>3000</Valeur>
+                    </Zone>
+                    <Zone id="EE">
+                        <Valeur>4000</Valeur>
+                    </Zone>
+                    <Zone id="ER">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="ED">
+                        <Valeur>6000</Valeur>
+                    </Zone>
+                    <Zone id="VM">
+                        <Valeur>7000</Valeur>
+                    </Zone>
+                    <Zone id="EX">
+                        <Valeur>8000</Valeur>
+                    </Zone>
+                    <Zone id="EW">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="FW">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="EK">
+                        <Valeur>500000</Valeur>
+                    </Zone>
+                    <Zone id="FK">
+                        <Valeur>100000</Valeur>
+                    </Zone>
+                    <Zone id="EF">
+                        <Valeur>3000</Valeur>
+                    </Zone>
+                    <Zone id="FF">
+                        <Valeur>165</Valeur>
+                    </Zone>
+                    <Zone id="GF">
+                        <Valeur>4000</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="EU">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="FU">
+                        <Valeur>425</Valeur>
+                    </Zone>
+                    <Zone id="EV">
+                        <Valeur>6000</Valeur>
+                    </Zone>
+                    <Zone id="FV">
+                        <Valeur>126</Valeur>
+                    </Zone>
+                    <Zone id="EJ">
+                        <Valeur>7000</Valeur>
+                    </Zone>
+                    <Zone id="FJ">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="AV">
+                        <Valeur>76920</Valeur>
+                    </Zone>
+                    <Zone id="AW">
+                        <Valeur>10000</Valeur>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>10000</Valeur>
+                    </Zone>
+                    <Zone id="FG">
+                        <Valeur>1960</Valeur>
+                    </Zone>
+                    <Zone id="EY">
+                        <Valeur>11000</Valeur>
+                    </Zone>
+                    <Zone id="FY">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="VN">
+                        <Valeur>12000</Valeur>
+                    </Zone>
+                    <Zone id="VP">
+                        <Valeur>2000</Valeur>
+                    </Zone>
+                    <Zone id="EH">
+                        <Valeur>13000</Valeur>
+                    </Zone>
+                    <Zone id="EZ">
+                        <Valeur>3000</Valeur>
+                    </Zone>
+                    <Zone id="EL">
+                        <Valeur>14000</Valeur>
+                    </Zone>
+                    <Zone id="FL">
+                        <Valeur>4000</Valeur>
+                    </Zone>
+                    <Zone id="EM">
+                        <Valeur>15000</Valeur>
+                    </Zone>
+                    <Zone id="FM">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="EN">
+                        <Valeur>16000</Valeur>
+                    </Zone>
+                    <Zone id="FN">
+                        <Valeur>6000</Valeur>
+                    </Zone>
+                    <Zone id="FR">
+                        <Valeur>135776</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="GB">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Valeur>500</Valeur>
+                    </Zone>
+                    <Zone id="VS">
+                        <Valeur>250</Valeur>
+                    </Zone>
+                    <Zone id="GC">
+                        <Valeur>138526</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="HC">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="JA">
+                        <Valeur>1830</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="KB">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="KC">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="VT">
+                        <Valeur>190</Valeur>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>3620</Valeur>
+                    </Zone>
+                    <Zone id="KN">
+                        <Valeur>1200</Valeur>
+                    </Zone>
+                    <Zone id="LA">
+                        <Valeur>134906</Valeur>
+                    </Zone>
+                    <Zone id="NA">
+                        <Valeur>118406</Valeur>
+                    </Zone>
+                    <Zone id="NB">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="NC">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="ZR">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="QA">
+                        <Valeur>50</Valeur>
+                    </Zone>
+                    <Zone id="QS">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="ZG">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="RF">
+                        <Valeur>52</Valeur>
+                    </Zone>
+                    <Zone id="ZH">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="RG">
+                        <Valeur>150</Valeur>
+                    </Zone>
+                    <Zone id="SR">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="SQ">
+                        <Valeur>52</Valeur>
+                    </Zone>
+                    <Zone id="ST">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="SS">
+                        <Valeur>150</Valeur>
+                    </Zone>
+                    <Zone id="ZJ">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="QH">
+                        <Valeur>149</Valeur>
+                    </Zone>
+                    <Zone id="NS">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="XF">
+                        <Valeur>11</Valeur>
+                    </Zone>
+                    <Zone id="UF">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="BG">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="ZL">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="VC">
+                        <Valeur>8</Valeur>
+                    </Zone>
+                    <Zone id="ZS">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="ZB">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <Valeur>13</Valeur>
+                    </Zone>
+                    <Zone id="RN">
+                        <Valeur>14</Valeur>
+                    </Zone>
+                    <Zone id="DB">
+                        <Valeur>15</Valeur>
+                    </Zone>
+                    <Zone id="CG">
+                        <Valeur>16</Valeur>
+                    </Zone>
+                    <Zone id="WB">
+                        <Valeur>17</Valeur>
+                    </Zone>
+                    <Zone id="WC">
+                        <Valeur>18</Valeur>
+                    </Zone>
+                    <Zone id="VW">
+                        <Valeur>19</Valeur>
+                    </Zone>
+                    <Zone id="VX">
+                        <Valeur>20</Valeur>
+                    </Zone>
+                    <Zone id="SN">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="VY">
+                        <Valeur>21</Valeur>
+                    </Zone>
+                    <Zone id="SP">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="VZ">
+                        <Valeur>1250</Valeur>
+                    </Zone>
+                    <Zone id="WD">
+                        <Valeur>22</Valeur>
+                    </Zone>
+                    <Zone id="WE">
+                        <Valeur>23</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="HE">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="JE">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="ZZ">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WF">
+                        <Valeur>24</Valeur>
+                    </Zone>
+                    <Zone id="YC">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WG">
+                        <Valeur>25</Valeur>
+                    </Zone>
+                    <Zone id="WZ">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WH">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                    <Zone id="ZA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WJ">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                    <Zone id="AZ">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>8</Valeur>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>26</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>15</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>7</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>27</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>8</Valeur>
+                    </Zone>
+                    <Zone id="JC">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>28</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                    <Zone id="LC">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="AK">
+                        <Valeur>29</Valeur>
+                    </Zone>
+                    <Zone id="NN">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="NP">
+                        <Valeur>1</Valeur>
+                    </Zone>
+                    <Zone id="AY">
+                        <Valeur>30</Valeur>
+                    </Zone>
+                    <Zone id="AX">
+                        <Valeur>140</Valeur>
+                    </Zone>
+                    <Zone id="XC">
+                        <Valeur>31</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>10</Valeur>
+                    </Zone>
+                    <Zone id="CF">
+                        <Valeur>9</Valeur>
+                    </Zone>
+                    <Zone id="HF">
+                        <Valeur>8</Valeur>
+                    </Zone>
+                    <Zone id="JF">
+                        <Valeur>7</Valeur>
+                    </Zone>
+                    <Zone id="LF">
+                        <Valeur>6</Valeur>
+                    </Zone>
+                    <Zone id="BD">
+                        <Valeur>32</Valeur>
+                    </Zone>
+                    <Zone id="NQ">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                    <Zone id="ZM">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WK">
+                        <Valeur>33</Valeur>
+                    </Zone>
+                    <Zone id="YA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WL">
+                        <Valeur>69</Valeur>
+                    </Zone>
+                    <Zone id="YB">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WM">
+                        <Valeur>35</Valeur>
+                    </Zone>
+                    <Zone id="WN">
+                        <Valeur>36</Valeur>
+                    </Zone>
+                    <Zone id="WP">
+                        <Valeur>37</Valeur>
+                    </Zone>
+                    <Zone id="AS">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>337</Valeur>
+                    </Zone>
+                    <Zone id="AM">
+                        <Valeur>106</Valeur>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>106</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>279</Valeur>
+                    </Zone>
+                    <Zone id="AQ">
+                        <Valeur>66</Valeur>
+                    </Zone>
+                    <Zone id="AR">
+                        <Valeur>66</Valeur>
+                    </Zone>
+                    <Zone id="ZP">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="WT">
+                        <Valeur>18</Valeur>
+                    </Zone>
+                    <Zone id="WU">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="SF">
+                        <Occurrence Numero="1">
+                            <Valeur>42</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>43</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>44</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="SE">
+                        <Occurrence Numero="1">
+                            <Valeur>38</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>39</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>40</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="SH">
+                        <Valeur>117</Valeur>
+                    </Zone>
+                    <Zone id="SW">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="SV">
+                        <Valeur>41</Valeur>
+                    </Zone>
+                    <Zone id="XA">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="SX">
+                        <Valeur>42</Valeur>
+                    </Zone>
+                    <Zone id="XB">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="RD">
+                        <Valeur>43</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Valeur>02</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>29</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>50</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AD">
+                        <Occurrence Numero="1">
+                            <Valeur>123</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>456</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>789</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>44</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>45</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>46</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>135</Valeur>
+                    </Zone>
+                    <Zone id="SU">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="AA">
+                        <Valeur>500</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="UE">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="XE">
+                        <Valeur>47</Valeur>
+                    </Zone>
+                    <Zone id="RA">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="SA">
+                        <Valeur>100406</Valeur>
+                    </Zone>
+                    <Zone id="RB">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="SB">
+                        <Valeur>7438</Valeur>
+                    </Zone>
+                    <Zone id="RC">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="SC">
+                        <Valeur>118682</Valeur>
+                    </Zone>
+                    <Zone id="VA">
+                        <Valeur>125876</Valeur>
+                    </Zone>
+                    <Zone id="MD">
+                        <Valeur>5000</Valeur>
+                    </Zone>
+                    <Zone id="ME">
+                        <Valeur>2500</Valeur>
+                    </Zone>
+                    <Zone id="MF">
+                        <Valeur>6000</Valeur>
+                    </Zone>
+                    <Zone id="MG">
+                        <Valeur>3000</Valeur>
+                    </Zone>
+                    <Zone id="MM">
+                        <Valeur>11000</Valeur>
+                    </Zone>
+                    <Zone id="MN">
+                        <Valeur>5500</Valeur>
+                    </Zone>
+                    <Zone id="MA">
+                        <Valeur>16500</Valeur>
+                    </Zone>
+                    <Zone id="TB">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="UB">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                    <Zone id="TD">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="UD">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                    <Zone id="VK">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <TexteLibre1>Accise sur les énergies</TexteLibre1>
+                    </Zone>
+                    <Zone id="TL">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="NX">
+                        <Valeur>18</Valeur>
+                    </Zone>
+                    <Zone id="UL">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="LL">
+                        <Valeur>150</Valeur>
+                    </Zone>
+                    <Zone id="BU">
+                        <Occurrence Numero="1">
+                            <Valeur>4</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BV">
+                        <Occurrence Numero="1">
+                            <Valeur>111</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BL">
+                        <Occurrence Numero="1">
+                            <Valeur>100</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BM">
+                        <Occurrence Numero="1">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BN">
+                        <Occurrence Numero="1">
+                            <Valeur>1111</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BP">
+                        <Occurrence Numero="1">
+                            <Valeur>10</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BQ">
+                        <Occurrence Numero="1">
+                            <Valeur>20</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BR">
+                        <Occurrence Numero="1">
+                            <Valeur>1081</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BS">
+                        <Valeur>1381</Valeur>
+                    </Zone>
+                    <Zone id="CJ">
+                        <Valeur>1381</Valeur>
+                    </Zone>
+                    <Zone id="GL">
+                        <Valeur>9938</Valeur>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="TF">
+                        <Valeur>1500</Valeur>
+                    </Zone>
+                    <Zone id="JL">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="XH">
+                        <Valeur>18000</Valeur>
+                    </Zone>
+                    <Zone id="JG">
+                        <Valeur>18000</Valeur>
+                    </Zone>
+                    <Zone id="LH">
+                        <Valeur>10838</Valeur>
+                    </Zone>
+                    <Zone id="LG">
+                        <Valeur>18000</Valeur>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Valeur>10838</Valeur>
+                    </Zone>
+                    <Zone id="LT">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="NR">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="JT">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="HM">
+                        <Valeur>16500</Valeur>
+                    </Zone>
+                    <Zone id="JM">
+                        <Valeur>16500</Valeur>
+                    </Zone>
+                    <Zone id="BT">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="3310TIC" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20241231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>E11111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>E22222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AD">
+                        <Occurrence Numero="1">
+                            <Valeur>1234A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>1234B</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AE">
+                        <Occurrence Numero="2">
+                            <Valeur>E08</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AF">
+                        <Occurrence Numero="1">
+                            <Valeur>E02</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BS">
+                        <Occurrence Numero="1">
+                            <Valeur>111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CE">
+                        <Occurrence Numero="1">
+                            <Valeur>25</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>50</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AG">
+                        <Occurrence Numero="1">
+                            <Valeur>10000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AH">
+                        <Occurrence Numero="1">
+                            <Valeur>750</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>1312</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AS">
+                        <Occurrence Numero="1">
+                            <Valeur>9250</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>688</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AM">
+                        <Occurrence Numero="2">
+                            <Valeur>SIR</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AN">
+                        <Occurrence Numero="2">
+                            <Valeur>2222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AR">
+                        <Occurrence Numero="2">
+                            <Valeur>22</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AP">
+                        <Occurrence Numero="2">
+                            <Valeur>22,277</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BT">
+                        <Valeur>9938</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Occurrence Numero="1">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20241231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AU">
+                        <Occurrence Numero="1">
+                            <Valeur>G11111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>G2222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AV">
+                        <Occurrence Numero="1">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AW">
+                        <Occurrence Numero="1">
+                            <Valeur>1234A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>1234B</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AX">
+                        <Occurrence Numero="2">
+                            <Valeur>G11</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AY">
+                        <Occurrence Numero="1">
+                            <Valeur>G02</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AQ">
+                        <Occurrence Numero="1">
+                            <Valeur>111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CF">
+                        <Occurrence Numero="1">
+                            <Valeur>20</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>30</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AZ">
+                        <Occurrence Numero="1">
+                            <Valeur>1000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Valeur>2000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BB">
+                        <Occurrence Numero="1">
+                            <Valeur>-1000</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>-500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BF">
+                        <Occurrence Numero="2">
+                            <Valeur>2222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BG">
+                        <Occurrence Numero="2">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BR">
+                        <Occurrence Numero="2">
+                            <Valeur>22</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BU">
+                        <Valeur>-1500</Valeur>
+                    </Zone>
+                    <Zone id="BH">
+                        <Occurrence Numero="1">
+                            <Valeur>20231231</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20241231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Occurrence Numero="1">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>07955593400011</Identifiant>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BK">
+                        <Occurrence Numero="1">
+                            <Valeur>1234A</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>1234B</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BL">
+                        <Occurrence Numero="1">
+                            <Valeur>C07</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CD">
+                        <Occurrence Numero="1">
+                            <Valeur>111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CG">
+                        <Occurrence Numero="1">
+                            <Valeur>15</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>25</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BN">
+                        <Occurrence Numero="1">
+                            <Valeur>1500</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BP">
+                        <Occurrence Numero="1">
+                            <Valeur>100</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>3000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BQ">
+                        <Occurrence Numero="1">
+                            <Valeur>1400</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>-500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BM">
+                        <Occurrence Numero="2">
+                            <Valeur>C06</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BZ">
+                        <Occurrence Numero="1">
+                            <Valeur>1111</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CC">
+                        <Occurrence Numero="1">
+                            <Valeur>111</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CH">
+                        <Occurrence Numero="1">
+                            <Valeur>11</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>22</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CB">
+                        <Occurrence Numero="2">
+                            <Valeur>2222</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BV">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="CJ">
+                        <Occurrence Numero="1">
+                            <Valeur>2025</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DA">
+                        <Occurrence Numero="1">
+                            <Valeur>220</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CN">
+                        <Occurrence Numero="1">
+                            <Valeur>SCO</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CP">
+                        <Occurrence Numero="1">
+                            <Valeur>3300</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CS">
+                        <Occurrence Numero="1">
+                            <Valeur>4400</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CQ">
+                        <Occurrence Numero="1">
+                            <Valeur>OUI</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CR">
+                        <Occurrence Numero="1">
+                            <Valeur>NON</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CK">
+                        <Occurrence Numero="1">
+                            <Valeur>20250101</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CL">
+                        <Occurrence Numero="1">
+                            <Valeur>20250131</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DD">
+                        <Occurrence Numero="1">
+                            <Valeur>330</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CU">
+                        <Occurrence Numero="1">
+                            <Valeur>4400</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CV">
+                        <Occurrence Numero="1">
+                            <Valeur>5500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CW">
+                        <Occurrence Numero="1">
+                            <Valeur>NON</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CX">
+                        <Occurrence Numero="1">
+                            <Valeur>OUI</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DB">
+                        <Occurrence Numero="1">
+                            <Valeur>20250101</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DC">
+                        <Occurrence Numero="1">
+                            <Valeur>20250131</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DF">
+                        <Occurrence Numero="1">
+                            <Valeur>440</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DE">
+                        <Occurrence Numero="1">
+                            <Valeur>5500</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DG">
+                        <Occurrence Numero="1">
+                            <Valeur>6600</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DH">
+                        <Occurrence Numero="1">
+                            <Valeur>OUI</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DJ">
+                        <Occurrence Numero="1">
+                            <Valeur>OUI</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CZ">
+                        <Valeur>16500</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

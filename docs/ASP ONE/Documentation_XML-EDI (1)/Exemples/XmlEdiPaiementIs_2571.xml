@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000001976-0-0" Type="IS">
+            <Redacteur>
+                <Siret>07955544700030</Siret>
+                <Designation>CEC_EDI_PAYE</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>76</AdresseNumero>
+                    <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                    <AdresseComplement>complément test</AdresseComplement>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555488IS1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555488</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+                    <AdresseNumero>207</AdresseNumero>
+                    <AdresseVoie>RUE ALPHANUMERIQUE</AdresseVoie>
+                    <AdresseCodePostal>44001</AdresseCodePostal>
+                    <AdresseVille>NANTES CHANTIERS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>IS1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_PAYE</Designation>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+                    <Zone id="AA">
+                        <Identifiant>079555488</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+                        <AdresseNumero>207</AdresseNumero>
+                        <AdresseVoie>RUE ALPHANUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>44001</AdresseCodePostal>
+                        <AdresseVille>NANTES CHANTIERS</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>IS1</Valeur>
+                    </Zone>
+                    <Zone id="KF">
+                        <Valeur>202503</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20250101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20251231</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Iban>FR7611111222223333333333391</Iban>
+                        <Bic>CEPBFRPPXXX</Bic>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>IS1-032025-2571</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>156</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2571" Repetition="0" Millesime="25">
+                    <Zone id="FA">
+                        <Valeur>5500</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>738</Valeur>
+                    </Zone>
+                    <Zone id="FB">
+                        <Valeur>100</Valeur>
+                    </Zone>
+                    <Zone id="FC">
+                        <Valeur>200</Valeur>
+                    </Zone>
+                    <Zone id="FD">
+                        <Valeur>300</Valeur>
+                    </Zone>
+                    <Zone id="FE">
+                        <Valeur>400</Valeur>
+                    </Zone>
+                    <Zone id="FF">
+                        <Valeur>500</Valeur>
+                    </Zone>
+                    <Zone id="DC">
+                        <Valeur>600</Valeur>
+                    </Zone>
+                    <Zone id="DD">
+                        <Valeur>700</Valeur>
+                    </Zone>
+                    <Zone id="BB">
+                        <Valeur>800</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>900</Valeur>
+                    </Zone>
+                    <Zone id="FG">
+                        <Valeur>1000</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>101</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>102</Valeur>
+                    </Zone>
+                    <Zone id="DB">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>941</Valeur>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>15</Valeur>
+                    </Zone>
+                    <Zone id="CH">
+                        <Valeur>956</Valeur>
+                    </Zone>
+                    <Zone id="FH">
+                        <Valeur>800</Valeur>
+                    </Zone>
+                    <Zone id="FK">
+                        <Valeur>TVA</Valeur>
+                    </Zone>
+                    <Zone id="FM">
+                        <Valeur>20250202</Valeur>
+                    </Zone>
+                    <Zone id="FN">
+                        <Valeur>156</Valeur>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

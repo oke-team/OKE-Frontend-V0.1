@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Reference="INFENT000000000818-0-0" Type="IAA">
+            <Redacteur>
+				<Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555595BNC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555595</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <Rof>BNC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+					<Zone id="AB">
+                        <Valeur>EI</Valeur>
+                    </Zone>
+					<Zone id="BA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>20241231</Valeur>
+                    </Zone> 
+					<Zone id="CC">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>	
+					<Zone id="DA">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="DL">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="EA">
+                        <Valeur>7112BA</Valeur>
+                    </Zone>					
+                </Identif>
+                <Formulaire Repetition="0" Nom="OGBNC00" Millesime="25">				
+					<Zone id="AA">
+						<Identifiant>41191617400021</Identifiant>
+						<Designation>CABINET TEST &amp; ASSOCIES</Designation>
+						<AdresseNumero>123</AdresseNumero>
+						<AdresseVoie>RUE DES ESSAIS</AdresseVoie>
+						<AdresseCodePostal>42480</AdresseCodePostal>
+						<AdresseVille>LA FOUILLOUSE</AdresseVille>
+						<AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+					<Zone id="AB">
+						<TexteLibre1>Ingénierie, études techniques</TexteLibre1>
+                    </Zone>
+					<Zone id="AC">
+						<Identifiant>111111</Identifiant>
+						<Designation>Test Gestion BNC</Designation>
+						<DesignationSuite2>ASS</DesignationSuite2>
+						<AdresseNumero>456</AdresseNumero>
+						<AdresseRepetabilite>T</AdresseRepetabilite>
+						<AdresseVoie>RUE DE L'ELECTRONIQUE</AdresseVoie>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>					
+					<Zone id="AD">
+						<Designation>DUPOND Martin</Designation>
+						<DesignationSuite1>GERANT EXPERT-COMPTABLE</DesignationSuite1>
+						<DesignationSuite2>M</DesignationSuite2>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+					<Zone id="BA">
+                        <Valeur>20250227</Valeur>
+                    </Zone>		
+					<Zone id="BB">
+                        <Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="BC">
+                        <Valeur>5</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Repetition="0" Nom="OGBNC01" Millesime="25">
+					<Zone id="AR">
+                        <Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="AW">
+                        <Valeur>4</Valeur>
+                    </Zone>
+					<Zone id="AX">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+					<Zone id="CA">
+						<Designation>DUPOND</Designation>
+						<DesignationSuite1>Martin</DesignationSuite1>
+						<DesignationSuite2>EXPERT COMPTABLE</DesignationSuite2>
+						<Email>dupond.martin@test.fr</Email>
+                    </Zone>
+					<Zone id="CB">
+                        <Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="CC">
+                        <Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="CD">
+                        <Valeur>4</Valeur>
+                    </Zone>
+					<Zone id="CE">
+                        <Valeur>1</Valeur>
+                    </Zone>					
+                    <Zone id="AG">
+						<Occurrence Numero="1">
+							<Valeur>2</Valeur>
+						</Occurrence>
+                    </Zone>
+					 <Zone id="CJ">
+						<Occurrence Numero="1">
+							<TexteLibre1>27 TER AVENUE DU MARECHAL LECLERC 42270 SAINT-PRIEST-EN-JAREZ</TexteLibre1>
+						</Occurrence>
+                    </Zone>					
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBNC02" Millesime="25">
+                    <Zone id="WW">
+                        <Valeur>X</Valeur>
+                    </Zone>				
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBNC03" Millesime="25">
+                    <Zone id="DD">
+                        <Valeur>780,70</Valeur>
+                    </Zone>
+					<Zone id="DE">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="DR">
+                        <Valeur>1350,02</Valeur>
+                    </Zone>
+					<Zone id="DS">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="EK">
+                        <Valeur>7281,73</Valeur>
+                    </Zone>
+					<Zone id="EL">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="ES">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="EU">
+                        <Valeur>10096,56</Valeur>
+                    </Zone>
+					<Zone id="EX">
+                        <Valeur>1782,32</Valeur>
+                    </Zone>
+                </Formulaire>
+				<Formulaire Repetition="0" Nom="OGBNC04" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>-1511,35</Valeur>
+                    </Zone>
+					<Zone id="AB">
+                        <Valeur>1610,00</Valeur>
+                    </Zone>
+					<Zone id="AD">
+                        <Valeur>5500,00</Valeur>
+                    </Zone>
+					<Zone id="AF">
+                        <Valeur>44552,05</Valeur>
+                    </Zone>
+					<Zone id="AH">
+                        <Valeur>51170,59</Valeur>
+                    </Zone>
+					<Zone id="AJ">
+                        <Valeur>-913,50</Valeur>
+                    </Zone>
+					<Zone id="AK">
+                        <Valeur>2245,00</Valeur>
+                    </Zone>
+					<Zone id="AN">
+                        <Valeur>267,75</Valeur>
+                    </Zone>
+					<Zone id="AP">
+                        <Valeur>9457,73</Valeur>
+                    </Zone>
+					<Zone id="AQ">
+                        <Valeur>11843,98</Valeur>
+                    </Zone>
+					<Zone id="AR">
+                        <Valeur>39326,61</Valeur>
+                    </Zone>
+					<Zone id="AS">
+                        <Valeur>29345,65</Valeur>
+                    </Zone>
+					<Zone id="AT">
+                        <Valeur>68672,26</Valeur>
+                    </Zone>
+					<Zone id="AV">
+                        <Valeur>-0,26</Valeur>
+                    </Zone>
+					<Zone id="AU">
+                        <Valeur>68672,00</Valeur>
+                    </Zone>
+					<Zone id="AW">
+                        <Valeur>787,00</Valeur>
+                    </Zone>
+					<Zone id="AY">
+                        <Valeur>1019,89</Valeur>
+                    </Zone>
+				</Formulaire>
+				<Formulaire Repetition="0" Nom="OGBNC05" Millesime="25">
+                    <Zone id="BK">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="BL">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="FR">
+                        <Valeur>68672,00</Valeur>
+                    </Zone>
+					<Zone id="FV">
+                        <Valeur>68672,00</Valeur>
+                    </Zone>
+					<Zone id="VC">
+                        <Valeur>68672,00</Valeur>
+                    </Zone>
+					<Zone id="VG">
+                        <Valeur>68672,00</Valeur>
+                    </Zone>
+					<Zone id="AA">
+						<Occurrence Numero="1">
+							<CompteNumero>706920</CompteNumero>
+							<CompteLibelleAbrege>Prestations de se</CompteLibelleAbrege>
+						</Occurrence>
+					</Zone>
+					<Zone id="AC">
+						<Occurrence Numero="1">
+							<Valeur>68672,00</Valeur>
+						</Occurrence>
+					</Zone>
+					<Zone id="AG">
+						<Occurrence Numero="1">
+							<Valeur>68672,00</Valeur>
+						</Occurrence>
+					</Zone>
+				</Formulaire>
+				<Formulaire Repetition="1" Nom="OGBNC07" Millesime="25">
+                    <Zone id="BD">
+                        <Valeur>X</Valeur>
+                    </Zone>
+					<Zone id="WW">
+                        <Valeur>X</Valeur>
+                    </Zone>
+				</Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+    </GroupeFonctionnel>
+</XmlEdi>

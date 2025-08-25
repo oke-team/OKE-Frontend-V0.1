@@ -1,0 +1,2109 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="yes"?>
+<XmlEdi Test="1">
+    <GroupeFonctionnel Type="INFENT">
+        <Declaration Type="IDF" Reference="INFENT000000000001-1">
+            <Redacteur>
+				<Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>7</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555421BIC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+				<ReferenceDossier>INFENT000000000001-1</ReferenceDossier>
+                <Rof>BIC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>DGI_EDI_TDFC</Designation>
+                </Destinataire>
+				<Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+				<Identif Millesime="25">
+                    <Zone id="BB">
+                        <Valeur>RN</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>IR</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>NOR</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Designation>CONSEIL TEST</Designation>
+                    </Zone>
+                    <Zone id="AA">
+                        <Identifiant>079555421</Identifiant>
+                        <Designation>REDEVABLE TEST</Designation>
+						<AdresseNumero>123</AdresseNumero>
+						<AdresseRepetabilite>C</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                        <Telephone>0102030405</Telephone>
+                    </Zone>
+                    <Zone id="DA">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>BIC1</Valeur>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>20231231</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>12</Valeur>
+                    </Zone>
+                    <Zone id="BA">
+                        <Valeur>BI</Valeur>
+                    </Zone>
+                </Identif>
+                <Formulaire Nom="2031" Repetition="0" Millesime="25">
+                    <Zone id="BG">
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseVoie>RUE DE TEST</AdresseVoie>
+                        <AdresseComplement>COMPLEMENT ADRESSE</AdresseComplement>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="AB">
+                        <TexteLibre1>Autres activités de soutien aux entreprises</TexteLibre1>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="CK">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CM">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="CP">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="KG">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CN">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CV">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CQ">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CR">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CW">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="CX">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>OUI</Valeur>
+                    </Zone>
+                    <Zone id="AJ">
+                        <TexteLibre1>SAP</TexteLibre1>
+                    </Zone>
+                    <Zone id="AW">
+                        <Identifiant>079555579</Identifiant>
+                        <Designation>PRESTATAIRE</Designation>
+                        <DesignationSuite1>COMPLEMENT 1 PRESTATAIRE</DesignationSuite1>
+                        <DesignationSuite2>COMPLEMENT 2 PRESTATAIRE</DesignationSuite2>
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseVoie>RUE DES CEDRES</AdresseVoie>
+                        <AdresseCodePostal>42480</AdresseCodePostal>
+                        <AdresseVille>LA FOUILLOUSE</AdresseVille>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2031BIS" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555884</Identifiant>
+                            <Designation>MALLET Jean</Designation>
+                            <DesignationSuite1>Associé Gérant</DesignationSuite1>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079556676</Identifiant>
+                            <Designation>MALLET Christine</Designation>
+                            <DesignationSuite1>Associée</DesignationSuite1>
+                            <DesignationSuite2>MME</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Identifiant>079555751</Identifiant>
+                            <Designation>PALO Géraldine</Designation>
+                            <DesignationSuite1>Associée</DesignationSuite1>
+                            <DesignationSuite2>MLE</DesignationSuite2>
+                            <AdresseNumero>456</AdresseNumero>
+                            <AdresseRepetabilite>Q</AdresseRepetabilite>
+                            <AdresseVoie>AVENUE DES PINS</AdresseVoie>
+                            <AdresseCodePostal>13000</AdresseCodePostal>
+                            <AdresseVille>MARSEILLE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AH">
+                        <Occurrence Numero="1">
+                            <Valeur>4319</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>481</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>7371</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EC">
+                        <Valeur>123456</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                    <Zone id="BE">
+                        <Valeur>2024</Valeur>
+                    </Zone>
+                    <Zone id="BF">
+                        <Valeur>1520</Valeur>
+                    </Zone>
+                    <Zone id="BG">
+                        <Valeur>12524</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2050" Repetition="0" Millesime="25">
+                    <Zone id="AF">
+                        <Valeur>9486047</Valeur>
+                    </Zone>
+                    <Zone id="AG">
+                        <Valeur>8261666</Valeur>
+                    </Zone>
+                    <Zone id="DK">
+                        <Valeur>1224381</Valeur>
+                    </Zone>
+                    <Zone id="AT">
+                        <Valeur>10132633</Valeur>
+                    </Zone>
+                    <Zone id="AU">
+                        <Valeur>7590060</Valeur>
+                    </Zone>
+                    <Zone id="DS">
+                        <Valeur>2542573</Valeur>
+                    </Zone>
+                    <Zone id="AV">
+                        <Valeur>767004</Valeur>
+                    </Zone>
+                    <Zone id="DT">
+                        <Valeur>767004</Valeur>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Valeur>20385684</Valeur>
+                    </Zone>
+                    <Zone id="BK">
+                        <Valeur>15851726</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>4533958</Valeur>
+                    </Zone>
+                    <Zone id="BX">
+                        <Valeur>25838719</Valeur>
+                    </Zone>
+                    <Zone id="EJ">
+                        <Valeur>25838719</Valeur>
+                    </Zone>
+                    <Zone id="BZ">
+                        <Valeur>689935</Valeur>
+                    </Zone>
+                    <Zone id="EK">
+                        <Valeur>689935</Valeur>
+                    </Zone>
+                    <Zone id="CF">
+                        <Valeur>339859</Valeur>
+                    </Zone>
+                    <Zone id="EN">
+                        <Valeur>339859</Valeur>
+                    </Zone>
+                    <Zone id="CH">
+                        <Valeur>585713</Valeur>
+                    </Zone>
+                    <Zone id="EP">
+                        <Valeur>585713</Valeur>
+                    </Zone>
+                    <Zone id="CJ">
+                        <Valeur>27454226</Valeur>
+                    </Zone>
+                    <Zone id="EQ">
+                        <Valeur>27454226</Valeur>
+                    </Zone>
+                    <Zone id="CO">
+                        <Valeur>47839910</Valeur>
+                    </Zone>
+                    <Zone id="GH">
+                        <Valeur>15851726</Valeur>
+                    </Zone>
+                    <Zone id="GJ">
+                        <Valeur>31988184</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2051" Repetition="0" Millesime="25">
+                    <Zone id="FA">
+                        <Valeur>100000</Valeur>
+                    </Zone>
+                    <Zone id="DA">
+                        <Valeur>100000</Valeur>
+                    </Zone>
+                    <Zone id="DH">
+                        <Valeur>-388999</Valeur>
+                    </Zone>
+                    <Zone id="DI">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="DL">
+                        <Valeur>-288999</Valeur>
+                    </Zone>
+                    <Zone id="DP">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="DR">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="DU">
+                        <Valeur>985456</Valeur>
+                    </Zone>
+                    <Zone id="DV">
+                        <Valeur>1162686</Valeur>
+                    </Zone>
+                    <Zone id="DW">
+                        <Valeur>24502200</Valeur>
+                    </Zone>
+                    <Zone id="DX">
+                        <Valeur>2989835</Valeur>
+                    </Zone>
+                    <Zone id="DY">
+                        <Valeur>2157863</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Valeur>90144</Valeur>
+                    </Zone>
+                    <Zone id="EC">
+                        <Valeur>31888184</Valeur>
+                    </Zone>
+                    <Zone id="EE">
+                        <Valeur>31988185</Valeur>
+                    </Zone>
+                    <Zone id="EG">
+                        <Valeur>7385982</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2052" Repetition="0" Millesime="25">
+                    <Zone id="FG">
+                        <Valeur>25062527</Valeur>
+                    </Zone>
+                    <Zone id="FI">
+                        <Valeur>25062527</Valeur>
+                    </Zone>
+                    <Zone id="FJ">
+                        <Valeur>25062527</Valeur>
+                    </Zone>
+                    <Zone id="FL">
+                        <Valeur>25062527</Valeur>
+                    </Zone>
+                    <Zone id="FN">
+                        <Valeur>1175118</Valeur>
+                    </Zone>
+                    <Zone id="FP">
+                        <Valeur>52317</Valeur>
+                    </Zone>
+                    <Zone id="FR">
+                        <Valeur>26289962</Valeur>
+                    </Zone>
+                    <Zone id="FV">
+                        <Valeur>13233055</Valeur>
+                    </Zone>
+                    <Zone id="FW">
+                        <Valeur>967666</Valeur>
+                    </Zone>
+                    <Zone id="FX">
+                        <Valeur>6092160</Valeur>
+                    </Zone>
+                    <Zone id="FY">
+                        <Valeur>3009196</Valeur>
+                    </Zone>
+                    <Zone id="FZ">
+                        <Valeur>1861677</Valeur>
+                    </Zone>
+                    <Zone id="GE">
+                        <Valeur>1105129</Valeur>
+                    </Zone>
+                    <Zone id="GF">
+                        <Valeur>26268883</Valeur>
+                    </Zone>
+                    <Zone id="GG">
+                        <Valeur>21079</Valeur>
+                    </Zone>
+                    <Zone id="GR">
+                        <Valeur>18745</Valeur>
+                    </Zone>
+                    <Zone id="GS">
+                        <Valeur>1</Valeur>
+                    </Zone>
+                    <Zone id="GU">
+                        <Valeur>18746</Valeur>
+                    </Zone>
+                    <Zone id="GV">
+                        <Valeur>-18746</Valeur>
+                    </Zone>
+                    <Zone id="GW">
+                        <Valeur>2333</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2053" Repetition="0" Millesime="25">
+                    <Zone id="HA">
+                        <Valeur>32</Valeur>
+                    </Zone>
+                    <Zone id="HD">
+                        <Valeur>32</Valeur>
+                    </Zone>
+                    <Zone id="HE">
+                        <Valeur>2362</Valeur>
+                    </Zone>
+                    <Zone id="HH">
+                        <Valeur>2362</Valeur>
+                    </Zone>
+                    <Zone id="HI">
+                        <Valeur>-2330</Valeur>
+                    </Zone>
+                    <Zone id="HK">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="HL">
+                        <Valeur>26289994</Valeur>
+                    </Zone>
+                    <Zone id="HM">
+                        <Valeur>26289991</Valeur>
+                    </Zone>
+                    <Zone id="HN">
+                        <Valeur>3</Valeur>
+                    </Zone>
+                    <Zone id="LH">
+                        <Valeur>52317</Valeur>
+                    </Zone>
+                    <Zone id="LL">
+                        <Valeur>1105129</Valeur>
+                    </Zone>
+                    <Zone id="MA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Pénalités et amendes</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Pertes exceptionnelles</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Produits exceptionnels</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="NA">
+                        <Occurrence Numero="1">
+                            <Valeur>19</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2343</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="PA">
+                        <Occurrence Numero="3">
+                            <Valeur>32</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2054" Repetition="0" Millesime="25">
+                    <Zone id="KD">
+                        <Valeur>8087851</Valeur>
+                    </Zone>
+                    <Zone id="KF">
+                        <Valeur>1398195</Valeur>
+                    </Zone>
+                    <Zone id="KV">
+                        <Valeur>2171581</Valeur>
+                    </Zone>
+                    <Zone id="KX">
+                        <Valeur>76805</Valeur>
+                    </Zone>
+                    <Zone id="LB">
+                        <Valeur>6987923</Valeur>
+                    </Zone>
+                    <Zone id="LD">
+                        <Valeur>896323</Valeur>
+                    </Zone>
+                    <Zone id="LH">
+                        <Valeur>1118443</Valeur>
+                    </Zone>
+                    <Zone id="LJ">
+                        <Valeur>756096</Valeur>
+                    </Zone>
+                    <Zone id="LN">
+                        <Valeur>10277947</Valeur>
+                    </Zone>
+                    <Zone id="LP">
+                        <Valeur>1729224</Valeur>
+                    </Zone>
+                    <Zone id="PN">
+                        <Valeur>18365798</Valeur>
+                    </Zone>
+                    <Zone id="PQ">
+                        <Valeur>3127419</Valeur>
+                    </Zone>
+                    <Zone id="LW">
+                        <Valeur>9486046</Valeur>
+                    </Zone>
+                    <Zone id="MN">
+                        <Valeur>2248386</Valeur>
+                    </Zone>
+                    <Zone id="MT">
+                        <Valeur>7884246</Valeur>
+                    </Zone>
+                    <Zone id="MY">
+                        <Valeur>1107535</Valeur>
+                    </Zone>
+                    <Zone id="NA">
+                        <Valeur>767004</Valeur>
+                    </Zone>
+                    <Zone id="QP">
+                        <Valeur>1107535</Valeur>
+                    </Zone>
+                    <Zone id="NH">
+                        <Valeur>10899636</Valeur>
+                    </Zone>
+                    <Zone id="RJ">
+                        <Valeur>1107535</Valeur>
+                    </Zone>
+                    <Zone id="RL">
+                        <Valeur>20385682</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2054BIS" Repetition="0" Millesime="25">
+                    <Zone id="HD">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2055" Repetition="0" Millesime="25">
+                    <Zone id="PE">
+                        <Valeur>7361155</Valeur>
+                    </Zone>
+                    <Zone id="PF">
+                        <Valeur>900511</Valeur>
+                    </Zone>
+                    <Zone id="PH">
+                        <Valeur>8261666</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>7361155</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Valeur>900511</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>8261666</Valeur>
+                    </Zone>
+                    <Zone id="QD">
+                        <Valeur>1045136</Valeur>
+                    </Zone>
+                    <Zone id="QE">
+                        <Valeur>209791</Valeur>
+                    </Zone>
+                    <Zone id="QG">
+                        <Valeur>1254927</Valeur>
+                    </Zone>
+                    <Zone id="QL">
+                        <Valeur>5583756</Valeur>
+                    </Zone>
+                    <Zone id="QM">
+                        <Valeur>751375</Valeur>
+                    </Zone>
+                    <Zone id="QO">
+                        <Valeur>6335131</Valeur>
+                    </Zone>
+                    <Zone id="QU">
+                        <Valeur>6628892</Valeur>
+                    </Zone>
+                    <Zone id="QV">
+                        <Valeur>961166</Valeur>
+                    </Zone>
+                    <Zone id="QX">
+                        <Valeur>7590058</Valeur>
+                    </Zone>
+                    <Zone id="TA">
+                        <Valeur>13990047</Valeur>
+                    </Zone>
+                    <Zone id="TB">
+                        <Valeur>1861677</Valeur>
+                    </Zone>
+                    <Zone id="TD">
+                        <Valeur>15851724</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2056" Repetition="0" Millesime="25">
+                    <Zone id="VT">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="YC">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="VU">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="TX">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="WD">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="UD">
+                        <Valeur>389000</Valeur>
+                    </Zone>
+                    <Zone id="EA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Provision pour risques et charges</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EB">
+                        <Occurrence Numero="1">
+                            <Valeur>389000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="EE">
+                        <Occurrence Numero="1">
+                            <Valeur>389000</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2057" Repetition="0" Millesime="25">
+                    <Zone id="UX">
+                        <Valeur>25838719</Valeur>
+                    </Zone>
+                    <Zone id="WB">
+                        <Valeur>25838719</Valeur>
+                    </Zone>
+                    <Zone id="UY">
+                        <Valeur>17724</Valeur>
+                    </Zone>
+                    <Zone id="WD">
+                        <Valeur>17724</Valeur>
+                    </Zone>
+                    <Zone id="VB">
+                        <Valeur>87843</Valeur>
+                    </Zone>
+                    <Zone id="WG">
+                        <Valeur>87843</Valeur>
+                    </Zone>
+                    <Zone id="VC">
+                        <Valeur>26140</Valeur>
+                    </Zone>
+                    <Zone id="WJ">
+                        <Valeur>26140</Valeur>
+                    </Zone>
+                    <Zone id="VR">
+                        <Valeur>558227</Valeur>
+                    </Zone>
+                    <Zone id="WK">
+                        <Valeur>558227</Valeur>
+                    </Zone>
+                    <Zone id="VS">
+                        <Valeur>585713</Valeur>
+                    </Zone>
+                    <Zone id="WL">
+                        <Valeur>585713</Valeur>
+                    </Zone>
+                    <Zone id="VT">
+                        <Valeur>27114366</Valeur>
+                    </Zone>
+                    <Zone id="VU">
+                        <Valeur>27114366</Valeur>
+                    </Zone>
+                    <Zone id="VH">
+                        <Valeur>985456</Valeur>
+                    </Zone>
+                    <Zone id="XP">
+                        <Valeur>985456</Valeur>
+                    </Zone>
+                    <Zone id="XC">
+                        <Valeur>437</Valeur>
+                    </Zone>
+                    <Zone id="XQ">
+                        <Valeur>437</Valeur>
+                    </Zone>
+                    <Zone id="XD">
+                        <Valeur>2989835</Valeur>
+                    </Zone>
+                    <Zone id="XR">
+                        <Valeur>2989835</Valeur>
+                    </Zone>
+                    <Zone id="XE">
+                        <Valeur>729233</Valeur>
+                    </Zone>
+                    <Zone id="XS">
+                        <Valeur>729233</Valeur>
+                    </Zone>
+                    <Zone id="XF">
+                        <Valeur>848995</Valeur>
+                    </Zone>
+                    <Zone id="XT">
+                        <Valeur>848995</Valeur>
+                    </Zone>
+                    <Zone id="VW">
+                        <Valeur>425381</Valeur>
+                    </Zone>
+                    <Zone id="XV">
+                        <Valeur>425381</Valeur>
+                    </Zone>
+                    <Zone id="VQ">
+                        <Valeur>154252</Valeur>
+                    </Zone>
+                    <Zone id="XY">
+                        <Valeur>154252</Valeur>
+                    </Zone>
+                    <Zone id="VI">
+                        <Valeur>1162249</Valeur>
+                    </Zone>
+                    <Zone id="YA">
+                        <Valeur>1162249</Valeur>
+                    </Zone>
+                    <Zone id="XJ">
+                        <Valeur>90144</Valeur>
+                    </Zone>
+                    <Zone id="YB">
+                        <Valeur>90144</Valeur>
+                    </Zone>
+                    <Zone id="VY">
+                        <Valeur>7385982</Valeur>
+                    </Zone>
+                    <Zone id="VZ">
+                        <Valeur>7385982</Valeur>
+                    </Zone>
+                    <Zone id="VK">
+                        <Valeur>3683031</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2058A" Repetition="0" Millesime="25">
+                    <Zone id="WA">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="WI">
+                        <Valeur>7944</Valeur>
+                    </Zone>
+                    <Zone id="XW">
+                        <Valeur>7944</Valeur>
+                    </Zone>
+                    <Zone id="WR">
+                        <Valeur>7944</Valeur>
+                    </Zone>
+                    <Zone id="WS">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="WU">
+                        <Valeur>20843</Valeur>
+                    </Zone>
+                    <Zone id="XH">
+                        <Valeur>20843</Valeur>
+                    </Zone>
+                    <Zone id="XJ">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="XN">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="XO">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2058B" Repetition="0" Millesime="25">
+                    <Zone id="DQ">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="YJ">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="YK">
+                        <Valeur>12899</Valeur>
+                    </Zone>
+                    <Zone id="BN">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>ORGANIC</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CN">
+                        <Occurrence Numero="1">
+                            <Valeur>7944</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="DN">
+                        <Occurrence Numero="1">
+                            <Valeur>20843</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CG">
+                        <Valeur>7944</Valeur>
+                    </Zone>
+                    <Zone id="DG">
+                        <Valeur>20843</Valeur>
+                    </Zone>
+                    <Zone id="YN">
+                        <Valeur>7944</Valeur>
+                    </Zone>
+                    <Zone id="YO">
+                        <Valeur>20843</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2058C" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>-209999</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>-179000</Valeur>
+                    </Zone>
+                    <Zone id="ZG">
+                        <Valeur>-388999</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>-388999</Valeur>
+                    </Zone>
+                    <Zone id="ZH">
+                        <Valeur>-388999</Valeur>
+                    </Zone>
+                    <Zone id="YT">
+                        <Valeur>3880523</Valeur>
+                    </Zone>
+                    <Zone id="EB">
+                        <Valeur>1214059</Valeur>
+                    </Zone>
+                    <Zone id="XQ">
+                        <Valeur>1304201</Valeur>
+                    </Zone>
+                    <Zone id="YU">
+                        <Valeur>37819</Valeur>
+                    </Zone>
+                    <Zone id="SS">
+                        <Valeur>1402911</Valeur>
+                    </Zone>
+                    <Zone id="ST">
+                        <Valeur>-5657788</Valeur>
+                    </Zone>
+                    <Zone id="ZJ">
+                        <Valeur>967666</Valeur>
+                    </Zone>
+                    <Zone id="YW">
+                        <Valeur>186634</Valeur>
+                    </Zone>
+                    <Zone id="AW">
+                        <Valeur>5905526</Valeur>
+                    </Zone>
+                    <Zone id="YX">
+                        <Valeur>6092160</Valeur>
+                    </Zone>
+                    <Zone id="YY">
+                        <Valeur>657219</Valeur>
+                    </Zone>
+                    <Zone id="YZ">
+                        <Valeur>348330</Valeur>
+                    </Zone>
+                    <Zone id="BC">
+                        <Valeur>5929362</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059A" Repetition="0" Millesime="25">
+                    <Zone id="GM">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059B" Repetition="0" Millesime="25">
+                    <Zone id="NB">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059C" Repetition="0" Millesime="25">
+                    <Zone id="XM">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059D" Repetition="0" Millesime="25">
+                    <Zone id="KF">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059E" Repetition="0" Millesime="25">
+                    <Zone id="AG">
+                        <Valeur>142</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="AC">
+                        <Valeur>2</Valeur>
+                    </Zone>
+                    <Zone id="AJ">
+                        <Valeur>25062527</Valeur>
+                    </Zone>
+                    <Zone id="AE">
+                        <Valeur>32502</Valeur>
+                    </Zone>
+                    <Zone id="AF">
+                        <Valeur>25095029</Valeur>
+                    </Zone>
+                    <Zone id="EE">
+                        <Valeur>1175118</Valeur>
+                    </Zone>
+                    <Zone id="AN">
+                        <Valeur>1175118</Valeur>
+                    </Zone>
+                    <Zone id="AL">
+                        <Valeur>577215</Valeur>
+                    </Zone>
+                    <Zone id="FE">
+                        <Valeur>11351638</Valeur>
+                    </Zone>
+                    <Zone id="FJ">
+                        <Valeur>90142</Valeur>
+                    </Zone>
+                    <Zone id="FK">
+                        <Valeur>1105129</Valeur>
+                    </Zone>
+                    <Zone id="AP">
+                        <Valeur>13124124</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Valeur>13146023</Valeur>
+                    </Zone>
+                    <Zone id="GB">
+                        <Valeur>13146023</Valeur>
+                    </Zone>
+                    <Zone id="KA">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                    <Zone id="KD">
+                        <Valeur>25095029</Valeur>
+                    </Zone>
+                    <Zone id="KB">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+                    <Zone id="KC">
+                        <Valeur>20241231</Valeur>
+                    </Zone>
+                    <Zone id="AH">
+                        <Valeur>128</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059F" Repetition="0" Millesime="25">
+                    <Zone id="GT">
+                        <Valeur>3</Valeur>
+                    </Zone>
+                    <Zone id="GU">
+                        <Valeur>100</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555884</Identifiant>
+                            <Designation>MALLET</Designation>
+                            <DesignationSuite2>SA</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079556676</Identifiant>
+                            <Designation>MALLET &amp; CIE</Designation>
+                            <DesignationSuite2>S01</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Identifiant>079555751</Identifiant>
+                            <Designation>ALP &amp; CIE</Designation>
+                            <DesignationSuite2>SAE</DesignationSuite2>
+                            <AdresseNumero>456</AdresseNumero>
+                            <AdresseVoie>AVENUE DES PINS</AdresseVoie>
+                            <AdresseCodePostal>13000</AdresseCodePostal>
+                            <AdresseVille>MARSEILLE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GD">
+                        <Occurrence Numero="1">
+                            <Valeur>63</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>12</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>11</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="GR">
+                        <Occurrence Numero="1">
+                            <Valeur>63</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>12</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>11</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BA">
+                        <Occurrence Numero="1">
+                            <Designation>POYAL Gérard</Designation>
+                            <DesignationSuite2>M</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES TESTS</AdresseVoie>
+                            <AdresseCodePostal>42000</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BD">
+                        <Occurrence Numero="1">
+                            <Valeur>4</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BR">
+                        <Occurrence Numero="1">
+                            <Valeur>4</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BE">
+                        <Occurrence Numero="1">
+                            <Valeur>19711205</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BG">
+                        <Occurrence Numero="1">
+                            <AdresseCodePostal>42</AdresseCodePostal>
+                            <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                            <AdresseCodePays>FR</AdresseCodePays>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2059G" Repetition="0" Millesime="25">
+                    <Zone id="GS">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2067" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Designation>BALMON Franck</Designation>
+                        <DesignationSuite1>Employé</DesignationSuite1>
+                        <DesignationSuite2>M</DesignationSuite2>
+                        <AdresseNumero>123</AdresseNumero>
+                        <AdresseVoie>RUE DES TESTS</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+                    <Zone id="AE">
+                        <Designation>PALMER Christine</Designation>
+                        <DesignationSuite1>Employée</DesignationSuite1>
+                        <DesignationSuite2>MME</DesignationSuite2>
+                        <AdresseNumero>456</AdresseNumero>
+                        <AdresseVoie>AVENUE DES CEDRES</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="RA">
+                        <Designation>SAUTER Gérard</Designation>
+                        <DesignationSuite1>Gérant</DesignationSuite1>
+                        <DesignationSuite2>M</DesignationSuite2>
+                        <AdresseNumero>789</AdresseNumero>
+                        <AdresseVoie>BOULEVARD DES BOULOTS</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="CA">
+                        <Valeur>185692</Valeur>
+                    </Zone>
+                    <Zone id="GA">
+                        <Valeur>185692</Valeur>
+                    </Zone>
+                    <Zone id="HA">
+                        <Valeur>11346</Valeur>
+                    </Zone>
+                    <Zone id="MA">
+                        <Valeur>197038</Valeur>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>135508</Valeur>
+                    </Zone>
+                    <Zone id="GB">
+                        <Valeur>135508</Valeur>
+                    </Zone>
+                    <Zone id="HB">
+                        <Valeur>374</Valeur>
+                    </Zone>
+                    <Zone id="MB">
+                        <Valeur>135882</Valeur>
+                    </Zone>
+                    <Zone id="CC">
+                        <Valeur>121249</Valeur>
+                    </Zone>
+                    <Zone id="GC">
+                        <Valeur>121249</Valeur>
+                    </Zone>
+                    <Zone id="HC">
+                        <Valeur>740</Valeur>
+                    </Zone>
+                    <Zone id="MC">
+                        <Valeur>121989</Valeur>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>442449</Valeur>
+                    </Zone>
+                    <Zone id="GL">
+                        <Valeur>442449</Valeur>
+                    </Zone>
+                    <Zone id="HL">
+                        <Valeur>12460</Valeur>
+                    </Zone>
+                    <Zone id="ML">
+                        <Valeur>454909</Valeur>
+                    </Zone>
+                    <Zone id="NC">
+                        <Valeur>0</Valeur>
+                    </Zone>
+                    <Zone id="PA">
+                        <Valeur>454909</Valeur>
+                    </Zone>
+                    <Zone id="PC">
+                        <Valeur>12898</Valeur>
+                    </Zone>
+                    <Zone id="PB">
+                        <Valeur>636588</Valeur>
+                    </Zone>
+                    <Zone id="PD">
+                        <Valeur>-177180</Valeur>
+                    </Zone>
+                    <Zone id="QA">
+                        <Valeur>20250227</Valeur>
+                    </Zone>
+                    <Zone id="QB">
+                        <Designation>DUPOND Martin</Designation>
+                        <DesignationSuite1>Président Directeur Général</DesignationSuite1>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2069RCI" Repetition="1" Millesime="25">
+                    <Zone id="AB">
+                        <Valeur>X</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="2036BIS" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Valeur>20250227</Valeur>
+                    </Zone>
+                    <Zone id="AB">
+                        <Designation>DUPOND Martin</Designation>
+                        <DesignationSuite1>Président Directeur Général</DesignationSuite1>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+                    <Zone id="BB">
+                        <Occurrence Numero="1">
+                            <Valeur>63</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>12</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>11</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BC">
+                        <Occurrence Numero="1">
+                            <Identifiant>079555884</Identifiant>
+                            <Designation>MALLET</Designation>
+                            <DesignationSuite2>SA</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Identifiant>079556676</Identifiant>
+                            <Designation>MALLET &amp; CIE</Designation>
+                            <DesignationSuite2>S09</DesignationSuite2>
+                            <AdresseNumero>123</AdresseNumero>
+                            <AdresseVoie>RUE DES CERISIERS</AdresseVoie>
+                            <AdresseCodePostal>69000</AdresseCodePostal>
+                            <AdresseVille>LYON</AdresseVille>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Identifiant>079555751</Identifiant>
+                            <Designation>ALP &amp; CIE</Designation>
+                            <DesignationSuite2>SAE</DesignationSuite2>
+                            <AdresseNumero>456</AdresseNumero>
+                            <AdresseVoie>AVENUE DES PINS</AdresseVoie>
+                            <AdresseCodePostal>13000</AdresseCodePostal>
+                            <AdresseVille>MARSEILLE</AdresseVille>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BD">
+                        <Occurrence Numero="1">
+                            <Valeur>262176</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>4694</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>195541</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BE">
+                        <Occurrence Numero="1">
+                            <Valeur>684749</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>12050</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>429425</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BF">
+                        <Occurrence Numero="1">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BG">
+                        <Occurrence Numero="1">
+                            <Valeur>872381</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>17656</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>608271</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CB">
+                        <Valeur>86</Valeur>
+                    </Zone>
+                    <Zone id="CD">
+                        <Valeur>462411</Valeur>
+                    </Zone>
+                    <Zone id="CE">
+                        <Valeur>1126224</Valeur>
+                    </Zone>
+                    <Zone id="CG">
+                        <Valeur>1498308</Valeur>
+                    </Zone>
+                    <Zone id="BH">
+                        <Occurrence Numero="1">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>0</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BJ">
+                        <Occurrence Numero="1">
+                            <Valeur>5549589</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>66747</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>2573291</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BK">
+                        <Occurrence Numero="1">
+                            <Valeur>525647</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>8823</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>354748</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BL">
+                        <Occurrence Numero="1">
+                            <Valeur>3061110</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>49346</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>2014409</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BM">
+                        <Occurrence Numero="1">
+                            <Valeur>36620</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>512</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>23237</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BP">
+                        <Occurrence Numero="1">
+                            <Valeur>1557338</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>25354</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>1028852</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BQ">
+                        <Occurrence Numero="1">
+                            <Valeur>8745</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>128</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>5758</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BR">
+                        <Occurrence Numero="1">
+                            <Valeur>958336</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>20707</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>685400</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="BS">
+                        <Occurrence Numero="1">
+                            <Valeur>13516691</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>206017</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>7918932</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="CJ">
+                        <Valeur>8189627</Valeur>
+                    </Zone>
+                    <Zone id="CK">
+                        <Valeur>889218</Valeur>
+                    </Zone>
+                    <Zone id="CL">
+                        <Valeur>5124865</Valeur>
+                    </Zone>
+                    <Zone id="CM">
+                        <Valeur>60369</Valeur>
+                    </Zone>
+                    <Zone id="CP">
+                        <Valeur>2611544</Valeur>
+                    </Zone>
+                    <Zone id="CQ">
+                        <Valeur>14631</Valeur>
+                    </Zone>
+                    <Zone id="CR">
+                        <Valeur>1664443</Valeur>
+                    </Zone>
+                    <Zone id="CS">
+                        <Valeur>21641640</Valeur>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA17PROREC" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Produits à recevoir</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Créances clients</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Avoirs à recevoir</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Créances sociales</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>25835</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>25096452</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>52605</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>2584</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA18CHAPAY" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>Avoirs à établir</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <TexteLibre1>Dettes fournisseur</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <TexteLibre1>Dettes sociales fiscales</TexteLibre1>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <TexteLibre1>Intérêts courus</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>73542</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="2">
+                            <Valeur>2660080</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="3">
+                            <Valeur>1077905</Valeur>
+                        </Occurrence>
+                        <Occurrence Numero="4">
+                            <Valeur>437</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+                <Formulaire Nom="CA20CHAAVA" Repetition="0" Millesime="25">
+                    <Zone id="AA">
+                        <Occurrence Numero="1">
+                            <TexteLibre1>C.C.A</TexteLibre1>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AB">
+                        <Occurrence Numero="1">
+                            <Valeur>2024010120241231</Valeur>
+                        </Occurrence>
+                    </Zone>
+                    <Zone id="AC">
+                        <Occurrence Numero="1">
+                            <Valeur>585713</Valeur>
+                        </Occurrence>
+                    </Zone>
+                </Formulaire>
+            </ListeFormulaires>
+        </Declaration>
+		<Declaration Reference="INFENT000000000001-2" Type="ICG">
+            <Redacteur>
+				<Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>8</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555421BIC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+              	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+				<ReferenceDossier>INFENT000000000001-2</ReferenceDossier>
+                <Rof>BIC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <ListeFormulaires>
+                <Identif Millesime="25">
+					<Zone id="AB">
+                        <Valeur>EI</Valeur>
+                    </Zone>					
+					<Zone id="BA">
+                        <Valeur>20240101</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>20241231</Valeur>
+                    </Zone>       
+					<Zone id="CC">
+                        <MonnaieCible>EUR</MonnaieCible>
+                    </Zone>
+					<Zone id="DL">
+                        <Valeur>2</Valeur>
+                    </Zone>	
+					<Zone id="DA">
+                        <Valeur>3</Valeur>
+                    </Zone>					
+                </Identif>				
+                <Formulaire Repetition="0" Nom="OGBIC00" Millesime="25">				
+					<Zone id="AA">
+						<Identifiant>07955559500010</Identifiant>
+						<Designation>CEC TEST</Designation>
+						<DesignationSuite2>CAB</DesignationSuite2>
+						<AdresseNumero>8</AdresseNumero>
+						<AdresseVoie>RUE DES CHENES</AdresseVoie>
+						<AdresseComplement>ZA DES GLANDS</AdresseComplement>
+						<AdresseCodePostal>42000</AdresseCodePostal>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+					<Zone id="AB">
+						<TexteLibre1>Coiffeuse</TexteLibre1>
+                    </Zone>
+					<Zone id="AC">
+						<Identifiant>111111</Identifiant>
+						<Designation>OGA TEST</Designation>
+						<AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DE LA TALAUDIERE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>Saint-Etienne</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Zone>
+					<Zone id="AD">
+						<Designation>DUPONT Roger</Designation>
+						<DesignationSuite1>EXPERT COMPTABLE ART 83 TER</DesignationSuite1>
+						<AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    </Zone>
+					<Zone id="BA">
+						<Valeur>20241209</Valeur>
+                    </Zone>
+					<Zone id="BB">
+                        <Valeur>1</Valeur>
+                    </Zone>					
+                </Formulaire>
+                <Formulaire Repetition="0" Nom="OGBIC01" Millesime="25">
+					<Zone id="AT">
+						<Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="AW">
+						<Valeur>4</Valeur>
+                    </Zone>
+					<Zone id="BA">
+						<Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="CA">
+						<Designation>MARTIN</Designation>
+						<DesignationSuite1>Jeanne</DesignationSuite1>
+                    </Zone>
+					<Zone id="CC">
+						<Valeur>1</Valeur>
+                    </Zone>
+					<Zone id="BC">
+						<Occurrence Numero="1">
+							<TexteLibre1>CONGES MATERNITE DU 28/12/2023 AU 09/02/2024</TexteLibre1>
+						</Occurrence>
+                    </Zone>					
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBIC02" Millesime="25">
+                    <Zone id="EE">
+                        <Valeur>87,00</Valeur>
+                    </Zone>
+					<Zone id="EP">
+                        <Valeur>587,00</Valeur>
+                    </Zone>
+					<Zone id="EV">
+						<Occurrence Numero="1">
+							<Valeur>29,00</Valeur>
+						</Occurrence>
+                    </Zone>					
+                </Formulaire>				
+                <Formulaire Repetition="0" Nom="OGBIC03" Millesime="25">
+					<Zone id="AU">
+                        <Valeur>673,00</Valeur>
+                    </Zone>					
+                    <Zone id="BK">
+                        <Valeur>2</Valeur>
+                    </Zone>
+					<Zone id="BL">
+                        <Valeur>3</Valeur>
+                    </Zone>
+					<Zone id="EX">
+                        <Valeur>20,0000</Valeur>
+                    </Zone>
+					<Zone id="FR">
+                        <Valeur>25728,00</Valeur>
+                    </Zone>
+					<Zone id="FS">
+                        <Valeur>25728,00</Valeur>
+                    </Zone>
+					<Zone id="VC">
+                        <Valeur>25727,88</Valeur>
+                    </Zone>
+					<Zone id="VE">
+                        <Valeur>25727,88</Valeur>
+                    </Zone>
+					<Zone id="YC">
+                        <Valeur>-0,12</Valeur>
+                    </Zone>
+					<Zone id="YE">
+                        <Valeur>-0,12</Valeur>
+                    </Zone>
+					<Zone id="ZC">
+                        <Valeur>-0,02</Valeur>
+                    </Zone>
+					<Zone id="ZE">
+                        <Valeur>-0,02</Valeur>
+                    </Zone>
+					<Zone id="AC">
+						<Occurrence Numero="1">
+							<Valeur>25727,88</Valeur>
+						</Occurrence>
+                    </Zone>
+					<Zone id="AE">
+						<Occurrence Numero="1">
+							<Valeur>25727,88</Valeur>
+						</Occurrence>
+                    </Zone>
+                </Formulaire>
+				<Formulaire Repetition="0" Nom="OGBIC05" Millesime="25">
+					<Zone id="AA">
+                        <Valeur>2</Valeur>
+                    </Zone>
+				</Formulaire>
+            </ListeFormulaires>    
+        </Declaration>
+    </GroupeFonctionnel>
+	<GroupeFonctionnel Type="BALANC">
+        <Balance Reference="BALANC000000000001-3" Type="BCG">
+            <Redacteur>
+				<Siret>07955607200019</Siret>
+                <Designation>CEC_EDI_TDFC</Designation>
+                <DesignationSuite1>REDACTEUR TEST</DesignationSuite1>
+                <Adresse>
+                    <AdresseNumero>8</AdresseNumero>
+                    <AdresseVoie>PARC METROTECH</AdresseVoie>
+                    <AdresseCodePostal>42650</AdresseCodePostal>
+                    <AdresseVille>SAINT-JEAN-BONNEFONDS</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>079555421BIC1</ReferenceDossier>
+            </Redacteur>
+            <Redevable>
+                <Identifiant>079555421</Identifiant>
+                <Designation>REDEVABLE TEST</Designation>
+                <Adresse>
+               	 	<AdresseNumero>123</AdresseNumero>
+					<AdresseRepetabilite>C</AdresseRepetabilite>
+                    <AdresseVoie>RUE DE TEST</AdresseVoie>
+                    <AdresseCodePostal>42000</AdresseCodePostal>
+                    <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                    <AdresseCodePays>FR</AdresseCodePays>
+                </Adresse>
+                <ReferenceDossier>BALANC000000000001-3</ReferenceDossier>
+                <Rof>BIC1</Rof>
+            </Redevable>
+            <ListeDestinataires>
+                <Destinataire>
+                    <Designation>OGA_EDI_TDFC</Designation>
+                    <Identifiant>41122204500030</Identifiant>
+                    <DesignationSuite1>OGA TEST</DesignationSuite1>
+					<Adresse>
+                        <AdresseNumero>66</AdresseNumero>
+                        <AdresseRepetabilite>B</AdresseRepetabilite>
+                        <AdresseVoie>RUE DU NUMERIQUE</AdresseVoie>
+                        <AdresseCodePostal>42000</AdresseCodePostal>
+                        <AdresseVille>SAINT-ETIENNE</AdresseVille>
+                        <AdresseCodePays>FR</AdresseCodePays>
+                    </Adresse>
+                    <ReferenceDossier>REFDOSSIER00001</ReferenceDossier>
+                </Destinataire>
+            </ListeDestinataires>
+            <Entete>
+				<Periode>
+					<Debut>20240101</Debut>
+					<Fin>20241231</Fin>
+				</Periode>
+				<Monnaies>
+					<MonnaieDossier>EUR</MonnaieDossier>
+					<MonnaieBalance>EUR</MonnaieBalance>
+					<MonnaieBalanceUsage>7</MonnaieBalanceUsage>
+				</Monnaies>				
+				<Statut>BRE</Statut>
+				<Niveau>N2</Niveau>
+				<MontantQualifiant>5</MontantQualifiant>
+			</Entete>
+			<ListeLignes>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>9328,19</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="517">
+						<Valeur>195641,46</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>204969,65</Valeur>
+						<Statut>30</Statut>
+					</Montant>				
+					<Compte id="4">
+						<Numero>10130000</Numero>
+						<LibelleLong>COMPTE DE L'EXPLOITANT</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>1679,19</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>1816,86</Valeur>
+						<Statut>30</Statut>
+					</Montant>		
+					<Montant id="517">
+						<Valeur>1816,86</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>1679,19</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>10810000</Numero>
+						<LibelleLong>APPORTS</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>11963,64</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>11845,25</Valeur>
+						<Statut>30</Statut>
+					</Montant>		
+					<Montant id="516">
+						<Valeur>11963,64</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="518">
+						<Valeur>11845,25</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>10820000</Numero>
+						<LibelleLong>PRELEVEMENTS DE L'EXPLOITANT</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>837,87</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>837,87</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>12000000</Numero>
+						<LibelleLong>BÉNÉFICE</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="516">
+						<Valeur>237511,81</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="518">
+						<Valeur>237511,81</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>21410000</Numero>
+						<LibelleLong>CHAMBRE EHPAD</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="516">
+						<Valeur>7800</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="518">
+						<Valeur>7800</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>21840000</Numero>
+						<LibelleLong>MOBILIER</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="374">
+						<Valeur>7916,27</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="517">
+						<Valeur>48664,67</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>40748,4</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>28141000</Numero>
+						<LibelleLong>AMORTIS. CONSTRUCTIONS SOL D'AUTRU</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="517">
+						<Valeur>7800</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>7800</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>28184000</Numero>
+						<LibelleLong>AMORTIS. MOBILIER</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>781,14</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>814,26</Valeur>
+						<Statut>30</Statut>
+					</Montant>		
+					<Montant id="517">
+						<Valeur>814,26</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>781,14</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>40100000</Numero>
+						<LibelleLong>FOURNISSEURS</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>11963,64</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>11963,64</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>41100000</Numero>
+						<LibelleLong>CLIENTS</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>471</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>456</Valeur>
+						<Statut>30</Statut>
+					</Montant>		
+					<Montant id="517">
+						<Valeur>456</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="519">
+						<Valeur>471</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>44551000</Numero>
+						<LibelleLong>TVA À DÉCAISSER</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>173,71</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>168,19</Valeur>
+						<Statut>30</Statut>
+					</Montant>		
+					<Montant id="516">
+						<Valeur>135,71</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="518">
+						<Valeur>130,19</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>44566000</Numero>
+						<LibelleLong>TVA DÉDUCTIBLE S/AUT.BIENS ET SCES</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>623,72</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="374">
+						<Valeur>623,72</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>44571100</Numero>
+						<LibelleLong>TVA COLLECTEE 5.5%</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>594,55</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>594,55</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>62260000</Numero>
+						<LibelleLong>HONORAIRES CEC</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>84</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>84</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>62261000</Numero>
+						<LibelleLong>HONORAIRES INFORMATIQUES</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>190</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>190</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>62810000</Numero>
+						<LibelleLong>COTISATION CGA</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>336,72</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>336,72</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>63512000</Numero>
+						<LibelleLong>TAXES FONCIÈRES</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>0,47</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>0,47</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>65800000</Numero>
+						<LibelleLong>CHARGES DIVERSES GESTION COURANTE</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="375">
+						<Valeur>7916,27</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Montant id="516">
+						<Valeur>7916,27</Valeur>
+						<Statut>29</Statut>
+					</Montant>
+					<Compte id="4">
+						<Numero>68112000</Numero>
+						<LibelleLong>DOT. AMORT. S/IMMOBIL. CORPOREL.</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+				<Ligne>
+					<Montant id="374">
+						<Valeur>11339,92</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Montant id="517">
+						<Valeur>11339,92</Valeur>
+						<Statut>30</Statut>
+					</Montant>
+					<Date id="454">20181229</Date>
+					<Reference id="AWP">REFMVT0003501</Reference> 
+					<Compte id="4">
+						<Numero>70610000</Numero>
+						<LibelleLong>LOCATIONS 5.5%</LibelleLong>
+						<Monnaie>EUR</Monnaie>
+						<Centralisation>CNC</Centralisation>
+					</Compte>
+				</Ligne>
+			</ListeLignes>				
+			<Synthese>
+				<Montant id="375">
+					<Valeur>46944,11</Valeur>
+					<Statut>29</Statut>
+				</Montant>
+				<Montant id="374">
+					<Valeur>46944,11</Valeur>
+					<Statut>30</Statut>
+				</Montant>
+				<Montant id="520">
+					<Valeur>266533,17</Valeur>
+					<Statut>29</Statut>
+				</Montant>
+				<Montant id="521">
+					<Valeur>266533,17</Valeur>
+					<Statut>30</Statut>
+				</Montant>
+				<Montant id="522">
+					<Valeur>257287,25</Valeur>
+					<Statut>29</Statut>
+				</Montant>
+				<Montant id="523">
+					<Valeur>257287,25</Valeur>
+					<Statut>30</Statut>
+				</Montant>
+			</Synthese>
+		</Balance>
+    </GroupeFonctionnel>
+</XmlEdi>

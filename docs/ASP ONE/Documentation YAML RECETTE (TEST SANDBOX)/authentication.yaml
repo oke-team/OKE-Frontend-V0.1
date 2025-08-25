@@ -1,0 +1,68 @@
+---
+swagger: "2.0"
+info:
+  version: "8.3.2.0"
+  title: "AUTHENTICATION"
+host: "recette-aspone.tessitechno.fr"
+basePath: "/api/rest"
+tags:
+- name: "TOKENS"
+schemes:
+- "https"
+paths:
+  /v1/authentication/tokens/access:
+    post:
+      tags:
+      - "TOKENS"
+      summary: "Create new access token from user credentials"
+      description: "Create new access token from user credentials using Basic Authentication.\
+        \ PORTAL is optional in username, it must be provided for non autonomous one."
+      operationId: "getToken_1"
+      parameters: []
+      security:
+      - Basic Authorization: []
+      responses:
+        "200":
+          description: "A pair of access / refresh tokens"
+          schema:
+            $ref: "#/definitions/RestToken"
+  /v1/authentication/tokens/refresh:
+    post:
+      tags:
+      - "TOKENS"
+      summary: "Create new access token from refresh token"
+      description: "Create new access token from refresh token : a refresh token can\
+        \ be used only once"
+      operationId: "refreshToken_1"
+      parameters: []
+      security:
+      - Key Authorization: []
+      responses:
+        "200":
+          description: "A pair of access / refresh tokens"
+          schema:
+            $ref: "#/definitions/RestToken"
+securityDefinitions:
+  Basic Authorization:
+    description: "Username = [PORTAL\\\\]LOGIN\nPORTAL is optional in username, it\
+      \ must be provided for non autonomous one."
+    type: "basic"
+  Key Authorization:
+    description: "Enter the refresh token\nExample : 021b50a5ccb78e4eb99020fc45b1220519926c33b140d07cfffe2661642a43f2"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  RestToken:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+      refreshToken:
+        type: "string"
+      tokenExpirationDate:
+        type: "string"
+        format: "date-time"
+      refreshTokenExpirationDate:
+        type: "string"
+        format: "date-time"
